@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <!-- Bootstrap -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/st-declare.css">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+   var phoneWidth = parseInt(window.screen.width);
+   var phoneScale = phoneWidth / 375;
+   var ua = navigator.userAgent;
+   if (/Android (\d+\.\d+)/.test(ua)) {
+       var version = parseFloat(RegExp.$1);
+       if (version > 2.3) {
+           document
+                   .write('<meta name="viewport" content="width=375, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+       } else {
+           document
+                   .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
+       }
+   } else {
+       document
+               .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
+   }
+
+   </script>
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <a href="st-main.html"><div class="de-left"><img src="assets/i/b-1.png" alt=""></div></a>
+    <span>积分申报</span>
+  </div>
+</nav>
+<div class="de-list">
+  <ul>
+      <li>
+        <div class="list-left">
+          项目名称：
+        </div>
+        <div class="list-right">
+          <input type="text" name="">
+        </div>
+      </li>
+      <li>
+        <div class="list-left">
+          项目类别：
+        </div>
+        <div class="list-right">
+        <select class="form-control select">
+          <option>创新创业类</option>
+          <option>创新创业类</option>
+          <option>创新创业类</option>
+          <option>创新创业类</option>
+          <option>创新创业类</option>
+      </select>
+      <select class="form-control select">
+          <option>国赛</option>
+          <option>省赛</option>
+          <option>校赛</option>
+      </select>
+      <select class="form-control select">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+      </select>
+      </div>
+      </li>
+      <li>
+        <div class="list-left">
+          所属学院：
+        </div>
+        <div class="list-right agray">
+          信息工程学院
+        </div>
+      </li>
+      <li class="list-other">
+        <div>
+          项目详情:
+        </div>
+        <textarea class="form-control" rows="3"></textarea>
+      </li>
+      <li class="list-other">
+        <div class="de-text">
+          上传佐证:
+        </div>
+        <img src="assets/i/b-2.png" alt="">
+      </li>
+  </ul>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+ <a href="st-check.html"><div class="container nav-bot">
+    确认提交
+  </div>
+  </a>
+</nav>

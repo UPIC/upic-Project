@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="Student-provider"/>
+
+    <dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>
+    <dubbo:protocol name="dubbo" port="20880"/>
+    <dubbo:service interface="com.upic.service.BannerService" ref="bannerService" version="1.0"
+                   group="systemManager"></dubbo:service>
+    <dubbo:service interface="com.upic.service.CategoryNodeService" ref="categoryNodeService" version="1.0"
+                   group="systemManager"></dubbo:service>
+    <dubbo:service interface="com.upic.service.ConfirmationBasisService" ref="confirmationBasisService" version="1.0"
+                   group="systemManager"></dubbo:service>
+    <dubbo:service interface="com.upic.service.ProjectCategoryService" ref="projectCategoryService" version="1.0"
+                   group="systemManager"></dubbo:service>
+    <dubbo:service interface="com.upic.service.SystemAdministrationLogService" ref="systemAdministrationLogService"
+                   version="1.0"
+                   group="systemManager"></dubbo:service>
+
+</beans>

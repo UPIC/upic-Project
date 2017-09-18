@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.upic</groupId>
+	<artifactId>upic-spring-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>upic-spring-parent</name>
+	<url>http://maven.apache.org</url>
+<!-- 全局属性配置 -->
+	<profiles>
+	
+		<!-- 开发环境 -->
+		<profile>
+			<id>main</id>
+			<properties>
+				<!-- 部署环境(对应配置文件版本) -->
+				<env>main</env>
+				<maven.test.skip>false</maven.test.skip>
+			</properties>
+			<!-- 设置默认环境 -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		
+		<!-- 测试环境  -->
+		<profile>
+			<id>test-mysql</id>
+			<properties>
+				<!-- 部署环境(对应配置文件版本) -->
+				<env>test-mysql</env>
+			</properties>
+		</profile>
+		
+	</profiles>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>Brussels-SR1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		
+		<student-common.version>1.0</student-common.version>
+		<!-- provider start -->
+		<student-project-provider.version>1.0</student-project-provider.version>
+		<student-grainCoin-provider.version>1.0</student-grainCoin-provider.version>
+		<student-systemManage-provider.version>1.0</student-systemManage-provider.version>
+		<student-user-provider.version>1.0</student-user-provider.version>
+		<student-mail-provider.version>1.0</student-mail-provider.version>
+		<student-operate-provider.version>1.0</student-operate-provider.version>
+		<!-- provider end -->
+		<!-- api start -->
+		<student-project-api.version>1.0</student-project-api.version>
+		<student-grainCoin-api.version>1.0</student-grainCoin-api.version>
+		<student-systemManage-api.version>1.0</student-systemManage-api.version>
+		<student-user-api.version>1.0</student-user-api.version>
+		<student-mail-api.version>1.0</student-mail-api.version>
+		<student-operate-api.version>1.0</student-operate-api.version>
+		<!-- api end -->
+
+		<!-- web start -->
+		<upic-web-mobile.version>1.0</upic-web-mobile.version>
+		<!-- web end -->
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

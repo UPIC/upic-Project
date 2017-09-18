@@ -1,0 +1,85 @@
+/*
+* @Author: Marte
+* @Date:   2017-09-12 19:00:56
+* @Last Modified by:   Marte
+* @Last Modified time: 2017-09-12 19:19:03
+*/
+.navbar-fixed-top{
+    text-align: center;
+    font-size: 22px;
+    background-color:  #24C3E0;
+    line-height: 50px;
+    color:#fff;
+}
+.navbar-fixed-top span{
+    margin-left: -15px;
+}
+.navbar-fixed-top .de-left{
+  float: left;
+}
+.de-top{
+    height: 100px;
+    border:none;
+    background-color: #fff;
+    margin-top: 60px;
+    border-bottom: 1px solid #ccc;
+}
+.top-name img{
+    width: 52px;
+    height: 52px;
+}
+.top-name span{
+    font-size: 18px;
+    padding-left:5px;
+}
+.top-name{
+    float: left;
+    width: 60%;
+    line-height: 100px;
+    padding-left:16px;
+}
+.top-num{
+    float: right;
+    width: 40%;
+    text-align: center;
+    padding-top: 20px;
+}
+.top-num span{
+   font-size: 16px;
+}
+.num{
+    font-size: 40px;
+    color:#FFCC33;
+}
+.de-list{
+    width: 100%;
+}
+.de-list ul{
+    padding:0px;
+}
+.de-list li{
+    width: 100%;
+    height: 50px;
+    list-style: none;
+     border-bottom: 1px solid #ccc;
+}
+.de-money{
+    float: left;
+    padding-left: 10px;
+    width: 50%;
+    font-size: 16px;
+    padding-top: 5px;
+}
+.time{
+    color: #ccc;
+    font-size: 12px;
+}
+.de-num{
+    float: right;
+    padding-right: 10px;
+    width: 50%;
+    text-align: right;
+    font-size: 20px;
+    color:#FFCC33;
+    line-height: 50px;
+}

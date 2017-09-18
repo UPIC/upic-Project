@@ -1,0 +1,91 @@
+.navbar-fixed-top{
+    text-align: center;
+    font-size: 22px;
+    background-color:  #24C3E0;
+    line-height: 50px;
+    color:#fff;
+}
+.navbar-fixed-top span{
+    margin-left: -15px;
+}
+.navbar-fixed-top .de-left{
+  float: left;
+}
+.re-nav{
+    margin-top: 50px;
+}
+.nav-tabs .aa{
+    margin-left:3px;
+}
+.re-nav .nav-tabs li{
+    text-align:center;
+    width: 33%;
+}
+.nav-tabs>li>a:hover{
+    border-color: none;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    border:none;
+     border-bottom:2px solid #24C3E0;
+}
+
+.re-nav a{
+    color: #24C3E0;
+    font-size:18px;
+}
+.act-div{
+    border-bottom:1px solid #ccc;
+    height: 96px;
+    margin-top:10px;
+}
+}
+.tab-pane{
+    width:100%;
+ }
+.tab-left{
+    width:35%;
+    float: left;
+}
+.tab-title{
+    width:100%;
+    height: 30px;
+}
+.tab-left img{
+    width:90%;
+    height: 80px;
+    padding-left: 10px;
+}
+.tab-right{
+    width:65%;
+    float: right;
+}
+.right-name{
+    float: left;
+    width:75%;
+    font-size:18px;
+}
+.right-apply{
+    float: right;
+    width:20%;
+    font-size:12px;
+    border: 1px solid #24C3E0;
+    border-radius: 6px;
+    color:#24C3E0;
+    text-align:center;
+    margin-top:3px;
+    margin-right: 10px;
+}
+.tab-text{
+    font-size:12px;
+    color:#ccc;
+}
+.tab-search{
+    color:#FFCC33;
+    float: right;
+    margin-top:-10px;
+    font-size:14px;
+}
+.tab-text .red{
+    color:#FF3300;
+    padding-left:10px;
+}

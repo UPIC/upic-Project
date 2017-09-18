@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <!-- Bootstrap -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/mo-detail.css">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+   var phoneWidth = parseInt(window.screen.width);
+   var phoneScale = phoneWidth / 375;
+   var ua = navigator.userAgent;
+   if (/Android (\d+\.\d+)/.test(ua)) {
+       var version = parseFloat(RegExp.$1);
+       if (version > 2.3) {
+           document
+                   .write('<meta name="viewport" content="width=375, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+       } else {
+           document
+                   .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
+       }
+   } else {
+       document
+               .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
+   }
+
+   </script>
+   <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <a href="st-main.html"><div class="de-left"><img src="assets/i/b-1.png" alt=""></div></a>
+    <span>积分明细</span>
+  </div>
+</nav>
+<div class="de-top">
+   <div class="top-name">
+     <img src="assets/i/d-1.png" alt="">
+     <span>我说了我最美</span>
+  </div>
+  <div class="top-num">
+     <span>当前积分</span>
+     <div class="num">4.5</div>
+  </div>
+</div>
+<div class="de-list">
+  <ul>
+      <li>
+        <div class="de-money">
+           校园文化节
+           <div class="time">2017.2.2</div>
+        </div>
+        <div class="de-num">
+           +0.5
+        </div>
+      </li>
+      <li>
+         <div class="de-money">
+           校园文化节
+           <div class="time">2017.2.2</div>
+        </div>
+        <div class="de-num">
+           +4.0
+        </div>
+      </li>
+  </ul>
+</div>

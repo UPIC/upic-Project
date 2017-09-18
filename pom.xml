@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.upic</groupId>
+	<artifactId>com.upic</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<modules>
+		<module>Upic-Spring-Parent</module>
+		<module>student-api</module>
+		<module>student-provider-demo</module>
+		<module>upic-spring-common</module>
+		<module>upic-spring-grainCoin-provider</module>
+		<module>upic-spring-mail-provider</module>
+		<module>upic-spring-operate-provider</module>
+		<module>upic-spring-project-provider</module>
+		<module>upic-spring-systemManager-provider</module>
+		<module>upic-spring-user-provider</module>
+		<module>upic-spring-grainCoin-api</module>
+		<module>upic-spring-mail-api</module>
+		<module>upic-spring-operate-api</module>
+		<module>upic-spring-project-api</module>
+		<module>upic-spring-systemManager-api</module>
+		<module>upic-spring-user-api</module>
+
+		<module>upic-spring-web-mobile</module>
+	</modules>
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+</project>
