@@ -100,4 +100,22 @@ public interface IntegralLogService {
      * @return
      */
     Page<IntegralLogInfo> getIntegralLogByMySelf(String studentNum, Pageable pageable);
+
+    /**
+     * 学生查看自身的积分日志
+     *
+     * @param studentNum
+     * @param pageable
+     * @return
+     */
+    Page<IntegralLogInfo> getAllIntegralLogByStudentNum(String studentNum, Pageable pageable);
+
+    /**
+     * 获取申报中的积分
+     *
+     * @param studentNum
+     * @param pageable
+     * @return
+     */
+    Page<IntegralLogInfo> getIntegralLogDeclaring(String studentNum, Pageable pageable);
 }

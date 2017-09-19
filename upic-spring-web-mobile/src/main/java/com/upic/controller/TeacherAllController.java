@@ -27,24 +27,6 @@ public class TeacherAllController {
     private IntegralLogService integralLogService;
 
     /**
-     * 根据用户获取项目列表
-     *
-     * @param pageable
-     * @param projectCondition
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/getProjectByUser")
-    public Page<ProjectInfo> getProjectByUser(@PageableDefault(size = 10) Pageable pageable, ProjectCondition projectCondition) throws Exception {
-        try {
-            return projectService.searchProject(projectCondition, pageable);
-        } catch (Exception e) {
-            LOGGER.info("getProjectByUser:" + e.getMessage());
-            throw new Exception("getProjectByUser" + e.getMessage());
-        }
-    }
-
-    /**
      * 根据项目编号获取项目详情
      *
      * @param projectNum

@@ -48,4 +48,16 @@ public interface MailService {
      * @param mailId
      */
     void deleteMail(long mailId);
+
+    /**
+     * 用户查询站内信
+     *
+     * @param college
+     * @param major
+     * @param clazz
+     * @param userNum
+     * @param pageable
+     * @return
+     */
+    Page<MailInfo> getMyMail(String college, String major, String clazz, String userNum, Pageable pageable);
 }

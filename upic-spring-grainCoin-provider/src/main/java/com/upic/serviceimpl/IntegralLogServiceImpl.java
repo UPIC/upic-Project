@@ -161,6 +161,37 @@ public class IntegralLogServiceImpl implements IntegralLogService {
                 }
             });
         } catch (Exception e) {
+            LOGGER.info("getIntegralLogByMySelf:" + e.getMessage());
+            return null;
+        }
+    }
+
+    public Page<IntegralLogInfo> getAllIntegralLogByStudentNum(String studentNum, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.getAllIntegralLogByStudentNum(studentNum, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getAllIntegralLogByStudentNum:" + e.getMessage());
+            return null;
+        }
+    }
+
+    public Page<IntegralLogInfo> getIntegralLogDeclaring(String studentNum, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.getIntegralLogDeclaring(studentNum, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogDeclaring:" + e.getMessage());
             return null;
         }
     }

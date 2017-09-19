@@ -41,4 +41,11 @@ public interface PrizeService {
      * @return
      */
     PrizeInfo getPrizeById(long prizeId);
+
+    /**
+     * 获取历史物品
+     *
+     * @return
+     */
+    Page<PrizeInfo> getHistoryPrize(Pageable pageable);
 }
