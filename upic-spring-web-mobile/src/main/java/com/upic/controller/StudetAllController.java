@@ -72,8 +72,8 @@ public class StudetAllController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/getCrainCoin")
-    public double getCrainCoin() throws Exception {
+    @GetMapping("/getGrainCoin")
+    public double getGrainCoin() throws Exception {
         try {
             // Authentication authentication =
             // SecurityContextHolder.getContext().getAuthentication();
@@ -176,23 +176,6 @@ public class StudetAllController {
     }
 
     /**
-     * 根据projectNum获取projectInfo
-     *
-     * @param projectNum
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/getProjectInfo")
-    public ProjectInfo getProjectInfo(String projectNum) throws Exception {
-        try {
-            return projectService.getProjectByNum(projectNum);
-        } catch (Exception e) {
-            LOGGER.info("getProjectInfo:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    /**
      * 查找积分列表
      *
      * @param i
@@ -206,23 +189,6 @@ public class StudetAllController {
             return integralLogService.searchIntegralLog(i, pageable);
         } catch (Exception e) {
             LOGGER.info("getProjectInfo:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    /**
-     * 根据项目编号查询项目人数
-     *
-     * @param projectNum
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/getSignUpNumberByProjectNum")
-    public int getSignUpNumberByProjectNum(String projectNum) throws Exception {
-        try {
-            return integralLogService.getSignUpNumberByProjectNum(projectNum);
-        } catch (Exception e) {
-            LOGGER.info("getSignUpNumberByProjectNum:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
@@ -289,6 +255,42 @@ public class StudetAllController {
             return integralLogService.getIntegralLogByMySelf(studentNum, pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogByMySelf:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 学生查看自身的积分日志
+     *
+     * @param studentNum
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getAllIntegralLogByStudentNum")
+    public Page<IntegralLogInfo> getAllIntegralLogByStudentNum(String studentNum, @PageableDefault(size = 10) Pageable pageable) throws Exception {
+        try {
+            return integralLogService.getAllIntegralLogByStudentNum(studentNum, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getAllIntegralLogByStudentNum:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取申报中的积分
+     *
+     * @param studentNum
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getIntegralLogDeclaring")
+    public Page<IntegralLogInfo> getIntegralLogDeclaring(String studentNum, @PageableDefault(size = 10) Pageable pageable) throws Exception {
+        try {
+            return integralLogService.getIntegralLogDeclaring(studentNum, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogDeclaring:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }

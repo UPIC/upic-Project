@@ -7,12 +7,13 @@ import java.util.Map;
  * Created by zhubuqing on 2017/8/4.
  */
 public enum ImplementationProcessEnum {
-    IN_AUDIT("审核中", 1),
-    AUDITED("已审核", 2),
-    SAVED("已保存", 3),
+    SAVED("已保存", 1),
+    IN_AUDIT("审核中", 2),
+    AUDITED("已审核", 3),
     NOT_PASS("未通过", 4),
-    HAVE_IN_HAND("进行中", 5),
-    COMPLETED("已完成", 6);
+    ENROLLMENT("报名中", 5),
+    HAVE_IN_HAND("进行中", 6),
+    COMPLETED("已完成", 7);
 
     private String content;
 

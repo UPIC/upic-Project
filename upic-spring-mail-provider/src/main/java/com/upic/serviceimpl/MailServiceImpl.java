@@ -88,4 +88,19 @@ public class MailServiceImpl implements MailService {
             e.printStackTrace();
         }
     }
+
+    public Page<MailInfo> getMyMail(String college, String major, String clazz, String userNum, Pageable pageable) {
+        Page<Mail> mailPage = null;
+        try {
+            mailPage = mailRepository.getMyMail(college, major, clazz, userNum, pageable);
+            return QueryResultConverter.convert(mailPage, pageable, new AbstractDomain2InfoConverter<Mail, MailInfo>() {
+                protected void doConvert(Mail domain, MailInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getMyMail:" + e.getMessage());
+            return null;
+        }
+    }
 }

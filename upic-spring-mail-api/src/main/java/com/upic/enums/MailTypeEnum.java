@@ -8,7 +8,10 @@ import java.util.Map;
  */
 public enum MailTypeEnum {
     SCHOOL("学校", 1),
-    COLLEGE("学院", 2);
+    COLLEGE("学院", 2),
+    MAJOR("专业", 3),
+    CLAZZ("班级", 4),
+    PERSONAL("个人", 5);
 
     private String content;
 

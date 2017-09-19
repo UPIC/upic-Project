@@ -26,13 +26,13 @@ public class ProjectInfo extends BaseInfo {
 
     private double integral; //单个积分
 
-    private Date startTime; //开始时间
+    private Date startTime; //活动开始时间
 
-    private Date endTime; //结束时间
+    private Date endTime; //活动结束时间
 
-    private Date signUpStartTime;
+    private Date signUpStartTime; //报名开始时间
 
-    private Date signUpEndTime;
+    private Date signUpEndTime; //报名结束时间
 
     private int maximum; //最大参与人数
 

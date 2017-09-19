@@ -80,4 +80,20 @@ public class PrizeServiceImpl implements PrizeService {
             return null;
         }
     }
+
+    public Page<PrizeInfo> getHistoryPrize(Pageable pageable) {
+        Page<Prize> prizePage = null;
+        try {
+            prizePage = prizeRepository.getHistoryPrize(pageable);
+            return QueryResultConverter.convert(prizePage, pageable, new AbstractDomain2InfoConverter<Prize, PrizeInfo>() {
+                @Override
+                protected void doConvert(Prize domain, PrizeInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getHistoryPrize:单个奖品查询失败。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
 }
