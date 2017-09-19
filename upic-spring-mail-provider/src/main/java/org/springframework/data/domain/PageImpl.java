@@ -56,7 +56,6 @@ public class PageImpl<T> extends Chunk<T> implements Page<T> {
 	 * (non-Javadoc)
 	 * @see org.springframework.data.domain.Page#getTotalPages()
 	 */
-	@Override
 	public int getTotalPages() {
 		return getSize() == 0 ? 1 : (int) Math.ceil((double) total / (double) getSize());
 	}
@@ -65,7 +64,6 @@ public class PageImpl<T> extends Chunk<T> implements Page<T> {
 	 * (non-Javadoc)
 	 * @see org.springframework.data.domain.Page#getTotalElements()
 	 */
-	@Override
 	public long getTotalElements() {
 		return total;
 	}
@@ -74,7 +72,6 @@ public class PageImpl<T> extends Chunk<T> implements Page<T> {
 	 * (non-Javadoc)
 	 * @see org.springframework.data.domain.Slice#hasNext()
 	 */
-	@Override
 	public boolean hasNext() {
 		return getNumber() + 1 < getTotalPages();
 	}
@@ -92,7 +89,6 @@ public class PageImpl<T> extends Chunk<T> implements Page<T> {
 	 * (non-Javadoc)
 	 * @see org.springframework.data.domain.Slice#transform(org.springframework.core.convert.converter.Converter)
 	 */
-	@Override
 	public <S> Page<S> map(Converter<? super T, ? extends S> converter) {
 		return new PageImpl<S>(getConvertedContent(converter), pageable, total);
 	}
