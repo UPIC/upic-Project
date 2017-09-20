@@ -40,7 +40,7 @@ public class StudetAllController {
     private PrizeService prizeService;
 
     /**
-     * 获取当前用户的积分
+     * 获取当前用户的积分*
      *
      * @return
      * @throws Exception
@@ -63,11 +63,10 @@ public class StudetAllController {
             LOGGER.info("getIntegeral :" + e.getMessage());
             throw new Exception(e.getMessage());
         }
-
     }
 
     /**
-     * 获取当前学生素拓币
+     * 获取当前学生素拓币*
      *
      * @return
      * @throws Exception
@@ -87,13 +86,13 @@ public class StudetAllController {
             // }
             return grainCoinLogService.watchGrainCoin("student01");
         } catch (Exception e) {
-            LOGGER.info("getCrainCoin:" + e.getMessage());
+            LOGGER.info("getGrainCoin:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
 
     /**
-     * 获取积分日志列表
+     * 获取积分明细*
      *
      * @param pageable
      * @param c
@@ -109,27 +108,10 @@ public class StudetAllController {
             LOGGER.info("getCrainCoin:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
-
     }
 
     /**
-     * 根据条件查询活动
-     *
-     * @throws Exception
-     */
-    @GetMapping("/getProject")
-    public Page<ProjectInfo> getProject(@PageableDefault(size = 10) Pageable pageable, ProjectCondition p)
-            throws Exception {
-        try {
-            return projectService.searchProject(p, pageable);
-        } catch (Exception e) {
-            LOGGER.info("getProject:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    /**
-     * 获取banner图
+     * 获取banner图*
      *
      * @param pageable
      * @param b
@@ -148,24 +130,7 @@ public class StudetAllController {
     }
 
     /**
-     * 获取奖品
-     *
-     * @param pageable
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/getPrize")
-    public Page<PrizeInfo> getPrize(@PageableDefault(size = 10) Pageable pageable, PrizeCondition p) throws Exception {
-        try {
-            return prizeService.searchPrizes(p, pageable);
-        } catch (Exception e) {
-            LOGGER.info("getPrize:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    /**
-     * 奖品交换
+     * 奖品交换*
      *
      * @param prizeId
      * @return
@@ -176,7 +141,7 @@ public class StudetAllController {
     }
 
     /**
-     * 查找积分列表
+     * 查找积分列表*
      *
      * @param i
      * @param pageable
@@ -194,7 +159,7 @@ public class StudetAllController {
     }
 
     /**
-     * 是否已报名
+     * 是否已报名*（需要修改）
      *
      * @param studentNum
      * @param projectNum
@@ -214,7 +179,7 @@ public class StudetAllController {
     }
 
     /**
-     * 自主申报
+     * 积分申请提交*
      *
      * @param integralLogInfo
      * @param file
@@ -242,7 +207,7 @@ public class StudetAllController {
     }
 
     /**
-     * 根据自身编号获取参加过的自主申报项目
+     * 根据自身编号获取参加过的自主申报项目（可能没用）
      *
      * @param studentNum
      * @param pageable
@@ -260,7 +225,7 @@ public class StudetAllController {
     }
 
     /**
-     * 学生查看自身的积分日志
+     * 学生查看自身的积分日志（可能没用）
      *
      * @param studentNum
      * @param pageable
@@ -278,7 +243,7 @@ public class StudetAllController {
     }
 
     /**
-     * 获取申报中的积分
+     * 获取申报中的积分（可能没用）
      *
      * @param studentNum
      * @param pageable

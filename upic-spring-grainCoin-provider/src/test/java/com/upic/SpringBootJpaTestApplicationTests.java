@@ -161,4 +161,16 @@ public class SpringBootJpaTestApplicationTests {
         double score = grainCoinLogService.watchGrainCoin(studentNum);
         System.out.println(score);
     }
+
+    @Test
+    public void testGetAllIntegralLogByStudentNum() {
+        String studentNum = "StudentNum2";
+        PageRequest pageRequest = new PageRequest();
+        Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getAllIntegralLogByStudentNum(studentNum, pageRequest);
+        System.out.println(integralLogInfoPage.getTotalElements());
+        System.out.println(integralLogInfoPage.getTotalPages());
+        for (IntegralLogInfo integralLogInfo : integralLogInfoPage.getContent()) {
+            System.out.println(integralLogInfo);
+        }
+    }
 }

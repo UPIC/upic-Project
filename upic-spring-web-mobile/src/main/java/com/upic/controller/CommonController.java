@@ -1,6 +1,7 @@
 package com.upic.controller;
 
 import com.upic.condition.MailCondition;
+import com.upic.condition.PrizeCondition;
 import com.upic.condition.ProjectCategoryCondition;
 import com.upic.condition.ProjectCondition;
 import com.upic.dto.*;
@@ -45,33 +46,17 @@ public class CommonController {
      */
     @GetMapping("/getUserInfo")
     public UserInfo getUserInfo() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername("山鸡");
+        userInfo.setPic("assets/i/shanji.jpg");
         try { // 1.获取认证信息 2.根据用户信息查询
-
         } catch (Exception e) {
-
         }
-        return null;
+        return userInfo;
     }
 
     /**
-     * 根据id获取相应的站内信
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/getMailInfo")
-    public MailInfo getMailInfo(Long id) throws Exception {
-        try {
-            return mailService.getMailById(id);
-        } catch (Exception e) {
-            LOGGER.info("getMailInfo:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    /**
-     * 获取所有项目类别
+     * 获取所有项目类别*
      */
     @GetMapping("/getAllProjectCategory")
     public Page<ProjectCategoryInfo> getAllProjectCategory(@PageableDefault(size = 20) Pageable pageable, ProjectCategoryCondition p) throws Exception {
@@ -84,7 +69,40 @@ public class CommonController {
     }
 
     /**
-     * 获取相应的站内信
+     * 根据条件查询活动*
+     *
+     * @throws Exception
+     */
+    @GetMapping("/getProject")
+    public Page<ProjectInfo> getProject(@PageableDefault(size = 10) Pageable pageable, ProjectCondition p)
+            throws Exception {
+        try {
+            return projectService.searchProject(p, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getProject:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取奖品*
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getPrize")
+    public Page<PrizeInfo> getPrize(@PageableDefault(size = 10) Pageable pageable, PrizeCondition p) throws Exception {
+        try {
+            return prizeService.searchPrizes(p, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getPrize:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取相应的站内信*
      *
      * @param pageable
      * @param m
@@ -102,7 +120,24 @@ public class CommonController {
     }
 
     /**
-     * 根据项目编号查询项目人数
+     * 根据id获取相应的站内信*
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getMailInfo")
+    public MailInfo getMailInfo(Long id) throws Exception {
+        try {
+            return mailService.getMailById(id);
+        } catch (Exception e) {
+            LOGGER.info("getMailInfo:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据项目编号查询项目人数*
      *
      * @param projectNum
      * @return
@@ -119,7 +154,24 @@ public class CommonController {
     }
 
     /**
-     * 用户查看站内信
+     * 根据活动编号查看活动详情*
+     *
+     * @param projectNum
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getProjectInfo")
+    public ProjectInfo getProjectInfo(String projectNum) throws Exception {
+        try {
+            return projectService.getProjectByNum(projectNum);
+        } catch (Exception e) {
+            LOGGER.info("getProjectInfo:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 用户查看站内信（可能没用）
      *
      * @param pageable
      * @param userInfo
@@ -132,23 +184,6 @@ public class CommonController {
             return mailService.getMyMail(userInfo.getCollege(), userInfo.getMajor(), userInfo.getClazz(), userInfo.getUserNum(), pageable);
         } catch (Exception e) {
             LOGGER.info("getMyMail:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    /**
-     * 根据projectNum获取projectInfo
-     *
-     * @param projectNum
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/getProjectInfo")
-    public ProjectInfo getProjectInfo(String projectNum) throws Exception {
-        try {
-            return projectService.getProjectByNum(projectNum);
-        } catch (Exception e) {
-            LOGGER.info("getProjectInfo:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
@@ -205,6 +240,13 @@ public class CommonController {
         }
     }
 
+    /**
+     * 获取历史奖品
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/getHistoryPrize")
     public Page<PrizeInfo> getHistoryPrize(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
