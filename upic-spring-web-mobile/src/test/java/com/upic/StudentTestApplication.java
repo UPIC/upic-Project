@@ -12,10 +12,6 @@ import java.util.Date;
 
 import javax.servlet.http.Cookie;
 
-import com.upic.dto.IntegralLogIdInfo;
-import com.upic.dto.IntegralLogInfo;
-import com.upic.enums.IntegralLogStatusEnum;
-import com.upic.enums.IntegralLogTypeEnum;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -177,6 +173,15 @@ public class StudentTestApplication {
     public void testGetIntegralLogByMySelf() throws Exception {
         String contentAsString = mockMvc
                 .perform(get("/stu/getIntegralLogByMySelf").accept(MediaType.APPLICATION_JSON_UTF8).param("studentNum", "StudentNum1"))
+                .andExpect(status().isOk()).andReturn().getResponse()
+                .getContentAsString();
+        System.out.println(contentAsString);
+    }
+
+    @Test
+    public void getAllIntegralLogByStudentNum() throws Exception {
+        String contentAsString = mockMvc
+                .perform(get("/stu/getAllIntegralLogByStudentNum").accept(MediaType.APPLICATION_JSON_UTF8).param("studentNum", "StudentNum2"))
                 .andExpect(status().isOk()).andReturn().getResponse()
                 .getContentAsString();
         System.out.println(contentAsString);

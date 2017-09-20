@@ -27,12 +27,13 @@ public class PrizeCondition extends BaseCondition {
 
     private Date endTimeTo; //结束时间
 
+    private String needPic; //是否需要图片
+
     public PrizeCondition() {
         super();
     }
 
-    public PrizeCondition(String prizeName, Double score, String title, String content, PrizeStatusEnum status, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo) {
-        super();
+    public PrizeCondition(String prizeName, Double score, String title, String content, PrizeStatusEnum status, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, String needPic) {
         this.prizeName = prizeName;
         this.score = score;
         this.title = title;
@@ -42,6 +43,7 @@ public class PrizeCondition extends BaseCondition {
         this.startTimeTo = startTimeTo;
         this.endTime = endTime;
         this.endTimeTo = endTimeTo;
+        this.needPic = needPic;
     }
 
     public String getPrizeName() {
@@ -114,5 +116,13 @@ public class PrizeCondition extends BaseCondition {
 
     public void setEndTimeTo(Date endTimeTo) {
         this.endTimeTo = endTimeTo;
+    }
+
+    public String getNeedPic() {
+        return needPic;
+    }
+
+    public void setNeedPic(String needPic) {
+        this.needPic = needPic;
     }
 }

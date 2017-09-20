@@ -57,6 +57,7 @@ public class PrizeServiceImpl implements PrizeService {
             return QueryResultConverter.convert(prizePage, pageable, new AbstractDomain2InfoConverter<Prize, PrizeInfo>() {
                 @Override
                 protected void doConvert(Prize domain, PrizeInfo info) throws Exception {
+                    filterPrize(domain);
                     UpicBeanUtils.copyProperties(domain, info);
                 }
             });
@@ -94,6 +95,12 @@ public class PrizeServiceImpl implements PrizeService {
         } catch (Exception e) {
             LOGGER.info("getHistoryPrize:单个奖品查询失败。错误信息：" + e.getMessage());
             return null;
+        }
+    }
+
+    private void filterPrize(Prize prize) {
+        if (prize.getPrizePic() != null) {
+            prize.setPrizePic(null);
         }
     }
 }

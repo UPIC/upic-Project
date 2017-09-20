@@ -22,7 +22,6 @@ public class IntegralLog implements Serializable{
 
     private String event; //事件 json
 
-    @Column(columnDefinition = "decimal(5,2)")
     private double integral; //分数
 
     @Enumerated(EnumType.STRING)
@@ -58,6 +57,8 @@ public class IntegralLog implements Serializable{
 
     private String field5;
 
+    private Date addTime;
 
+    private String projectName;
 }
 
