@@ -40,12 +40,14 @@ public class IntegralLogCondition implements Serializable {
 
     private Date addTime;
 
+    private Date addTimeTo;
+
     private String projectName;
 
     public IntegralLogCondition() {
     }
 
-    public IntegralLogCondition(String event, Double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, Date creatTime, Date creatTimeTo, String field1, String field2, String field3, String field4, String field5, Date addTime, String projectName) {
+    public IntegralLogCondition(String event, Double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, Date creatTime, Date creatTimeTo, String field1, String field2, String field3, String field4, String field5, Date addTime, Date addTimeTo, String projectName) {
         this.event = event;
         this.integral = integral;
         this.type = type;
@@ -61,6 +63,7 @@ public class IntegralLogCondition implements Serializable {
         this.field4 = field4;
         this.field5 = field5;
         this.addTime = addTime;
+        this.addTimeTo = addTimeTo;
         this.projectName = projectName;
     }
 
@@ -182,6 +185,14 @@ public class IntegralLogCondition implements Serializable {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public Date getAddTimeTo() {
+        return addTimeTo;
+    }
+
+    public void setAddTimeTo(Date addTimeTo) {
+        this.addTimeTo = addTimeTo;
     }
 
     public String getProjectName() {

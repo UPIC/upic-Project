@@ -20,18 +20,23 @@ public class GrainCoinLogCondition extends BaseCondition {
 
     private String userNum; //用户编号
 
+    private String projectName;
+
+    private String prizeName;
+
     public GrainCoinLogCondition() {
         super();
     }
 
-    public GrainCoinLogCondition(String event, Double score, GrainCoinLogTypeEnum type, GrainCoinLogStatusEnum status, String username, String userNum) {
-        super();
+    public GrainCoinLogCondition(String event, Double score, GrainCoinLogTypeEnum type, GrainCoinLogStatusEnum status, String username, String userNum, String projectName, String prizeName) {
         this.event = event;
         this.score = score;
         this.type = type;
         this.status = status;
         this.username = username;
         this.userNum = userNum;
+        this.projectName = projectName;
+        this.prizeName = prizeName;
     }
 
     public String getEvent() {
@@ -82,15 +87,19 @@ public class GrainCoinLogCondition extends BaseCondition {
         this.userNum = userNum;
     }
 
-    @Override
-    public String toString() {
-        return "GrainCoinLogCondition{" +
-                "event='" + event + '\'' +
-                ", score=" + score +
-                ", type=" + type +
-                ", status=" + status +
-                ", username='" + username + '\'' +
-                ", userNum='" + userNum + '\'' +
-                '}';
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getPrizeName() {
+        return prizeName;
+    }
+
+    public void setPrizeName(String prizeName) {
+        this.prizeName = prizeName;
     }
 }

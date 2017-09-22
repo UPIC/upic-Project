@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by zhubuqing on 2017/8/5.
  */
 public enum IntegralLogTypeEnum {
-    BATCH_IMPORT("批量导入", 1),
+    SIGN_IN("报名导入", 1),
     VOLUNTARY_APPLICATION("自主申请", 2);
 
     private String content;

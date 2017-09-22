@@ -13,6 +13,8 @@ public class PrizeCondition extends BaseCondition {
 
     private Double score; //消费分数
 
+    private Double scoreTo; //消费分数
+
     private String title; //标题
 
     private String content; //奖品内容
@@ -33,9 +35,10 @@ public class PrizeCondition extends BaseCondition {
         super();
     }
 
-    public PrizeCondition(String prizeName, Double score, String title, String content, PrizeStatusEnum status, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, String needPic) {
+    public PrizeCondition(String prizeName, Double score, Double scoreTo, String title, String content, PrizeStatusEnum status, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, String needPic) {
         this.prizeName = prizeName;
         this.score = score;
+        this.scoreTo = scoreTo;
         this.title = title;
         this.content = content;
         this.status = status;
@@ -60,6 +63,14 @@ public class PrizeCondition extends BaseCondition {
 
     public void setScore(Double score) {
         this.score = score;
+    }
+
+    public Double getScoreTo() {
+        return scoreTo;
+    }
+
+    public void setScoreTo(Double scoreTo) {
+        this.scoreTo = scoreTo;
     }
 
     public String getTitle() {

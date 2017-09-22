@@ -25,8 +25,6 @@ public class PrizeInfo extends BaseInfo {
 
     private String remark; //备注
 
-    private GrainCoinLogInfo grainCoinLog; //素拓币消费日志
-
     private Date startTime; //开始时间
 
     private Date endTime; //结束时间
@@ -34,7 +32,7 @@ public class PrizeInfo extends BaseInfo {
     public PrizeInfo() {
     }
 
-    public PrizeInfo(String prizeName, double score, List<String> prizePic, String title, String content, PrizeStatusEnum status, String remark, GrainCoinLogInfo grainCoinLog, Date startTime, Date endTime) {
+    public PrizeInfo(String prizeName, double score, List<String> prizePic, String title, String content, PrizeStatusEnum status, String remark, Date startTime, Date endTime) {
         this.prizeName = prizeName;
         this.score = score;
         this.prizePic = prizePic;
@@ -42,7 +40,6 @@ public class PrizeInfo extends BaseInfo {
         this.content = content;
         this.status = status;
         this.remark = remark;
-        this.grainCoinLog = grainCoinLog;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -103,14 +100,6 @@ public class PrizeInfo extends BaseInfo {
         this.remark = remark;
     }
 
-    public GrainCoinLogInfo getGrainCoinLog() {
-        return grainCoinLog;
-    }
-
-    public void setGrainCoinLog(GrainCoinLogInfo grainCoinLog) {
-        this.grainCoinLog = grainCoinLog;
-    }
-
     public Date getStartTime() {
         return startTime;
     }
@@ -136,7 +125,6 @@ public class PrizeInfo extends BaseInfo {
                 ", content='" + content + '\'' +
                 ", status=" + status +
                 ", remark='" + remark + '\'' +
-                ", grainCoinLog=" + grainCoinLog +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';

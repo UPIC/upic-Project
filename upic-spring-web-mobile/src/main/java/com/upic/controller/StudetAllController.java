@@ -58,7 +58,7 @@ public class StudetAllController {
             // if(user==null){
             // throw new Exception("获取用户失败");
             // }
-            return integralLogService.watchIntegral("student01");
+            return integralLogService.watchIntegral("1522110240");
         } catch (Exception e) {
             LOGGER.info("getIntegeral :" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -84,28 +84,9 @@ public class StudetAllController {
             // if(user==null){
             // throw new Exception("获取用户失败");
             // }
-            return grainCoinLogService.watchGrainCoin("student01");
+            return grainCoinLogService.watchGrainCoin("1522110240");
         } catch (Exception e) {
             LOGGER.info("getGrainCoin:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    /**
-     * 获取积分明细*
-     *
-     * @param pageable
-     * @param c
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/getIntegralLogPage")
-    public Page<IntegralLogInfo> getIntegralLogPage(@PageableDefault(size = 10) Pageable pageable,
-                                                    IntegralLogCondition c) throws Exception {
-        try {
-            return integralLogService.searchIntegralLog(c, pageable);
-        } catch (Exception e) {
-            LOGGER.info("getCrainCoin:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }

@@ -20,22 +20,28 @@ public class GrainCoinLogInfo extends BaseInfo {
 
     private String userNum; //用户编号
 
-    private IntegralLogInfo integralLog;
+    private IntegralLogIdInfo integralLogIdInfo;
 
-    private PrizeInfo prize; //消费奖品
+    private long prizeId;
+
+    private String projectName;
+
+    private String prizeName;
 
     public GrainCoinLogInfo() {
     }
 
-    public GrainCoinLogInfo(String event, double score, GrainCoinLogTypeEnum type, GrainCoinLogStatusEnum status, String username, String userNum, IntegralLogInfo integralLog, PrizeInfo prize) {
+    public GrainCoinLogInfo(String event, double score, GrainCoinLogTypeEnum type, GrainCoinLogStatusEnum status, String username, String userNum, IntegralLogIdInfo integralLogIdInfo, long prizeId, String projectName, String prizeName) {
         this.event = event;
         this.score = score;
         this.type = type;
         this.status = status;
         this.username = username;
         this.userNum = userNum;
-        this.integralLog = integralLog;
-        this.prize = prize;
+        this.integralLogIdInfo = integralLogIdInfo;
+        this.prizeId = prizeId;
+        this.projectName = projectName;
+        this.prizeName = prizeName;
     }
 
     public String getEvent() {
@@ -86,20 +92,36 @@ public class GrainCoinLogInfo extends BaseInfo {
         this.userNum = userNum;
     }
 
-    public IntegralLogInfo getIntegralLog() {
-        return integralLog;
+    public IntegralLogIdInfo getIntegralLogIdInfo() {
+        return integralLogIdInfo;
     }
 
-    public void setIntegralLog(IntegralLogInfo integralLog) {
-        this.integralLog = integralLog;
+    public void setIntegralLogIdInfo(IntegralLogIdInfo integralLogIdInfo) {
+        this.integralLogIdInfo = integralLogIdInfo;
     }
 
-    public PrizeInfo getPrize() {
-        return prize;
+    public long getPrizeId() {
+        return prizeId;
     }
 
-    public void setPrize(PrizeInfo prize) {
-        this.prize = prize;
+    public void setPrizeId(long prizeId) {
+        this.prizeId = prizeId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getPrizeName() {
+        return prizeName;
+    }
+
+    public void setPrizeName(String prizeName) {
+        this.prizeName = prizeName;
     }
 
     @Override
@@ -111,8 +133,10 @@ public class GrainCoinLogInfo extends BaseInfo {
                 ", status=" + status +
                 ", username='" + username + '\'' +
                 ", userNum='" + userNum + '\'' +
-                ", integralLog=" + integralLog +
-                ", prize=" + prize +
+                ", integralLogIdInfo=" + integralLogIdInfo +
+                ", prizeId=" + prizeId +
+                ", projectName='" + projectName + '\'' +
+                ", prizeName='" + prizeName + '\'' +
                 '}';
     }
 }

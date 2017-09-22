@@ -34,5 +34,5 @@ public interface GrainCoinLogService {
      * @param grainCoinLogInfo
      * @return
      */
-    GrainCoinLogInfo exchangePrize(long prizeId, GrainCoinLogInfo grainCoinLogInfo);
+//    GrainCoinLogInfo exchangePrize(long prizeId, GrainCoinLogInfo grainCoinLogInfo);
 }

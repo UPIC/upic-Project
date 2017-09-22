@@ -30,9 +30,6 @@ public class Prize extends BaseEntity {
 
     private String remark; //备注
 
-    @OneToOne(mappedBy = "prize")
-    private GrainCoinLog grainCoinLog; //素拓币消费日志
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime; //开始时间
 
