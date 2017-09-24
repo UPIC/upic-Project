@@ -27,10 +27,11 @@ public class GrainCoinLog extends BaseEntity {
 
     private String userNum; //用户编号
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private IntegralLog integralLog;
+    private IntegralLogId integralLogId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true, nullable = false, updatable = false)
-    private Prize prize; //消费奖品
+    private long prizeId; //消费奖品
+
+    private String projectName;
+
+    private String prizeName;
 }

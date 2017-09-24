@@ -56,21 +56,21 @@ public class GrainCoinLogServiceImpl implements GrainCoinLogService {
         }
     }
 
-    public GrainCoinLogInfo exchangePrize(long prizeId, GrainCoinLogInfo grainCoinLogInfo) {
-        try {
-            GrainCoinLog grainCoinLog = new GrainCoinLog();
-            Prize prize = prizeRepository.findOne(prizeId);
-            PrizeInfo prizeInfo = new PrizeInfo();
-            UpicBeanUtils.copyProperties(prize, prizeInfo);
-            grainCoinLogInfo.setPrize(prizeInfo);
-            grainCoinLogInfo.setScore(-prizeInfo.getScore());
-            UpicBeanUtils.copyProperties(grainCoinLogInfo, grainCoinLog);
-            grainCoinLog = grainCoinLogRepository.save(grainCoinLog);
-            UpicBeanUtils.copyProperties(grainCoinLog, grainCoinLogInfo);
-            return grainCoinLogInfo;
-        } catch (Exception e) {
-            LOGGER.info("exchangePrize:兑换奖品失败。错误信息：" + e.getMessage());
-            return null;
-        }
-    }
+//    public GrainCoinLogInfo exchangePrize(long prizeId, GrainCoinLogInfo grainCoinLogInfo) {
+//        try {
+//            GrainCoinLog grainCoinLog = new GrainCoinLog();
+//            Prize prize = prizeRepository.findOne(prizeId);
+//            PrizeInfo prizeInfo = new PrizeInfo();
+//            UpicBeanUtils.copyProperties(prize, prizeInfo);
+//            grainCoinLogInfo.setPrize(prizeInfo);
+//            grainCoinLogInfo.setScore(-prizeInfo.getScore());
+//            UpicBeanUtils.copyProperties(grainCoinLogInfo, grainCoinLog);
+//            grainCoinLog = grainCoinLogRepository.save(grainCoinLog);
+//            UpicBeanUtils.copyProperties(grainCoinLog, grainCoinLogInfo);
+//            return grainCoinLogInfo;
+//        } catch (Exception e) {
+//            LOGGER.info("exchangePrize:兑换奖品失败。错误信息：" + e.getMessage());
+//            return null;
+//        }
+//    }
 }

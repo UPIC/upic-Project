@@ -20,7 +20,7 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
 
     IntegralLog findByIntegralLogId(IntegralLogId integralLogId);
 
-    @Query(value = "SELECT SUM(integralLog.integral) from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1")
+    @Query(value = "SELECT SUM(integralLog.integral) from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and integralLog.status = 'COMPLETED' or integralLog.status = 'HAVEPASSED'")
     double findByStudentNum(String studentNum);
 
     @Query(value = "SELECT integralLog from IntegralLog integralLog where integralLog.integralLogId.projectNum = ?1")

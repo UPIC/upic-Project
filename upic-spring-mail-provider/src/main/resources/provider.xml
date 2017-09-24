@@ -8,7 +8,7 @@
     <dubbo:application name="Student-provider"/>
 
     <dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>
-    <dubbo:protocol name="dubbo" port="20880"/>
+    <dubbo:protocol name="dubbo" port="20881"/>
     <dubbo:service interface="com.upic.service.MailLogService" ref="mailLogService" version="1.0"
                    group="mail"></dubbo:service>
     <dubbo:service interface="com.upic.service.MailService" ref="mailService" version="1.0"

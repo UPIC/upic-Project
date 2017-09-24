@@ -16,9 +16,11 @@ import java.util.List;
 @Data
 @Entity
 @Embeddable
-public class IntegralLog implements Serializable{
+public class IntegralLog implements Serializable {
     @EmbeddedId
     private IntegralLogId integralLogId;
+
+    private String content; //项目详情
 
     private String event; //事件 json
 
@@ -42,7 +44,7 @@ public class IntegralLog implements Serializable{
     @Version
     private int version;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date creatTime;
 
     private String apartment;
@@ -57,6 +59,7 @@ public class IntegralLog implements Serializable{
 
     private String field5;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date addTime;
 
     private String projectName;

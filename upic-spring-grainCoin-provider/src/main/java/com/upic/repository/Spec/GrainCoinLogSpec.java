@@ -15,6 +15,8 @@ public class GrainCoinLogSpec extends CommonSimpleSpecification<GrainCoinLog, Gr
 
     protected void addCondition(QueryWraper<GrainCoinLog> queryWraper) {
         addLikeCondition(queryWraper, "event");
+        addLikeCondition(queryWraper, "projectName");
+        addLikeCondition(queryWraper, "prizeName");
         addEqualsCondition(queryWraper, "score");
         addEqualsCondition(queryWraper, "type");
         addEqualsCondition(queryWraper, "status");

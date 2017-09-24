@@ -8,6 +8,8 @@ import com.upic.enums.RankEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
+
 /**
  * Created by zhubuqing on 2017/9/6.
  */
@@ -70,4 +72,13 @@ public interface ProjectService {
      * @return
      */
     Page<ProjectInfo> getOnlineProject(RankEnum rankEnum, String unit, Pageable page);
+
+    /**
+     * 查询我未报名、并且在报名期间内的活动（学生移动端全部活动查询）
+     *
+     * @param now
+     * @param pageable
+     * @return
+     */
+    Page<ProjectInfo> getProjectWithoutSignUp(Date now, Pageable pageable);
 }

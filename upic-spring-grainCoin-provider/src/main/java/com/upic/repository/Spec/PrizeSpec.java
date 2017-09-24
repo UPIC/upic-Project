@@ -14,12 +14,12 @@ public class PrizeSpec extends CommonSimpleSpecification<Prize, PrizeCondition> 
     }
 
     protected void addCondition(QueryWraper<Prize> queryWraper) {
-        addLikeCondition(queryWraper,"prizeName");
-        addEqualsCondition(queryWraper,"score");
-        addEqualsCondition(queryWraper,"status");
-        addLikeCondition(queryWraper,"title");
-        addLikeCondition(queryWraper,"content");
-        addBetweenCondition(queryWraper,"startTime");
-        addBetweenCondition(queryWraper,"endTime");
+        addLikeCondition(queryWraper, "prizeName");
+        addBetweenCondition(queryWraper, "score");
+        addEqualsCondition(queryWraper, "status");
+        addLikeCondition(queryWraper, "title");
+        addLikeCondition(queryWraper, "content");
+        addBetweenCondition(queryWraper, "startTime");
+        addBetweenCondition(queryWraper, "endTime");
     }
 }

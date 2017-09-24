@@ -1,9 +1,6 @@
 package com.upic.controller;
 
-import com.upic.condition.MailCondition;
-import com.upic.condition.PrizeCondition;
-import com.upic.condition.ProjectCategoryCondition;
-import com.upic.condition.ProjectCondition;
+import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.service.*;
 import org.slf4j.Logger;
@@ -15,6 +12,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhubuqing on 2017/9/18.
@@ -38,6 +38,9 @@ public class CommonController {
 
     @Autowired
     private PrizeService prizeService;
+
+    @Autowired
+    private GrainCoinLogService grainCoinLogService;
 
     /**
      * 获取用户信息
@@ -146,7 +149,9 @@ public class CommonController {
     @GetMapping("/getSignUpNumberByProjectNum")
     public int getSignUpNumberByProjectNum(String projectNum) throws Exception {
         try {
-            return integralLogService.getSignUpNumberByProjectNum(projectNum);
+            int a = integralLogService.getSignUpNumberByProjectNum(projectNum);
+            System.out.println(a + "*****************************************************************************************************************************");
+            return a;
         } catch (Exception e) {
             LOGGER.info("getSignUpNumberByProjectNum:" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -171,6 +176,43 @@ public class CommonController {
     }
 
     /**
+     * 获取积分明细*
+     *
+     * @param pageable
+     * @param c
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getIntegralLogPage")
+    public Page<IntegralLogInfo> getIntegralLogPage(@PageableDefault(size = 10) Pageable pageable,
+                                                    IntegralLogCondition c) throws Exception {
+        try {
+            return integralLogService.searchIntegralLog(c, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getProjectInfo:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取素拓币明细*
+     *
+     * @param pageable
+     * @param grainCoinLogCondition
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getGraincoinLogPage")
+    public Page<GrainCoinLogInfo> getGraincoinLogPage(@PageableDefault(size = 10) Pageable pageable, GrainCoinLogCondition grainCoinLogCondition) throws Exception {
+        try {
+            return grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getGraincoinLogPage:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
      * 用户查看站内信（可能没用）
      *
      * @param pageable
@@ -187,6 +229,8 @@ public class CommonController {
             throw new Exception(e.getMessage());
         }
     }
+
+    /****************************************************************************************************/
 
     /**
      * 根据用户获取项目列表
@@ -254,6 +298,46 @@ public class CommonController {
         } catch (Exception e) {
             LOGGER.info("getHistoryPrize:" + e.getMessage());
             throw new Exception("getHistoryPrize" + e.getMessage());
+        }
+    }
+
+    /****************************************************************************************************/
+
+    /**
+     * 查询我未报名、并且在报名期间内的活动（学生移动端全部活动查询）
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getProjectWithoutSignUp")
+    public Page<ProjectInfo> getProjectWithoutSignUp(@PageableDefault(size = 10) Pageable pageable) throws Exception {
+        try {
+            Page<ProjectInfo> projectInfoPage = projectService.getProjectWithoutSignUp(new Date(), pageable);
+            return projectInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getProjectWithoutSignUp:" + e.getMessage());
+            throw new Exception("getProjectWithoutSignUp" + e.getMessage());
+        }
+    }
+
+    /**
+     * 根据项目编号查找已报名的活动*
+     *
+     * @param projectNum
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getIntegralLogInfoByMySelf")
+    public IntegralLogInfo getIntegralLogInfoByMySelf(String projectNum) throws Exception {
+        try {
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            integralLogIdInfo.setProjectNum(projectNum);
+            integralLogIdInfo.setStudentNum("1522110240");
+            return integralLogService.getByIntegralLogId(integralLogIdInfo);
+        } catch (Exception e) {
+            LOGGER.info("getProjectWithoutSignUp:" + e.getMessage());
+            throw new Exception("getProjectWithoutSignUp" + e.getMessage());
         }
     }
 }
