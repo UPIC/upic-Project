@@ -12,7 +12,8 @@ public enum IntegralLogStatusEnum {
     FAILURE_TO_PASS_THE_AUDIT("未通过审核", 3),
 
     ALREADY_SIGN_UP("已报名", 4),
-    COMPLETED("已完成", 5);
+    SIGNED_IN("已签到", 5),
+    COMPLETED("已完成", 6);
 
     private String content;
 

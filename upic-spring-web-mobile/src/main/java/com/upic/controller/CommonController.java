@@ -149,7 +149,9 @@ public class CommonController {
     @GetMapping("/getSignUpNumberByProjectNum")
     public int getSignUpNumberByProjectNum(String projectNum) throws Exception {
         try {
-            return integralLogService.getSignUpNumberByProjectNum(projectNum);
+            int a = integralLogService.getSignUpNumberByProjectNum(projectNum);
+            System.out.println(a + "*****************************************************************************************************************************");
+            return a;
         } catch (Exception e) {
             LOGGER.info("getSignUpNumberByProjectNum:" + e.getMessage());
             throw new Exception(e.getMessage());

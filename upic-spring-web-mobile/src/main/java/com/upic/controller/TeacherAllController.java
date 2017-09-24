@@ -52,7 +52,9 @@ public class TeacherAllController {
     @GetMapping("/getUserListByProjectNum")
     public Page<IntegralLogInfo> getUserListByProjectNum(@PageableDefault(size = 10) Pageable pageable, String projectNum) throws Exception {
         try {
-            return integralLogService.getUserListByProjectNum(projectNum, pageable);
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getUserListByProjectNum(projectNum, pageable);
+            System.out.println(integralLogInfoPage.getContent().toString());
+            return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getUserListByProjectNum:" + e.getMessage());
             throw new Exception("getUserListByProjectNum:" + e.getMessage());
