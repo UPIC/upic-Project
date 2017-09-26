@@ -26,6 +26,7 @@
 		<module>upic-spring-user-api</module>
 
 		<module>upic-spring-web-mobile</module>
+		<module>upic-spring-web-pc</module>
 	</modules>
     <dependencies>
         <dependency>

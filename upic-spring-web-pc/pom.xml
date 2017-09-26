@@ -8,7 +8,7 @@
     <version>${upic-web-pc.version}</version>
     <packaging>jar</packaging>
 
-    <name>web-mobile</name>
+    <name>web-pc</name>
 
     <parent>
         <groupId>com.upic</groupId>
