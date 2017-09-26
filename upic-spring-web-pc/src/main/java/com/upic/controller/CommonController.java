@@ -298,7 +298,8 @@ public class CommonController {
     @GetMapping("/getHistoryPrize")
     public Page<PrizeInfo> getHistoryPrize(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
-            return prizeService.getHistoryPrize(pageable);
+            Page<PrizeInfo> prizeInfoPage = prizeService.getHistoryPrize(pageable);
+            return prizeInfoPage;
         } catch (Exception e) {
             LOGGER.info("getHistoryPrize:" + e.getMessage());
             throw new Exception("getHistoryPrize" + e.getMessage());

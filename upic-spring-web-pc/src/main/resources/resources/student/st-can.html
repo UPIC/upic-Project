@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <!-- Bootstrap -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/st-can.css">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/st-can.js"></script>
+    <script type="text/javascript">
+        var phoneWidth = parseInt(window.screen.width);
+        var phoneScale = phoneWidth / 375;
+        var ua = navigator.userAgent;
+        if (/Android (\d+\.\d+)/.test(ua)) {
+            var version = parseFloat(RegExp.$1);
+            if (version > 2.3) {
+                document
+                    .write('<meta name="viewport" content="width=375, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+            } else {
+                document
+                    .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
+            }
+        } else {
+            document
+                .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
+        }
+
+    </script>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <a href="st-mall.html">
+                <div class="de-left"><img src="assets/i/b-1.png" alt=""></div>
+            </a>
+            <span>我能兑换的</span>
+        </div>
+    </nav>
+    <div class="mall-list">
+        <ul id="getPrizeInfo">
+            <li>
+                <div class="tab-left">
+                    <img src="assets/i/b-3.jpg" alt="">
+                </div>
+                <div class="tab-right">
+                    <div class="right-name">
+                        无线鼠标
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModa2">
+                            兑换
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModa2" tabindex="-1" role="dialog" aria-labelledby="myModalLabe2">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabe2">提示</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        兑换失败
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-apply">
+                        总计: <span>4000</span> 分
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>

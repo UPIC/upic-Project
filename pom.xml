@@ -27,7 +27,34 @@
 
 		<module>upic-spring-web-mobile</module>
 	</modules>
-	<properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.upic.grainCoin.api</groupId>
+            <artifactId>upic-spring-grainCoin-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+		<dependency>
+			<groupId>com.upic.mail.api</groupId>
+			<artifactId>upic-spring-mail-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.upic.project.api</groupId>
+			<artifactId>upic-spring-project-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.upic.systemManager.api</groupId>
+			<artifactId>upic-spring-systemManager-api</artifactId>
+			<version>${student-systemManager-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.upic.user.api</groupId>
+			<artifactId>upic-spring-user-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+    <properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
