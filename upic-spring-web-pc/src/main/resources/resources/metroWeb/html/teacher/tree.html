@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<head>
+   <meta charset="utf-8" />
+   <title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+   <meta content="" name="description" />
+   <meta content="Mosaddek" name="author" />
+   <link href="../../css/bootstrap.min.css" rel="stylesheet" />
+   <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
+   <link href="../../css/bootstrap-fileupload.css" rel="stylesheet" />
+   <link href="../../css/font-awesome.css" rel="stylesheet" />
+   <link href="../../css/style.css" rel="stylesheet" />
+   <link href="../../css/style-responsive.css" rel="stylesheet" />
+   <link href="../../css/style-default.css" rel="stylesheet" id="style_color" />
+   <link href="../../css/jquery.fancybox.css" rel="stylesheet" />
+   <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css" />
+   <link rel="stylesheet" type="text/css" href="../../css/my_project.css" />
+   <link rel="stylesheet" href="../../css/demo.css" type="text/css">
+   <link rel="stylesheet" href="../../css/zTreeStyle.css" type="text/css">
+  <script type="text/javascript" src="../../js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="../../js/jquery.ztree.core-3.5.js"></script>
+  <script type="text/javascript" src="../../js/jquery.ztree.excheck-3.5.js"></script>
+  <script type="text/javascript" src="../../js/jquery.ztree.exedit-3.5.js"></script>
+
+<script type="text/javascript">
+    var setting = {
+      view: {
+        selectedMulti: false
+      },
+      edit: {
+        enable: true,
+        showRemoveBtn: false,
+        showRenameBtn: false
+      },
+      data: {
+        keep: {
+          parent:true,
+          leaf:true
+        },
+        simpleData: {
+          enable: true
+        }
+      },
+      callback: {
+        beforeDrag: beforeDrag,
+        beforeRemove: beforeRemove,
+        beforeRename: beforeRename,
+        onRemove: onRemove
+      }
+    };
+
+    var zNodes =[
+      { id:1, pId:0, name:"创新实践积分（选修积分）", open:true},
+      { id:11, pId:1, name:"论文（作品）"},
+      { id:111, pId:11, name:"论文（作品）"},
+      { id:12, pId:1, name:"专利"},
+      { id:13, pId:1, name:"课题研究"},
+      { id:14, pId:1, name:"学校组织的各类学科（专业）竞赛、科技类竞赛、发明创造大赛等"},
+
+
+
+      /*{ id:2, pId:0, name:"父节点 2", open:false},
+      { id:21, pId:2, name:"叶子节点 2-1"},
+      { id:22, pId:2, name:"叶子节点 2-2"},
+      { id:23, pId:2, name:"叶子节点 2-3"},
+      { id:3, pId:0, name:"父节点 3", open:false},
+      { id:31, pId:3, name:"叶子节点 3-1"},
+      { id:32, pId:3, name:"叶子节点 3-2"},
+      { id:33, pId:3, name:"叶子节点 3-3"}*/
+    ];
+    var log, className = "dark";
+    function beforeDrag(treeId, treeNodes) {
+      return false;
+    }
+    function beforeRemove(treeId, treeNode) {
+      className = (className === "dark" ? "":"dark");
+      showLog("[ "+getTime()+" beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+      return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+    }
+    function onRemove(e, treeId, treeNode) {
+      showLog("[ "+getTime()+" onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+    }
+    function beforeRename(treeId, treeNode, newName) {
+      if (newName.length == 0) {
+        alert("节点名称不能为空.");
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        setTimeout(function(){zTree.editName(treeNode)}, 10);
+        return false;
+      }
+      return true;
+    }
+    function showLog(str) {
+      if (!log) log = $("#log");
+      log.append("<li class='"+className+"'>"+str+"</li>");
+      if(log.children("li").length > 8) {
+        log.get(0).removeChild(log.children("li")[0]);
+      }
+    }
+    function getTime() {
+      var now= new Date(),
+      h=now.getHours(),
+      m=now.getMinutes(),
+      s=now.getSeconds(),
+      ms=now.getMilliseconds();
+      return (h+":"+m+":"+s+ " " +ms);
+    }
+
+    var newCount = 1;
+    function add(e) {
+      var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+      isParent = e.data.isParent,
+      nodes = zTree.getSelectedNodes(),
+      treeNode = nodes[0];
+      if (treeNode) {
+        treeNode = zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, isParent:isParent, name:"new node" + (newCount++)});
+      } else {
+        treeNode = zTree.addNodes(null, {id:(100 + newCount), pId:0, isParent:isParent, name:"new node" + (newCount++)});
+      }
+      if (treeNode) {
+        zTree.editName(treeNode[0]);
+      } else {
+        alert("叶子节点被锁定，无法增加子节点");
+      }
+    };
+    function edit() {
+      var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+      nodes = zTree.getSelectedNodes(),
+      treeNode = nodes[0];
+      if (nodes.length == 0) {
+        alert("请先选择一个节点");
+        return;
+      }
+      zTree.editName(treeNode);
+    };
+    function remove(e) {
+      var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+      nodes = zTree.getSelectedNodes(),
+      treeNode = nodes[0];
+      if (nodes.length == 0) {
+        alert("请先选择一个节点");
+        return;
+      }
+      var callbackFlag = $("#callbackTrigger").attr("checked");
+      zTree.removeNode(treeNode, callbackFlag);
+    };
+    function clearChildren(e) {
+      var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+      nodes = zTree.getSelectedNodes(),
+      treeNode = nodes[0];
+      if (nodes.length == 0 || !nodes[0].isParent) {
+        alert("请先选择一个父节点");
+        return;
+      }
+      zTree.removeChildNodes(treeNode);
+    };
+
+    $(document).ready(function(){
+      $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+      $("#addParent").bind("click", {isParent:true}, add);
+      $("#addLeaf").bind("click", {isParent:false}, add);
+      $("#edit").bind("click", edit);
+      $("#remove").bind("click", remove);
+      $("#clearChildren").bind("click", clearChildren);
+    });
+  </script>
+</head>
+
+
+<body class="fixed-top">
+<div class="container-fluid">
+
+      <div class="row-fluid">
+         <div class="span12">
+             <h3 class="page-title">
+               积分认定表
+             </h3>
+             <ul class="breadcrumb">
+                 <li>
+                     <a href="#">首页</a>
+                     <span class="divider">/</span>
+                 </li>
+                 <li class="active">
+                     系统管理
+                     <span class="divider">/</span>
+                 </li>
+                 <li class="active">
+                     积分认定表
+                 </li>
+             </ul>
+
+         </div>
+      </div>
+
+<div class="content_wrap">
+<div>
+  <button class="btn btn-small" id="addParent"><i class="icon-plus icon-white"></i>父节点</button>
+  <button class="btn btn-small" id="addLeaf"><i class="icon-plus icon-white"></i>子节点</button>
+  <button class="btn btn-small" id="edit"><i class="icon-pencil icon-white"></i>编辑</button>
+  <button class="btn btn-small" id="remove"><i class="icon-remove icon-white"></i>删除</button>
+</div>
+  <div class="zTreeDemoBackground left">
+    <ul id="treeDemo" class="ztree"></ul>
+  </div>
+  <div class="zTreeDemoBackground right">
+  <div class="control-group">
+  <form action="#" class="form-horizontal">
+  <div class="control-group">
+      <label class="control-label">上级菜单:</label>
+      <div class="controls">
+          <input type="text" class="input-large" disabled="disabled" value="创业实践积分" />
+      </div>
+      </div>
+      <div class="control-group">
+      <label class="control-label">菜单编号:</label>
+      <div class="controls">
+          <input type="text" class="input-large" disabled="disabled" value="2" />
+      </div>
+      </div>
+    <div class="control-group">
+      <label class="control-label">节点内容:</label>
+      <div class="controls">
+          <input type="text" class="input-large" />
+      </div>
+      </div>
+<div class="form-bottom">
+<button class="btn btn-mid btn-info">保存</button>
+</div>
+  </form>
+  </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+</html>

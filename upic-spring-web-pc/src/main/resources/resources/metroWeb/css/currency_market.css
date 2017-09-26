@@ -1,0 +1,114 @@
+/*
+* @Author: Marte
+* @Date:   2017-09-14 16:02:46
+* @Last Modified by:   Marte
+* @Last Modified time: 2017-09-14 16:03:12
+*/
+body{
+        background:#fff;
+       }
+       .btn_left{
+        height:30px;
+       }
+       .center_td{
+            text-align:center !important;
+        }
+        .row-fluid{
+            margin-bottom:10px;
+        }
+        .row-form{
+            text-align:center;
+            width:100%;
+            padding:0px;
+        }
+        .btn-ul{
+            display:flex;
+            width:50%;
+            margin:0px auto;
+        }
+        .btn-ul li{
+            list-style:none;
+            flex:1;
+            padding:0px 20px;
+        }
+        .wBlock{
+            text-align:center;
+        }
+        .hero-unit{
+            margin-bottom:20px;
+        }
+        .head-h4{
+            background:rgb(255, 249, 240);
+            border-left:5px solid #faa732;
+            height:50px;
+            line-height:50px;
+            padding:0px 0px 0px 10px;
+            margin:0px;
+        }
+        #change_histroy .head-h4{
+            background:rgb(217, 217, 217);
+            border-left:5px solid #3D3D3D;
+            height:50px;
+            line-height:50px;
+            padding:0px 0px 0px 10px;
+            margin:0px;
+        }
+        .button-p{
+            text-align:center;
+        }
+        h3{
+            margin:0px;
+        }
+        .thumbnail h3{
+            overflow:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+        }
+        .block, .block-fluid{
+          background:#F9F9F9;
+          border:1px solid #ccc;
+          border-radius:6px !important;
+        }
+        .wBlock{
+          background:#E5E5E5;
+          border:1px solid #D9D9D9;
+          box-shadow:0 1px 1px #B5B5B5, 0px 1px 0 #FFF inset;
+          border-radius:5px !important;
+          padding:0px 5px 5px;
+        }
+        .btn-ul button{
+          border-radius:6px !important;
+        }
+        .btn-info{
+          background:#4187DF;
+        }
+        .btn-info:hover{
+          background:#2B7ADB;
+        }
+        .widget-body ul{
+          width:100%;
+        }
+        .widget-body ul li{
+          list-style:none;
+          float:left;
+          width:20%;
+        }
+        .clear{
+          clear:both;
+        }
+        .goods_item{
+          border:1px solid #ccc;
+          text-align:center;
+          padding:5px;
+        }
+        .goods_item img{
+          width:200px;
+          height:150px;
+        }
+        .goods_item button{
+          border-radius:5px !important;
+        }
+        ul{
+          padding:0px;
+          margin:0px;
+        }

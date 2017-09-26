@@ -1,0 +1,60 @@
+/*
+* @Author: Marte
+* @Date:   2017-09-14 15:57:53
+* @Last Modified by:   Marte
+* @Last Modified time: 2017-09-18 16:34:35
+*/
+body{
+        background:#fff;
+       }
+       .btn_left{
+        height:30px;
+       }
+       .center_td{
+          text-align:center !important;
+        }
+        .selectlist{
+          padding:0px 10px;
+            width:150px !important;
+            float: left;
+            height:25px;
+            line-height:25px;
+        }
+        .selectlist select{
+            height:25px;
+            line-height:25px;
+            padding:0px !important;
+        }
+        #sample_1_length label{
+          float: left;
+        }
+
+        .modal-body{
+          padding:0px 0px 0px 10px;
+        }
+        .modal .row-form{
+          padding:5px 10px;
+          border-bottom:1px solid #DDD;
+        }
+        .row-form [class^="span"]{
+          line-height:30px !important;
+        }
+        #sample_1_length .btn{
+          float:left;
+        }
+        .dataTables_filter{
+          float:right !important;
+        }
+        .row-form .span9 img{
+          width:200px;
+          height:150px;
+        }
+        .message_div a{
+          cursor:pointer;
+        }
+        .message_div .space{
+          padding:0px 10px;
+        }
+        .widget-title span.tools{
+          margin-right: 15px;
+        }
