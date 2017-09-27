@@ -20,9 +20,6 @@ $(function () {
 
 
 function ajaxs(datas, method, urls) {
-    if (pageCount == page || pageCount == 0) {
-        return;
-    }
     $.ajax({
         type: types, // 提交方式
         url: urls,// 路径
@@ -83,38 +80,38 @@ function addHtmls(result, method) {
             htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div'>查看详情</div></a></td>";
             htmls += "</tr>";
 
-            htmlss = "<div class='row-form clearfix'>";
-            htmlss = "<div class='span3'>编号</div>";
-            htmlss = "<div class='span3'>" + (i + 1) + "</div>";
-            htmlss = "<div class='span3'>代码</div>";
-            htmlss = "<div class='span3'>" + result[i].integralLogId.projectNum + "</div>";
-            htmlss = "</div>";
-            htmlss = "<div class='row-form clearfix'>";
-            htmlss = "<div class='span3'>项目申请日期</div>";
-            htmlss = "<div class='span3'>" + result[i].creatTime + "</div>";
-            htmlss = "<div class='span3'>状态</div>";
-            htmlss = "<div class='span3'>" + statusC + "</div>";
-            htmlss = "</div>";
-            htmlss = "<div class='row-form clearfix'>";
-            htmlss = "<div class='span3'>项目类别</div>";
-            htmlss = "<div class='span3'>" + splitJson(result[i].event) + "</div>";
-            htmlss = "<div class='span3'>所属学院</div>";
-            htmlss = "<div class='span3'>" + result[i].college + "</div>";
-            htmlss = "</div>";
-            htmlss = "<div class='row-form clearfix'>";
-            htmlss = "<div class='span3'>项目名称</div>";
-            htmlss = "<div class='span3'>" + result[i].projectName + "</div>";
-            htmlss = "<div class='span3'>负责人</div>";
-            htmlss = "<div class='span3'>XXX</div>";
-            htmlss = "</div>";
-            htmlss = "<div class='row-form clearfix'>";
-            htmlss = "<div class='span3'>项目内容</div>";
-            htmlss = "<div class='span9'>校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>";
-            htmlss = "</div>";
-            htmlss = "<div class='row-form clearfix'>";
-            htmlss = "<div class='span3'>评价标准与形式</div>";
-            htmlss = "<div class='span9'>校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>";
-            htmlss = "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>编号</div>";
+            htmlss += "<div class='span3'>" + (i + 1) + "</div>";
+            htmlss += "<div class='span3'>代码</div>";
+            htmlss += "<div class='span3'>" + result[i].integralLogId.projectNum + "</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>项目申请日期</div>";
+            htmlss += "<div class='span3'>" + result[i].creatTime + "</div>";
+            htmlss += "<div class='span3'>状态</div>";
+            htmlss += "<div class='span3'>" + statusC + "</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>项目类别</div>";
+            htmlss += "<div class='span3'>" + splitJson(result[i].event) + "</div>";
+            htmlss += "<div class='span3'>所属学院</div>";
+            htmlss += "<div class='span3'>" + result[i].college + "</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>项目名称</div>";
+            htmlss += "<div class='span3'>" + result[i].projectName + "</div>";
+            htmlss += "<div class='span3'>负责人</div>";
+            htmlss += "<div class='span3'>XXX</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>项目内容</div>";
+            htmlss += "<div class='span9'>校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>评价标准与形式</div>";
+            htmlss += "<div class='span9'>校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>";
+            htmlss += "</div>";
         }
 
         $("#showAll").html(htmls);
