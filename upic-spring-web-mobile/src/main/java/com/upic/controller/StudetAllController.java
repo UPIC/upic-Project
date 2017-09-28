@@ -191,6 +191,7 @@ public class StudetAllController {
             throw new Exception(e.getMessage());
         }
     }
+    //
 
     /**
      * 根据自身编号获取参加过的自主申报项目（可能没用）
