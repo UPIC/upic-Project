@@ -9,15 +9,15 @@ import com.upic.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/stu")
@@ -167,19 +167,24 @@ public class StudetAllController {
      * @param request
      * @return
      */
-    @GetMapping("/postIntegralLog")
-    public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo, @RequestParam("file") MultipartFile file, MultipartHttpServletRequest request) throws Exception {
-        try {
-//            Iterator<String> iterator = request.getFileNames();
-//            MultipartFile multipartFile = file;
-//            while (iterator.hasNext()) {
-//                multipartFile = request.getFile(iterator.next());
-//            }
 
+    //@RequestParam(name = "file",required=false) MultipartFile file
+    //,  MultipartHttpServletRequest request
+    @PostMapping("/postIntegralLog")
+    public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo) throws Exception {
+        try {
+            System.out.println(integralLogInfo.toString());
+
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + (new Date()).getTime());
+            integralLogIdInfo.setStudentNum("1522110240");
+
+            integralLogInfo.setCollege("信息工程学院");
+            integralLogInfo.setClazz("15微社交");
+            integralLogInfo.setStudent("章威男");
             integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
             integralLogInfo.setType(IntegralLogTypeEnum.VOLUNTARY_APPLICATION);
             integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);
-
             return integralLogInfo;
         } catch (Exception e) {
             LOGGER.info("postIntegralLog:" + e.getMessage());

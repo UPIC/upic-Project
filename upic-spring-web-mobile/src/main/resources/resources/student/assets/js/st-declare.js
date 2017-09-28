@@ -16,9 +16,41 @@ var getProjectCategoryUrl = "/common/getAllProjectCategory";//项目类别获取
 var getStudentInfoUrl = "/common/getUserInfo";
 var getIntegralLogPage = "/common/getIntegralLogPage";
 var getCategoryNode = "/common/getCategoryNode";
+var postIntegralLog = "/stu/postIntegralLog";
 var types = "GET";
 
+var obj={
+    event:"",
+    projectName:"",
+    content:"",
+    integral:""
+};
+
+
 $(function () {
+    $("#submit").click(function () {
+        obj.event="";
+        obj.content=$("#content").val();
+        obj.integral="";
+        obj.projectName=$("#projectName").val();
+        $.ajax({
+            type: "POST",
+            url: postIntegralLog,
+            data: obj,
+            success: function (message) {
+                if (message != null) {
+                    alert("请求已提交！");
+                    window.location.href = "st-check.html";
+                }
+            },
+            error: function (message) {
+
+            }
+        });
+    });
+
+
+
     /**
      * 1.进入加载申报表数据
      * 2.点击已申报 加载审核中数据
@@ -33,6 +65,7 @@ $(function () {
      */
     $.ajax({
         type: "GET", // 提交方式
+        async: false,
         url: getStudentInfoUrl,// 路径
         success: function (result) {// 返回数据根据结果进行相应的处理
             $("#college").html(result.college);
@@ -53,6 +86,7 @@ $(function () {
          */
         $.ajax({
             type: "GET", // 提交方式
+            async: false,
             url: getStudentInfoUrl,// 路径
             success: function (result) {// 返回数据根据结果进行相应的处理
                 $("#college").html(result.college);
@@ -118,6 +152,7 @@ function ajaxs(datas, method, urls) {
         type: types, // 提交方式
         url: urls,// 路径
         data: datas,//
+        async: false,
 
         beforeSend: function (XMLHttpRequest) {
 // progress.inc();
@@ -174,6 +209,8 @@ function addHtmls(result, method) {
         $("#" + method).html(htmls);
     }
 }
+
+
 
 function subMyStr(str) {
     if (str.length > 8) {
