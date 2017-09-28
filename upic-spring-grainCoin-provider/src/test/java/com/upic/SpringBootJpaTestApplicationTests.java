@@ -145,15 +145,15 @@ public class SpringBootJpaTestApplicationTests {
     /**
      * ************************************** GrainCoinLog *****************************************
      */
-    @Test
-    public void testExchangePrize() {
-        for (long i = 4L; i < 7L; i++) {
-            long prizeId = i;
-            GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
-            grainCoinLogInfo.setEvent("Event" + (i - 3));
-            grainCoinLogService.exchangePrize(prizeId, grainCoinLogInfo);
-        }
-    }
+//    @Test
+//    public void testExchangePrize() {
+//        for (long i = 4L; i < 7L; i++) {
+//            long prizeId = i;
+//            GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
+//            grainCoinLogInfo.setEvent("Event" + (i - 3));
+//            grainCoinLogService.exchangePrize(prizeId, grainCoinLogInfo);
+//        }
+//    }
 
     @Test
     public void testWatchGrainCoin() {
