@@ -42,6 +42,9 @@ public class CommonController {
     @Autowired
     private GrainCoinLogService grainCoinLogService;
 
+    @Autowired
+    private CategoryNodeService categoryNodeService;
+
     /**
      * 获取用户信息
      *
@@ -67,6 +70,16 @@ public class CommonController {
             return projectCategoryService.searchProjectCategory(p, pageable);
         } catch (Exception e) {
             LOGGER.info("getAllProjectCategory:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getCategoryNode")
+    public Page<CategoryNodeInfo> getCategoryNode(@PageableDefault(size = 20) Pageable pageable, CategoryNodeCondition categoryNodeCondition) throws Exception {
+        try {
+            return categoryNodeService.searchCategoryNode(categoryNodeCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getCategoryNode:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
