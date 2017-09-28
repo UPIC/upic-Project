@@ -163,13 +163,10 @@ public class StudetAllController {
      * 积分申请提交*
      *
      * @param integralLogInfo
-     * @param file
-     * @param request
      * @return
      */
-
     //@RequestParam(name = "file",required=false) MultipartFile file
-    //,  MultipartHttpServletRequest request
+    //,  MultipartHttpServletRequest reques
     @PostMapping("/postIntegralLog")
     public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo) throws Exception {
         try {
