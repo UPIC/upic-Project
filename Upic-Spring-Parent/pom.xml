@@ -10,9 +10,16 @@
 
 	<name>upic-spring-parent</name>
 	<url>http://maven.apache.org</url>
-<!-- 全局属性配置 -->
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.2.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<!-- 全局属性配置 -->
 	<profiles>
-	
+
 		<!-- 开发环境 -->
 		<profile>
 			<id>main</id>
@@ -26,8 +33,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 		</profile>
-		
-		<!-- 测试环境  -->
+
+		<!-- 测试环境 -->
 		<profile>
 			<id>test-mysql</id>
 			<properties>
@@ -35,7 +42,7 @@
 				<env>test-mysql</env>
 			</properties>
 		</profile>
-		
+
 	</profiles>
 	<dependencyManagement>
 		<dependencies>
@@ -53,7 +60,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		
+
 		<student-common.version>1.0</student-common.version>
 		<!-- provider start -->
 		<student-project-provider.version>1.0</student-project-provider.version>
