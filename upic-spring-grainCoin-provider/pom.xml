@@ -76,12 +76,6 @@
 			<artifactId>upic-spring-common</artifactId>
 			<version>${student-common.version}</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.jboss.netty</groupId> -->
-		<!-- <artifactId>netty</artifactId> -->
-		<!-- <version>3.2.5.Final</version> -->
-		<!-- </dependency> -->
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -94,7 +88,6 @@
 		</dependency>
 
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
