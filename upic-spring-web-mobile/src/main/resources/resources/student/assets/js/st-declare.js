@@ -12,27 +12,24 @@
  */
 var page = 1;
 var pageCount = -1;
-var getProjectCategoryUrl = "/common/getAllProjectCategory";//项目类别获取
 var getStudentInfoUrl = "/common/getUserInfo";
 var getIntegralLogPage = "/common/getIntegralLogPage";
-var getCategoryNode = "/common/getCategoryNode";
 var postIntegralLog = "/stu/postIntegralLog";
 var types = "GET";
 
-var obj={
-    event:"",
-    projectName:"",
-    content:"",
-    integral:""
+var obj = {
+    event: "",
+    projectName: "",
+    content: "",
+    integral: ""
 };
-
 
 $(function () {
     $("#submit").click(function () {
-        obj.event="";
-        obj.content=$("#content").val();
-        obj.integral="";
-        obj.projectName=$("#projectName").val();
+        obj.event = "";
+        obj.content = $("#content").val();
+        obj.integral = "";
+        obj.projectName = $("#projectName").val();
         $.ajax({
             type: "POST",
             url: postIntegralLog,
@@ -48,7 +45,6 @@ $(function () {
             }
         });
     });
-
 
 
     /**
@@ -72,11 +68,6 @@ $(function () {
         }
     });
 
-    /**
-     * 获取项目类别
-     */
-    ajaxs("", "getProCateg", getProjectCategoryUrl)
-
     /*
      获取点击申报表
      */
@@ -92,11 +83,6 @@ $(function () {
                 $("#college").html(result.college);
             }
         });
-
-        /**
-         * 获取项目类别
-         */
-        ajaxs("", "getProCateg", getProjectCategoryUrl)
     })
 
     /*
@@ -173,43 +159,30 @@ function ajaxs(datas, method, urls) {
 
 function addHtmls(result, method) {
     var htmls = "";
+    for (var i = 0; i < result.length; i++) {
+        htmls += "<div class='act-div'><div class='tab-left'><img src='" + result[i].integralLogPic + "'></div>";
+        htmls += "<div class='tab-right'><div class='tab-title'><div class='right-name'>" + subMyStr(result[i].projectName) + "</div></div>";
+        htmls += "<div class='tab-text'><span>" + "创新创业类" + " >></span>&nbsp;<span>" + "国赛" + " >></span>&nbsp;<span>" + "一等奖" + "</span><br><span>" + "信息工程学院" + "</span></div>";
+        htmls += "<a href='st-check.html?projectNum=" + result[i].integralLogId.projectNum + "'><div class='tab-search'>" + "查看详情" + " ></div></a></div></div>";
+    }
     if (method === "inreview") {
-        for (var i = 0; i < result.length; i++) {
-            htmls += "<div class='act-div'><div class='tab-left'><img src='" + result[i].integralLogPic + "'></div>";
-            htmls += "<div class='tab-right'><div class='tab-title'><div class='right-name'>" + subMyStr(result[i].projectName) + "</div></div>";
-            htmls += "<div class='tab-text'><span>" + "创新创业类" + " >></span>&nbsp;<span>" + "国赛" + " >></span>&nbsp;<span>" + "一等奖" + "</span><br><span>" + "信息工程学院" + "</span></div>";
-            htmls += "<a href='st-check.html?projectNum=" + result[i].integralLogId.projectNum + "'><div class='tab-search'>" + "查看详情" + " ></div></a></div></div>";
-        }
+        $("#aa").html(htmls);
+    }
 
-        if (method === "inreview") {
-            if (page == 1) {
-                $("#aa").html(htmls);
-            } else {
-                $("#aa").append(htmls);
-            }
-        }
-        else if (method === "success") {
-            if (page == 1) {
-                $("#bb").html(htmls);
-            } else {
-                $("#bb").append(htmls);
-            }
-        }
-        else {
-            if (page == 1) {
-                $("#cc").html(htmls);
-            } else {
-                $("#cc").append(htmls);
-            }
-        }
-    } else if (method === "getProCateg") {
+    else if (method === "success") {
+        $("#bb").html(htmls);
+    }
+
+    else if (method === "getProCateg") {
         for (var i = 0; i < result.length; i++) {
             htmls += "<option>" + result[i].categoryName + "</option>";
         }
         $("#" + method).html(htmls);
     }
+    else {
+        $("#cc").html(htmls);
+    }
 }
-
 
 
 function subMyStr(str) {
