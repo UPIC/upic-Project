@@ -81,4 +81,23 @@ public interface ProjectService {
      * @return
      */
     Page<ProjectInfo> getProjectWithoutSignUp(Date now, Pageable pageable);
+
+    /**
+     * 我的项目搜索条
+     *
+     * @param userNum
+     * @param keyword
+     * @param pageable
+     * @return
+     */
+    Page<ProjectInfo> projectSearchBar(String userNum, String keyword, Pageable pageable);
+
+    /**
+     * 项目搜索条
+     *
+     * @param keyword
+     * @param pageable
+     * @return
+     */
+    Page<ProjectInfo> projectSearchBar(String keyword, Pageable pageable);
 }

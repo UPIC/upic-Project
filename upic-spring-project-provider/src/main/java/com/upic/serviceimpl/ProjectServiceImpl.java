@@ -143,6 +143,7 @@ public class ProjectServiceImpl implements ProjectService {
                         }
                     });
         } catch (Exception e) {
+            LOGGER.info("getOnlineProject:项目" + projectPage.toString() + "更新失败。错误信息：" + e.getMessage());
             return null;
         }
     }
@@ -158,6 +159,41 @@ public class ProjectServiceImpl implements ProjectService {
                 }
             });
         } catch (Exception e) {
+            LOGGER.info("getProjectWithoutSignUp:项目" + projectPage.toString() + "更新失败。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
+
+    public Page<ProjectInfo> projectSearchBar(String userNum, String keyword, Pageable pageable) {
+        Page<Project> projectPage = null;
+        try {
+            projectPage = projectRepository.projectSearchBar(userNum, keyword, pageable);
+            return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
+                @Override
+                protected void doConvert(Project domain, ProjectInfo info) throws Exception {
+                    filterProject(domain);
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("projectSearchBar:项目" + projectPage.toString() + "更新失败。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
+
+    public Page<ProjectInfo> projectSearchBar(String keyword, Pageable pageable) {
+        Page<Project> projectPage = null;
+        try {
+            projectPage = projectRepository.projectSearchBar(keyword, pageable);
+            return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
+                @Override
+                protected void doConvert(Project domain, ProjectInfo info) throws Exception {
+                    filterProject(domain);
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("projectSearchBar:项目" + projectPage.toString() + "更新失败。错误信息：" + e.getMessage());
             return null;
         }
     }

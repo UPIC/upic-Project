@@ -2,6 +2,7 @@ package com.upic.controller;
 
 import com.upic.condition.*;
 import com.upic.dto.*;
+import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -338,11 +339,111 @@ public class CommonController {
         try {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum(projectNum);
-            integralLogIdInfo.setStudentNum("1522110240");
+            integralLogIdInfo.setStudentNum(getUser().getUserNum());
             return integralLogService.getByIntegralLogId(integralLogIdInfo);
         } catch (Exception e) {
             LOGGER.info("getProjectWithoutSignUp:" + e.getMessage());
             throw new Exception("getProjectWithoutSignUp" + e.getMessage());
         }
+    }
+
+    /******************************************20171009******************************************/
+
+    /**
+     * 积分搜索条
+     *
+     * @param pageable
+     * @param status
+     * @param keyword
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/integralLogSearchBar")
+    public Page<IntegralLogInfo> integralLogSearchBar(@PageableDefault(size = 10) Pageable pageable, String status, String keyword) throws Exception {
+        try {
+            return integralLogService.integralLogSearchBar(status, keyword, pageable);
+        } catch (Exception e) {
+            LOGGER.info("integralLogSearchBar:" + e.getMessage());
+            throw new Exception("integralLogSearchBar" + e.getMessage());
+        }
+    }
+
+    /**
+     * 修改积分状态
+     *
+     * @param integralLogIdInfos
+     * @param status
+     * @return
+     */
+    @GetMapping("/updateIntegralLogStatus")
+    public String updateIntegralLogStatus(List<IntegralLogIdInfo> integralLogIdInfos, IntegralLogStatusEnum status) throws Exception {
+        try {
+            return integralLogService.updateIntegralLogStatus(integralLogIdInfos, status);
+        } catch (Exception e) {
+            LOGGER.info("updateIntegralLogStatus:" + e.getMessage());
+            throw new Exception("updateIntegralLogStatus" + e.getMessage());
+        }
+    }
+
+    /**
+     * 我的项目搜索条
+     *
+     * @param pageable
+     * @param keyword
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/myProjectSearchBar")
+    public Page<ProjectInfo> myProjectSearchBar(@PageableDefault(size = 10) Pageable pageable, String keyword) throws Exception {
+        try {
+            return projectService.projectSearchBar(getUser().getUserNum(), keyword, pageable);
+        } catch (Exception e) {
+            LOGGER.info("myProjectSearchBar:" + e.getMessage());
+            throw new Exception("myProjectSearchBar" + e.getMessage());
+        }
+    }
+
+    /**
+     * 更新项目
+     *
+     * @param projectInfo
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/updateProject")
+    public ProjectInfo updateProject(ProjectInfo projectInfo) throws Exception {
+        try {
+            return projectService.updateProject(projectInfo);
+        } catch (Exception e) {
+            LOGGER.info("updateProject:" + e.getMessage());
+            throw new Exception("updateProject" + e.getMessage());
+        }
+    }
+
+    /**
+     * 项目搜索条
+     *
+     * @param pageable
+     * @param keyword
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/projectSearchBar")
+    public Page<ProjectInfo> projectSearchBar(@PageableDefault(size = 10) Pageable pageable, String keyword) throws Exception {
+        try {
+            return projectService.projectSearchBar(keyword, pageable);
+        } catch (Exception e) {
+            LOGGER.info("projectSearchBar:" + e.getMessage());
+            throw new Exception("projectSearchBar" + e.getMessage());
+        }
+    }
+
+    private UserInfo getUser() {
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //SocialUser so=(SocialUser) authentication.getPrincipal();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername("山鸡");
+        userInfo.setPic("assets/i/shanji.jpg");
+        return userInfo;
     }
 }
