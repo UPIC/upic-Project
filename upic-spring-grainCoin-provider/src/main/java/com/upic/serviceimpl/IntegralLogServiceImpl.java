@@ -20,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -192,6 +191,39 @@ public class IntegralLogServiceImpl implements IntegralLogService {
             });
         } catch (Exception e) {
             LOGGER.info("getIntegralLogDeclaring:" + e.getMessage());
+            return null;
+        }
+    }
+
+    public Page<IntegralLogInfo> integralLogSearchBar(String status, String keyword, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.integralLogSearchBar(status, keyword, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                @Override
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("integralLogSearchBar:" + e.getMessage());
+            return null;
+        }
+    }
+
+    public String updateIntegralLogStatus(List<IntegralLogIdInfo> integralLogIdInfos, IntegralLogStatusEnum status) {
+        try {
+            for (IntegralLogIdInfo integralLogIdInfo : integralLogIdInfos) {
+                IntegralLogId integralLogId = new IntegralLogId();
+                integralLogId.setStudentNum(integralLogIdInfo.getStudentNum());
+                integralLogId.setProjectNum(integralLogIdInfo.getProjectNum());
+                IntegralLog integralLog = integralLogRepository.findByIntegralLogId(integralLogId);
+                integralLog.setStatus(status);
+                integralLogRepository.saveAndFlush(integralLog);
+            }
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("updateIntegralLogStatus:" + e.getMessage());
             return null;
         }
     }

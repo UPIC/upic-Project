@@ -8,6 +8,7 @@ import com.upic.enums.IntegralLogTypeEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -118,4 +119,23 @@ public interface IntegralLogService {
      * @return
      */
     Page<IntegralLogInfo> getIntegralLogDeclaring(String studentNum, Pageable pageable);
+
+    /**
+     * 积分搜索条
+     *
+     * @param status
+     * @param keyword
+     * @param pageable
+     * @return
+     */
+    Page<IntegralLogInfo> integralLogSearchBar(String status, String keyword, Pageable pageable);
+
+    /**
+     * 修改积分状态
+     *
+     * @param integralLogIdInfos
+     * @param status
+     * @return
+     */
+    String updateIntegralLogStatus(List<IntegralLogIdInfo> integralLogIdInfos, IntegralLogStatusEnum status);
 }
