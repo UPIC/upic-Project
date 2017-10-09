@@ -43,6 +43,9 @@ public class CommonController {
     @Autowired
     private GrainCoinLogService grainCoinLogService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 获取用户信息
      *
@@ -435,6 +438,24 @@ public class CommonController {
         } catch (Exception e) {
             LOGGER.info("projectSearchBar:" + e.getMessage());
             throw new Exception("projectSearchBar" + e.getMessage());
+        }
+    }
+
+    /**
+     * 获取所有用户
+     *
+     * @param pageable
+     * @param userCondition
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getAllUser")
+    public Page<UserInfo> getAllUser(@PageableDefault(size = 10) Pageable pageable, UserCondition userCondition) throws Exception {
+        try {
+            return userService.searchUser(userCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getAllUser:" + e.getMessage());
+            throw new Exception("getAllUser" + e.getMessage());
         }
     }
 
