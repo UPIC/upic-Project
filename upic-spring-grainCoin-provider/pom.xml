@@ -157,15 +157,6 @@
             </exclusions>
         </dependency>
     </dependencies>
-
-		<dependency>
-			<groupId>com.upic.grainCoin.api</groupId>
-			<artifactId>upic-spring-grainCoin-api</artifactId>
-			<version>${student-grainCoin-api.version}</version>
-		</dependency>
-
-
-	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
