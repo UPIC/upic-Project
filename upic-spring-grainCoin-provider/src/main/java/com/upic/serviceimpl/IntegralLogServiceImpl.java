@@ -108,6 +108,11 @@ public class IntegralLogServiceImpl implements IntegralLogService {
     }
 
     public void signUp(IntegralLogInfo integralLogInfo) {
+		try {
+			integralLogInfo.getProjectName();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
     }
 
