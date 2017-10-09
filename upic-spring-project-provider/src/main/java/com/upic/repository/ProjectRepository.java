@@ -23,4 +23,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
 
     @Query(value = "select project from Project project where project.signUpStartTime < ?1 and project.signUpEndTime > ?1 and project.implementationProcess <> 'NOT_PASS'")
     Page<Project> getProjectWithoutSignUp(Date now, Pageable pageable);
+
+    @Query(value = "select project from Project project where project.guidanceNum = ?1 and project.projectNum = ?2 or project.projectName = ?2 or project.guidanceMan = ?2")
+    Page<Project> projectSearchBar(String userNum, String keyword, Pageable pageable);
+
+    @Query(value = "select project from Project project where project.projectNum = ?1 or project.projectName = ?1 or project.guidanceMan = ?1")
+    Page<Project> projectSearchBar(String keyword, Pageable pageable);
 }
