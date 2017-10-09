@@ -1,12 +1,11 @@
 package com.upic.controller;
 
-import com.alibaba.dubbo.common.logger.Logger;
-import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.upic.condition.ProjectCondition;
 import com.upic.dto.IntegralLogInfo;
 import com.upic.dto.ProjectInfo;
 import com.upic.service.IntegralLogService;
 import com.upic.service.ProjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
