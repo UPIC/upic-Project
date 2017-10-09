@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 //import com.upic.po.Student;
 //import com.upic.repository.StudentRspoitory;
 
-//@Component
+@Component
 public abstract class MyUserDetailsService implements UserDetailsService,SocialUserDetailsService{
 
 //	@Autowired
