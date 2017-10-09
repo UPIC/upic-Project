@@ -5,7 +5,7 @@
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 
-	<dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>
+	<!--<dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>-->
 
 	<dubbo:reference id="grainCoinLogService"
 					 interface="com.upic.service.GrainCoinLogService" version="1.0" group="grainCoin"
