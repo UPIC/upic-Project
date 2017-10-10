@@ -8,6 +8,7 @@ import com.upic.dto.*;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import com.upic.po.IntegralOperateLog;
+import com.upic.repository.IntegralLogRepository;
 import com.upic.service.GrainCoinLogService;
 import com.upic.service.IntegralLogService;
 import com.upic.service.IntegralOperateLogService;
@@ -22,14 +23,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
-   
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringBootJpaTestApplication.class)
 public class SpringBootJpaTestApplicationTests {
 	@Autowired
 	private IntegralLogRepository logRepository;
-	
+
 	@Autowired
 	private GrainCoinLogService grainCoinLogService;
 
@@ -199,21 +203,22 @@ public class SpringBootJpaTestApplicationTests {
 	@Test
 	public void testRedis() {
 		ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
-		Thread []t=new Thread[10];
+		Thread[] t = new Thread[10];
 		for (int i = 0; i < 10; i++) {
 			Thread t1 = new Thread(() -> {
 				for (int j = 0; j < 5000; j++) {
-//					System.out.println(Thread.currentThread().getName() + ":" + redisComponent.increment("1001"));
+					// System.out.println(Thread.currentThread().getName() + ":" +
+					// redisComponent.increment("1001"));
 					redisComponent.increment("1001");
 				}
 			});
-			t[i]=t1;
+			t[i] = t1;
 		}
-		long startTime=System.currentTimeMillis();
-		Stream.of(t).parallel().forEach((a)->newCachedThreadPool.submit(a));
+		long startTime = System.currentTimeMillis();
+		Stream.of(t).parallel().forEach((a) -> newCachedThreadPool.submit(a));
 		try {
 			newCachedThreadPool.awaitTermination(5, TimeUnit.SECONDS);
-			System.out.println("总共消费时间:"+(System.currentTimeMillis()-startTime));
+			System.out.println("总共消费时间:" + (System.currentTimeMillis() - startTime));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -224,86 +229,93 @@ public class SpringBootJpaTestApplicationTests {
 		System.out.println("result:" + redisComponent.init("1001"));
 		// redisComponent.set("dtz", "superman");
 	}
-	
+
 	@Test
 	public void testRedisAdd() {
 		ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
-		Thread []t=new Thread[10];
+		Thread[] t = new Thread[10];
 		for (int i = 0; i < 10; i++) {
 			Thread t1 = new Thread(() -> {
 				for (int j = 0; j < 5; j++) {
-//					System.out.println(Thread.currentThread().getName() + ":" + redisComponent.increment("1001"));
-					IntegralLogInfo i1=new IntegralLogInfo();
+					// System.out.println(Thread.currentThread().getName() + ":" +
+					// redisComponent.increment("1001"));
+					IntegralLogInfo i1 = new IntegralLogInfo();
 					i1.setIntegralLogId(new IntegralLogIdInfo(Thread.currentThread().getName(), "1001"));
 					IntegralLogInfo signUp = integralLogService.signUp(i1, 25);
-					if(signUp==null) {
-						System.out.println(Thread.currentThread().getName()+"："+"第"+j+"次抢票失败");
-					}else {
-						System.out.println(Thread.currentThread().getName()+"："+"第"+j+"次抢票成功,并且票号为:"+signUp.getField1());
+					if (signUp == null) {
+						System.out.println(Thread.currentThread().getName() + "：" + "第" + j + "次抢票失败");
+					} else {
+						System.out.println(
+								Thread.currentThread().getName() + "：" + "第" + j + "次抢票成功,并且票号为:" + signUp.getField1());
 					}
 				}
 			});
-			t[i]=t1;
+			t[i] = t1;
 		}
-		long startTime=System.currentTimeMillis();
-		Stream.of(t).parallel().forEach((a)->newCachedThreadPool.submit(a));
+		long startTime = System.currentTimeMillis();
+		Stream.of(t).parallel().forEach((a) -> newCachedThreadPool.submit(a));
 		try {
 			newCachedThreadPool.awaitTermination(5, TimeUnit.SECONDS);
-			System.out.println("总共消费时间:"+(System.currentTimeMillis()-startTime));
+			System.out.println("总共消费时间:" + (System.currentTimeMillis() - startTime));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testAdd() {
 		redisComponent.decrement("1001");
-//		List<IntegralLog> l=new ArrayList<>();
-//		for(int i=0;i<2;i++) {
-//			IntegralLog integralLog = new IntegralLog();
-//			IntegralLogId integralLogId = new IntegralLogId();
-//			integralLogId.setStudentNum("1422110108");
-//			integralLogId.setProjectNum("1001");
-//			integralLog.setIntegralLogId(integralLogId);
-//			l.add(integralLog);
-//		}
-//		logRepository.save(l);
-//		System.out.println(redisComponent.putIfAbsent("1001hash", "142211", 1+""));
+		// List<IntegralLog> l=new ArrayList<>();
+		// for(int i=0;i<2;i++) {
+		// IntegralLog integralLog = new IntegralLog();
+		// IntegralLogId integralLogId = new IntegralLogId();
+		// integralLogId.setStudentNum("1422110108");
+		// integralLogId.setProjectNum("1001");
+		// integralLog.setIntegralLogId(integralLogId);
+		// l.add(integralLog);
+		// }
+		// logRepository.save(l);
+		// System.out.println(redisComponent.putIfAbsent("1001hash", "142211", 1+""));
 	}
-	 @Test
-	    public void testIntegralLogSearchBar() {
-	        String status = "ALREADY_SIGN_UP";
-	        String keyword = "1";
-	        PageRequest pageRequest = new PageRequest();
-	        Page<IntegralLogInfo> integralLogInfoPage = integralLogService.integralLogSearchBar(IntegralLogStatusEnum.ALREADY_SIGN_UP, keyword, pageRequest);
-	        integralLogInfoPage.getContent().forEach(t->System.out.println(t.toString()));
-	    }
 
-	    @Test
-	    public void testUpdateIntegralLogStatus() {
-	        List<IntegralLogIdInfo> integralLogIdInfoList = new ArrayList<IntegralLogIdInfo>();
-	        IntegralLogIdInfo integralLogIdInfoOne = new IntegralLogIdInfo();
-	        IntegralLogIdInfo integralLogIdInfoTwo = new IntegralLogIdInfo();
-	        integralLogIdInfoOne.setProjectNum("PROJECT001");
-	        integralLogIdInfoOne.setStudentNum("1522110240");
-	        integralLogIdInfoTwo.setProjectNum("PROJECT027");
-	        integralLogIdInfoTwo.setStudentNum("1522110240");
-	        integralLogIdInfoList.add(integralLogIdInfoOne);
-	        integralLogIdInfoList.add(integralLogIdInfoTwo);
+	@Test
+	public void testIntegralLogSearchBar() {
+		String status = "ALREADY_SIGN_UP";
+		String keyword = "1";
+		PageRequest pageRequest = new PageRequest();
+		Page<IntegralLogInfo> integralLogInfoPage = integralLogService
+				.integralLogSearchBar(IntegralLogStatusEnum.ALREADY_SIGN_UP, keyword, pageRequest);
+		integralLogInfoPage.getContent().forEach(t -> System.out.println(t.toString()));
+	}
 
-	        IntegralLogStatusEnum status = IntegralLogStatusEnum.ALREADY_SIGN_UP;
+	@Test
+	public void testUpdateIntegralLogStatus() {
+		List<IntegralLogIdInfo> integralLogIdInfoList = new ArrayList<IntegralLogIdInfo>();
+		IntegralLogIdInfo integralLogIdInfoOne = new IntegralLogIdInfo();
+		IntegralLogIdInfo integralLogIdInfoTwo = new IntegralLogIdInfo();
+		integralLogIdInfoOne.setProjectNum("PROJECT001");
+		integralLogIdInfoOne.setStudentNum("1522110240");
+		integralLogIdInfoTwo.setProjectNum("PROJECT027");
+		integralLogIdInfoTwo.setStudentNum("1522110240");
+		integralLogIdInfoList.add(integralLogIdInfoOne);
+		integralLogIdInfoList.add(integralLogIdInfoTwo);
 
-	        System.out.println(integralLogService.updateIntegralLogStatus(integralLogIdInfoList, status));
-	    }
-  @Test
-    public void testGetGrainCoinLog() {
-        GrainCoinLogCondition grainCoinLogCondition = new GrainCoinLogCondition();
-        PageRequest pageRequest = new PageRequest();
-        Page<GrainCoinLogInfo> grainCoinLogInfoPage = grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageRequest);
-        System.out.println(grainCoinLogInfoPage.getTotalElements());
-        System.out.println(grainCoinLogInfoPage.getTotalPages());
-        for (GrainCoinLogInfo grainCoinLogInfo : grainCoinLogInfoPage.getContent()) {
-            System.out.println(grainCoinLogInfo);
-        }
+		IntegralLogStatusEnum status = IntegralLogStatusEnum.ALREADY_SIGN_UP;
 
+		System.out.println(integralLogService.updateIntegralLogStatus(integralLogIdInfoList, status));
+	}
+
+	@Test
+	public void testGetGrainCoinLog() {
+		GrainCoinLogCondition grainCoinLogCondition = new GrainCoinLogCondition();
+		PageRequest pageRequest = new PageRequest();
+		Page<GrainCoinLogInfo> grainCoinLogInfoPage = grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition,
+				pageRequest);
+		System.out.println(grainCoinLogInfoPage.getTotalElements());
+		System.out.println(grainCoinLogInfoPage.getTotalPages());
+		for (GrainCoinLogInfo grainCoinLogInfo : grainCoinLogInfoPage.getContent()) {
+			System.out.println(grainCoinLogInfo);
+		}
+
+	}
 }
