@@ -48,12 +48,4 @@ public interface UserService {
      * @param userNum
      */
     void deleteUser(String userNum);
-
-    /**
-     * 教师查询目前汇总工作量
-     *
-     * @param teacherNum
-     * @return
-     */
-    double getTeacherNowWorkloadSummary(String teacherNum);
 }

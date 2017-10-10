@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -224,6 +225,24 @@ public class IntegralLogServiceImpl implements IntegralLogService {
             return "SUCCESS";
         } catch (Exception e) {
             LOGGER.info("updateIntegralLogStatus:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<IntegralLogInfo> getByProjectNum(String projectNum) {
+        List<IntegralLog> integralLogList = null;
+        List<IntegralLogInfo> integralLogInfoList = new ArrayList<>();
+        try {
+            integralLogList = integralLogRepository.getByProjectNum(projectNum);
+            for (IntegralLog integralLog : integralLogList) {
+                IntegralLogInfo integralLogInfo = new IntegralLogInfo();
+                UpicBeanUtils.copyProperties(integralLog, integralLogInfo);
+                integralLogInfoList.add(integralLogInfo);
+            }
+            return integralLogInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getByProjectNum:" + e.getMessage());
             return null;
         }
     }

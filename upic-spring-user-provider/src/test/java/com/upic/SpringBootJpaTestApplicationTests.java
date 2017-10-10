@@ -39,7 +39,7 @@ public class SpringBootJpaTestApplicationTests {
 
     @Test
     public void testUpdateUser() {
-        UserInfo u1 = userService.getUserByUserNum("1504927905724");
+        UserInfo u1 = userService.getUserByUserNum("1422110151");
         u1.setClazz("100");
         UserInfo u = userService.updateUser(u1);
         System.out.println(u);

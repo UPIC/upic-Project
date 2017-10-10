@@ -138,4 +138,12 @@ public interface IntegralLogService {
      * @return
      */
     String updateIntegralLogStatus(List<IntegralLogIdInfo> integralLogIdInfos, IntegralLogStatusEnum status);
+
+    /**
+     * 根据项目编号获取参加列表
+     *
+     * @param projectNum
+     * @return
+     */
+    List<IntegralLogInfo> getByProjectNum(String projectNum);
 }

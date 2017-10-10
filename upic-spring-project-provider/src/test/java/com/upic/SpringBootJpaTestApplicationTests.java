@@ -115,8 +115,12 @@ public class SpringBootJpaTestApplicationTests {
     @Test
     public void testUpdateProject() {
         ProjectInfo p = projectService.getProjectByNum("1");
-        p.setMaximum(5);
-        System.out.println(projectService.updateProject(p));
+        if (p == null) {
+
+        } else {
+            p.setMaximum(5);
+            System.out.println(projectService.updateProject(p));
+        }
     }
 
     @Test
@@ -128,5 +132,25 @@ public class SpringBootJpaTestApplicationTests {
         for (ProjectInfo projectInfo : projectInfoPage.getContent()) {
             System.out.println(projectInfo);
         }
+    }
+
+    @Test
+    public void testProjectSearchBar() {
+        String keyword = "1";
+        PageRequest pageRequest = new PageRequest();
+        Page<ProjectInfo> projectInfoPage = projectService.projectSearchBar(keyword, pageRequest);
+        if (projectInfoPage != null) {
+            System.out.println(projectInfoPage.getTotalElements());
+            System.out.println(projectInfoPage.getTotalPages());
+            for (ProjectInfo projectInfo : projectInfoPage.getContent()) {
+                System.out.println(projectInfo);
+            }
+        }
+    }
+
+    @Test
+    public void testGetTeacherAllWorkloadSummary() {
+        String teacherNum = "101045";
+        System.out.println(projectService.getTeacherAllWorkloadSummary(teacherNum));
     }
 }

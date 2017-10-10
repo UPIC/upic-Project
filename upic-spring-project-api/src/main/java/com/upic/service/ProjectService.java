@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhubuqing on 2017/9/6.
@@ -108,4 +109,12 @@ public interface ProjectService {
      * @return
      */
     double getTeacherAllWorkloadSummary(String teacherNum);
+
+    /**
+     * 根据教师编号获取教师的项目列表编号
+     *
+     * @param teacherNum
+     * @return
+     */
+    List<String> getByGuidanceNum(String teacherNum);
 }

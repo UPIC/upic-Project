@@ -88,14 +88,4 @@ public class UserServiceImpl implements UserService {
             LOGGER.info("用户删除失败。deleteUser错误信息：" + e.getMessage());
         }
     }
-
-    @Override
-    public double getTeacherNowWorkloadSummary(String teacherNum) {
-        try {
-            return userRepository.getTeacherNowWorkloadSummary(teacherNum);
-        } catch (Exception e) {
-            LOGGER.info("getTeacherNowWorkloadSummary错误信息：" + e.getMessage());
-            return 0;
-        }
-    }
 }

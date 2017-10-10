@@ -1,5 +1,6 @@
 package com.upic;
 
+import com.upic.condition.GrainCoinLogCondition;
 import com.upic.condition.IntegralOperateLogCondition;
 import com.upic.condition.PrizeCondition;
 import com.upic.dto.*;
@@ -200,5 +201,17 @@ public class SpringBootJpaTestApplicationTests {
         IntegralLogStatusEnum status = IntegralLogStatusEnum.ALREADY_SIGN_UP;
 
         System.out.println(integralLogService.updateIntegralLogStatus(integralLogIdInfoList, status));
+    }
+
+    @Test
+    public void testGetGrainCoinLog() {
+        GrainCoinLogCondition grainCoinLogCondition = new GrainCoinLogCondition();
+        PageRequest pageRequest = new PageRequest();
+        Page<GrainCoinLogInfo> grainCoinLogInfoPage = grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageRequest);
+        System.out.println(grainCoinLogInfoPage.getTotalElements());
+        System.out.println(grainCoinLogInfoPage.getTotalPages());
+        for (GrainCoinLogInfo grainCoinLogInfo : grainCoinLogInfoPage.getContent()) {
+            System.out.println(grainCoinLogInfo);
+        }
     }
 }
