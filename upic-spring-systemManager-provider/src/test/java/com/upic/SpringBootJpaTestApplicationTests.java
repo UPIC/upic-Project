@@ -1,5 +1,6 @@
 package com.upic;
 
+import com.upic.common.utils.redis.UpicRedisComponent;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.po.Banner;
@@ -35,6 +36,9 @@ public class SpringBootJpaTestApplicationTests {
 
     @Autowired
     private SystemAdministrationLogService systemAdministrationLogService;
+    
+    @Autowired
+    private UpicRedisComponent redisComponent;
 
     /**
      * ************************************** Banner *****************************************
@@ -215,4 +219,5 @@ public class SpringBootJpaTestApplicationTests {
             System.out.println(systemAdministrationLogInfo);
         }
     }
+   
 }
