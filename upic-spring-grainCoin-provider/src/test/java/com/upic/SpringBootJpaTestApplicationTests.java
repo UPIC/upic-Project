@@ -18,6 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringBootJpaTestApplication.class)
@@ -154,7 +157,6 @@ public class SpringBootJpaTestApplicationTests {
 //            grainCoinLogService.exchangePrize(prizeId, grainCoinLogInfo);
 //        }
 //    }
-
     @Test
     public void testWatchGrainCoin() {
         String studentNum = "1";
@@ -172,5 +174,31 @@ public class SpringBootJpaTestApplicationTests {
         for (IntegralLogInfo integralLogInfo : integralLogInfoPage.getContent()) {
             System.out.println(integralLogInfo);
         }
+    }
+
+    @Test
+    public void testIntegralLogSearchBar() {
+        String status = "ALREADY_SIGN_UP";
+        String keyword = "1";
+        PageRequest pageRequest = new PageRequest();
+        Page<IntegralLogInfo> integralLogInfoPage = integralLogService.integralLogSearchBar(status, keyword, pageRequest);
+        System.out.println(integralLogInfoPage);
+    }
+
+    @Test
+    public void testUpdateIntegralLogStatus() {
+        List<IntegralLogIdInfo> integralLogIdInfoList = new ArrayList<IntegralLogIdInfo>();
+        IntegralLogIdInfo integralLogIdInfoOne = new IntegralLogIdInfo();
+        IntegralLogIdInfo integralLogIdInfoTwo = new IntegralLogIdInfo();
+        integralLogIdInfoOne.setProjectNum("PROJECT001");
+        integralLogIdInfoOne.setStudentNum("1522110240");
+        integralLogIdInfoTwo.setProjectNum("PROJECT027");
+        integralLogIdInfoTwo.setStudentNum("1522110240");
+        integralLogIdInfoList.add(integralLogIdInfoOne);
+        integralLogIdInfoList.add(integralLogIdInfoTwo);
+
+        IntegralLogStatusEnum status = IntegralLogStatusEnum.ALREADY_SIGN_UP;
+
+        System.out.println(integralLogService.updateIntegralLogStatus(integralLogIdInfoList, status));
     }
 }

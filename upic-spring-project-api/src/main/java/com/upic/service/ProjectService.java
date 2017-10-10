@@ -100,4 +100,12 @@ public interface ProjectService {
      * @return
      */
     Page<ProjectInfo> projectSearchBar(String keyword, Pageable pageable);
+
+    /**
+     * 教师查询汇总工作量
+     *
+     * @param teacherNum
+     * @return
+     */
+    double getTeacherAllWorkloadSummary(String teacherNum);
 }
