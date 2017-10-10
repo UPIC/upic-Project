@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -38,6 +39,6 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and integralLog.type = 'VOLUNTARY_APPLICATION' and integralLog.status <> 'HAVEPASSED'")
     Page<IntegralLog> getIntegralLogDeclaring(String studentNum, Pageable pageable);
 
-    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1 and integralLog.integralLogId.studentNum = ?2 or integralLog.student = ?2 or integralLog.projectName = ?2")
+    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1 and (integralLog.integralLogId.studentNum like '%?2%' or integralLog.student like '%?2%' or integralLog.integralLogId.projectNum like '%?2%')")
     Page<IntegralLog> integralLogSearchBar(String status, String keyword, Pageable pageable);
 }

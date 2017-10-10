@@ -1,5 +1,6 @@
 package com.upic;
 
+import com.upic.dto.IntegralLogIdInfo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +14,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.Cookie;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -32,5 +35,39 @@ public class CommonTestApplication {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
+    @Test
+    public void getUserListByProjectNum() throws Exception {
+        String contentAsString = mockMvc
+                .perform(get("/common/integralLogSearchBar").accept(MediaType.APPLICATION_JSON_UTF8).param("keyword", "1"))
+                .andExpect(status().isOk()).andReturn().getResponse()
+                .getContentAsString();
+        System.out.println(contentAsString);
+    }
 
+    @Test
+    public void updateIntegralLogStatus() throws Exception {
+        String contentAsString = mockMvc
+                .perform(get("/common/updateIntegralLogStatus").accept(MediaType.APPLICATION_JSON_UTF8).param("integralLogIdInfos", "").param("status", "ALREADY_SIGN_UP"))
+                .andExpect(status().isOk()).andReturn().getResponse()
+                .getContentAsString();
+        System.out.println(contentAsString);
+    }
+
+    @Test
+    public void t() {
+        IntegralLogIdInfo integralLogIdInfoOne = new IntegralLogIdInfo();
+        IntegralLogIdInfo integralLogIdInfoTwo = new IntegralLogIdInfo();
+
+        integralLogIdInfoOne.setProjectNum("PROJECT027");
+        integralLogIdInfoOne.setStudentNum("1522110240");
+
+        integralLogIdInfoTwo.setStudentNum("1522110240");
+        integralLogIdInfoTwo.setProjectNum("PROJECT001");
+
+        List<IntegralLogIdInfo> integralLogIdInfoList = new ArrayList<>();
+        integralLogIdInfoList.add(integralLogIdInfoOne);
+        integralLogIdInfoList.add(integralLogIdInfoTwo);
+
+        System.out.println(integralLogIdInfoList.toString());
+    }
 }

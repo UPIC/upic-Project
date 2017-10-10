@@ -198,6 +198,22 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    @Override
+    public double getTeacherAllWorkloadSummary(String teacherNum) {
+        Page<Project> projectPage = null;
+        try {
+            projectPage = projectRepository.getByGuidanceNum(teacherNum);
+            double allWorkloadSummary = 0;
+            for (Project project : projectPage) {
+                allWorkloadSummary += project.getIntegral() * project.getMaximum();
+            }
+            return allWorkloadSummary;
+        } catch (Exception e) {
+            LOGGER.info("getTeacherAllWorkloadSummary：" + e.getMessage());
+            return 0;
+        }
+    }
+
     private void filterProject(Project project) {
         if (project.getProjectLogs() != null) {
             project.setProjectLogs(null);

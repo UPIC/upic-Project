@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
             UpicBeanUtils.copyProperties(user, userInfo);
             return userInfo;
         } catch (Exception e) {
-            LOGGER.info("用户：" + userInfo.toString() + "添加失败。错误信息：" + e.getMessage());
+            LOGGER.info("用户：" + userInfo.toString() + "添加失败。addUser错误信息：" + e.getMessage());
             return null;
         }
     }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
             UpicBeanUtils.copyProperties(user, userInfo);
             return userInfo;
         } catch (Exception e) {
-            LOGGER.info("用户" + userInfo.toString() + "更新失败。错误信息：" + e.getMessage());
+            LOGGER.info("用户" + userInfo.toString() + "更新失败。updateUser错误信息：" + e.getMessage());
             return null;
         }
     }
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
                 }
             });
         } catch (Exception e) {
-            LOGGER.info("用户列表查询失败。错误信息：" + e.getMessage());
+            LOGGER.info("用户列表查询失败。searchUser错误信息：" + e.getMessage());
             return null;
         }
     }
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
             UpicBeanUtils.copyProperties(user, userInfo);
             return userInfo;
         } catch (Exception e) {
-            LOGGER.info("用户编号为：" + userNum + "查询失败。错误信息：" + e.getMessage());
+            LOGGER.info("用户编号为：" + userNum + "查询失败。getUserByUserNum错误信息：" + e.getMessage());
             return null;
         }
     }
@@ -85,7 +85,17 @@ public class UserServiceImpl implements UserService {
             User user = userRepository.getByUserNum(userNum);
             userRepository.delete(user);
         } catch (Exception e) {
-            LOGGER.info("用户删除失败。错误信息：" + e.getMessage());
+            LOGGER.info("用户删除失败。deleteUser错误信息：" + e.getMessage());
+        }
+    }
+
+    @Override
+    public double getTeacherNowWorkloadSummary(String teacherNum) {
+        try {
+            return userRepository.getTeacherNowWorkloadSummary(teacherNum);
+        } catch (Exception e) {
+            LOGGER.info("getTeacherNowWorkloadSummary错误信息：" + e.getMessage());
+            return 0;
         }
     }
 }

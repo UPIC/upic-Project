@@ -459,6 +459,124 @@ public class CommonController {
         }
     }
 
+    /**
+     * 教师查询目前汇总工作量
+     *
+     * @param teacherNum
+     * @return
+     */
+    @GetMapping("/getTeacherNowWorkloadSummary")
+    public double getTeacherNowWorkloadSummary(String teacherNum) throws Exception {
+        try {
+            return userService.getTeacherNowWorkloadSummary(teacherNum);
+        } catch (Exception e) {
+            LOGGER.info("getTeacherNowWorkloadSummary:" + e.getMessage());
+            throw new Exception("getTeacherNowWorkloadSummary" + e.getMessage());
+        }
+    }
+
+    /**
+     * 教师查询汇总工作量
+     *
+     * @param teacherNum
+     * @return
+     */
+    @GetMapping("/getTeacherAllWorkloadSummary")
+    public double getTeacherAllWorkloadSummary(String teacherNum) throws Exception {
+        try {
+            return projectService.getTeacherAllWorkloadSummary(teacherNum);
+        } catch (Exception e) {
+            LOGGER.info("getTeacherAllWorkloadSummary:" + e.getMessage());
+            throw new Exception("getTeacherAllWorkloadSummary" + e.getMessage());
+        }
+    }
+
+    /**
+     * 更新奖品
+     *
+     * @param prizeInfo
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/updatePrize")
+    public PrizeInfo updatePrize(PrizeInfo prizeInfo) throws Exception {
+        try {
+            return prizeService.updatePrize(prizeInfo);
+        } catch (Exception e) {
+            LOGGER.info("updatePrize:" + e.getMessage());
+            throw new Exception("updatePrize" + e.getMessage());
+        }
+    }
+
+    /**
+     * 获取所有奖品
+     *
+     * @param pageable
+     * @param grainCoinLogCondition
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getGrainCoinLog")
+    public Page<GrainCoinLogInfo> getGrainCoinLog(@PageableDefault(size = 10) Pageable pageable, GrainCoinLogCondition grainCoinLogCondition) throws Exception {
+        try {
+            return grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getGrainCoinLog:" + e.getMessage());
+            throw new Exception("getGrainCoinLog" + e.getMessage());
+        }
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param userInfo
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/updateUser")
+    public UserInfo updateUser(UserInfo userInfo) throws Exception {
+        try {
+            return userService.updateUser(userInfo);
+        } catch (Exception e) {
+            LOGGER.info("updateUser:" + e.getMessage());
+            throw new Exception("updateUser" + e.getMessage());
+        }
+    }
+
+    /**
+     * 添加用户
+     *
+     * @param userInfo
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/addUser")
+    public UserInfo addUser(UserInfo userInfo) throws Exception {
+        try {
+            return userService.addUser(userInfo);
+        } catch (Exception e) {
+            LOGGER.info("addUser:" + e.getMessage());
+            throw new Exception("addUser" + e.getMessage());
+        }
+    }
+
+    /**
+     * 添加奖品
+     *
+     * @param prizeInfo
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/addPrize")
+    public PrizeInfo addPrize(PrizeInfo prizeInfo) throws Exception {
+        try {
+            return prizeService.addPrize(prizeInfo);
+        } catch (Exception e) {
+            LOGGER.info("addPrize:" + e.getMessage());
+            throw new Exception("addPrize" + e.getMessage());
+        }
+    }
+
     private UserInfo getUser() {
         //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //SocialUser so=(SocialUser) authentication.getPrincipal();

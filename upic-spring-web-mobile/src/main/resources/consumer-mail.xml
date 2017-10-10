@@ -6,7 +6,8 @@
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 
-    <dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>
+
+    <!--<dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>-->
 
     <dubbo:reference id="mailLogService" interface="com.upic.service.MailLogService" version="1.0" group="mail"
                      check="false"></dubbo:reference>
