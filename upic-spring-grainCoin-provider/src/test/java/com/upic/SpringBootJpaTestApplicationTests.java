@@ -95,6 +95,7 @@ public class SpringBootJpaTestApplicationTests {
             prizeInfo.setContent("Content" + (i + 1));
             prizeInfo.setRemark("Remark" + (i + 1));
             prizeService.addPrize(prizeInfo);
+            System.out.println();
         }
     }
 
