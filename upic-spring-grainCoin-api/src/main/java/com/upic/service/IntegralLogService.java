@@ -129,7 +129,7 @@ public interface IntegralLogService {
      * @param pageable
      * @return
      */
-    Page<IntegralLogInfo> integralLogSearchBar(String status, String keyword, Pageable pageable);
+    Page<IntegralLogInfo> integralLogSearchBar(IntegralLogStatusEnum status, String keyword, Pageable pageable);
 
     /**
      * 修改积分状态
