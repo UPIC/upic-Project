@@ -24,6 +24,7 @@ import com.upic.service.ProjectService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Dtz
@@ -193,14 +194,14 @@ public class ProjectServiceImpl implements ProjectService {
                 }
             });
         } catch (Exception e) {
-            LOGGER.info("projectSearchBar:项目" + projectPage.toString() + "更新失败。错误信息：" + e.getMessage());
+            LOGGER.info("projectSearchBar:项目" + "更新失败。错误信息：" + e.getMessage());
             return null;
         }
     }
 
     @Override
     public double getTeacherAllWorkloadSummary(String teacherNum) {
-        Page<Project> projectPage = null;
+        List<Project> projectPage = null;
         try {
             projectPage = projectRepository.getByGuidanceNum(teacherNum);
             double allWorkloadSummary = 0;
@@ -214,9 +215,32 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    @Override
+    public List<String> getByGuidanceNum(String teacherNum) {
+        List<Project> projectPage = null;
+        List<String> projectNumList = null;
+        try {
+            projectPage = projectRepository.getByGuidanceNum(teacherNum);
+            if (projectPage == null) {
+                throw new Exception();
+            }
+            for (Project project : projectPage) {
+                projectNumList.add(project.getProjectNum());
+            }
+            return projectNumList;
+        } catch (Exception e) {
+            LOGGER.info("getTeacherAllWorkloadSummary：" + e.getMessage());
+            return null;
+        }
+    }
+
     private void filterProject(Project project) {
-        if (project.getProjectLogs() != null) {
-            project.setProjectLogs(null);
+        if (project == null) {
+
+        } else {
+            if (project.getProjectLogs() != null) {
+                project.setProjectLogs(null);
+            }
         }
     }
 }

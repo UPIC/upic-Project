@@ -10,7 +10,4 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     User getByUserNum(String userNum);
-
-    @Query(value = "select sum(integralLog.integral) from Project project join IntegralLog integralLog where project.guidanceNum = ?1 and project.projectNum = integralLog.integralLogId.projectNum")
-    double getTeacherNowWorkloadSummary(String teacherNum);
 }

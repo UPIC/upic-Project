@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by zhubuqing on 2017/9/7.
@@ -24,11 +25,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
     @Query(value = "select project from Project project where project.signUpStartTime < ?1 and project.signUpEndTime > ?1 and project.implementationProcess <> 'NOT_PASS'")
     Page<Project> getProjectWithoutSignUp(Date now, Pageable pageable);
 
-    @Query(value = "select project from Project project where project.guidanceNum = ?1 and (project.projectNum = '%?2%' or project.projectName = '%?2%' or project.guidanceMan = '%?2%')")
+    @Query(value = "select project from Project project where project.guidanceNum = ?1 and (project.projectNum like %?2% or project.projectName like %?2% or project.guidanceMan like %?2%)")
     Page<Project> projectSearchBar(String userNum, String keyword, Pageable pageable);
 
-    @Query(value = "select project from Project project where project.projectNum = '%?1%' or project.projectName = '%?1%' or project.guidanceMan = '%?1%'")
+    @Query(value = "select project from Project project where project.projectNum like %?1% or project.projectName like %?1% or project.guidanceMan like %?1%")
     Page<Project> projectSearchBar(String keyword, Pageable pageable);
 
-    Page<Project> getByGuidanceNum(String guidanceNum);
+    List<Project> getByGuidanceNum(String guidanceNum);
 }

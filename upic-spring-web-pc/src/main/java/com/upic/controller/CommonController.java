@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -468,7 +469,14 @@ public class CommonController {
     @GetMapping("/getTeacherNowWorkloadSummary")
     public double getTeacherNowWorkloadSummary(String teacherNum) throws Exception {
         try {
-            return userService.getTeacherNowWorkloadSummary(teacherNum);
+            List<String> projectNumList = projectService.getByGuidanceNum(teacherNum); // 获取到的是项目编号的List
+            List<IntegralLogInfo> integralLogInfoAllList = new ArrayList<>();
+            for (String projectNum : projectNumList) {
+                List<IntegralLogInfo> integralLogInfoList = integralLogService.getByProjectNum(projectNum); // 获取积分列表
+                integralLogInfoAllList.addAll(integralLogInfoList);
+            }
+            //用流实现
+            return 0;
         } catch (Exception e) {
             LOGGER.info("getTeacherNowWorkloadSummary:" + e.getMessage());
             throw new Exception("getTeacherNowWorkloadSummary" + e.getMessage());
@@ -509,7 +517,7 @@ public class CommonController {
     }
 
     /**
-     * 获取所有奖品
+     * 获取所有奖品交易记录
      *
      * @param pageable
      * @param grainCoinLogCondition

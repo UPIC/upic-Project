@@ -1,27 +1,17 @@
 package com.upic;
 
+import com.upic.condition.GrainCoinLogCondition;
 import com.upic.common.utils.redis.UpicRedisComponent;
 import com.upic.condition.IntegralOperateLogCondition;
 import com.upic.condition.PrizeCondition;
 import com.upic.dto.*;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
-import com.upic.po.IntegralLog;
-import com.upic.po.IntegralLogId;
 import com.upic.po.IntegralOperateLog;
-import com.upic.repository.IntegralLogRepository;
 import com.upic.service.GrainCoinLogService;
 import com.upic.service.IntegralLogService;
 import com.upic.service.IntegralOperateLogService;
 import com.upic.service.PrizeService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +20,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
    
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringBootJpaTestApplication.class)
 public class SpringBootJpaTestApplicationTests {
@@ -310,5 +295,15 @@ public class SpringBootJpaTestApplicationTests {
 
 	        System.out.println(integralLogService.updateIntegralLogStatus(integralLogIdInfoList, status));
 	    }
+  @Test
+    public void testGetGrainCoinLog() {
+        GrainCoinLogCondition grainCoinLogCondition = new GrainCoinLogCondition();
+        PageRequest pageRequest = new PageRequest();
+        Page<GrainCoinLogInfo> grainCoinLogInfoPage = grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageRequest);
+        System.out.println(grainCoinLogInfoPage.getTotalElements());
+        System.out.println(grainCoinLogInfoPage.getTotalPages());
+        for (GrainCoinLogInfo grainCoinLogInfo : grainCoinLogInfoPage.getContent()) {
+            System.out.println(grainCoinLogInfo);
+        }
 
 }
