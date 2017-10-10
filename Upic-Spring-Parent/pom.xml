@@ -81,6 +81,7 @@
 
 		<!-- web start -->
 		<upic-web-mobile.version>1.0</upic-web-mobile.version>
+		<upic-web-pc.version>1.0</upic-web-pc.version>
 		<!-- web end -->
 	</properties>
 

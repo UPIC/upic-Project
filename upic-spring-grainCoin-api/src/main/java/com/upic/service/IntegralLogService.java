@@ -64,8 +64,9 @@ public interface IntegralLogService {
      * 报名
      *
      * @param integralLogInfo
+     * @param allNum
      */
-    void signUp(IntegralLogInfo integralLogInfo);
+    IntegralLogInfo signUp(IntegralLogInfo integralLogInfo,int allNum);
 
     /**
      * 查询积分列表（条件）
