@@ -197,8 +197,8 @@
 		$(function() {
 			$("#sui").click(
 					function() {
-						//$(".div1").toggle();
-						$("#div1").show();
+						$("#div1").toggle();
+// 						$("#div1").show();
 						$.ajax({
 							type : "GET", // 提交方式
 							url : "/common/getAllProjectCategory",// 路径
@@ -208,45 +208,54 @@
 						});
 
 						function addHtmls(result) {
-							var htmls = "";
+							var htmls = "<ul class='clearfix' id='one'>";
 							for (var i = 0; i < result.content.length; i++) {
+								var level=parseInt(result.content[i].field1)+1;
 								htmls += "<li onclick='getId("
 										+ result.content[i].id + ","
-										+ result.content[i].categoryName
-										+ ")'>"
+										+ result.content[i].categoryName+","
+										+ level+")'>"
 										+ result.content[i].categoryName
 										+ "</li>";
 							}
-							$("#one").html(htmls);
+							htmls+="</ul>";
+							$("#div1").text("");
+							$("#div1").append(htmls);
 						}
 					});
 		})
 
-		function getId(fatherId, categroyName, isLeaf) {
+		function getId(fatherId, categroyName, level,isLeaf) {
 			if (isLeaf === 1) {
 				var texts = $("#sui").val() + categroyName;
 				$("#sui").val(texts);
 				$(".div1").css("display", "none");
 			} else {
+				
 				var texts = $("#sui").val() + categroyName;
 				$("#sui").val(texts + "/");
 				$.ajax({
 					type : "GET", // 提交方式
 					url : "/common/getCategoryNode",// 路径
-					data : "fatherId=" + fatherId,
+					data : "fatherId=" + fatherId+"&level="+level,
 					success : function(result) {// 返回数据根据结果进行相应的处理
-						var htmlss = "";
+						var htmlss = "<ul class='clearfix' id='one'>";
 						for (var i = 0; i < result.content.length; i++) {
+							var level=parseInt(result.content[i].level)+1;
 							htmlss += "<li onclick='getId("
 									+ result.content[i].id + ","
 									+ result.content[i].nodeContent + ","
+									+ level + ","
 									+ result.content[i].isLeaf + ")'>"
 									+ result.content[i].nodeContent + "</li>";
 						}
-						//$("#div1").css("display", "block");
-						$("#one").html(htmlss);
-
-						//$("#div1").toggle();
+						htmlss+="</ul>";
+						$("#div1").hide();
+						$("#div1").text("");
+						$("#div1").append(htmlss);
+						$("#div1").css("display", "block");
+						$("#div1").show();
+// 						$("#div1").toggle();
 					}
 				});
 			}

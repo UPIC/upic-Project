@@ -3,6 +3,7 @@ package com.upic.serviceimpl;
 import com.upic.common.beans.utils.UpicBeanUtils;
 import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
+import com.upic.common.utils.redis.UpicRedisComponent;
 import com.upic.condition.IntegralLogCondition;
 import com.upic.dto.IntegralLogIdInfo;
 import com.upic.dto.IntegralLogInfo;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.test.util.AopTestUtils;
 
 import java.util.ArrayList;
 import java.util.List;

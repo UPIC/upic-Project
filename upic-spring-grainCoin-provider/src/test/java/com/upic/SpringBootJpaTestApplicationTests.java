@@ -1,6 +1,7 @@
 package com.upic;
 
 import com.upic.condition.GrainCoinLogCondition;
+import com.upic.common.utils.redis.UpicRedisComponent;
 import com.upic.condition.IntegralOperateLogCondition;
 import com.upic.condition.PrizeCondition;
 import com.upic.dto.*;
