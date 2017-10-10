@@ -226,7 +226,7 @@ public class IntegralLogServiceImpl implements IntegralLogService {
 		}
 	}
 
-	public Page<IntegralLogInfo> integralLogSearchBar(String status, String keyword, Pageable pageable) {
+	public Page<IntegralLogInfo> integralLogSearchBar(IntegralLogStatusEnum status, String keyword, Pageable pageable) {
 		Page<IntegralLog> integralLogPage = null;
 		try {
 			integralLogPage = integralLogRepository.integralLogSearchBar(status, keyword, pageable);
