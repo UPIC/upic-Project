@@ -19,7 +19,7 @@
 
    <script src="../../js/jquery-1.8.3.min.js"></script>
    <script src="../../js/bootstrap.min.js"></script>
-   <script src="../../js/myJs/integral_declare.js"></script>
+   <script src="../../js/ujs/integral_declare.js"></script>
    <script>
      $(document).ready(function(){
       $("#main-content").css({
@@ -86,7 +86,7 @@
                                 <div class="control-group">
                                     <label class="control-label">选择项目类别:</label>
                                     <div class="controls">
-                                        <select class="input-large m-wrap" tabindex="1">
+                                        <select class="input-large m-wrap" tabindex="1" id="getone">
                                             <option value="category 1">创新实践</option>
                                             <option value="category 2">创业实践</option>
                                             <option value="category 3">社会实践</option>
@@ -106,12 +106,12 @@
                                 <div class="control-group">
                                     <label class="control-label">选择项目级别:</label>
                                     <div class="controls">
-                                        <select class="input-medium m-wrap" tabindex="1">
+                                        <select class="input-medium m-wrap" tabindex="1" id="gettwo">
                                             <option value="category 1">市级</option>
                                             <option value="category 2">校级</option>
                                             <option value="category 3">院级</option>
                                         </select>
-                                         <select class="input-medium m-wrap" tabindex="2">
+                                         <select class="input-medium m-wrap" tabindex="2" id="getthree">
                                             <option value="category 1">一等奖</option>
                                             <option value="category 2">二等奖</option>
                                             <option value="category 3">三等奖</option>
@@ -122,7 +122,7 @@
 
                                 <div class="control-group">
                                     <label class="control-label">项目积分</label>
-                                    <div class="controls">
+                                    <div class="controls" id="getfour">
                                         <input class="medium" readonly type="text" placeholder="2" disabled />
                                         <span class="help-inline">*</span>
                                     </div>
@@ -140,8 +140,8 @@
 
 
                                 <div class="form-actions">
-                                    <button type="submit" class="btn blue"><i class="icon-ok"></i>提交</button>
-                                    <button type="button" class="btn"><i class=" icon-remove"></i>取消</button>
+                                    <button type="submit" class="btn blue"><i class="icon-ok" onclick="sub"></i>提交</button>
+                                    <button type="button" class="btn"><i class=" icon-remove" ></i>取消</button>
                                 </div>
 
 

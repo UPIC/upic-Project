@@ -19,7 +19,9 @@
 <link rel="stylesheet" type="text/css"
 	href="../../css/uniform.default.css" />
 <link rel="stylesheet" type="text/css" href="../../css/my_project.css" />
+<script src="../../js/jquery-1.8.3.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/ujs/my_integral.js"></script>
 <script>
 	$(document).ready(function() {
 		$("#main-content").css({
@@ -67,7 +69,7 @@
 				</h4>
 			</div>
 			<div class="widget-body">
-				<table class="table table-striped table-bordered" id="sample_1">
+				<table class="table table-striped table-bordered" id="sample_1" id="showAll">
 					<thead>
 						<tr>
 							<th style="width: 8px;"><input type="checkbox"
@@ -135,9 +137,9 @@
 					aria-hidden="true">×</button>
 				<h4 id="mymodallabel1">详情</h4>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" >
 				<div class="row-fluid">
-					<div class="block-fluid">
+					<div class="block-fluid" id="details">
 						<div class="row-form clearfix">
 							<div class="span3">编号</div>
 							<div class="span3">01</div>
@@ -188,9 +190,9 @@
 	</div>
 
 
-	<script src="../../js/jquery-1.8.3.min.js"></script>
+
 	<script src="../../js/jquery.nicescroll.js"></script>
-	<script src="../../js/bootstrap.min.js"></script>
+	<!-- <script src="../../js/bootstrap.min.js"></script> -->
 	<script src="../../js/jquery.blockui.js"></script>
 
 	<!--[if lt ie 9]>
@@ -204,7 +206,7 @@
 
 
 
-	<script src="../../js/common-scripts.js"></script>
+	<!-- <script src="../../js/common-scripts.js"></script> -->
 
 
 	<script src="../../js/dynamic-table.js"></script>
@@ -212,7 +214,7 @@
 		$(function() {
 			$(".dataTables_filter").find('input').attr('placeholder',
 					'空格分隔 编号、项目名称、负责人').css('width', '250px');
-			
+
 			var $checkall = $("input[name='checkall']");
 			var $btn = $(".btn-success");
 			$btn.click(function() {
@@ -220,21 +222,13 @@
 					alert("确定选择审核的全部内容吗");
 				}
 			});
-			$("#sample_1_length")
-					.find('label')
-					.after(
-							'<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
-			$(".selectlist")
-					.after(
-							'<div class="selectlist selectlist_second"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">状态筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
-
-			$(".dataTables_filter")
-					.find('input')
-					.after(
-							'<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');
-			$("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
-					'62.9%');
-			$(".dataTables_filter").parent(".span6").css('width', '33.9%');
+			$("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+        $("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
+        $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
+        $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
+        $(".selectlist").after('<div class="selectlist selectlist_second"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目状态筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+        $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
+        $(".dataTables_filter").parent(".span6").css('width', '33.9%');
 
 			var x = 10;
 			var y = -300;

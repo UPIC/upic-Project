@@ -48,4 +48,13 @@ public interface UserService {
      * @param userNum
      */
     void deleteUser(String userNum);
+
+    /**
+     * 用户搜索条
+     *
+     * @param keyword
+     * @param pageable
+     * @return
+     */
+    Page<UserInfo> userSearchBar(String keyword, Pageable pageable);
 }

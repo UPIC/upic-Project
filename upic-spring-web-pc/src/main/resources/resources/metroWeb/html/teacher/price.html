@@ -17,6 +17,7 @@
    <link href="../../css/jquery.fancybox.css" rel="stylesheet" />
    <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css" />
    <link rel="stylesheet" type="text/css" href="../../css/my_project.css" />
+   <script src="../../js/jquery-1.8.3.min.js"></script>
    <script src="../../js/bootstrap.min.js"></script>
    <script>
      $(document).ready(function(){
@@ -68,13 +69,17 @@
           height:50px;
         }
         .down{
-          background-color:#4187DF;
-          color:#fff;
           margin-left:5px;
         }
         .span3 input{
           width:50%;
         }
+        .span9 textarea{
+          width:92%;
+        }
+        #select-small{
+        width:55px;
+       }
    </style>
 </head>
 
@@ -135,11 +140,11 @@
                                     <td>1400</td>
                                     <td>2017.1.1</td>
                                     <td>
-                                      <button type="submit" class="btn btn-small">上架</button>
-                                      <button type="submit" class="btn btn-small down">下架</button>
+                                      <button class="btn btn-small">上架</button>
+                                      <button class="btn btn-small down">下架</button>
                                     </td>
                                     <td class="center_td">
-                                      <a href="#mymodal1" data-toggle="modal"><button type="submit" class="btn btn-small">编辑</button></a>
+                                      <a href="#mymodal1" data-toggle="modal"><button class="btn btn-small">编辑</button></a>
                                     </td>
 
                                 </tr>
@@ -153,11 +158,11 @@
                                     <td>1400</td>
                                     <td>2017.1.1</td>
                                     <td>
-                                      <button type="submit" class="btn btn-small">上架</button>
-                                      <button type="submit" class="btn btn-small down">下架</button>
+                                      <button class="btn btn-small">上架</button>
+                                      <button class="btn btn-small down">下架</button>
                                     </td>
                                     <td class="center_td">
-                                      <a href="#mymodal1" data-toggle="modal"><button type="submit" class="btn btn-small">编辑</button></a>
+                                      <a href="#mymodal1" data-toggle="modal"><button class="btn btn-small">编辑</button></a>
                                     </td>
 
                                 </tr>
@@ -171,11 +176,11 @@
                                     <td>1400</td>
                                     <td>2017.1.1</td>
                                     <td>
-                                      <button type="submit" class="btn btn-small">上架</button>
-                                      <button type="submit" class="btn btn-small down">下架</button>
+                                      <button class="btn btn-small">上架</button>
+                                      <button class="btn btn-small down">下架</button>
                                     </td>
                                     <td class="center_td">
-                                      <a href="#mymodal1" data-toggle="modal"><button type="submit" class="btn btn-small">编辑</button></a>
+                                      <a href="#mymodal1" data-toggle="modal"><button class="btn btn-small">编辑</button></a>
                                     </td>
 
                                 </tr>
@@ -189,11 +194,11 @@
                                     <td>1400</td>
                                     <td>2017.1.1</td>
                                     <td>
-                                      <button type="submit" class="btn btn-small">上架</button>
-                                      <button type="submit" class="btn btn-small down">下架</button>
+                                      <button class="btn btn-small">上架</button>
+                                      <button class="btn btn-small down">下架</button>
                                     </td>
                                     <td class="center_td">
-                                      <a href="#mymodal1" data-toggle="modal"><button type="submit" class="btn btn-small">编辑</button></a>
+                                      <a href="#mymodal1" data-toggle="modal"><button class="btn btn-small">编辑</button></a>
                                     </td>
 
                                 </tr>
@@ -207,11 +212,11 @@
                                     <td>1400</td>
                                     <td>2017.1.1</td>
                                     <td>
-                                      <button type="submit" class="btn btn-small">上架</button>
-                                      <button type="submit" class="btn btn-small down">下架</button>
+                                      <button class="btn btn-small">上架</button>
+                                      <button class="btn btn-small down">下架</button>
                                     </td>
                                     <td class="center_td">
-                                      <a href="#mymodal1" data-toggle="modal"><button type="submit" class="btn btn-small">编辑</button></a>
+                                      <a href="#mymodal1" data-toggle="modal"><button class="btn btn-small">编辑</button></a>
                                     </td>
 
                                 </tr>
@@ -225,11 +230,11 @@
                                     <td>1400</td>
                                     <td>2017.1.1</td>
                                     <td>
-                                      <button type="submit" class="btn btn-small">上架</button>
-                                      <button type="submit" class="btn btn-small down">下架</button>
+                                      <button class="btn btn-small">上架</button>
+                                      <button class="btn btn-small down">下架</button>
                                     </td>
                                     <td class="center_td">
-                                      <a href="#mymodal1" data-toggle="modal"><button type="submit" class="btn btn-small">编辑</button></a>
+                                      <a href="#mymodal1" data-toggle="modal"><button class="btn btn-small">编辑</button></a>
                                     </td>
 
                                 </tr>
@@ -247,25 +252,62 @@
                                     <div class="row-fluid">
             <div class="block-fluid">
                 <div class="row-form clearfix">
-                    <div class="span3">编号</div>
-                    <div class="span3"><input type="text" name="" value=""></div>
-                    <div class="span3">代码</div>
-                    <div class="span3"><input type="text" name="" value=""></div>
+                    <div class="span3">上传日期</div>
+                    <div class="span3">2017/09/28</div>
                 </div>
                 <div class="row-form clearfix">
-                    <div class="span3">上传日期</div>
-                    <div class="span3">2017/8/5 14:00</div>
-                    <div class="span3">所需学分</div>
-                    <div class="span3"><input type="text" name="" value=""></div>
+                    <div class="span3">奖品名称</div>
+                    <div class="span3"><input type="text" name="" value="鼠标" /></div>
+                    <div class="span3">所需素拓币</div>
+                    <div class="span3"><input type="text" name="" value="3000" /></div>
                 </div>
 
                 <div class="row-form clearfix">
                     <div class="span3">简介</div>
-                    <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                    <div class="span9"><textarea class="textarea1"></textarea></div>
                 </div>
                 <div class="row-form clearfix">
-                    <div class="span3">添加图片</div>
+                    <div class="span3">图片</div>
                     <div class="span9"><input type="file" name="" value=""></div>
+                </div>
+            </div>
+            <div class="dr"><span></span></div>
+        </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button>
+                                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
+                                </div>
+                            </div>
+
+
+
+<div id="mymodal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 id="mymodallabel1">编辑</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row-fluid">
+            <div class="block-fluid">
+                <div class="row-form clearfix">
+                    <div class="span3">上传日期</div>
+                    <div class="span3">2017/09/28</div>
+                </div>
+                <div class="row-form clearfix">
+                    <div class="span3">奖品名称</div>
+                    <div class="span3"><input type="text"  /></div>
+                    <div class="span3">所需素拓币</div>
+                    <div class="span3"><input type="text"   /></div>
+                </div>
+
+                <div class="row-form clearfix">
+                    <div class="span3">简介</div>
+                    <div class="span9"><textarea></textarea></div>
+                </div>
+                <div class="row-form clearfix">
+                    <div class="span3">图片</div>
+                    <div class="span9"><input type="file" name="" ></div>
                 </div>
             </div>
             <div class="dr"><span></span></div>
@@ -282,9 +324,9 @@
    </div>
 
 
-  <script src="../../js/jquery-1.8.3.min.js"></script>
+
    <script src="../../js/jquery.nicescroll.js" type="text/javascript"></script>
-   <script src="../../js/bootstrap.min.js"></script>
+   <!-- <script src="../../js/bootstrap.min.js"></script> -->
    <script src="../../js/jquery.blockui.js"></script>
 
    <!--[if lt ie 9]>
@@ -298,7 +340,7 @@
 
 
 
-   <script src="../../js/common-scripts.js"></script>
+   <!-- <script src="../../js/common-scripts.js"></script> -->
 
 
    <script src="../../js/dynamic-table.js"></script>
@@ -313,11 +355,14 @@
                  alert("确定选择审核的全部内容吗");
                 }
         });
+$("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
+        $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
+        $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
+        $("#sample_1_length").find('label').after('<a href="#mymodal2" data-toggle="modal"><button class="btn btn-success">上传</button></a>');
 
-     /* $("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
-        $(".selectlist").after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目名称筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');*/
         $(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');
         $("#sample_1_filter").hide();
+        $(".textarea1").html("校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分");
     })
   </script>
 

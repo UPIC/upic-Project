@@ -3,11 +3,12 @@
  * 我的积分
  * @Date:   2017-09-24 10:17:37
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-09-25 13:04:45
+ * @Last Modified time: 2017-10-11 22:55:01
  */
 
 var getAllIntegralLogByStudentNum = "/stu/getAllIntegralLogByStudentNum";
 var getProjectCategoryUrl = "/common/getAllProjectCategory";
+var getIntegralLogByIntegralLogId="/common/getIntegralLogByIntegralLogId";
 var types = "GET";
 
 $(function () {
@@ -29,9 +30,7 @@ function ajaxs(datas, method, urls) {
 // progress.inc();
         },
         success: function (result) {// 返回数据根据结果进行相应的处理
-            pageCount = result.total;
-            var datas = result.content;
-            addHtmls(datas, method)
+            addHtmls(result, method)
         },
         complete: function (XMLHttpRequest, textStatus) {
 // progress.done(true);
@@ -47,37 +46,37 @@ function addHtmls(result, method) {
     var htmls = "";
     var htmlss = "";
     if (method === "showAll") {
-        for (var i = 0; i < result.length; i++) {
+        for (var i = 0; i < result.content.length; i++) {
             var color = "";
             var statusC = "";
             htmls += "<tr>";
             htmls += "<td class='center_td'></td>";
-            if (result[i].status === "PENDING_AUDIT") {
+            if (result.content[i].status === "PENDING_AUDIT") {
                 color = "danger";
                 statusC = "待审核";
-            } else if (result[i].status === "HAVEPASSED") {
+            } else if (result.content[i].status === "HAVEPASSED") {
                 color = "success";
                 statusC = "已通过";
-            } else if (result[i].status === "FAILURE_TO_PASS_THE_AUDIT") {
+            } else if (result.content[i].status === "FAILURE_TO_PASS_THE_AUDIT") {
                 color = "danger";
                 statusC = "未通过";
-            } else if (result[i].status === "ALREADY_SIGN_UP") {
+            } else if (result.content[i].status === "ALREADY_SIGN_UP") {
                 color = "danger";
                 statusC = "已报名";
-            } else if (result[i].status === "SIGNED_IN") {
+            } else if (result.content[i].status === "SIGNED_IN") {
                 color = "success";
                 statusC = "已签到";
-            } else if (result[i].status === "COMPLETED") {
+            } else if (result.content[i].status === "COMPLETED") {
                 color = "success";
                 statusC = "已完成";
             }
             htmls += "<td class='center_td'><button class='btn btn-mini btn-" + color + "'>" + statusC + "</button></td>";
-            htmls += "<td>" + splitJson(result[i].event) + "</td>";
-            htmls += "<td>" + result[i].projectName + "</td>";
-            htmls += "<td>" + result[i].college + "</td>";
-            htmls += "<td>" + result[i].integral + "</td>";
+            htmls += "<td>" + splitJson(result.content[i].event) + "</td>";
+            htmls += "<td>" + result.content[i].projectName + "</td>";
+            htmls += "<td>" + result.content[i].college + "</td>";
+            htmls += "<td>" + result.content[i].integral + "</td>";
             htmls += "<td>";
-            htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div'>查看详情</div></a></td>";
+            htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick='ajaxs('"+result.content[i].integralLogId.projectNum+"','details','getIntegralLogByIntegralLogId')'>查看详情</div></a></td>";
             htmls += "</tr>";
         }
     } else if (method === "details") {

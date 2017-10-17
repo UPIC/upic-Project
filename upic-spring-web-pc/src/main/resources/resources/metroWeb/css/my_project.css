@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2017-09-14 15:57:53
 * @Last Modified by:   Marte
-* @Last Modified time: 2017-09-18 16:34:35
+* @Last Modified time: 2017-10-04 21:43:22
 */
 body{
         background:#fff;
@@ -24,6 +24,10 @@ body{
             height:25px;
             line-height:25px;
             padding:0px !important;
+        }
+        .selectlist_second{
+          margin-left: 0px !important;
+          padding-left: 0px !important;
         }
         #sample_1_length label{
           float: left;

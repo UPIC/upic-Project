@@ -88,4 +88,20 @@ public class UserServiceImpl implements UserService {
             LOGGER.info("用户删除失败。deleteUser错误信息：" + e.getMessage());
         }
     }
+
+    @Override
+    public Page<UserInfo> userSearchBar(String keyword, Pageable pageable) {
+        Page<User> userPage = null;
+        try {
+            userPage = userRepository.userSearchBar(keyword, pageable);
+            return QueryResultConverter.convert(userPage, pageable, new AbstractDomain2InfoConverter<User, UserInfo>() {
+                protected void doConvert(User domain, UserInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("用户列表查询失败。userSearchBar：" + e.getMessage());
+            return null;
+        }
+    }
 }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <title>text</title>
+    <style type="text/css" media="screen">
+        .div1{
+            width:100px;
+            height:100px;
+            border:1px solid #ccc;
+            display:none;
+        }
+        .div2{
+            width:100px;
+            height:100px;
+            border:1px solid green;
+            display:none;
+        }
+        .div3{
+            width:100px;
+            height:100px;
+            border:1px solid green;
+            display:none;
+        }
+
+    </style>
+</head>
+<body>
+<input type="text" name="">
+<div class="div1">
+<ul>
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+    <li>444</li>
+</ul>
+</div>
+<div class="div2">
+    <ul>
+        <li>555</li>
+        <li>666</li>
+        <li>777</li>
+        <li>888</li>
+    </ul>
+</div>
+<div class="div3">
+    <ul>
+        <li>000</li>
+        <li>000</li>
+        <li>000</li>
+        <li>000</li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $("input").click(function(){
+        $(".div1").toggle();
+    })
+    $(".div1>ul>li").click(function(){
+        var text = $(this).html();
+        $(".div2").show();
+        $(".div1").hide();
+        $("input").val(text);
+    })
+    $(".div2>ul>li").click(function(){
+        var old = $("input").val();
+        var text1 = $(this).html();
+        $("input").val(old+"/"+text1);
+        $(".div2").hide();
+        $(".div3").show();
+    })
+    $(".div3>ul>li").click(function(){
+        var old1 = $("input").val();
+        var text2 = $(this).html();
+        $("input").val(old1+"/"+text2);
+        $(".div3").hide();
+    })
+</script>
+</body>
+</html>

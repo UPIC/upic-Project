@@ -66,7 +66,7 @@ public interface IntegralLogService {
      * @param integralLogInfo
      * @param allNum
      */
-    IntegralLogInfo signUp(IntegralLogInfo integralLogInfo,int allNum);
+    IntegralLogInfo signUp(IntegralLogInfo integralLogInfo, int allNum);
 
     /**
      * 查询积分列表（条件）
@@ -147,4 +147,13 @@ public interface IntegralLogService {
      * @return
      */
     List<IntegralLogInfo> getByProjectNum(String projectNum);
+
+    /**
+     * 获取未通过审核的积分申请
+     *
+     * @param status
+     * @param pageable
+     * @return
+     */
+    Page<IntegralLogInfo> getIntegralLogWithOutPass(IntegralLogStatusEnum status, Pageable pageable);
 }
