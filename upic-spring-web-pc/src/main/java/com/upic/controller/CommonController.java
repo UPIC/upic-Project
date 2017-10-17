@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by zhubuqing on 2017/9/18.
@@ -363,7 +364,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/integralLogSearchBar")
-    public Page<IntegralLogInfo> integralLogSearchBar(@PageableDefault(size = 10) Pageable pageable, String status, String keyword) throws Exception {
+    public Page<IntegralLogInfo> integralLogSearchBar(@PageableDefault(size = 10) Pageable pageable, IntegralLogStatusEnum status, String keyword) throws Exception {
         try {
             return integralLogService.integralLogSearchBar(status, keyword, pageable);
         } catch (Exception e) {
@@ -467,19 +468,20 @@ public class CommonController {
      * @return
      */
     @GetMapping("/getTeacherNowWorkloadSummary")
-    public double getTeacherNowWorkloadSummary(String teacherNum) throws Exception {
+    public Double getTeacherNowWorkloadSummary(String teacherNum) throws Exception {
         try {
             List<String> projectNumList = projectService.getByGuidanceNum(teacherNum); // 获取到的是项目编号的List
-            List<IntegralLogInfo> integralLogInfoAllList = new ArrayList<>();
-            for (String projectNum : projectNumList) {
-                List<IntegralLogInfo> integralLogInfoList = integralLogService.getByProjectNum(projectNum); // 获取积分列表
+            List<IntegralLogInfo> integralLogInfoAllList = new ArrayList<IntegralLogInfo>();
+            projectNumList.stream().parallel().forEach((i)->{
+            	List<IntegralLogInfo> integralLogInfoList = integralLogService.getByProjectNum(i); // 获取积分列表
                 integralLogInfoAllList.addAll(integralLogInfoList);
-            }
+            });
             //用流实现
-            return 0;
+            return  integralLogInfoAllList.stream().parallel().reduce(IntegralLogInfo::doSum).get().getIntegral();
         } catch (Exception e) {
             LOGGER.info("getTeacherNowWorkloadSummary:" + e.getMessage());
-            throw new Exception("getTeacherNowWorkloadSummary" + e.getMessage());
+//            throw new Exception("getTeacherNowWorkloadSummary" + e.getMessage());
+            return null;
         }
     }
 
