@@ -1,8 +1,11 @@
 package com.upic.serviceimpl;
 
 import com.upic.common.beans.utils.UpicBeanUtils;
+import com.upic.common.exception.NeedRollBackException;
+import com.upic.common.exception.NoExitException;
 import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
+import com.upic.common.utils.redis.UpicRedisComponent;
 import com.upic.condition.IntegralLogCondition;
 import com.upic.dto.IntegralLogIdInfo;
 import com.upic.dto.IntegralLogInfo;
@@ -29,6 +32,8 @@ public class IntegralLogServiceImpl implements IntegralLogService {
     @Autowired
     private IntegralLogRepository integralLogRepository;
 
+    @Autowired
+    private UpicRedisComponent redisComponent;
     protected static final Logger LOGGER = LoggerFactory.getLogger(IntegralLogServiceImpl.class);
 
     public void allOperation(String apartment, String operatorNum, IntegralLogStatusEnum status, IntegralLogTypeEnum type) {
@@ -110,7 +115,27 @@ public class IntegralLogServiceImpl implements IntegralLogService {
 
     @Override
     public IntegralLogInfo signUp(IntegralLogInfo integralLogInfo, int allNum) {
-        return null;
+        String projectKey = integralLogInfo.getIntegralLogId().getProjectNum();
+        try {
+            Long increment = redisComponent.increment(projectKey);
+            if (increment == -1L) {
+                throw new NoExitException("No project!");
+            }
+            if (!redisComponent.putIfAbsent(projectKey + "hash", integralLogInfo.getIntegralLogId().getStudentNum(), increment + "")) {
+                throw new NeedRollBackException("exit!");
+            }
+            integralLogInfo.setField1(increment + "");
+            IntegralLog i = new IntegralLog();
+            UpicBeanUtils.copyProperties(integralLogInfo, i);
+            i = integralLogRepository.save(i);
+            UpicBeanUtils.copyProperties(i, integralLogInfo);
+            return integralLogInfo;
+        } catch (Exception e) {
+            if (e instanceof NeedRollBackException) {
+                redisComponent.decrement(projectKey);
+            }
+            return null;
+        }
     }
 
     public Page<IntegralLogInfo> searchIntegralLog(IntegralLogCondition integralLogCondition, Pageable pageable) {
@@ -197,7 +222,7 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         }
     }
 
-    public Page<IntegralLogInfo> integralLogSearchBar(String status, String keyword, Pageable pageable) {
+    public Page<IntegralLogInfo> integralLogSearchBar(IntegralLogStatusEnum status, String keyword, Pageable pageable) {
         Page<IntegralLog> integralLogPage = null;
         try {
             integralLogPage = integralLogRepository.integralLogSearchBar(status, keyword, pageable);
@@ -247,4 +272,23 @@ public class IntegralLogServiceImpl implements IntegralLogService {
             return null;
         }
     }
+
+    @Override
+    public Page<IntegralLogInfo> getIntegralLogWithOutPass(IntegralLogStatusEnum status, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.getIntegralLogWithOutPass(status, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                @Override
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogWithOutPass:" + e.getMessage());
+            return null;
+        }
+    }
+
+
 }

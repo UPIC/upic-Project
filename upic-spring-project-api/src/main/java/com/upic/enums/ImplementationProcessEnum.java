@@ -13,7 +13,8 @@ public enum ImplementationProcessEnum {
     NOT_PASS("未通过", 4),
     ENROLLMENT("报名中", 5),
     HAVE_IN_HAND("进行中", 6),
-    COMPLETED("已完成", 7);
+    COMPLETED("已完成", 7),
+    CHECKED("已验收", 8);
 
     private String content;
 

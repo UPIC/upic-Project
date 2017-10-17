@@ -58,7 +58,7 @@ public class StudetAllController {
             // if(user==null){
             // throw new Exception("获取用户失败");
             // }
-            return integralLogService.watchIntegral("1522110240");
+            return integralLogService.watchIntegral(getUser().getUserNum());
         } catch (Exception e) {
             LOGGER.info("getIntegeral :" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -84,7 +84,7 @@ public class StudetAllController {
             // if(user==null){
             // throw new Exception("获取用户失败");
             // }
-            return grainCoinLogService.watchGrainCoin("1522110240");
+            return grainCoinLogService.watchGrainCoin(getUser().getUserNum());
         } catch (Exception e) {
             LOGGER.info("getGrainCoin:" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -200,7 +200,7 @@ public class StudetAllController {
         try {
             return integralLogService.getIntegralLogByMySelf(studentNum, pageable);
         } catch (Exception e) {
-            LOGGER.info("getAllIntegralLogByStudentNum:" + e.getMessage());
+            LOGGER.info("getIntegralLogByMySelf:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
@@ -208,15 +208,14 @@ public class StudetAllController {
     /**
      * 学生查看自身的积分日志（可能没用）
      *
-     * @param studentNum
      * @param pageable
      * @return
      * @throws Exception
      */
     @GetMapping("/getAllIntegralLogByStudentNum")
-    public Page<IntegralLogInfo> getAllIntegralLogByStudentNum(String studentNum, @PageableDefault(size = 10) Pageable pageable) throws Exception {
+    public Page<IntegralLogInfo> getAllIntegralLogByStudentNum(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
-            return integralLogService.getAllIntegralLogByStudentNum(studentNum, pageable);
+            return integralLogService.getAllIntegralLogByStudentNum(getUser().getUserNum(), pageable);
         } catch (Exception e) {
             LOGGER.info("getAllIntegralLogByStudentNum:" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -226,18 +225,27 @@ public class StudetAllController {
     /**
      * 获取申报中的积分（可能没用）
      *
-     * @param studentNum
      * @param pageable
      * @return
      * @throws Exception
      */
     @GetMapping("/getIntegralLogDeclaring")
-    public Page<IntegralLogInfo> getIntegralLogDeclaring(String studentNum, @PageableDefault(size = 10) Pageable pageable) throws Exception {
+    public Page<IntegralLogInfo> getIntegralLogDeclaring(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
-            return integralLogService.getIntegralLogDeclaring(studentNum, pageable);
+            return integralLogService.getIntegralLogDeclaring(getUser().getUserNum(), pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogDeclaring:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
+    }
+
+    private UserInfo getUser() {
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //SocialUser so=(SocialUser) authentication.getPrincipal();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername("山鸡");
+        userInfo.setUserNum("1522110240");
+        userInfo.setPic("assets/i/shanji.jpg");
+        return userInfo;
     }
 }

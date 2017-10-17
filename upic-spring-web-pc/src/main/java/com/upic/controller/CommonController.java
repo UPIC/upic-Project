@@ -4,6 +4,8 @@ import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.service.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,7 @@ public class CommonController {
      * @return
      */
     @GetMapping("/getUserInfo")
+    @ApiOperation("获取用户信息")
     public UserInfo getUserInfo() {
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername("山鸡");
@@ -67,6 +70,7 @@ public class CommonController {
      * 获取所有项目类别*
      */
     @GetMapping("/getAllProjectCategory")
+    @ApiOperation("获取所有项目类别")
     public Page<ProjectCategoryInfo> getAllProjectCategory(@PageableDefault(size = 20) Pageable pageable, ProjectCategoryCondition p) throws Exception {
         try {
             return projectCategoryService.searchProjectCategory(p, pageable);
@@ -82,6 +86,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getProject")
+    @ApiOperation("根据条件查询活动")
     public Page<ProjectInfo> getProject(@PageableDefault(size = 10) Pageable pageable, ProjectCondition p)
             throws Exception {
         try {
@@ -100,6 +105,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getPrize")
+    @ApiOperation("根据条件查询奖品")
     public Page<PrizeInfo> getPrize(@PageableDefault(size = 10) Pageable pageable, PrizeCondition p) throws Exception {
         try {
             return prizeService.searchPrizes(p, pageable);
@@ -118,6 +124,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getMail")
+    @ApiOperation("根据条件获取站内信")
     public Page<MailInfo> getMail(@PageableDefault(size = 10) Pageable pageable, MailCondition m) throws Exception {
         try {
             return mailService.searchMail(m, pageable);
@@ -135,7 +142,8 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getMailInfo")
-    public MailInfo getMailInfo(Long id) throws Exception {
+    @ApiOperation("根据ID获取相应的站内信")
+    public MailInfo getMailInfo(@ApiParam("站内信ID") Long id) throws Exception {
         try {
             return mailService.getMailById(id);
         } catch (Exception e) {
@@ -152,7 +160,8 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getSignUpNumberByProjectNum")
-    public int getSignUpNumberByProjectNum(String projectNum) throws Exception {
+    @ApiOperation("根据项目编号查询项目人数")
+    public int getSignUpNumberByProjectNum(@ApiParam("项目编号") String projectNum) throws Exception {
         try {
             int a = integralLogService.getSignUpNumberByProjectNum(projectNum);
             System.out.println(a + "*****************************************************************************************************************************");
@@ -171,7 +180,8 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getProjectInfo")
-    public ProjectInfo getProjectInfo(String projectNum) throws Exception {
+    @ApiOperation("根据项目编号查询活动详情")
+    public ProjectInfo getProjectInfo(@ApiParam("项目编号") String projectNum) throws Exception {
         try {
             return projectService.getProjectByNum(projectNum);
         } catch (Exception e) {
@@ -189,6 +199,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getIntegralLogPage")
+    @ApiOperation("获取积分明细")
     public Page<IntegralLogInfo> getIntegralLogPage(@PageableDefault(size = 10) Pageable pageable,
                                                     IntegralLogCondition c) throws Exception {
         try {
@@ -212,6 +223,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getGraincoinLogPage")
+    @ApiOperation("获取素拓币明细")
     public Page<GrainCoinLogInfo> getGraincoinLogPage(@PageableDefault(size = 10) Pageable pageable, GrainCoinLogCondition grainCoinLogCondition) throws Exception {
         try {
             return grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageable);
@@ -230,6 +242,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getMyMail")
+    @ApiOperation("用户查看站内信（可能没用）")
     public Page<MailInfo> getMyMail(@PageableDefault(size = 10) Pageable pageable, UserInfo userInfo) throws Exception {
         try {
             return mailService.getMyMail(userInfo.getCollege(), userInfo.getMajor(), userInfo.getClazz(), userInfo.getUserNum(), pageable);
@@ -250,6 +263,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getProjectByUser")
+    @ApiOperation("根据用户获取项目列表")
     public Page<ProjectInfo> getProjectByUser(@PageableDefault(size = 10) Pageable pageable, ProjectCondition projectCondition) throws Exception {
         try {
             return projectService.searchProject(projectCondition, pageable);
@@ -267,6 +281,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/addProject")
+    @ApiOperation("项目申报")
     public ProjectInfo addProject(ProjectInfo projectInfo) throws Exception {
         try {
             return projectService.addProject(projectInfo);
@@ -284,7 +299,8 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getPrizeById")
-    public PrizeInfo getPrizeById(long prizeId) throws Exception {
+    @ApiOperation("获取单个奖品")
+    public PrizeInfo getPrizeById(@ApiParam("奖品ID") long prizeId) throws Exception {
         try {
             return prizeService.getPrizeById(prizeId);
         } catch (Exception e) {
@@ -301,6 +317,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getHistoryPrize")
+    @ApiOperation("获取历史奖品")
     public Page<PrizeInfo> getHistoryPrize(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
             Page<PrizeInfo> prizeInfoPage = prizeService.getHistoryPrize(pageable);
@@ -321,6 +338,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getProjectWithoutSignUp")
+    @ApiOperation("查询我未报名、并且在报名期间内的活动（学生移动端全部活动查询）")
     public Page<ProjectInfo> getProjectWithoutSignUp(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
             Page<ProjectInfo> projectInfoPage = projectService.getProjectWithoutSignUp(new Date(), pageable);
@@ -339,7 +357,8 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getIntegralLogInfoByMySelf")
-    public IntegralLogInfo getIntegralLogInfoByMySelf(String projectNum) throws Exception {
+    @ApiOperation("根据项目编号查找已报名的活动")
+    public IntegralLogInfo getIntegralLogInfoByMySelf(@ApiParam("项目编号") String projectNum) throws Exception {
         try {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum(projectNum);
@@ -363,7 +382,8 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/integralLogSearchBar")
-    public Page<IntegralLogInfo> integralLogSearchBar(@PageableDefault(size = 10) Pageable pageable, String status, String keyword) throws Exception {
+    @ApiOperation("积分搜索条")
+    public Page<IntegralLogInfo> integralLogSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("积分状态") IntegralLogStatusEnum status, @ApiParam("关键词") String keyword) throws Exception {
         try {
             return integralLogService.integralLogSearchBar(status, keyword, pageable);
         } catch (Exception e) {
@@ -375,14 +395,19 @@ public class CommonController {
     /**
      * 修改积分状态
      *
-     * @param integralLogIdInfos
      * @param status
      * @return
      */
     @GetMapping("/updateIntegralLogStatus")
-    public String updateIntegralLogStatus(List<IntegralLogIdInfo> integralLogIdInfos, IntegralLogStatusEnum status) throws Exception {
+    @ApiOperation("修改积分状态")
+    public String updateIntegralLogStatus(@ApiParam("学生编号）") List<String> studentNumList, @ApiParam("项目编号") List<String> projectNumList, @ApiParam("积分状态") IntegralLogStatusEnum status) throws Exception {
         try {
-            return integralLogService.updateIntegralLogStatus(integralLogIdInfos, status);
+            List<IntegralLogIdInfo> integralLogIdInfoList = new ArrayList<IntegralLogIdInfo>();
+            for (int i = 0; i < studentNumList.size(); i++) {
+                integralLogIdInfoList.get(i).setProjectNum(projectNumList.get(i));
+                integralLogIdInfoList.get(i).setStudentNum(studentNumList.get(i));
+            }
+            return integralLogService.updateIntegralLogStatus(integralLogIdInfoList, status);
         } catch (Exception e) {
             LOGGER.info("updateIntegralLogStatus:" + e.getMessage());
             throw new Exception("updateIntegralLogStatus" + e.getMessage());
@@ -398,7 +423,8 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/myProjectSearchBar")
-    public Page<ProjectInfo> myProjectSearchBar(@PageableDefault(size = 10) Pageable pageable, String keyword) throws Exception {
+    @ApiOperation("我的项目搜索条")
+    public Page<ProjectInfo> myProjectSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("关键词") String keyword) throws Exception {
         try {
             return projectService.projectSearchBar(getUser().getUserNum(), keyword, pageable);
         } catch (Exception e) {
@@ -415,6 +441,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/updateProject")
+    @ApiOperation("更新项目")
     public ProjectInfo updateProject(ProjectInfo projectInfo) throws Exception {
         try {
             return projectService.updateProject(projectInfo);
@@ -433,7 +460,8 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/projectSearchBar")
-    public Page<ProjectInfo> projectSearchBar(@PageableDefault(size = 10) Pageable pageable, String keyword) throws Exception {
+    @ApiOperation("项目搜索条")
+    public Page<ProjectInfo> projectSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("关键词") String keyword) throws Exception {
         try {
             return projectService.projectSearchBar(keyword, pageable);
         } catch (Exception e) {
@@ -451,6 +479,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getAllUser")
+    @ApiOperation("获取所有用户")
     public Page<UserInfo> getAllUser(@PageableDefault(size = 10) Pageable pageable, UserCondition userCondition) throws Exception {
         try {
             return userService.searchUser(userCondition, pageable);
@@ -467,7 +496,8 @@ public class CommonController {
      * @return
      */
     @GetMapping("/getTeacherNowWorkloadSummary")
-    public double getTeacherNowWorkloadSummary(String teacherNum) throws Exception {
+    @ApiOperation("教师查询目前汇总工作量")
+    public double getTeacherNowWorkloadSummary(@ApiParam("教师编号") String teacherNum) throws Exception {
         try {
             List<String> projectNumList = projectService.getByGuidanceNum(teacherNum); // 获取到的是项目编号的List
             List<IntegralLogInfo> integralLogInfoAllList = new ArrayList<>();
@@ -490,7 +520,8 @@ public class CommonController {
      * @return
      */
     @GetMapping("/getTeacherAllWorkloadSummary")
-    public double getTeacherAllWorkloadSummary(String teacherNum) throws Exception {
+    @ApiOperation("教师查询汇总工作量")
+    public double getTeacherAllWorkloadSummary(@ApiParam("教师编号") String teacherNum) throws Exception {
         try {
             return projectService.getTeacherAllWorkloadSummary(teacherNum);
         } catch (Exception e) {
@@ -507,6 +538,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/updatePrize")
+    @ApiOperation("更新奖品")
     public PrizeInfo updatePrize(PrizeInfo prizeInfo) throws Exception {
         try {
             return prizeService.updatePrize(prizeInfo);
@@ -525,6 +557,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getGrainCoinLog")
+    @ApiOperation("获取所有奖品交易记录")
     public Page<GrainCoinLogInfo> getGrainCoinLog(@PageableDefault(size = 10) Pageable pageable, GrainCoinLogCondition grainCoinLogCondition) throws Exception {
         try {
             return grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageable);
@@ -542,6 +575,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/updateUser")
+    @ApiOperation("更新用户")
     public UserInfo updateUser(UserInfo userInfo) throws Exception {
         try {
             return userService.updateUser(userInfo);
@@ -559,6 +593,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/addUser")
+    @ApiOperation("添加用户")
     public UserInfo addUser(UserInfo userInfo) throws Exception {
         try {
             return userService.addUser(userInfo);
@@ -576,6 +611,7 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/addPrize")
+    @ApiOperation("添加奖品")
     public PrizeInfo addPrize(PrizeInfo prizeInfo) throws Exception {
         try {
             return prizeService.addPrize(prizeInfo);
@@ -585,11 +621,102 @@ public class CommonController {
         }
     }
 
+    /**
+     * 根据积分ID获取积分详情
+     *
+     * @param projectNum
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getIntegralLogByIntegralLogId")
+    @ApiOperation("根据积分ID获取积分详情")
+    public IntegralLogInfo getIntegralLogByIntegralLogId(String projectNum) throws Exception {
+        try {
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            integralLogIdInfo.setStudentNum(getUser().getUserNum());
+            integralLogIdInfo.setProjectNum(projectNum);
+            return integralLogService.getByIntegralLogId(integralLogIdInfo);
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogByIntegralLogId:" + e.getMessage());
+            throw new Exception("getIntegralLogByIntegralLogId" + e.getMessage());
+        }
+    }
+
+    /**
+     * 根据单个积分状态获取积分
+     *
+     * @param pageable
+     * @param status
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getIntegralLogWithOutPass")
+    @ApiOperation("根据单个积分状态获取积分")
+    public Page<IntegralLogInfo> getIntegralLogWithOutPass(@PageableDefault(size = 10) Pageable pageable, IntegralLogStatusEnum status) throws Exception {
+        try {
+            return integralLogService.getIntegralLogWithOutPass(status, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogWithOutPass:" + e.getMessage());
+            throw new Exception("getIntegralLogWithOutPass" + e.getMessage());
+        }
+    }
+
+    /**
+     * 获取用户的积分
+     *
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getIntegeral")
+    public double getIntegeral(String studentNum) throws Exception {
+        try {
+            return integralLogService.watchIntegral(studentNum);
+        } catch (Exception e) {
+            LOGGER.info("getIntegeral :" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取学生素拓币
+     *
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getGrainCoin")
+    public double getGrainCoin(String studentNum) throws Exception {
+        try {
+            return grainCoinLogService.watchGrainCoin(studentNum);
+        } catch (Exception e) {
+            LOGGER.info("getGrainCoin:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 用户搜索条
+     *
+     * @param pageable
+     * @param keyword
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/userSearchBar")
+    public Page<UserInfo> userSearchBar(@PageableDefault(size = 10) Pageable pageable, String keyword) throws Exception {
+        try {
+            return userService.userSearchBar(keyword, pageable);
+        } catch (Exception e) {
+            LOGGER.info("userSearchBar:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
     private UserInfo getUser() {
         //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //SocialUser so=(SocialUser) authentication.getPrincipal();
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername("山鸡");
+        userInfo.setUserNum("1522110240");
         userInfo.setPic("assets/i/shanji.jpg");
         return userInfo;
     }

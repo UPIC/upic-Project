@@ -17,6 +17,7 @@
    <link href="../../css/jquery.fancybox.css" rel="stylesheet" />
    <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css" />
    <link rel="stylesheet" type="text/css" href="../../css/my_project.css" />
+    <script src="../../js/jquery-1.8.3.min.js"></script>
    <script src="../../js/bootstrap.min.js"></script>
    <script>
      $(document).ready(function(){
@@ -62,6 +63,33 @@
         .new{
           margin-left:10px;
         }
+        #mymodal1{
+        width:600px;
+       }
+       #mymodal2{
+        width:600px;
+       }
+       #mymodal1 input{
+        width:120px !important;
+       }
+       #mymodal1 select{
+        width:120px !important;
+       }
+       #mymodal2 input{
+        width:120px !important;
+       }
+       #mymodal2 select{
+        width:120px !important;
+       }
+       .modal.fade.in{
+        top:5%;
+       }
+       .span9 textarea{
+        width:90%;
+       }
+       #select-small{
+        width:55px;
+       }
    </style>
 </head>
 
@@ -103,9 +131,11 @@
 
                                     <th width="5%" class="center_td">编号</th>
                                     <th width="25%">所属学院</th>
+                                    <th width="25%">班级</th>
                                     <th width="20%">学号</th>
                                     <th width="15%">姓名</th>
-                                    <th width="25%">班级</th>
+                                    <th width="15%" class="center_td">编辑</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,63 +143,21 @@
 
                                     <td class="center_td">01</td>
                                     <td>信息工程学院</td>
+                                    <td>14广告</td>
                                     <td>152273737</td>
                                     <td>宣武帝</td>
-                                    <td>14广告</td>
-
-
-                                </tr>
-                                <tr>
-
-                                   <td class="center_td">01</td>
-                                    <td>信息工程学院</td>
-                                    <td>152273737</td>
-                                    <td>宣武帝</td>
-                                    <td>14广告</td>
-
-                                </tr>
-                                <tr>
-
-                                    <td class="center_td">01</td>
-                                    <td>信息工程学院</td>
-                                    <td>152273737</td>
-                                    <td>宣武帝</td>
-                                    <td>14广告</td>
-
-                                </tr>
-                                <tr>
-                                    <td class="center_td">01</td>
-                                    <td>信息工程学院</td>
-                                    <td>152273737</td>
-                                    <td>宣武帝</td>
-                                    <td>14广告</td>
-
-                                </tr>
-                                <tr>
-                                    <td class="center_td">01</td>
-                                    <td>信息工程学院</td>
-                                    <td>152273737</td>
-                                    <td>宣武帝</td>
-                                    <td>14广告</td>
-
-                                </tr>
-                                <tr>
-
-                                    <td class="center_td">01</td>
-                                    <td>信息工程学院</td>
-                                    <td>152273737</td>
-                                    <td>宣武帝</td>
-                                    <td>14广告</td>
-
-
-                                </tr>
+                                    <td class="center_td">
+                                    <div class="message_div"><a href="#mymodal1" data-toggle="modal">编辑</a><span class="space">|</span><a>提交</a></div></td>
+</tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-</div>
 
-<!-- <div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
+
+
+
+                <div id="mymodal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h4 id="mymodallabel1">详情</h4>
@@ -178,54 +166,77 @@
                                     <div class="row-fluid">
             <div class="block-fluid">
                 <div class="row-form clearfix">
-                    <div class="span3">编号</div>
-                    <div class="span3">01</div>
-                    <div class="span3">代码</div>
-                    <div class="span3">010</div>
-                </div>
-                <div class="row-form clearfix">
-                    <div class="span3">项目申请日期</div>
-                    <div class="span3">2017/8/5 14:00</div>
-                    <div class="span3">状态</div>
-                    <div class="span3">已报名</div>
-                </div>
-                <div class="row-form clearfix">
-                    <div class="span3">项目类别</div>
-                    <div class="span3">信息工程学院</div>
                     <div class="span3">所属学院</div>
-                    <div class="span3">信息工程学院</div>
+                    <div class="span3"><input type="text" name="" ></div>
+                    <div class="span3">班级</div>
+                    <div class="span3"><input type="text" name="" ></div>
                 </div>
                 <div class="row-form clearfix">
-                    <div class="span3">项目名称</div>
-                    <div class="span3">校级学生干部加分</div>
-                    <div class="span3">负责人</div>
-                    <div class="span3">XXX</div>
+                    <div class="span3">学号</div>
+                    <div class="span3"><input type="text" name="" ></div>
+                    <div class="span3">姓名</div>
+                    <div class="span3"><input type="text" name="" ></div>
                 </div>
-                <div class="row-form clearfix">
-                    <div class="span3">项目内容</div>
-                    <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
-                </div>
-                <div class="row-form clearfix">
-                    <div class="span3">评价标准与形式</div>
-                    <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
-                </div>
+
             </div>
             <div class="dr"><span></span></div>
         </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
+                                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button>
+                                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
                                 </div>
                             </div>
 
 
 
-   </div> -->
+<div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 id="mymodallabel1">详情</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row-fluid">
+            <div class="block-fluid">
+                <div class="row-form clearfix">
+                    <div class="span3">所属学院</div>
+                    <div class="span3"><input type="text" name="" value="信息工程学院" ></div>
+                    <div class="span3">班级</div>
+                    <div class="span3"><input type="text" name="" value="14广告1"></div>
+                </div>
+                <div class="row-form clearfix">
+                    <div class="span3">学号</div>
+                    <div class="span3"><input type="text" name="" value="1422131231"></div>
+                    <div class="span3">姓名</div>
+                    <div class="span3"><input type="text" name="" value="玄武帝"></div>
+                </div>
+
+            </div>
+            <div class="dr"><span></span></div>
+        </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button>
+                                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                                </div>
+                            </div>
 
 
-  <script src="../../js/jquery-1.8.3.min.js"></script>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
    <script src="../../js/jquery.nicescroll.js" type="text/javascript"></script>
-   <script src="../../js/bootstrap.min.js"></script>
+   <!-- <script src="../../js/bootstrap.min.js"></script> -->
    <script src="../../js/jquery.blockui.js"></script>
 
    <!--[if lt ie 9]>
@@ -239,7 +250,7 @@
 
 
 
-   <script src="../../js/common-scripts.js"></script>
+<!--    <script src="../../js/common-scripts.js"></script> -->
 
 
    <script src="../../js/dynamic-table.js"></script>
@@ -254,11 +265,15 @@
                  alert("确定选择审核的全部内容吗");
                 }
         });
-
+$("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
+        $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
+        $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
      /* $("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
         $(".selectlist").after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目名称筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');*/
-        $("#sample_1_length").after('<button class="btn btn-small btn-warning new"><i class="icon-plus icon-white"></i>新建</button><button class="btn btn-small btn-success"><i class="icon-cloud"></i>导入</button>');
-        $(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>')
+        $("#sample_1_length").after('<a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-warning new"><i class="icon-plus icon-white"></i>新建</button></a><button class="btn btn-small btn-success"><i class="icon-cloud"></i>导入</button>');
+/*        $(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/
+        $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
+        $(".dataTables_filter").parent(".span6").css('width', '33.9%');
     })
   </script>
 

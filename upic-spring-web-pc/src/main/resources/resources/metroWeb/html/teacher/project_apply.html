@@ -39,9 +39,13 @@
         font-size:24px;
         margin-left:-25px;
        }
-      /* .widget-body{
+       .widget-body{
         padding:15px 0px;
-      } */
+      }
+      .widget-body.form .form-actions{
+        margin-left:0px !important;
+        margin-right:0px !important;
+      }
    </style>
 </head>
 
@@ -107,7 +111,7 @@
                     </div>
                     </div>
                     <div class="span6">
-                       <label for="cname" class="control-label">指导人</label>
+                       <label for="cname" class="control-label">负责人</label>
                        <div class="controls">
                         <input type="text" value="XXX">
                        </div>
@@ -118,6 +122,7 @@
                         <label for="cname" class="control-label">项目类别</label>
                     <div class="controls">
                           <select class="input-large m-wrap" tabindex="1">
+                          <option value="category 1">--请选择项目类别--</option>
                               <option value="category 1">创新实践</option>
                               <option value="category 2">创业实践</option>
                               <option value="category 3">社会实践</option>
@@ -177,7 +182,7 @@
                       <div class="span10">
                         <label for="cname" class="control-label">项目主要内容</label>
                         <div class="controls">
-                        <textarea class="span6"></textarea>
+                        <textarea class="span9"></textarea>
                         </div>
                       </div>
                     </div>
@@ -185,7 +190,7 @@
                       <div class="span10">
                         <label for="cname" class="control-label">项目实施进程</label>
                         <div class="controls">
-                        <textarea class="span6"></textarea>
+                        <textarea class="span9"></textarea>
                         </div>
                       </div>
                     </div>
@@ -193,7 +198,7 @@
                       <div class="span10">
                         <label for="cname" class="control-label">考核评价标准与形式</label>
                         <div class="controls">
-                        <textarea class="span6"></textarea>
+                        <textarea class="span9"></textarea>
                         </div>
                       </div>
                     </div>
@@ -243,6 +248,25 @@
 <script src="../../js/home-chartjs.js"></script>
 
  -->
+
+ <script src="../../js/jquery.nicescroll.js" type="text/javascript"></script>
+   <script src="../../js/jquery.blockui.js"></script>
+
+   <script src="http://www.js-css.cn/js/excanvas.js"></script>
+   <script src="http://www.js-css.cn/js/respond.js"></script>
+
+   <script type="text/javascript" src="../../js/jquery.datatables.js"></script>
+   <script type="text/javascript" src="../../js/dt_bootstrap.js"></script>
+   <script src="../../js/jquery.scrollto.min.js"></script>
+
+
+
+   <script src="../../js/common-scripts.js"></script>
+
+
+   <script src="../../js/dynamic-table.js"></script>
+
+
  <script type="text/javascript">
  var newDate = new Date();
  var str = "" + newDate.getFullYear() + "-";
