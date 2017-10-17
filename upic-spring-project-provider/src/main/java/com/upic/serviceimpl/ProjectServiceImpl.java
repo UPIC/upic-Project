@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import com.upic.service.ProjectService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -218,7 +219,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<String> getByGuidanceNum(String teacherNum) {
         List<Project> projectPage = null;
-        List<String> projectNumList = null;
+        List<String> projectNumList = new ArrayList<String>();
         try {
             projectPage = projectRepository.getByGuidanceNum(teacherNum);
             if (projectPage == null) {

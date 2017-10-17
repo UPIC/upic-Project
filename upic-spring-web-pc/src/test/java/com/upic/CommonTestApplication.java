@@ -70,4 +70,13 @@ public class CommonTestApplication {
 
         System.out.println(integralLogIdInfoList.toString());
     }
+    
+    @Test
+    public void testGetProjectNum() throws Exception {
+        String contentAsString = mockMvc
+                .perform(get("/common/getTeacherNowWorkloadSummary").accept(MediaType.APPLICATION_JSON_UTF8).param("teacherNum", "101045"))
+                .andExpect(status().isOk()).andReturn().getResponse()
+                .getContentAsString();
+        System.out.println(contentAsString);
+    }
 }
