@@ -500,7 +500,7 @@ public class CommonController {
      */
     @GetMapping("/getTeacherNowWorkloadSummary")
     @ApiOperation("教师查询目前汇总工作量")
-    public double getTeacherNowWorkloadSummary(@ApiParam("教师编号") String teacherNum) throws Exception {
+    public Double getTeacherNowWorkloadSummary(@ApiParam("教师编号") String teacherNum) throws Exception {
         try {
             List<String> projectNumList = projectService.getByGuidanceNum(teacherNum); // 获取到的是项目编号的List
             List<IntegralLogInfo> integralLogInfoAllList = new ArrayList<IntegralLogInfo>();
