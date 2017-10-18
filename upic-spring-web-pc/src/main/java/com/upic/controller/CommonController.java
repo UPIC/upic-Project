@@ -94,7 +94,7 @@ public class CommonController {
             return projectService.searchProject(p, pageable);
         } catch (Exception e) {
             LOGGER.info("getProject:" + e.getMessage());
-            throw new Exception(e.getMessage());
+            return null;
         }
     }
 
