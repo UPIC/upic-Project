@@ -225,9 +225,9 @@ public class IntegralLogInfo implements Serializable {
                 ", projectName='" + projectName + '\'' +
                 '}';
     }
- 
-    public static IntegralLogInfo doSum(IntegralLogInfo i1,IntegralLogInfo i2) {
-    	i1.setIntegral(i1.getIntegral()+i2.getIntegral());
-    	return i1;
+
+    public static IntegralLogInfo doSum(IntegralLogInfo i1, IntegralLogInfo i2) {
+        i1.setIntegral(i1.getIntegral() + i2.getIntegral());
+        return i1;
     }
 }

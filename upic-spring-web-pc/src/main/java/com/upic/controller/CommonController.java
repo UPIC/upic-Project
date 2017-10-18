@@ -184,7 +184,9 @@ public class CommonController {
     @ApiOperation("根据项目编号查询活动详情")
     public ProjectInfo getProjectInfo(@ApiParam("项目编号") String projectNum) throws Exception {
         try {
-            return projectService.getProjectByNum(projectNum);
+            ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
+            System.out.println(projectInfo);
+            return projectInfo;
         } catch (Exception e) {
             LOGGER.info("getProjectInfo:" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -210,7 +212,7 @@ public class CommonController {
             System.out.println("******************************************************************************");
             return integralLogInfoPage;
         } catch (Exception e) {
-            LOGGER.info("getProjectInfo:" + e.getMessage());
+            LOGGER.info("getIntegralLogPage:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
@@ -504,12 +506,12 @@ public class CommonController {
         try {
             List<String> projectNumList = projectService.getByGuidanceNum(teacherNum); // 获取到的是项目编号的List
             List<IntegralLogInfo> integralLogInfoAllList = new ArrayList<IntegralLogInfo>();
-            projectNumList.stream().parallel().forEach((i)->{
-            	List<IntegralLogInfo> integralLogInfoList = integralLogService.getByProjectNum(i); // 获取积分列表
+            projectNumList.stream().parallel().forEach((i) -> {
+                List<IntegralLogInfo> integralLogInfoList = integralLogService.getByProjectNum(i); // 获取积分列表
                 integralLogInfoAllList.addAll(integralLogInfoList);
             });
             //用流实现
-            return  integralLogInfoAllList.stream().parallel().reduce(IntegralLogInfo::doSum).get().getIntegral();
+            return integralLogInfoAllList.stream().parallel().reduce(IntegralLogInfo::doSum).get().getIntegral();
         } catch (Exception e) {
             LOGGER.info("getTeacherNowWorkloadSummary:" + e.getMessage());
 //            throw new Exception("getTeacherNowWorkloadSummary" + e.getMessage());
