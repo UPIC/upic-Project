@@ -1,4 +1,6 @@
 var dataUrl = "/common/getProject";
+var searchKeyWordUrl="/common/projectSearchBar";
+var getProjectTypeUrl="/common/getAllProjectCategory";
 var pageSize = 0;
 var totalPages=-1;
 var pageNum=0;
@@ -9,6 +11,8 @@ var requestData={
 $(function(){
 	pageSize=$("#select-small").children('option:selected').text()
 	getData(pageNum,dataUrl);
+	commonAjax(getProjectTypeUrl,null,"addProjectType","GET");
+	registSelect("projectCategory");
 })
 
 
@@ -34,6 +38,8 @@ $(function(){
 		$("#data").html(htmls);
 		page(datas,dataUrl,requestData.size,requestData.page);
 	}
-
+function addProjectType(data){
+	alert(data);
+}
 
 

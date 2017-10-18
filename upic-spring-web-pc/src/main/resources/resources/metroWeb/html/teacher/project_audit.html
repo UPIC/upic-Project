@@ -21,14 +21,17 @@
 <link rel="stylesheet" type="text/css" href="../../css/my_project.css" />
 <script src="../../js/jquery-1.8.3.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
-<script src="../../js/tjs/pagejs.js"></script>
+
 <script>
+
 	$(document).ready(function() {
 		$("#main-content").css({
 			minHeight : $(window).height() - 100 + "px"
 		});
+		$("#sample_1_wrapper>.row-fluid>.span6").first().siblings().append('<input type="search" id="search" style="float:right" class="search"/>')
 	})
 </script>
+
 <style type="text/css" media="screen">
 #select-small {
 	width: 55px;
@@ -312,7 +315,7 @@
 			$("#sample_1_length")
 					.find('label')
 					.after(
-							'<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+							'<div class="selectlist"><select id="projectCategory" name="projectCategory" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
 
 			$(".selectlist")
 					.after(
@@ -323,6 +326,8 @@
 			$("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
 					'62.9%');
 			$("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
+			
+			
 
 			$(".fal").click(function() {
 				$(".hide1").show();
@@ -335,6 +340,6 @@
 		})
 	</script>
 	<script src="../../js/tjs/project_audit.js"></script>
-		
+		<script src="../../js/tjs/pagejs.js"></script>
 </body>
 </html>

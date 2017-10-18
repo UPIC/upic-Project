@@ -1,3 +1,5 @@
+
+//ajax获取页面内容
 function getData(pageNum, dataUrl, pageSize) {
 	requestData.size = parseInt($("#select-small").children('option:selected')
 			.text());
@@ -20,6 +22,7 @@ function getData(pageNum, dataUrl, pageSize) {
 	});
 
 }
+
 function page(data, dataUrl, pageSize, pageNum) {
 	var totalData = "当前显示<span>" + (parseInt(pageNum) * parseInt(pageSize) + 1)
 			+ "</span>到<span>"
@@ -28,6 +31,7 @@ function page(data, dataUrl, pageSize, pageNum) {
 	$('#sample_1_info').html(totalData);
 	loadPage(dataUrl, data.totalPages, pageSize, pageNum);
 }
+// 分页
 function loadPage(dataUrl, totalPages, pageSize, pageNum) {
 	// var pageNum=requestData.page;
 	var htmls = "<div class='pagination'><ul>";
@@ -70,12 +74,7 @@ function loadPage(dataUrl, totalPages, pageSize, pageNum) {
 	$('.pagination').html(htmls);
 }
 
-$(function(){
-	$("#select-small").change(function() {
-		pageSize = parseInt($(this).children('option:selected').text());// 这就是selected的值
-		getData(0,dataUrl);
-	});
-})
+
 
 function getDate(date, rule) {
     var date = new Date(date);
@@ -125,3 +124,56 @@ Date.prototype.pattern = function (fmt) {
     }
     return fmt;
 }
+
+
+var  oldVal="";
+$(function() {
+	// pageSize监听
+	$("#select-small").change(function() {
+		pageSize = parseInt($(this).children('option:selected').text());// 这就是selected的值
+		getData(0,dataUrl);
+	});
+	// input监听事件
+	$('#search').bind('input propertychange', function() {
+		if ($.trim($(this).val()) == oldVal) {
+			getData(0,dataUrl);
+			return;
+		}
+		oldVal = $.trim($(this).val());
+		if ($(this).val().length > 0) {
+			requestData.keyword=oldVal;
+			getData(0, searchKeyWordUrl);
+		}
+	});
+})
+
+ //下拉框注册监听
+ function registSelect(id){
+	$("#"+id).change(function() {
+		var name=$(this).attr("name");
+		var value=$(this).children('option:selected').text();
+		eval('('+"requestData."+name1+"=\""+value+'\")'); 
+		getData(0,dataUrl);
+	});
+}
+//通用ajax请求 万能类
+ function commonAjax(url,requestData,methodName,requestType){
+	 $.ajax({
+			type : requestType,
+			url : url,
+			data : requestData,
+			beforeSend : function(XMLHttpRequest) {
+			},
+			success : function(result) {
+				if (result != "" && result != null) {
+					var str=JSON.stringify(result);
+					eval('('+methodName+'('+str+'))');
+				}
+			},
+			complete : function(XMLHttpRequest, textStatus) {
+			},
+			error : function() {
+			}
+		});
+	 
+ }
