@@ -24,8 +24,8 @@ $(function(){
         function ajaxGetPage(page,pages){
                 $.ajax({
                      type: POST, // 提交方式
-                     url:"/common/getProjectByUser",// 路径
-                     data: 获取第几页的参数名=page&每页几条数据参数名=pages,
+                     url:"/common/getProjectByGuidanceNum",// 路径
+                     // data: 获取第几页的参数名=page&每页几条数据参数名=pages,
                     beforeSend: function (XMLHttpRequest) {
                         // progress.inc();
                         },
@@ -64,7 +64,7 @@ $(function(){
                 }
 
 
-                if (result[i].status=="已保存"&&(result[i].status=="未通过") {
+                if (result[i].status=="已保存"&&(result[i].status=="未通过")) {
                  htmls+="<tr>";
                  htmls+="<td><input type='checkbox' class='checkboxes' value='1'/></td>";
                  htmls+="<td class='center_td'>"+项目编号+"</td>";
@@ -123,13 +123,7 @@ $(function(){
         });
 
         //页面加载项目类别筛选
-        $("#sample_1_length").find('label').after("<div class='selectlist'>
-                                                    <select name='select' style='width: 100%;' class='color-wh'>
-                                                    <option value='4' class='yellow' id='get'>项目类别筛选...</option>
-
-
-                                                    </select>
-                                                    </div>");
+        $("#sample_1_length").find('label').after("<div class='selectlist'><select name='select' style='width: 100%;' class='color-wh'> <option value='4' class='yellow' id='get'>项目类别筛选...</option> </select> </div>");
 
         //ajax获取项目类别
         $.ajax({
@@ -145,15 +139,7 @@ $(function(){
         });
 
         //页面加载
-        $("#sample_1_length").find('label').html("<span>每页显示</span>
-                                                <select class='input-small m-wrap' tabindex='1' id='select-small'>
-
-                                                <option value='Category 1'>5</option>
-                                                <option value='Category 2'>10</option>
-                                                <option value='Category 3'>15</option>
-                                                <option value='Category 4'>20</option>
-
-                                                </select><span>条记录</span>");
+        $("#sample_1_length").find('label').html("<span>每页显示</span> <select class='input-small m-wrap' tabindex='1' id='select-small'> <option value='Category 1'>5</option> <option value='Category 2'>10</option> <option value='Category 3'>15</option> <option value='Category 4'>20</option> </select><span>条记录</span>");
 
 
 
@@ -208,21 +194,11 @@ $(function(){
         var fengyehtml="";
         fengyehtml=shangyiye+pagehtml+xiayiye;
 
-        $('.pagination').html("<div class='pagination'>
-                                <ul id="fengyedaohang">
-
-                                </ul>
-                                </div>");
+        $('.pagination').html("<div class='pagination'> <ul id='fengyedaohang'> </ul> </div>");
 
         $("fengyedaohang").html(fengyehtml);
 
-        $(".selectlist").after("<div class='selectlist selectlist_second'>
-                                <select name='select' style='width: 100%;' class='color-wh'>
-                                <option value='4' class='yellow' id='getstatus'>项目状态筛选...</option>
-
-
-                                </select>
-                                </div>");
+        $(".selectlist").after("<div class='selectlist selectlist_second'> <select name='select' style='width: 100%;' class='color-wh'> <option value='4' class='yellow' id='getstatus'>项目状态筛选...</option> </select> </div>");
 
         $.ajax({
             type: "GET",
@@ -236,10 +212,7 @@ $(function(){
               }
         });
 
-        $(".selectlist_second").after("<button class='btn btn-small btn-success'>
-                                        <i class='icon-cloud'></i>
-                                        导出
-                                        </button>");
+        $(".selectlist_second").after("<button class='btn btn-small btn-success'> <i class='icon-cloud'></i>导出 </button>");
 
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
 

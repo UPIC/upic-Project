@@ -162,7 +162,7 @@ function addHtmls(result, method) {
     for (var i = 0; i < result.length; i++) {
         htmls += "<div class='act-div'><div class='tab-left'><img src='" + result[i].integralLogPic + "'></div>";
         htmls += "<div class='tab-right'><div class='tab-title'><div class='right-name'>" + subMyStr(result[i].projectName) + "</div></div>";
-        htmls += "<div class='tab-text'><span>" + "创新创业类" + " >></span>&nbsp;<span>" + "国赛" + " >></span>&nbsp;<span>" + "一等奖" + "</span><br><span>" + "信息工程学院" + "</span></div>";
+        htmls += "<div class='tab-text'><span>" + result[i].event + "</span></div>";
         htmls += "<a href='st-check.html?projectNum=" + result[i].integralLogId.projectNum + "'><div class='tab-search'>" + "查看详情" + " ></div></a></div></div>";
     }
     if (method === "inreview") {
@@ -183,7 +183,6 @@ function addHtmls(result, method) {
         $("#cc").html(htmls);
     }
 }
-
 
 function subMyStr(str) {
     if (str.length > 8) {

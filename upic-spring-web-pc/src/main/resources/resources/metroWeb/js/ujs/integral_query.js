@@ -82,22 +82,16 @@ function addHtmls(result, method, j) {
     } else if (method === "details") {
         var statusC = "";
         if (result.status === "PENDING_AUDIT") {
-            color = "danger";
             statusC = "待审核";
         } else if (result.status === "HAVEPASSED") {
-            color = "success";
             statusC = "已通过";
         } else if (result.status === "FAILURE_TO_PASS_THE_AUDIT") {
-            color = "danger";
             statusC = "未通过";
         } else if (result.status === "ALREADY_SIGN_UP") {
-            color = "danger";
             statusC = "已报名";
         } else if (result.status === "SIGNED_IN") {
-            color = "success";
             statusC = "已签到";
         } else if (result.status === "COMPLETED") {
-            color = "success";
             statusC = "已完成";
         }
 
@@ -136,11 +130,11 @@ function addHtmls(result, method, j) {
 
         $("#details").html(htmlss);
 
-        projectAjaxs("projectNum=" + result.integralLogId.projectNum, "/common/getProjectInfo", result.integralLogId.projectNum);
+        projectAjaxs("projectNum=" + result.integralLogId.projectNum, "/common/getProjectInfo", result);
     }
 }
 
-function projectAjaxs(datas, url, projectNum) {
+function projectAjaxs(datas, url, project) {
     $.ajax({
         type: types, // 提交方式
         url: url,// 路径
@@ -149,9 +143,15 @@ function projectAjaxs(datas, url, projectNum) {
         beforeSend: function (XMLHttpRequest) {
         },
         success: function (result) {// 返回数据根据结果进行相应的处理
-            $("#guidanceMan" + projectNum).html(result.guidanceMan);
-            $("#content" + projectNum).html(result.content);
-            $("#checkAssessmentCriteraAndForm" + projectNum).html(result.checkAssessmentCriteraAndForm);
+            if (project.type === 'SIGN_IN') {
+                $("#guidanceMan" + project.integralLogId.projectNum).html(result.guidanceMan);
+                $("#content" + project.integralLogId.projectNum).html(result.content);
+                $("#checkAssessmentCriteraAndForm" + project.integralLogId.projectNum).html(result.checkAssessmentCriteraAndForm);
+            } else {
+                $("#guidanceMan" + project.integralLogId.projectNum).html("自主申报");
+                $("#content" + project.integralLogId.projectNum).html("自主申报");
+                $("#checkAssessmentCriteraAndForm" + project.integralLogId.projectNum).html("自主申报");
+            }
         },
         complete: function (XMLHttpRequest, textStatus) {
         },
@@ -162,7 +162,7 @@ function projectAjaxs(datas, url, projectNum) {
 
 function splitJson(json) {
     var projectCategorys = new Array();
-    projectCategorys.concat(json.split(" >"));
+    projectCategorys = json.split(">");
     return projectCategorys[0];
 }
 

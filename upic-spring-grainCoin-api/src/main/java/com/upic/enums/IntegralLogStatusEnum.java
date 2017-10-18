@@ -8,8 +8,8 @@ import java.util.Map;
  */
 public enum IntegralLogStatusEnum {
     PENDING_AUDIT("待审核", 1),
-    HAVEPASSED("已通过", 2),
-    FAILURE_TO_PASS_THE_AUDIT("未通过审核", 3),
+    HAVEPASSED("审核成功", 2),
+    FAILURE_TO_PASS_THE_AUDIT("审核失败", 3),
 
     ALREADY_SIGN_UP("已报名", 4),
     SIGNED_IN("已签到", 5),

@@ -235,6 +235,24 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    @Override
+    public Page<ProjectInfo> getProjectByGuidanceNum(String guidanceNum, Pageable pageable) {
+        Page<Project> projectPage = null;
+        try {
+            projectPage = projectRepository.getProjectByGuidanceNum(guidanceNum, pageable);
+            return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
+                @Override
+                protected void doConvert(Project domain, ProjectInfo info) throws Exception {
+                    filterProject(domain);
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getProjectByGuidanceNum：" + e.getMessage());
+            return null;
+        }
+    }
+
     private void filterProject(Project project) {
         if (project == null) {
 

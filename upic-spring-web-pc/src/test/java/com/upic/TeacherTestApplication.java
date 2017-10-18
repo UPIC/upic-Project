@@ -135,7 +135,7 @@ public class TeacherTestApplication {
     @Test
     public void getProjectByUser() throws Exception {
         String contentAsString = mockMvc
-                .perform(get("/teacher/getProjectByUser").accept(MediaType.APPLICATION_JSON_UTF8))
+                .perform(get("/teacher/getProjectByGuidanceNum").accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk()).andReturn().getResponse()
                 .getContentAsString();
         System.out.println(contentAsString);
