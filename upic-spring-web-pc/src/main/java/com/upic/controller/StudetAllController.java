@@ -215,7 +215,8 @@ public class StudetAllController {
     @GetMapping("/getAllIntegralLogByStudentNum")
     public Page<IntegralLogInfo> getAllIntegralLogByStudentNum(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
-            return integralLogService.getAllIntegralLogByStudentNum(getUser().getUserNum(), pageable);
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getAllIntegralLogByStudentNum(getUser().getUserNum(), pageable);
+            return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getAllIntegralLogByStudentNum:" + e.getMessage());
             throw new Exception(e.getMessage());
