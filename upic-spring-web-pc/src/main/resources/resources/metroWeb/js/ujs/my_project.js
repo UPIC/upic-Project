@@ -69,7 +69,7 @@ function addHtmls(result, method) {
             htmls += "<td>" + result.content[i].creatTime + "</td>";
             htmls += "<td>" + status + "</td>";
             htmls += "<td>";
-            htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick='ajaxs('" + result.content[i].projectNum + "','details','getProjectInfo')>查看详情</div></a></td>";
+            htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=ajaxs('" + result.content[i].projectNum + "','info','getProjectInfo')>查看详情</div></a></td>";
             htmls += "</tr>";
         }
         $("#showAll").html(htmls);
