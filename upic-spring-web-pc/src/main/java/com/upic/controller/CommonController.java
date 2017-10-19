@@ -271,8 +271,8 @@ public class CommonController {
         try {
             return projectService.searchProject(projectCondition, pageable);
         } catch (Exception e) {
-            LOGGER.info("getProjectByUser:" + e.getMessage());
-            throw new Exception("getProjectByUser" + e.getMessage());
+            LOGGER.info("getProjectByGuidanceNum:" + e.getMessage());
+            throw new Exception("getProjectByGuidanceNum" + e.getMessage());
         }
     }
 
@@ -714,6 +714,20 @@ public class CommonController {
         } catch (Exception e) {
             LOGGER.info("userSearchBar:" + e.getMessage());
             throw new Exception(e.getMessage());
+        }
+    }
+
+    /*******************************************20171018*******************************************/
+
+    @GetMapping("/getProjectByGuidanceNum")
+    public Page<ProjectInfo> getProjectByGuidanceNum(@PageableDefault(size = 10) Pageable pageable) {
+        try {
+            Page<ProjectInfo> projectInfoPage = projectService.getProjectByGuidanceNum("101045", pageable);
+            System.out.println(projectInfoPage.toString());
+            return projectInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getProjectByGuidanceNum:" + e.getMessage());
+            return null;
         }
     }
 

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping("/stu")
 public class StudetAllController {
@@ -170,14 +172,12 @@ public class StudetAllController {
     @GetMapping("/postIntegralLog")
     public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo, @RequestParam("file") MultipartFile file, MultipartHttpServletRequest request) throws Exception {
         try {
-//            Iterator<String> iterator = request.getFileNames();
-//            MultipartFile multipartFile = file;
-//            while (iterator.hasNext()) {
-//                multipartFile = request.getFile(iterator.next());
-//            }
-
             integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
             integralLogInfo.setType(IntegralLogTypeEnum.VOLUNTARY_APPLICATION);
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            UserInfo userInfo = getUser();
+            integralLogIdInfo.setStudentNum(userInfo.getUserNum());
+            integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + userInfo.getUserNum() + (new Date()).getTime());
             integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);
 
             return integralLogInfo;

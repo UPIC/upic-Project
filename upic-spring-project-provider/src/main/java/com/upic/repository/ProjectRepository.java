@@ -32,4 +32,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
     Page<Project> projectSearchBar(String keyword, Pageable pageable);
 
     List<Project> getByGuidanceNum(String guidanceNum);
+
+    Page<Project> getProjectByGuidanceNum(String guidanceNum, Pageable pageable);
 }

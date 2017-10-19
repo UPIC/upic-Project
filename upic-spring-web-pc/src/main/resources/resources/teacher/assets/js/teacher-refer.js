@@ -8,7 +8,7 @@
 
 var page = 1;
 var pageCount = -1;
-var getAllurl = "/common/getProjectByUser";//获取用户项目列表
+var getAllurl = "/common/getProjectByGuidanceNum";//获取用户项目列表
 var getNewNum = "/common/getSignUpNumberByProjectNum";//项目报名人数
 var types = "GET";
 

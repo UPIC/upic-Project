@@ -15,7 +15,7 @@ $(function(){
 
                              $("#getusernsme").text(result.username+" 同学，你好！");
 
-                             coin="<a href='#mymodal1' data-toggle='modal'> <span onclick='ajaxs('guidanceNum="+result.guidanceNum+"','getmyproject','/common/getProjectByUser')''>"+result.id+" ></span></a>"
+                             coin="<a href='#mymodal1' data-toggle='modal'> <span onclick='ajaxs('guidanceNum="+result.guidanceNum+"','getmyproject','/common/getProjectByGuidanceNum')''>"+result.id+" ></span></a>"
 
                              $("#getcoin").html(coin);
 

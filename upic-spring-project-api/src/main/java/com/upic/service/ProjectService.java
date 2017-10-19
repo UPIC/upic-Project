@@ -117,4 +117,13 @@ public interface ProjectService {
      * @return
      */
     List<String> getByGuidanceNum(String teacherNum);
+
+    /**
+     * 根据指导人编号找出指导人的所有项目
+     *
+     * @param guidanceNum
+     * @param pageable
+     * @return
+     */
+    Page<ProjectInfo> getProjectByGuidanceNum(String guidanceNum, Pageable pageable);
 }
