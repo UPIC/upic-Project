@@ -97,8 +97,8 @@ public class SpringBootJpaTestApplicationTests {
     public void searchProject() {
         ProjectCondition projectCondition = new ProjectCondition();
         PageRequest p = new PageRequest();
+        projectCondition.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT);
         Page<ProjectInfo> page = projectService.searchProject(projectCondition, p);
-
         System.out.println(page.getTotalElements());
         System.out.println(page.getTotalPages());
 //        page.getContent().forEach(x->System.out.println());

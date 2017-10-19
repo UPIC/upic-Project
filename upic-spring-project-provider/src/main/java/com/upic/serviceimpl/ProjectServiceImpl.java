@@ -10,7 +10,6 @@ import com.upic.dto.ProjectInfo;
 import com.upic.enums.RankEnum;
 import com.upic.po.Advice;
 import com.upic.po.Project;
-import com.upic.po.ProjectLog;
 import com.upic.repository.AdviceRepository;
 import com.upic.repository.ProjectRepository;
 import com.upic.repository.spec.AdviceSpec;
@@ -20,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import com.upic.service.ProjectService;
 import org.springframework.stereotype.Service;
 

@@ -94,7 +94,7 @@ public class CommonController {
             return projectService.searchProject(p, pageable);
         } catch (Exception e) {
             LOGGER.info("getProject:" + e.getMessage());
-            throw new Exception(e.getMessage());
+            return null;
         }
     }
 
@@ -723,6 +723,7 @@ public class CommonController {
     public Page<ProjectInfo> getProjectByGuidanceNum(@PageableDefault(size = 10) Pageable pageable) {
         try {
             Page<ProjectInfo> projectInfoPage = projectService.getProjectByGuidanceNum("101045", pageable);
+            System.out.println(projectInfoPage.toString());
             return projectInfoPage;
         } catch (Exception e) {
             LOGGER.info("getProjectByGuidanceNum:" + e.getMessage());

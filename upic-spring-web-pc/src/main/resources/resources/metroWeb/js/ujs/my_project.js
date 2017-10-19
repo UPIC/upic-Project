@@ -16,7 +16,7 @@ $(function () {
 
 function ajaxs(datas, method, urls) {
     $.ajax({
-        type: GET, // 提交方式
+        type: "GET", // 提交方式
         url: urls,// 路径
         data: datas,//
 
@@ -36,13 +36,11 @@ function ajaxs(datas, method, urls) {
 }
 
 function addHtmls(result, method) {
-
     var htmls = "";
     var htmlss = "";
 
-
     if (method === "showAll") {
-        for (var i = 0; i <= result.content.length; i++) {
+        for (var i = 0; i < result.content.length; i++) {
             var status = "";
 
             if (result.content[i].implementationProcess === "SAVED") {
@@ -66,12 +64,12 @@ function addHtmls(result, method) {
             htmls += "<td>" + result.content[i].projectCategory + "</td>";
             htmls += "<td>" + result.content[i].projectName + "</td>";
             htmls += "<td>" + result.content[i].integral + "</td>";
-            htmls += "<td>" + reslut.content[i].maximum + "</td>";
-            htmls += "<td>" + (result.content[i].integral * reslut.content[i].maximum) + "</td>";
-            htmls += "<td>" + reslut.content[i].creatTime + "</td>";
+            htmls += "<td>" + result.content[i].maximum + "</td>";
+            htmls += "<td>" + (result.content[i].integral * result.content[i].maximum) + "</td>";
+            htmls += "<td>" + result.content[i].creatTime + "</td>";
             htmls += "<td>" + status + "</td>";
             htmls += "<td>";
-            htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick='ajaxs('" + result.content[i].integralLogId.projectNum + "','details','getProjectInfo')>查看详情</div></a></td>";
+            htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick='ajaxs('" + result.content[i].projectNum + "','details','getProjectInfo')>查看详情</div></a></td>";
             htmls += "</tr>";
         }
         $("#showAll").html(htmls);
@@ -93,40 +91,40 @@ function addHtmls(result, method) {
                 status = "已完成"
             }
 
-            htmlss += "    <div class='block-fluid'>";
-            htmlss += "     <div class='row-form clearfix'>";
-            htmlss += "       <div class='span3'>编号</div>";
-            htmlss += "       <div class='span3'>" + (i + 1) + "</div>";
-            htmlss += "       <div class='span3'>代码</div>";
-            htmlss += "    <div class='span3'>" + reslut[i].id + "</div>";
-            htmlss += "  </div>";
-            htmlss += " <div class='row-form clearfix'>";
-            htmlss += "   <div class='span3'>项目申请日期</div>";
-            htmlss += "   <div class='span3'>" + reslut[i].creatTime + "</div>";
-            htmlss += "   <div class='span3'>状态</div>";
-            htmlss += "   <div class='span3'>" + statuss + "</div>";
-            htmlss += "   </div>";
-            htmlss += "   <div class='row-form clearfix'>";
-            htmlss += "     <div class='span3'>项目类别</div>";
-            htmlss += "     <div class='span3'>" + reslut[i].projectCategory + "</div>";
-            htmlss += "     <div class='span3'>所属学院</div>";
-            htmlss += "     <div class='span3'>" + reslut[i].college + "</div>";
-            htmlss += "   </div>";
-            htmlss += "    <div class='row-form clearfix'>";
-            htmlss += "     <div class='span3'>项目名称</div>";
-            htmlss += "    <div class='span3'>" + reslut[i].projectName + "</div>";
-            htmlss += "    <div class='span3'>负责人</div>";
-            htmlss += "    <div class='span3'>123</div>";
-            htmlss += "  </div>";
-            htmlss += " <div class='row-form clearfix'>";
-            htmlss += "    <div class='span3'>项目内容</div>";
-            htmlss += "    <div class='span9'>" + reslut[i].content + "</div>";
-            htmlss += "  </div>";
-            htmlss += "  <div class='row-form clearfix'>";
-            htmlss += "    <div class='span3'>评价标准与形式</div>";
-            htmlss += "    <div class='span9'>123</div>";
-            htmlss += "  </div>";
-            htmlss += " </div>";
+            htmlss += "<div class='block-fluid'>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>编号</div>";
+            htmlss += "<div class='span3'>" + (i + 1) + "</div>";
+            htmlss += "<div class='span3'>代码</div>";
+            htmlss += "<div class='span3'>" + result[i].id + "</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>项目申请日期</div>";
+            htmlss += "<div class='span3'>" + result[i].creatTime + "</div>";
+            htmlss += "<div class='span3'>状态</div>";
+            htmlss += "<div class='span3'>" + statuss + "</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>项目类别</div>";
+            htmlss += "<div class='span3'>" + result[i].projectCategory + "</div>";
+            htmlss += "<div class='span3'>所属学院</div>";
+            htmlss += "<div class='span3'>" + result[i].college + "</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>项目名称</div>";
+            htmlss += "<div class='span3'>" + result[i].projectName + "</div>";
+            htmlss += "<div class='span3'>负责人</div>";
+            htmlss += "<div class='span3'>123</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>项目内容</div>";
+            htmlss += "<div class='span9'>" + result[i].content + "</div>";
+            htmlss += "</div>";
+            htmlss += "<div class='row-form clearfix'>";
+            htmlss += "<div class='span3'>评价标准与形式</div>";
+            htmlss += "<div class='span9'>123</div>";
+            htmlss += "</div>";
+            htmlss += "</div>";
         }
         $("#info").html(htmlss);
     }
