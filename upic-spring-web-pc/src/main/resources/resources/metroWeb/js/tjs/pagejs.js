@@ -147,7 +147,7 @@ $(function() {
 	});
 })
 
- //下拉框注册监听
+ // 下拉框注册监听
  function registSelect(id){
 	$("#"+id).change(function() {
 		var name=$(this).attr("name");
@@ -156,8 +156,8 @@ $(function() {
 		getData(0,dataUrl);
 	});
 }
-//通用ajax请求 万能类
- function commonAjax(url,requestData,methodName,requestType){
+// 通用ajax请求 万能类
+ function commonAjax(url,requestData,methodName,requestType,sendData){
 	 $.ajax({
 			type : requestType,
 			url : url,
@@ -166,8 +166,15 @@ $(function() {
 			},
 			success : function(result) {
 				if (result != "" && result != null) {
-					var str=JSON.stringify(result);
-					eval('('+methodName+'('+str+'))');
+					if(sendData ==null && sendData == ""){
+						var str=JSON.stringify(result);
+						eval('('+methodName+'('+str+'))');
+					}else{
+						var str=JSON.stringify(result);
+						var str1=JSON.stringify(sendData);
+						eval('('+methodName+'('+str+','+str1+'))');
+					}
+					
 				}
 			},
 			complete : function(XMLHttpRequest, textStatus) {
