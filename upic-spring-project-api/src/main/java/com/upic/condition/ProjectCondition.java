@@ -3,6 +3,7 @@ package com.upic.condition;
 import com.upic.common.base.condition.BaseCondition;
 import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.ProjectAddWayEnum;
+import com.upic.enums.ProjectTypeEnum;
 import com.upic.enums.RankEnum;
 
 import java.util.Date;
@@ -59,11 +60,19 @@ public class ProjectCondition extends BaseCondition {
 
     private String unit;
 
+    private int onOff; //二维码开关
+
+    private String refreshTime; //刷新时间
+
+    private ProjectTypeEnum type;
+
+    private long projectCategoryId;
+
     public ProjectCondition() {
         super();
     }
 
-    public ProjectCondition(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, Double integral, Double integralTo, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, Date signUpStartTime, Date signUpStartTimeTo, Date signUpEndTime, Date signUpEndTimeTo, Integer maximum, Integer maximumTo, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit) {
+    public ProjectCondition(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, Double integral, Double integralTo, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, Date signUpStartTime, Date signUpStartTimeTo, Date signUpEndTime, Date signUpEndTimeTo, Integer maximum, Integer maximumTo, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, int onOff, String refreshTime, ProjectTypeEnum type, long projectCategoryId) {
         this.projectNum = projectNum;
         this.declareUnit = declareUnit;
         this.projectName = projectName;
@@ -88,6 +97,10 @@ public class ProjectCondition extends BaseCondition {
         this.projectAddWay = projectAddWay;
         this.rankEnum = rankEnum;
         this.unit = unit;
+        this.onOff = onOff;
+        this.refreshTime = refreshTime;
+        this.type = type;
+        this.projectCategoryId = projectCategoryId;
     }
 
     public String getProjectNum() {
@@ -280,5 +293,37 @@ public class ProjectCondition extends BaseCondition {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public int getOnOff() {
+        return onOff;
+    }
+
+    public void setOnOff(int onOff) {
+        this.onOff = onOff;
+    }
+
+    public String getRefreshTime() {
+        return refreshTime;
+    }
+
+    public void setRefreshTime(String refreshTime) {
+        this.refreshTime = refreshTime;
+    }
+
+    public ProjectTypeEnum getType() {
+        return type;
+    }
+
+    public void setType(ProjectTypeEnum type) {
+        this.type = type;
+    }
+
+    public long getProjectCategoryId() {
+        return projectCategoryId;
+    }
+
+    public void setProjectCategoryId(long projectCategoryId) {
+        this.projectCategoryId = projectCategoryId;
     }
 }

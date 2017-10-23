@@ -23,6 +23,7 @@
      $(document).ready(function(){
       $("#main-content").css({
         minHeight: $(window).height()-100+"px"});
+       $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().append('<input type="search" id="search" style="float:right" class="search"/>')
      })
    </script>
    <style>
@@ -112,7 +113,7 @@
                                     <th width="25%">班级</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="data">
                                 <tr>
 
                                     <td class="center_td">01</td>
@@ -262,12 +263,14 @@
         $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
 
-      $("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">学院筛选...</option><option value="4">信息工程学院</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
-        $(".selectlist").after('<div class="selectlist selectlist_second"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">班级筛选...</option><option value="5">14微社交</option><option value="6">项目类别</option></select></div>');
+      $("#sample_1_length").find('label').after('<div class="selectlist"><select name="getCollege" id="getCollege" style="width: 100%;" class="color-wh"><option value="4" class="yellow">学院筛选...</option><option value="4">信息工程学院</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+        $(".selectlist").after('<div class="selectlist selectlist_second"><select name="getClazz" id="getClazz" style="width: 100%;" class="color-wh"><option value="4" class="yellow">班级筛选...</option><option value="5">14微社交</option><option value="6">项目类别</option></select></div>');
         /*$("#sample_1_length").after('<button class="btn btn-small btn-warning new"><i class="icon-plus icon-white"></i>新建</button><button class="btn btn-small btn-success"><i class="icon-cloud"></i>导入</button>');*/
         /*$(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>')*/
-        $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
-        $(".dataTables_filter").parent(".span6").css('width', '33.9%');
+        $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
+          '62.9%');
+      $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
+
     })
   </script>
 

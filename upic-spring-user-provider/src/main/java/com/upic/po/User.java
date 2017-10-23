@@ -47,4 +47,8 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private UserTypeEnum type;
+
+    private double earnedPoints;
+
+    private double earningPoints;
 }

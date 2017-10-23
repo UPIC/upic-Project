@@ -26,5 +26,7 @@ public class UserSpec extends CommonSimpleSpecification<User, UserCondition> {
         addEqualsCondition(queryWraper, "type");
         addLikeCondition(queryWraper, "nickName");
         addBetweenCondition(queryWraper, "birthday");
+        addBetweenCondition(queryWraper, "earnedPoints");
+        addBetweenCondition(queryWraper, "earningPoints");
     }
 }

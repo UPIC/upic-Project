@@ -3,6 +3,7 @@ package com.upic.po;
 import com.upic.common.base.entiy.BaseEntity;
 import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.ProjectAddWayEnum;
+import com.upic.enums.ProjectTypeEnum;
 import com.upic.enums.RankEnum;
 import lombok.Data;
 
@@ -50,10 +51,19 @@ public class Project extends BaseEntity {
 
     private int maximum; //最大参与人数
 
+    private int onOff; //二维码开关
+
+    private String refreshTime; //刷新时间
+
     private String content; //项目主要内容
 
     @Enumerated(EnumType.STRING)
     private ImplementationProcessEnum implementationProcess; //项目实施进程
+
+    @Enumerated(EnumType.STRING)
+    private ProjectTypeEnum type;
+
+    private long projectCategoryId;
 
     private String checkAssessmentCriteraAndForm; //考核评价标准与形式
 

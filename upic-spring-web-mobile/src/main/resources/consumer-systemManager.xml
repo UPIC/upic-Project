@@ -10,6 +10,8 @@
 
     <dubbo:reference id="bannerService" interface="com.upic.service.BannerService" version="1.0" group="systemManager"
                      check="false"></dubbo:reference>
+    <dubbo:reference id="collegeService" interface="com.upic.service.CollegeService" version="1.0" group="systemManager"
+                     check="false"></dubbo:reference>
     <dubbo:reference id="categoryNodeService" interface="com.upic.service.CategoryNodeService" version="1.0"
                      group="systemManager"
                      check="false"></dubbo:reference>

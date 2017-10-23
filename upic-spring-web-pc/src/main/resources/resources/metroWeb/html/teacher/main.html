@@ -2,147 +2,150 @@
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 <head>
-   <meta charset="utf-8" />
-   <title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
-   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-   <meta content="" name="description" />
-   <meta content="Mosaddek" name="author" />
-   <link href="../../css/bootstrap.min.css" rel="stylesheet" />
-   <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
-   <link href="../../css/bootstrap-fileupload.css" rel="stylesheet" />
-   <link href="../../css/font-awesome.css" rel="stylesheet" />
-   <link href="../../css/style.css" rel="stylesheet" />
-   <link href="../../css/style-responsive.css" rel="stylesheet" />
-   <link href="../../css/style-default.css" rel="stylesheet" id="style_color" />
-   <link href="../../css/jquery.fancybox.css" rel="stylesheet" />
-   <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css" />
-      <script src="../../js/jquery-1.8.3.min.js"></script>
-   <script src="../../js/bootstrap.min.js"></script>
-   <script src="../../js/tjs/main.js"></script>
+    <meta charset="utf-8"/>
+    <title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="Mosaddek" name="author"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap-fileupload.css" rel="stylesheet"/>
+    <link href="../../css/font-awesome.css" rel="stylesheet"/>
+    <link href="../../css/style.css" rel="stylesheet"/>
+    <link href="../../css/style-responsive.css" rel="stylesheet"/>
+    <link href="../../css/style-default.css" rel="stylesheet" id="style_color"/>
+    <link href="../../css/jquery.fancybox.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/tjs/main.js"></script>
 
 
-   <style>
-      body{
-         background-image: url('../../img/page.jpg');
-         background-repeat:no-repeat;
-         background-size:120%;
-         }
-      .aa{
-        font-size:40px;
-        top:10%;
-        left:2%;
-        position:absolute;
-        color:#000000;
-      }
-      .big{
-        height:60px;
-      }
-      .message{
-        position:absolute;
-        top:60%;
-        left:2%;
-      }
-      .message li{
-        list-style:none;
-        height:50px;
-        font-size:18px;
-        color:#000000;
-      }
-   </style>
-   <body>
-   <div class="body">
+    <style>
+        body {
+            background-image: url('../../img/page.jpg');
+            background-repeat: no-repeat;
+            background-size: 120%;
+        }
 
-   <div class="aa">
-       <div class="big">
-        宁波大红鹰学院
-       </div>
-     <div class="big">
-        专业素质拓展项目管理
-     </div>
-   </div>
-   <div class="message">
-     <ul>
-         <li>
-           <img src="../../img/m3.png" alt="">
-           <span id="getusernsme">xxx 同学，你好！</span>
-         </li>
-         <li>
-           <img src="../../img/m2.png" alt="" id="getcoin">
-           <span>当前素拓分为： <a href="#mymodal1" data-toggle="modal" > <span>4.5 ></span></a>
+        .aa {
+            font-size: 40px;
+            top: 10%;
+            left: 2%;
+            position: absolute;
+            color: #000000;
+        }
+
+        .big {
+            height: 60px;
+        }
+
+        .message {
+            position: absolute;
+            top: 60%;
+            left: 2%;
+        }
+
+        .message li {
+            list-style: none;
+            height: 50px;
+            font-size: 18px;
+            color: #000000;
+        }
+    </style>
+</head>
+<script src="../../js/tjs/main.js"></script>
+<body>
+<div class="body">
+
+    <div class="aa">
+        <div class="big">
+            宁波大红鹰学院
+        </div>
+        <div class="big">
+            专业素质拓展项目管理
+        </div>
+    </div>
+    <div class="message">
+        <ul>
+            <li>
+                <img src="../../img/m3.png" alt="">
+                <span id="getusernsme">xxx 同学，你好！</span>
+            </li>
+            <li>
+                <img src="../../img/m2.png" alt="" id="getcoin">
+                <span>当前素拓分为： <a href="#mymodal1" data-toggle="modal"> <span>4.5 ></span></a>
            </span>
 
-           <div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h4 id="mymodallabel1">详情</h4>
-            </div>
-            <div class="modal-body">
-              <div class="row-fluid">
-                <div class="block-fluid" id="getinfo">
+                <div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+                     aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 id="mymodallabel1">详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row-fluid">
+                            <div class="block-fluid" id="getinfo">
 
-                  <div class="row-form clearfix">
-                    <div class="span3">所属学院</div>
-                    <div class="span3" id="college"></div>
-                    <div class="span3">班级</div>
-                    <div class="span3" id="clazz"></div>
-                  </div>
-                  <div class="row-form clearfix">
-                    <div class="span3">姓名</div>
-                    <div class="span3" id="name"></div>
-                    <div class="span3">学号</div>
-                    <div class="span3" id="userid"></div>
-                  </div>
+                                <div class="row-form clearfix">
+                                    <div class="span3">所属学院</div>
+                                    <div class="span3" id="college"></div>
+                                    <div class="span3">班级</div>
+                                    <div class="span3" id="clazz"></div>
+                                </div>
+                                <div class="row-form clearfix">
+                                    <div class="span3">姓名</div>
+                                    <div class="span3" id="name"></div>
+                                    <div class="span3">学号</div>
+                                    <div class="span3" id="userid"></div>
+                                </div>
 
 
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>类别</th>
-                        <th>积分</th>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>类别</th>
+                                        <th>积分</th>
 
-                      </tr>
-                    </thead>
-                    <tbody id="main">
-                      <span>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="main">
+                                    <span>
                       <tr>
                         <td>创业实践积分</td>
                         <td>0.2</td>
                       </tr>
                       </span>
-                      <tr>
-                        <td colspan="4" style="text-align:right;padding-right: 20px;">总计:<span id="total"></span></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                                    <tr>
+                                        <td colspan="4" style="text-align:right;padding-right: 20px;">总计:<span
+                                                id="total"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
+                            </div>
+                            <div class="dr"><span></span></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    </div>
                 </div>
-                <div class="dr"><span></span></div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
-            </div>
-          </div>
 
 
+            </li>
+            <li>
+                <img src="../../img/m1.png" alt="">
+                <span>当前素拓币为：10000</span>
+            </li>
+        </ul>
+    </div>
 
 
+    <div class="clear">
 
-         </li>
-         <li>
-           <img src="../../img/m1.png" alt="">
-           <span>当前素拓币为：10000</span>
-         </li>
-     </ul>
-   </div>
+    </div>
 
-
-
-   <div class="clear">
-
-   </div>
-
-   </div>
-   </body>
-   </head>
-   </html>
+</div>
+</body>
+</html>

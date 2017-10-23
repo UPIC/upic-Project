@@ -2,10 +2,12 @@ package com.upic.controller;
 
 import com.upic.condition.*;
 import com.upic.dto.*;
+import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.service.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.log4j.lf5.viewer.categoryexplorer.CategoryNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Map;
 
 /**
  * Created by zhubuqing on 2017/9/18.
@@ -50,25 +52,39 @@ public class CommonController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CategoryNodeService categoryNodeService;
+
+    @Autowired
+    private CollegeService collegeService;
+
+    @Autowired
+    private ClazzService clazzService;
+
     /**
-     * 获取用户信息
+     * 添加项目类别
      *
+     * @param projectCategoryInfo
      * @return
      */
-    @GetMapping("/getUserInfo")
-    @ApiOperation("获取用户信息")
-    public UserInfo getUserInfo() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("山鸡");
-        userInfo.setPic("assets/i/shanji.jpg");
-        try { // 1.获取认证信息 2.根据用户信息查询
+    @GetMapping("/addProjectCategory")
+    @ApiOperation("添加项目类别")
+    public ProjectCategoryInfo addProjectCategory(ProjectCategoryInfo projectCategoryInfo) {
+        try {
+            return projectCategoryService.addProjectCategory(projectCategoryInfo);
         } catch (Exception e) {
+            LOGGER.info("addProjectCategory:" + e.getMessage());
+            return null;
         }
-        return userInfo;
     }
 
     /**
-     * 获取所有项目类别*
+     * 获取所有项目类别
+     *
+     * @param pageable
+     * @param p
+     * @return
+     * @throws Exception
      */
     @GetMapping("/getAllProjectCategory")
     @ApiOperation("获取所有项目类别")
@@ -80,6 +96,85 @@ public class CommonController {
             throw new Exception(e.getMessage());
         }
     }
+
+    /**
+     * 更新项目类别
+     *
+     * @param projectCategoryInfo
+     * @return
+     */
+    @GetMapping("/updateProjectCategory")
+    @ApiOperation("更新项目类别")
+    public ProjectCategoryInfo updateProjectCategory(ProjectCategoryInfo projectCategoryInfo) {
+        try {
+            return projectCategoryService.updateProjectCategory(projectCategoryInfo);
+        } catch (Exception e) {
+            LOGGER.info("updateProjectCategory:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/addCategoryNode")
+    @ApiOperation("添加项目节点")
+    public CategoryNodeInfo searchCategoryNode(CategoryNodeInfo categoryNodeInfo) {
+        try {
+            return categoryNodeService.addCategoryNode(categoryNodeInfo);
+        } catch (Exception e) {
+            LOGGER.info("searchCategoryNode:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取项目节点
+     *
+     * @param pageable
+     * @param categoryNodeCondition
+     * @return
+     */
+    @GetMapping("/searchCategoryNode")
+    @ApiOperation("获取项目节点")
+    public Page<CategoryNodeInfo> searchCategoryNode(@PageableDefault(size = 20) Pageable pageable, CategoryNodeCondition categoryNodeCondition) {
+        try {
+            return categoryNodeService.searchCategoryNode(categoryNodeCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("searchCategoryNode:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 更新项目节点
+     *
+     * @param categoryNodeInfo
+     * @return
+     */
+    @GetMapping("/updateCategoryNode")
+    @ApiOperation("更新项目节点")
+    public CategoryNodeInfo updateCategoryNode(CategoryNodeInfo categoryNodeInfo) {
+        try {
+            return categoryNodeService.updateCategoryNode(categoryNodeInfo);
+        } catch (Exception e) {
+            LOGGER.info("updateCategoryNode:" + e.getMessage());
+            return null;
+        }
+    }
+
+//    @GetMapping("/deleteProjectCategory")
+//    @ApiOperation("删除项目类别")
+//    public String deleteProjectCategory(long projectCategoryId) {
+//        try {
+//            projectCategoryService.deleteProjectCategory(projectCategoryId);
+//            List<CategoryNodeInfo> categoryNodeInfoList = categoryNodeService.getCategoryNodeByFatherId(projectCategoryId);
+//            if (categoryNodeInfoList != null) {
+//
+//            }
+//            return "SUCCESS";
+//        } catch (Exception e) {
+//            LOGGER.info("updateCategoryNode:" + e.getMessage());
+//            return "ERROR";
+//        }
+//    }
 
     /**
      * 根据条件查询活动*
@@ -96,6 +191,7 @@ public class CommonController {
             LOGGER.info("getProject:" + e.getMessage());
             return null;
         }
+
     }
 
     /**
@@ -267,12 +363,12 @@ public class CommonController {
      */
     @GetMapping("/getProjectByUser")
     @ApiOperation("根据用户获取项目列表")
-    public Page<ProjectInfo> getProjectByUser(@PageableDefault(size = 10) Pageable pageable, ProjectCondition projectCondition) throws Exception {
+    public Page<ProjectInfo> getProjectByUser(@PageableDefault(size = 10) Pageable pageable, ProjectCondition projectCondition) {
         try {
             return projectService.searchProject(projectCondition, pageable);
         } catch (Exception e) {
-            LOGGER.info("getProjectByGuidanceNum:" + e.getMessage());
-            throw new Exception("getProjectByGuidanceNum" + e.getMessage());
+            LOGGER.info("getProjectByUser:" + e.getMessage());
+            return null;
         }
     }
 
@@ -668,11 +764,30 @@ public class CommonController {
     }
 
     /**
+     * 获取所有积分
+     *
+     * @param integralLogCondition
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/getAllIntegralLog")
+    @ApiOperation("获取所有积分")
+    public Page<IntegralLogInfo> getAllIntegralLog(IntegralLogCondition integralLogCondition, @PageableDefault(size = 10) Pageable pageable) {
+        try {
+            return integralLogService.searchIntegralLog(integralLogCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogWithOutPass:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * 获取用户的积分
      *
      * @return
      * @throws Exception
      */
+    @ApiOperation("获取用户的积分")
     @GetMapping("/getIntegeral")
     public double getIntegeral(String studentNum) throws Exception {
         try {
@@ -719,10 +834,16 @@ public class CommonController {
 
     /*******************************************20171018*******************************************/
 
+    /**
+     * 查找我的项目
+     *
+     * @param pageable
+     * @return
+     */
     @GetMapping("/getProjectByGuidanceNum")
     public Page<ProjectInfo> getProjectByGuidanceNum(@PageableDefault(size = 10) Pageable pageable) {
         try {
-            Page<ProjectInfo> projectInfoPage = projectService.getProjectByGuidanceNum("101045", pageable);
+            Page<ProjectInfo> projectInfoPage = projectService.getProjectByGuidanceNum(getUser().getUserNum(), pageable);
             System.out.println(projectInfoPage.toString());
             return projectInfoPage;
         } catch (Exception e) {
@@ -731,11 +852,108 @@ public class CommonController {
         }
     }
 
+    /**
+     * 查询project
+     *
+     * @param projectCondition
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/searchProject")
+    public Page<ProjectInfo> searchProject(ProjectCondition projectCondition, @PageableDefault(size = 10) Pageable pageable) {
+        try {
+            Page<ProjectInfo> projectInfoPage = projectService.searchProject(projectCondition, pageable);
+            return projectInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("searchProject:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取学院
+     *
+     * @param collegeCondition
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/getCollege")
+    @ApiOperation("获取学院")
+    public Page<CollegeInfo> getCollege(CollegeCondition collegeCondition, @PageableDefault(size = 20) Pageable pageable) {
+        try {
+            Page<CollegeInfo> collegeInfoPage = collegeService.searchCollege(collegeCondition, pageable);
+            return collegeInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getCollege:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/getClazz")
+    @ApiOperation("获取班级")
+    public Page<ClazzInfo> getClazz(ClazzCondition clazzCondition, @PageableDefault(size = 10) Pageable pageable) {
+        try {
+            Page<ClazzInfo> clazzInfoPage = clazzService.searchClazz(clazzCondition, pageable);
+            return clazzInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getClazz:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取项目状态列表
+     *
+     * @return
+     */
+    @GetMapping("/getProjectStatus")
+    @ApiOperation("获取项目状态列表")
+    public List<String> getProjectStatus() {
+        try {
+            Map map = ImplementationProcessEnum.toMap();
+            List<String> projectStatusList = new ArrayList<>();
+            for (int i = 0; i < map.size(); i++) {
+                projectStatusList.add((String) map.get(i));
+            }
+            return getProjectStatus();
+        } catch (Exception e) {
+            LOGGER.info("getProjectStatus:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/getUserByUserNum")
+    @ApiOperation("根据用户编号查询用户")
+    public UserInfo getUserByUserNum(String userNum) {
+        try {
+            UserInfo userInfo = userService.getUserByUserNum(userNum);
+            return userInfo;
+        } catch (Exception e) {
+            LOGGER.info("getUserByUserNum:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    @GetMapping("/getUserInfo")
+    public UserInfo getUserInfo() {
+        return getUser();
+    }
+
     private UserInfo getUser() {
         //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //SocialUser so=(SocialUser) authentication.getPrincipal();
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername("山鸡");
+        userInfo.setClazz("15微社交");
+        userInfo.setCollege("信息工程学院");
+        userInfo.setEarnedPoints(4);
+        userInfo.setEarningPoints(6);
+        userInfo.setMajor("计算机科学与技术.社交网络");
         userInfo.setUserNum("1522110240");
         userInfo.setPic("assets/i/shanji.jpg");
         return userInfo;

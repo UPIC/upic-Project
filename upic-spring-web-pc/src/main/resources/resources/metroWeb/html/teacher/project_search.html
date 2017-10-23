@@ -23,11 +23,28 @@
      $(document).ready(function(){
       $("#main-content").css({
         minHeight: $(window).height()-100+"px"});
+       $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().append('<input type="search" id="search" style="float:right" class="search"/>')
      })
    </script>
    <style type="text/css" media="screen">
        #select-small{
         width:55px;
+       }
+       #mymodal1{
+        width:850px;
+        left:38%;
+        top:5%;
+       }
+       #mymodal1 input{
+        width:120px !important;
+       }
+       #mymodal1 select{
+        width:120px !important;
+       }
+       .chart_list ul li{
+        list-style:none;
+        float:left;
+        width:50%;
        }
    </style>
 </head>
@@ -83,7 +100,7 @@
                                     <th width="5%" class="center_td">详情</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="data">
                                 <tr>
                                 <td><input type="checkbox" class="checkboxes" value="1" /></td>
                                     <td class="center_td">01</td>
@@ -188,6 +205,7 @@
                                 <div class="modal-body">
                                     <div class="row-fluid">
             <div class="block-fluid">
+            <div class="span8" style="border-right: 1px solid #ccc;">
                 <div class="row-form clearfix">
                     <div class="span3">编号</div>
                     <div class="span3">01</div>
@@ -253,6 +271,19 @@
                     <div class="span3">评价标准与形式</div>
                     <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
                 </div>
+                </div>
+                <div class="span4">
+            <div id="main" style="height:150px; width:220px"></div>
+            <div class="chart_list">
+               <ul>
+                    <li><span>0.1</span>:(<span>10%</span>)</li>
+                    <li><span>0.1</span>:(<span>10%</span>)</li>
+                    <li><span>0.1</span>:(<span>10%</span>)</li>
+                    <li><span>0.1</span>:(<span>10%</span>)</li>
+                    <li><span>0.1</span>:(<span>10%</span>)</li>
+                </ul>
+            </div>
+            </div>
             </div>
             <div class="dr"><span></span></div>
         </div>
@@ -288,6 +319,62 @@
 
 
    <script src="../../js/dynamic-table.js"></script>
+   <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+   <script type="text/javascript">
+     require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+
+                var option = {
+    title : {
+        text: '成绩分析',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+  /*  legend: {
+        orient : 'vertical',
+        x : 'left',
+        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+    },*/
+
+    calculable : true,
+    series : [
+        {
+            name:'访问来源',
+            type:'pie',
+            radius : '55%',
+            center: ['50%', '65%'],
+            data:[
+                {value:335, name:'0.111'},
+                {value:310, name:'0.222'},
+                {value:234, name:'0.333'},
+                {value:135, name:'0.444'},
+                {value:1548, name:'0.555'}
+            ]
+        }
+    ]
+};
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+</script>
    <script>
      $(function(){
         $(".dataTables_filter").find('input').attr('placeholder','空格分隔 项目代码、项目名称、负责人').css('width', '250px');;
@@ -316,7 +403,8 @@
 
         /*$(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
-        $(".dataTables_filter").parent(".span6").css('width', '33.9%');
+        $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
+
     })
    </script>
 </body>

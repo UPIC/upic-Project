@@ -68,6 +68,32 @@ public class StudetAllController {
     }
 
     /**
+     * 获取当前用户的积分*
+     *
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getIntegeralByUserNum")
+    public double getIntegeralByUserNum(String userNum) throws Exception {
+        try {
+            // Authentication authentication =
+            // SecurityContextHolder.getContext().getAuthentication();
+            // System.out.println(authentication);
+            // SocialUser user = null;
+            // if (authentication != null) {
+            // user = (SocialUser) authentication.getPrincipal();
+            // }
+            // if(user==null){
+            // throw new Exception("获取用户失败");
+            // }
+            return integralLogService.watchIntegral(userNum);
+        } catch (Exception e) {
+            LOGGER.info("getIntegeral :" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
      * 获取当前学生素拓币*
      *
      * @return
@@ -87,6 +113,32 @@ public class StudetAllController {
             // throw new Exception("获取用户失败");
             // }
             return grainCoinLogService.watchGrainCoin(getUser().getUserNum());
+        } catch (Exception e) {
+            LOGGER.info("getGrainCoin:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取当前学生素拓币*
+     *
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getGrainCoinByUserNum")
+    public double getGrainCoinByUserNum(String userNum) throws Exception {
+        try {
+            // Authentication authentication =
+            // SecurityContextHolder.getContext().getAuthentication();
+            // System.out.println(authentication);
+            // SocialUser user = null;
+            // if (authentication != null) {
+            // user = (SocialUser) authentication.getPrincipal();
+            // }
+            // if(user==null){
+            // throw new Exception("获取用户失败");
+            // }
+            return grainCoinLogService.watchGrainCoin(userNum);
         } catch (Exception e) {
             LOGGER.info("getGrainCoin:" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -190,18 +242,17 @@ public class StudetAllController {
     /**
      * 根据自身编号获取参加过的自主申报项目（可能没用）
      *
-     * @param studentNum
      * @param pageable
      * @return
      * @throws Exception
      */
     @GetMapping("/getIntegralLogByMySelf")
-    public Page<IntegralLogInfo> getIntegralLogByMySelf(String studentNum, @PageableDefault(size = 10) Pageable pageable) throws Exception {
+    public Page<IntegralLogInfo> getIntegralLogByMySelf(@PageableDefault(size = 10) Pageable pageable) {
         try {
-            return integralLogService.getIntegralLogByMySelf(studentNum, pageable);
+            return integralLogService.getIntegralLogByMySelf(getUser().getUserNum(), pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogByMySelf:" + e.getMessage());
-            throw new Exception(e.getMessage());
+            return null;
         }
     }
 
@@ -219,6 +270,24 @@ public class StudetAllController {
             return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getAllIntegralLogByStudentNum:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 学生查看积分日志（可能没用）
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getAllIntegralLogByUserNum")
+    public Page<IntegralLogInfo> getAllIntegralLogByUserNum(String userNum, @PageableDefault(size = 10) Pageable pageable) throws Exception {
+        try {
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getAllIntegralLogByStudentNum(userNum, pageable);
+            return integralLogInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getAllIntegralLogByUserNum:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }

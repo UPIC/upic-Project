@@ -3,6 +3,7 @@ package com.upic.dto;
 import com.upic.common.base.dto.BaseInfo;
 import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.ProjectAddWayEnum;
+import com.upic.enums.ProjectTypeEnum;
 import com.upic.enums.RankEnum;
 
 import java.util.Date;
@@ -50,11 +51,19 @@ public class ProjectInfo extends BaseInfo {
 
     private List<ProjectLogInfo> projectLogs;
 
+    private int onOff; //二维码开关
+
+    private String refreshTime; //刷新时间
+
+    private ProjectTypeEnum type;
+
+    private long projectCategoryId;
+
     public ProjectInfo() {
         super();
     }
 
-    public ProjectInfo(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, double integral, Date startTime, Date endTime, Date signUpStartTime, Date signUpEndTime, int maximum, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, List<ProjectLogInfo> projectLogs) {
+    public ProjectInfo(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, double integral, Date startTime, Date endTime, Date signUpStartTime, Date signUpEndTime, int maximum, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, List<ProjectLogInfo> projectLogs, int onOff, String refreshTime, ProjectTypeEnum type, long projectCategoryId) {
         this.projectNum = projectNum;
         this.declareUnit = declareUnit;
         this.projectName = projectName;
@@ -74,6 +83,10 @@ public class ProjectInfo extends BaseInfo {
         this.rankEnum = rankEnum;
         this.unit = unit;
         this.projectLogs = projectLogs;
+        this.onOff = onOff;
+        this.refreshTime = refreshTime;
+        this.type = type;
+        this.projectCategoryId = projectCategoryId;
     }
 
     public String getProjectNum() {
@@ -228,6 +241,38 @@ public class ProjectInfo extends BaseInfo {
         this.projectLogs = projectLogs;
     }
 
+    public int getOnOff() {
+        return onOff;
+    }
+
+    public void setOnOff(int onOff) {
+        this.onOff = onOff;
+    }
+
+    public String getRefreshTime() {
+        return refreshTime;
+    }
+
+    public void setRefreshTime(String refreshTime) {
+        this.refreshTime = refreshTime;
+    }
+
+    public ProjectTypeEnum getType() {
+        return type;
+    }
+
+    public void setType(ProjectTypeEnum type) {
+        this.type = type;
+    }
+
+    public long getProjectCategoryId() {
+        return projectCategoryId;
+    }
+
+    public void setProjectCategoryId(long projectCategoryId) {
+        this.projectCategoryId = projectCategoryId;
+    }
+
     @Override
     public String toString() {
         return "ProjectInfo{" +
@@ -249,6 +294,10 @@ public class ProjectInfo extends BaseInfo {
                 ", projectAddWay=" + projectAddWay +
                 ", rankEnum=" + rankEnum +
                 ", unit='" + unit + '\'' +
+                ", onOff=" + onOff +
+                ", refreshTime='" + refreshTime + '\'' +
+                ", type=" + type +
+                ", projectCategoryId=" + projectCategoryId +
                 '}';
     }
 }

@@ -115,7 +115,7 @@ function addHtmls(result, method, j) {
 
 function splitJson(json) {
     var projectCategorys = new Array();
-    projectCategorys = json.split(">");
+    projectCategorys = json.split("/");
     return projectCategorys[0];
 }
 

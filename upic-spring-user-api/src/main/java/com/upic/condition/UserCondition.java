@@ -36,12 +36,19 @@ public class UserCondition extends BaseCondition {
 
     private Date birthdayTo;
 
+    private double earnedPoints;
+
+    private double earnedPointsTo;
+
+    private double earningPoints;
+
+    private double earningPointsTo;
+
     public UserCondition() {
         super();
     }
 
-    public UserCondition(String userNum, String username, String college, String major, String clazz, String phone, String idCard, String email, UserStatusEnum status, String nickName, UserTypeEnum type, Date birthday, Date birthdayTo) {
-        super();
+    public UserCondition(String userNum, String username, String college, String major, String clazz, String phone, String idCard, String email, UserStatusEnum status, String nickName, UserTypeEnum type, Date birthday, Date birthdayTo, double earnedPoints, double earnedPointsTo, double earningPoints, double earningPointsTo) {
         this.userNum = userNum;
         this.username = username;
         this.college = college;
@@ -55,6 +62,10 @@ public class UserCondition extends BaseCondition {
         this.type = type;
         this.birthday = birthday;
         this.birthdayTo = birthdayTo;
+        this.earnedPoints = earnedPoints;
+        this.earnedPointsTo = earnedPointsTo;
+        this.earningPoints = earningPoints;
+        this.earningPointsTo = earningPointsTo;
     }
 
     public String getUserNum() {
@@ -159,5 +170,37 @@ public class UserCondition extends BaseCondition {
 
     public void setBirthdayTo(Date birthdayTo) {
         this.birthdayTo = birthdayTo;
+    }
+
+    public double getEarnedPoints() {
+        return earnedPoints;
+    }
+
+    public void setEarnedPoints(double earnedPoints) {
+        this.earnedPoints = earnedPoints;
+    }
+
+    public double getEarnedPointsTo() {
+        return earnedPointsTo;
+    }
+
+    public void setEarnedPointsTo(double earnedPointsTo) {
+        this.earnedPointsTo = earnedPointsTo;
+    }
+
+    public double getEarningPoints() {
+        return earningPoints;
+    }
+
+    public void setEarningPoints(double earningPoints) {
+        this.earningPoints = earningPoints;
+    }
+
+    public double getEarningPointsTo() {
+        return earningPointsTo;
+    }
+
+    public void setEarningPointsTo(double earningPointsTo) {
+        this.earningPointsTo = earningPointsTo;
     }
 }

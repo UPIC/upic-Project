@@ -45,10 +45,12 @@ public class IntegralLogInfo implements Serializable {
 
     private String projectName;
 
+    private String projectCategory;
+
     public IntegralLogInfo() {
     }
 
-    public IntegralLogInfo(IntegralLogIdInfo integralLogId, String event, double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, List<String> integralLogPic, Date creatTime, String field1, String field2, String field3, String field4, String field5, Date addTime, String projectName) {
+    public IntegralLogInfo(IntegralLogIdInfo integralLogId, String event, double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, List<String> integralLogPic, Date creatTime, String field1, String field2, String field3, String field4, String field5, Date addTime, String projectName, String projectCategory) {
         this.integralLogId = integralLogId;
         this.event = event;
         this.integral = integral;
@@ -66,6 +68,7 @@ public class IntegralLogInfo implements Serializable {
         this.field5 = field5;
         this.addTime = addTime;
         this.projectName = projectName;
+        this.projectCategory = projectCategory;
     }
 
     public IntegralLogIdInfo getIntegralLogId() {
@@ -204,6 +207,14 @@ public class IntegralLogInfo implements Serializable {
         this.projectName = projectName;
     }
 
+    public String getProjectCategory() {
+        return projectCategory;
+    }
+
+    public void setProjectCategory(String projectCategory) {
+        this.projectCategory = projectCategory;
+    }
+
     @Override
     public String toString() {
         return "IntegralLogInfo{" +
@@ -223,6 +234,7 @@ public class IntegralLogInfo implements Serializable {
                 ", field5='" + field5 + '\'' +
                 ", addTime=" + addTime +
                 ", projectName='" + projectName + '\'' +
+                ", projectCategory='" + projectCategory + '\'' +
                 '}';
     }
 

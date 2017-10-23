@@ -28,5 +28,9 @@ public class ProjectSpec extends CommonSimpleSpecification<Project, ProjectCondi
         addEqualsCondition(queryWraper, "checkAssessmentCriteraAndForm");
         addEqualsCondition(queryWraper, "projectAddWay");
         addEqualsCondition(queryWraper, "unit");
+        addEqualsCondition(queryWraper, "onOff");
+        addEqualsCondition(queryWraper, "refreshTime");
+        addEqualsCondition(queryWraper, "type");
+        addEqualsCondition(queryWraper, "projectCategoryId");
     }
 }

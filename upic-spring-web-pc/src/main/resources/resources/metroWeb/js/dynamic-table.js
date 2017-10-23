@@ -3,7 +3,8 @@ var Script = function () {
         // begin first table
         $('#sample_1,#sample_1_1,#sample_1_2,#sample_1_3').dataTable({
             "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-            "sPaginationType": "bootstrap","bFilter": false,
+            "sPaginationType": "bootstrap",
+            "bFilter": false,
             "oLanguage": {
                 "sLengthMenu": "每页显示 _MENU_ 条记录",
                 "sZeroRecords": "对不起，查询不到任何相关数据",

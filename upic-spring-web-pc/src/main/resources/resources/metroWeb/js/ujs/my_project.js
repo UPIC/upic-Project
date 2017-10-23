@@ -14,7 +14,7 @@ $(function () {
     ajaxs("", "showAll", getProjectByGuidanceNum);
 })
 
-function ajaxs(datas, method, urls) {
+function ajaxs(datas, method, urls, j) {
     $.ajax({
         type: "GET", // 提交方式
         url: urls,// 路径
@@ -24,7 +24,7 @@ function ajaxs(datas, method, urls) {
 // progress.inc();
         },
         success: function (result) {// 返回数据根据结果进行相应的处理
-            addHtmls(result, method)
+            addHtmls(result, method, j)
         },
         complete: function (XMLHttpRequest, textStatus) {
 // progress.done(true);
@@ -35,7 +35,7 @@ function ajaxs(datas, method, urls) {
     });
 }
 
-function addHtmls(result, method) {
+function addHtmls(result, method, j) {
     var htmls = "";
     var htmlss = "";
 
@@ -69,65 +69,63 @@ function addHtmls(result, method) {
             htmls += "<td>" + result.content[i].creatTime + "</td>";
             htmls += "<td>" + status + "</td>";
             htmls += "<td>";
-            htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=ajaxs('" + result.content[i].projectNum + "','info','getProjectInfo')>查看详情</div></a></td>";
+            htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=ajaxs('projectNum=" + result.content[i].projectNum + "','info','" + getProjectInfo + "','" + (i + 1) + "')>查看详情</div></a></td>";
             htmls += "</tr>";
         }
         $("#showAll").html(htmls);
     } else {
-        for (var i = 0; i <= result.length; i++) {
-            var status = "";
+        var status = "";
 
-            if (result.content[i].implementationProcess === "SAVED") {
-                status = "已保存"
-            } else if (result.content[i].implementationProcess === "IN_AUDIT") {
-                status = "审核中"
-            } else if (result.content[i].implementationProcess === "NOT_PASS") {
-                status = "未通过"
-            } else if (result.content[i].implementationProcess === "AUDITED") {
-                status = "已审核"
-            } else if (result.content[i].implementationProcess === "HAVE_IN_HAND") {
-                status = "进行中"
-            } else {
-                status = "已完成"
-            }
-
-            htmlss += "<div class='block-fluid'>";
-            htmlss += "<div class='row-form clearfix'>";
-            htmlss += "<div class='span3'>编号</div>";
-            htmlss += "<div class='span3'>" + (i + 1) + "</div>";
-            htmlss += "<div class='span3'>代码</div>";
-            htmlss += "<div class='span3'>" + result[i].id + "</div>";
-            htmlss += "</div>";
-            htmlss += "<div class='row-form clearfix'>";
-            htmlss += "<div class='span3'>项目申请日期</div>";
-            htmlss += "<div class='span3'>" + result[i].creatTime + "</div>";
-            htmlss += "<div class='span3'>状态</div>";
-            htmlss += "<div class='span3'>" + statuss + "</div>";
-            htmlss += "</div>";
-            htmlss += "<div class='row-form clearfix'>";
-            htmlss += "<div class='span3'>项目类别</div>";
-            htmlss += "<div class='span3'>" + result[i].projectCategory + "</div>";
-            htmlss += "<div class='span3'>所属学院</div>";
-            htmlss += "<div class='span3'>" + result[i].college + "</div>";
-            htmlss += "</div>";
-            htmlss += "<div class='row-form clearfix'>";
-            htmlss += "<div class='span3'>项目名称</div>";
-            htmlss += "<div class='span3'>" + result[i].projectName + "</div>";
-            htmlss += "<div class='span3'>负责人</div>";
-            htmlss += "<div class='span3'>123</div>";
-            htmlss += "</div>";
-            htmlss += "<div class='row-form clearfix'>";
-            htmlss += "<div class='span3'>项目内容</div>";
-            htmlss += "<div class='span9'>" + result[i].content + "</div>";
-            htmlss += "</div>";
-            htmlss += "<div class='row-form clearfix'>";
-            htmlss += "<div class='span3'>评价标准与形式</div>";
-            htmlss += "<div class='span9'>123</div>";
-            htmlss += "</div>";
-            htmlss += "</div>";
+        if (result.implementationProcess === "SAVED") {
+            status = "已保存"
+        } else if (result.implementationProcess === "IN_AUDIT") {
+            status = "审核中"
+        } else if (result.implementationProcess === "NOT_PASS") {
+            status = "未通过"
+        } else if (result.implementationProcess === "AUDITED") {
+            status = "已审核"
+        } else if (result.implementationProcess === "HAVE_IN_HAND") {
+            status = "进行中"
+        } else {
+            status = "已完成"
         }
-        $("#info").html(htmlss);
+
+        htmlss += "<div class='block-fluid'>";
+        htmlss += "<div class='row-form clearfix'>";
+        htmlss += "<div class='span3'>编号</div>";
+        htmlss += "<div class='span3'>" + j + "</div>";
+        htmlss += "<div class='span3'>代码</div>";
+        htmlss += "<div class='span3'>" + result.id + "</div>";
+        htmlss += "</div>";
+        htmlss += "<div class='row-form clearfix'>";
+        htmlss += "<div class='span3'>项目申请日期</div>";
+        htmlss += "<div class='span3'>" + result.creatTime + "</div>";
+        htmlss += "<div class='span3'>状态</div>";
+        htmlss += "<div class='span3'>" + status + "</div>";
+        htmlss += "</div>";
+        htmlss += "<div class='row-form clearfix'>";
+        htmlss += "<div class='span3'>项目类别</div>";
+        htmlss += "<div class='span3'>" + result.projectCategory + "</div>";
+        htmlss += "<div class='span3'>申报单位</div>";
+        htmlss += "<div class='span3'>" + result.declareUnit + "</div>";
+        htmlss += "</div>";
+        htmlss += "<div class='row-form clearfix'>";
+        htmlss += "<div class='span3'>项目名称</div>";
+        htmlss += "<div class='span3'>" + result.projectName + "</div>";
+        htmlss += "<div class='span3'>负责人</div>";
+        htmlss += "<div class='span3'>" + result.guidanceMan + "</div>";
+        htmlss += "</div>";
+        htmlss += "<div class='row-form clearfix'>";
+        htmlss += "<div class='span3'>项目内容</div>";
+        htmlss += "<div class='span9'>" + result.content + "</div>";
+        htmlss += "</div>";
+        htmlss += "<div class='row-form clearfix'>";
+        htmlss += "<div class='span3'>评价标准与形式</div>";
+        htmlss += "<div class='span9'>" + result.checkAssessmentCriteraAndForm + "</div>";
+        htmlss += "</div>";
+        htmlss += "</div>";
     }
+    $("#info").html(htmlss);
 }
 
 function splitJson(json) {
