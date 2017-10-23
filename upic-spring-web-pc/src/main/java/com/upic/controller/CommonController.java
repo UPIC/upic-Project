@@ -623,12 +623,13 @@ public class CommonController {
      */
     @GetMapping("/getTeacherAllWorkloadSummary")
     @ApiOperation("教师查询汇总工作量")
-    public double getTeacherAllWorkloadSummary(@ApiParam("教师编号") String teacherNum) throws Exception {
+    public double getTeacherAllWorkloadSummary(@ApiParam("教师编号") String teacherNum) {
         try {
             return projectService.getTeacherAllWorkloadSummary(teacherNum);
         } catch (Exception e) {
             LOGGER.info("getTeacherAllWorkloadSummary:" + e.getMessage());
-            throw new Exception("getTeacherAllWorkloadSummary" + e.getMessage());
+//            throw new Exception("getTeacherAllWorkloadSummary" + e.getMessage());
+            return 0;
         }
     }
 
