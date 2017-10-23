@@ -49,6 +49,8 @@ public class IntegralLog implements Serializable {
 
     private String apartment;
 
+    private String projectCategory;
+
     private String field1;
 
     private String field2;

@@ -1,13 +1,9 @@
-
 var getAllProjectCategory = "/common/getAllProjectCategory";//获取项目类别
 var types = "GET";
 
 $(function () {
-
     ajaxs("", "getProject", getAllProjectCategory);
-
 })
-
 
 function ajaxs(datas, method, urls) {
     // if (pageCount == page || pageCount == 0) {
@@ -37,9 +33,7 @@ function addHtmls(result, method) {
     var htmls = "";
     if (method == "getProject") {
         for (var i = 0; i < result.length; i++) {
-
             htmls += "<option value='category "+(i+1)+"'>"+result[i].categoryName+"</option>";
-
         }
         $("#getProject").html(htmls);
     }

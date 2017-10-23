@@ -48,4 +48,21 @@ public interface OperatorService {
      * @param operatorId
      */
     void deleteByOperatorId(long operatorId);
+
+    /**
+     * 根据角色查找操作员
+     *
+     * @param roleId
+     * @param pageable
+     * @return
+     */
+    Page<OperatorInfo> getOperatorByRole(long roleId, Pageable pageable);
+
+    /**
+     * 根据工号获取
+     *
+     * @param jobNum
+     * @return
+     */
+    OperatorInfo getByJobNum(String jobNum);
 }

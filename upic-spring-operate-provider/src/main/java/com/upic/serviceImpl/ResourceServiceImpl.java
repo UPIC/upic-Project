@@ -86,4 +86,20 @@ public class ResourceServiceImpl implements ResourceService {
             LOGGER.info("deleteResource:资源删除失败。错误信息：" + e.getMessage());
         }
     }
+
+    @Override
+    public Page<ResourceInfo> findByFatherId(long fatherId, Pageable pageable) {
+        Page<Resource> resourcePage = null;
+        try {
+            resourcePage = resourceRepository.findByFatherId(fatherId, pageable);
+            return QueryResultConverter.convert(resourcePage, pageable, new AbstractDomain2InfoConverter<Resource, ResourceInfo>() {
+                protected void doConvert(Resource domain, ResourceInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("deleteResource:资源删除失败。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
 }

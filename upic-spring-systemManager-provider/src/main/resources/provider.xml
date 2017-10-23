@@ -11,6 +11,10 @@
     <dubbo:protocol name="dubbo" port="20884"/>
     <dubbo:service interface="com.upic.service.BannerService" ref="bannerService" version="1.0"
                    group="systemManager"></dubbo:service>
+    <dubbo:service interface="com.upic.service.ClazzService" ref="clazzService" version="1.0"
+                   group="systemManager"></dubbo:service>
+    <dubbo:service interface="com.upic.service.CollegeService" ref="collegeService" version="1.0"
+                   group="systemManager"></dubbo:service>
     <dubbo:service interface="com.upic.service.CategoryNodeService" ref="categoryNodeService" version="1.0"
                    group="systemManager"></dubbo:service>
     <dubbo:service interface="com.upic.service.ConfirmationBasisService" ref="confirmationBasisService" version="1.0"

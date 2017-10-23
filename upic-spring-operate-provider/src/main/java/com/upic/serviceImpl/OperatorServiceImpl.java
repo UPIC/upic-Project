@@ -85,4 +85,32 @@ public class OperatorServiceImpl implements OperatorService {
             LOGGER.info("deleteByOperatorId:管理员删除失败。错误信息：" + e.getMessage());
         }
     }
+
+    @Override
+    public Page<OperatorInfo> getOperatorByRole(long roleId, Pageable pageable) {
+        Page<Operator> operatorPage = null;
+        try {
+            operatorPage = operatorRepository.getOperatorByRole(roleId, pageable);
+            return QueryResultConverter.convert(operatorPage, pageable, new AbstractDomain2InfoConverter<Operator, OperatorInfo>() {
+                protected void doConvert(Operator domain, OperatorInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getOperatorByRole。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public OperatorInfo getByJobNum(String jobNum) {
+        try {
+            OperatorInfo operatorInfo = new OperatorInfo();
+            UpicBeanUtils.copyProperties(operatorRepository.getByJobNum(jobNum), operatorInfo);
+            return operatorInfo;
+        } catch (Exception e) {
+            LOGGER.info("getByJobNum。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
 }

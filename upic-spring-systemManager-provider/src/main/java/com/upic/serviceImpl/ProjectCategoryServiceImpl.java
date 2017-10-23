@@ -78,4 +78,15 @@ public class ProjectCategoryServiceImpl implements ProjectCategoryService {
             return null;
         }
     }
+
+    @Override
+    public String deleteProjectCategory(long projectCategoryId) {
+        try {
+            projectCategoryRepository.delete(projectCategoryId);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("deleteProjectCategory：" + e.getMessage());
+            return "ERROR";
+        }
+    }
 }

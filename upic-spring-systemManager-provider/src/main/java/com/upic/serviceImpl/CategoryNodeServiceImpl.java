@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/10.
  */
@@ -34,7 +37,7 @@ public class CategoryNodeServiceImpl implements CategoryNodeService {
             UpicBeanUtils.copyProperties(categoryNode, categoryNodeInfo);
             return categoryNodeInfo;
         } catch (Exception e) {
-            LOGGER.info("addCategoryNode：节点" + categoryNodeInfo.toString() + "添加失败。错误信息：" + e.getMessage());
+            LOGGER.info("addCategoryNode " + e.getMessage());
             return null;
         }
     }
@@ -47,7 +50,7 @@ public class CategoryNodeServiceImpl implements CategoryNodeService {
             UpicBeanUtils.copyProperties(categoryNode, categoryNodeInfo);
             return categoryNodeInfo;
         } catch (Exception e) {
-            LOGGER.info("updateCategoryNode：节点" + categoryNodeInfo.toString() + "更新失败。错误信息：" + e.getMessage());
+            LOGGER.info("updateCategoryNode ：" + e.getMessage());
             return null;
         }
     }
@@ -62,7 +65,7 @@ public class CategoryNodeServiceImpl implements CategoryNodeService {
                 }
             });
         } catch (Exception e) {
-            LOGGER.info("节点列表获取失败。错误信息：" + e.getMessage());
+            LOGGER.info("searchCategoryNode：" + e.getMessage());
             return null;
         }
     }
@@ -75,7 +78,25 @@ public class CategoryNodeServiceImpl implements CategoryNodeService {
             UpicBeanUtils.copyProperties(categoryNode, categoryNodeInfo);
             return categoryNodeInfo;
         } catch (Exception e) {
-            LOGGER.info("节点获取失败。错误信息：" + e.getMessage());
+            LOGGER.info("getCategoryNodeById：" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<CategoryNodeInfo> getCategoryNodeByFatherId(long fatherId) {
+        List<CategoryNode> categoryNodeList = new ArrayList<CategoryNode>();
+        try {
+            List<CategoryNodeInfo> categoryNodeInfoList = new ArrayList<CategoryNodeInfo>();
+            categoryNodeList = categoryNodeRepository.getCategoryNodeByFatherId(fatherId);
+            for (int i = 0; i < categoryNodeList.size(); i++) {
+                CategoryNodeInfo categoryNodeInfo = new CategoryNodeInfo();
+                UpicBeanUtils.copyProperties(categoryNodeList.get(i), categoryNodeInfo);
+                categoryNodeInfoList.add(categoryNodeInfo);
+            }
+            return categoryNodeInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getCategoryNodeByFatherId：" + e.getMessage());
             return null;
         }
     }

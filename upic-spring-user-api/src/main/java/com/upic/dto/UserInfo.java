@@ -34,12 +34,15 @@ public class UserInfo extends BaseInfo {
 
     private UserTypeEnum type;
 
+    private double earnedPoints;
+
+    private double earningPoints;
+
     public UserInfo() {
         super();
     }
 
-    public UserInfo(String userNum, String username, String password, String college, String major, String clazz, String phone, String idCard, String email, String pic, UserStatusEnum status, String nickName, UserTypeEnum type) {
-        super();
+    public UserInfo(String userNum, String username, String password, String college, String major, String clazz, String phone, String idCard, String email, String pic, UserStatusEnum status, String nickName, UserTypeEnum type, double earnedPoints, double earningPoints) {
         this.userNum = userNum;
         this.username = username;
         this.password = password;
@@ -53,6 +56,8 @@ public class UserInfo extends BaseInfo {
         this.status = status;
         this.nickName = nickName;
         this.type = type;
+        this.earnedPoints = earnedPoints;
+        this.earningPoints = earningPoints;
     }
 
     public String getUserNum() {
@@ -159,6 +164,22 @@ public class UserInfo extends BaseInfo {
         this.type = type;
     }
 
+    public double getEarnedPoints() {
+        return earnedPoints;
+    }
+
+    public void setEarnedPoints(double earnedPoints) {
+        this.earnedPoints = earnedPoints;
+    }
+
+    public double getEarningPoints() {
+        return earningPoints;
+    }
+
+    public void setEarningPoints(double earningPoints) {
+        this.earningPoints = earningPoints;
+    }
+
     @Override
     public String toString() {
         return "UserInfo{" +
@@ -175,6 +196,8 @@ public class UserInfo extends BaseInfo {
                 ", status=" + status +
                 ", nickName='" + nickName + '\'' +
                 ", type=" + type +
+                ", earnedPoints=" + earnedPoints +
+                ", earningPoints=" + earningPoints +
                 '}';
     }
 }

@@ -195,6 +195,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.upic.operate.api</groupId>
+            <artifactId>upic-spring-operate-api</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 

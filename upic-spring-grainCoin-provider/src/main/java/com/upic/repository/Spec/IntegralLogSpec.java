@@ -23,6 +23,7 @@ public class IntegralLogSpec extends CommonSimpleSpecification<IntegralLog, Inte
         addEqualsCondition(queryWraper, "clazz");
         addEqualsCondition(queryWraper, "college");
         addEqualsCondition(queryWraper, "projectName");
-        addBetweenCondition(queryWraper,"addTime");
+        addEqualsCondition(queryWraper, "projectCategory");
+        addBetweenCondition(queryWraper, "addTime");
     }
 }

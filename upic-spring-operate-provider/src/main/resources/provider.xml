@@ -19,5 +19,13 @@
                    group="operate"></dubbo:service>
     <dubbo:service interface="com.upic.service.RoleService" ref="roleService" version="1.0"
                    group="operate"></dubbo:service>
+    <dubbo:service interface="com.upic.service.OrginzationService" ref="orginzationService" version="1.0"
+                   group="operate"></dubbo:service>
+    <dubbo:service interface="com.upic.service.OrginzationProjectCategoryService"
+                   ref="orginzationProjectCategoryService" version="1.0"
+                   group="operate"></dubbo:service>
+    <dubbo:service interface="com.upic.service.OrginzationOperatorService"
+                   ref="orginzationOperatorService" version="1.0"
+                   group="operate"></dubbo:service>
 
 </beans>

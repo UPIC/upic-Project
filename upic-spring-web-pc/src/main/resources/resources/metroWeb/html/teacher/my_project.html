@@ -2,102 +2,132 @@
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 <head>
- <meta charset="utf-8" />
- <title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
- <meta content="width=device-width, initial-scale=1.0" name="viewport" />
- <meta content="" name="description" />
- <meta content="Mosaddek" name="author" />
- <link href="../../css/bootstrap.min.css" rel="stylesheet" />
- <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
- <link href="../../css/bootstrap-fileupload.css" rel="stylesheet" />
- <link href="../../css/font-awesome.css" rel="stylesheet" />
- <link href="../../css/style.css" rel="stylesheet" />
- <link href="../../css/style-responsive.css" rel="stylesheet" />
- <link href="../../css/style-default.css" rel="stylesheet" id="style_color" />
- <link href="../../css/jquery.fancybox.css" rel="stylesheet" />
- <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css" />
- <link rel="stylesheet" type="text/css" href="../../css/my_project.css" />
- <link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
- <script src="../../js/jquery-1.8.3.min.js"></script>
- <script src="../../js/bootstrap.min.js"></script>
- <script src="../../js/bootstrap-datepicker.js"></script>
- <script src="../../js/bootstrap-datetimepicker.js"></script>
- <script src="../../js/bootstrap-datetimepicker.zh-CN.js"></script>
- <script>
-   $(document).ready(function(){
-      $("#main-content").css({
-        minHeight: $(window).height()-100+"px"});
-  })
-</script>
-<style type="text/css" media="screen">
- #mymodal2{
-    width:600px;
-}
-#mymodal2 input{
-    width:120px !important;
-}
-#mymodal2 select{
-    width:120px !important;
-}
-#mymodal4{
-    width:600px;
-}
-#mymodal4 input{
-    width:120px !important;
-}
-#mymodal4 select{
-    width:120px !important;
-}
-.modal.fade.in{
-    top:5%;
-}
-.span9 textarea{
-    width:90%;
-}
-#select-small{
-    width:55px;
-}
-</style>
+    <meta charset="utf-8"/>
+    <title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="Mosaddek" name="author"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap-fileupload.css" rel="stylesheet"/>
+    <link href="../../css/font-awesome.css" rel="stylesheet"/>
+    <link href="../../css/style.css" rel="stylesheet"/>
+    <link href="../../css/style-responsive.css" rel="stylesheet"/>
+    <link href="../../css/style-default.css" rel="stylesheet" id="style_color"/>
+    <link href="../../css/jquery.fancybox.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/my_project.css"/>
+    <link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap-datepicker.js"></script>
+    <script src="../../js/bootstrap-datetimepicker.js"></script>
+    <script src="../../js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#main-content").css({
+                minHeight: $(window).height() - 100 + "px"
+            });
+            $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().append('<input type="search" id="search" style="float:right" class="search"/>')
+        })
+    </script>
+    <style type="text/css" media="screen">
+        #mymodal2 {
+            width: 600px;
+        }
+
+        #mymodal2 input {
+            width: 120px !important;
+        }
+
+        #mymodal2 select {
+            width: 120px !important;
+        }
+
+        #mymodal4 {
+            width: 600px;
+        }
+
+        #mymodal4 input {
+            width: 120px !important;
+        }
+
+        #mymodal4 select {
+            width: 120px !important;
+        }
+
+        #mymodal6 {
+            width: 850px;
+            left: 38%;
+        }
+
+        #mymodal6 input {
+            width: 120px !important;
+        }
+
+        #mymodal6 select {
+            width: 120px !important;
+        }
+
+        .modal.fade.in {
+            top: 5%;
+        }
+
+        .span9 textarea {
+            width: 90%;
+        }
+
+        #select-small {
+            width: 55px;
+        }
+
+        .chart_list ul li {
+            list-style: none;
+            float: left;
+            width: 50%;
+        }
+    </style>
 </head>
 
 
 <body class="fixed-top">
 
 
-    <div class="container-fluid">
+<div class="container-fluid">
 
-      <div class="row-fluid">
-       <div class="span12">
-           <h3 class="page-title">
-             我的项目
-         </h3>
-         <ul class="breadcrumb">
-           <li>
-               <a href="#">首页</a>
-               <span class="divider">/</span>
-           </li>
-           <li class="active">
-               项目管理
-               <span class="divider">/</span>
-           </li>
-           <li class="active">
-               我的项目
-           </li>
-       </ul>
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="page-title">
+                我的项目
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">首页</a>
+                    <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    项目管理
+                    <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    我的项目
+                </li>
+            </ul>
 
-   </div>
-</div>
-
-
-<div class="widget gray">
-    <div class="widget-title">
-        <h4><i class="icon-reorder"></i>我的项目</h4>
+        </div>
     </div>
-    <div class="widget-body">
-        <table class="table table-striped table-bordered" id="sample_1">
-            <thead>
+
+
+    <div class="widget gray">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i>我的项目</h4>
+        </div>
+        <div class="widget-body">
+            <table class="table table-striped table-bordered" id="sample_1">
+                <thead>
                 <tr>
-                    <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                    <th style="width:8px;"><input type="checkbox" class="group-checkable"
+                                                  data-set="#sample_1 .checkboxes"/></th>
                     <th width="5%" class="center_td">编号</th>
                     <th width="10%">代码</th>
                     <th width="15%">项目类别</th>
@@ -109,12 +139,10 @@
                     <th width="10%" class="center_td">状态</th>
                     <th width="10%" class="center_td">详情</th>
                 </tr>
-            </thead>
-            <tbody>
-
-
+                </thead>
+                <tbody id="data">
                 <tr>
-                    <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                    <td><input type="checkbox" class="checkboxes" value="1"/></td>
                     <td class="center_td">01</td>
                     <td>0101</td>
                     <td>校级学生干部加分</td>
@@ -125,76 +153,268 @@
                     <td>2017/09/14</td>
                     <td class="center_td">已保存</td>
                     <td class="center_td">
-                        <div class="message_div"><a href="#mymodal2" data-toggle="modal">编辑</a><span class="space">|</span><a>提交</a></div></td>
-                    </tr>
+                        <div class="message_div"><a href="#mymodal2" data-toggle="modal">编辑</a><span
+                                class="space">|</span><a>提交</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="checkboxes" value="1"/></td>
+                    <td class="center_td">01</td>
+                    <td>0101</td>
+                    <td>校级学生干部加分</td>
+                    <td>项目名称</td>
+                    <td>2.0</td>
+                    <td>10/40</td>
+                    <td>1000/3000</td>
+                    <td>2017/09/14</td>
+                    <td class="center_td">审核中</td>
+                    <td class="center_td">
+                        <div class="message_div"><a href="#mymodal3" data-toggle="modal">详情</a><span
+                                class="space">|</span><a href="#mymodal5" data-toggle="modal">名单</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="checkboxes" value="1"/></td>
+                    <td class="center_td">01</td>
+                    <td>0101</td>
+                    <td>校级学生干部加分</td>
+                    <td>项目名称</td>
+                    <td>2.0</td>
+                    <td>10/40</td>
+                    <td>1000/3000</td>
+                    <td>2017/09/14</td>
+                    <td class="center_td">未通过</td>
+                    <td class="center_td">
+                        <div class="message_div"><a href="#mymodal2" data-toggle="modal">编辑</a><span
+                                class="space">|</span><a>提交</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="checkboxes" value="1"/></td>
+                    <td class="center_td">01</td>
+                    <td>0101</td>
+                    <td>校级学生干部加分</td>
+                    <td>项目名称</td>
+                    <td>2.0</td>
+                    <td>10/40</td>
+                    <td>1000/3000</td>
+                    <td>2017/09/14</td>
+                    <td class="center_td">已通过</td>
+                    <td class="center_td">
+                        <div class="message_div"><a href="#mymodal3" data-toggle="modal">详情</a><span
+                                class="space">|</span><a href="#mymodal5" data-toggle="modal">名单</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="checkboxes" value="1"/></td>
+                    <td class="center_td">01</td>
+                    <td>0101</td>
+                    <td>校级学生干部加分</td>
+                    <td>项目名称</td>
+                    <td>2.0</td>
+                    <td>10/40</td>
+                    <td>1000/3000</td>
+                    <td>2017/09/14</td>
+                    <td class="center_td">进行中</td>
+                    <td class="center_td">
+                        <div class="message_div"><a href="#mymodal3" data-toggle="modal">详情</a><span
+                                class="space">|</span><a href="#mymodal5" data-toggle="modal">名单</a></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="checkboxes" value="1"/></td>
+                    <td class="center_td">01</td>
+                    <td>0101</td>
+                    <td>校级学生干部加分</td>
+                    <td>项目名称</td>
+                    <td>2.0</td>
+                    <td>10/40</td>
+                    <td>1000/3000</td>
+                    <td>2017/09/14</td>
+                    <td class="center_td">已完成</td>
+                    <td class="center_td">
+                        <div class="message_div"><a href="#mymodal6" data-toggle="modal">详情</a><span
+                                class="space">|</span><a href="#mymodal5" data-toggle="modal">名单</a></div>
+                    </td>
+                </tr>
 
-
-                    <tr>
-                        <td><input type="checkbox" class="checkboxes" value="1" /></td>
-                        <td class="center_td">01</td>
-                        <td>0101</td>
-                        <td>校级学生干部加分</td>
-                        <td>项目名称</td>
-                        <td>2.0</td>
-                        <td>10/40</td>
-                        <td>1000/3000</td>
-                        <td>2017/09/14</td>
-                        <td class="center_td">审核中</td>
-                        <td class="center_td">
-                            <div class="message_div"><a href="#mymodal3" data-toggle="modal">详情</a><span class="space">|</span><a href="#mymodal5" data-toggle="modal">名单</a></div></td>
-                        </tr>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-
-<!--编辑-->
-
-<div id="mymodal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 id="mymodallabel1">详情</h4>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="modal-body">
-        <div class="row-fluid">
-            <div class="block-fluid">
-                <div class="row-form clearfix">
-                    <div class="span3">编号</div>
-                    <div class="span3">01</div>
-                    <div class="span3">代码</div>
-                    <div class="span3">010</div>
+
+
+    <!-- <div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 id="mymodallabel1">详情</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row-fluid">
+                <div class="block-fluid">
+                    <div class="row-form clearfix">
+                        <div class="span3">编号</div>
+                        <div class="span3">01</div>
+                        <div class="span3">代码</div>
+                        <div class="span3">010</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目申请日期</div>
+                        <div class="span3">2017/8/5 14:00</div>
+                        <div class="span3">状态</div>
+                        <div class="span3">已报名</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目类别</div>
+                        <div class="span3">信息工程学院</div>
+                        <div class="span3">所属学院</div>
+                        <div class="span3">信息工程学院</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目名称</div>
+                        <div class="span3">校级学生干部加分</div>
+                        <div class="span3">负责人</div>
+                        <div class="span3">XXX</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目内容</div>
+                        <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">评价标准与形式</div>
+                        <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                    </div>
                 </div>
-                <div class="row-form clearfix">
-                    <div class="span3">项目申请日期</div>
-                    <div class="span3">2017/8/5</div>
-                    <div class="span3">状态</div>
-                    <div class="span3">已报名</div>
+                <div class="dr"><span></span></div>
+            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
+                                    </div>
+                                </div> -->
+    <div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4>详情</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="block-fluid">
+                    <div class="row-form clearfix">
+                        <div class="span3">编号</div>
+                        <div class="span3">01</div>
+                        <div class="span3">代码</div>
+                        <div class="span3">010</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目申请日期</div>
+                        <div class="span3">2017/8/5</div>
+                        <div class="span3">状态</div>
+                        <div class="span3">已报名</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目类别</div>
+                        <div class="span3">
+                            <!-- <select class="input-large m-wrap" tabindex="1">
+                                <option value="category 1">创新实践</option>
+                                <option value="category 2">创业实践</option>
+                                <option value="category 3">社会实践</option>
+                                <option value="category 4">文体活动</option>
+                                <option value="category 5">志愿服务</option>
+                                <option value="category 6">讲座论坛</option>
+                                <option value="category 7">社团工作</option>
+                                <option value="category 8">国（境）内外交流</option>
+                                <option value="category 9">生活能力</option>
+                                <option value="category 10">思想品德</option>
+                                <option value="category 11">非学校组织的素质拓展课程</option>
+                            </select> -->
+                            非学校组织的素质拓展课程
+                        </div>
+                        <div class="span3">所属学院</div>
+                        <div class="span3">校级学生干部加分</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目名称</div>
+                        <div class="span3">校级学生干部加分</div>
+                        <div class="span3">负责人</div>
+                        <div class="span3">XXX</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">工作量</div>
+                        <div class="span3">20/40</div>
+                        <div class="span3">积分</div>
+                        <div class="span3">2.0</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">开始时间</div>
+                        <div class="span3">2017/09/28</div>
+                        <div class="span3">结束时间</div>
+                        <div class="span3">2017/09/28</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">总人数</div>
+                        <div class="span3">20</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目内容</div>
+                        <div class="span9">
+                            校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分
+                        </div>
+                    </div>
+
+                    <div class="row-form clearfix">
+                        <div class="span3">评价标准与形式</div>
+                        <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                    </div>
                 </div>
-                <div class="row-form clearfix">
-                    <div class="span3">项目类别</div>
-                    <div class="span3">
-                        <select class="input-large m-wrap" tabindex="1">
-                            <option value="category 1">创新实践</option>
-                            <option value="category 2">创业实践</option>
-                            <option value="category 3">社会实践</option>
-                            <option value="category 4">文体活动</option>
-                            <option value="category 5">志愿服务</option>
-                            <option value="category 6">讲座论坛</option>
-                            <option value="category 7">社团工作</option>
-                            <option value="category 8">国（境）内外交流</option>
-                            <option value="category 9">生活能力</option>
-                            <option value="category 10">思想品德</option>
-                            <option value="category 11">非学校组织的素质拓展课程</option>
-                        </select></div>
+                <div class="dr"><span></span></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
+    </div>
+
+
+    <div id="mymodal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4>详情</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="block-fluid">
+                    <div class="row-form clearfix">
+                        <div class="span3">编号</div>
+                        <div class="span3">01</div>
+                        <div class="span3">代码</div>
+                        <div class="span3">010</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目申请日期</div>
+                        <div class="span3">2017/8/5</div>
+                        <div class="span3">状态</div>
+                        <div class="span3">已报名</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目类别</div>
+                        <div class="span3">
+                            <select class="input-large m-wrap" tabindex="1">
+                                <option value="category 1">创新实践</option>
+                                <option value="category 2">创业实践</option>
+                                <option value="category 3">社会实践</option>
+                                <option value="category 4">文体活动</option>
+                                <option value="category 5">志愿服务</option>
+                                <option value="category 6">讲座论坛</option>
+                                <option value="category 7">社团工作</option>
+                                <option value="category 8">国（境）内外交流</option>
+                                <option value="category 9">生活能力</option>
+                                <option value="category 10">思想品德</option>
+                                <option value="category 11">非学校组织的素质拓展课程</option>
+                            </select></div>
                         <div class="span3">所属学院</div>
                         <div class="span3"><input type="text" value="校级学生干部加分"></div>
                     </div>
@@ -212,29 +432,37 @@
                     </div>
                     <div class="row-form clearfix">
                         <div class="span3">开始时间</div>
-                        <div class="span3"><div class="input-append date" id="datetimepicker1" data-date="2017/09/14" data-date-format="dd-mm-yyyy">
-                         <input class="span2 nowdate" size="16" type="text" value="12-02-2012" style="width:100px !important;">
-                         <span class="add-on"><i class="icon-th"></i></span>
-                     </div></div>
-                     <div class="span3">结束时间</div>
-                     <div class="span3"><div class="input-append date" id="datetimepicker2" data-date="2017/09/14" data-date-format="dd-mm-yyyy">
-                         <input class="span2 nowdate" size="16" type="text" value="12-02-2012" style="width:100px !important;">
-                         <span class="add-on"><i class="icon-th"></i></span>
-                     </div></div>
-                 </div>
-                 <div class="row-form clearfix">
-                    <div class="span3">总人数</div>
-                    <div class="span3"><input type="text" value="20"></div>
-                </div>
-                <div class="row-form clearfix">
-                    <div class="span3">项目内容</div>
-                    <div class="span9">
-                        <textarea name=""></textarea></div>
+                        <div class="span3">
+                            <div class="input-append date" id="datetimepicker1" data-date="2017/09/14"
+                                 data-date-format="dd-mm-yyyy">
+                                <input class="span2 nowdate" size="16" type="text" value="12-02-2012"
+                                       style="width:100px !important;">
+                                <span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="span3">结束时间</div>
+                        <div class="span3">
+                            <div class="input-append date" id="datetimepicker2" data-date="2017/09/14"
+                                 data-date-format="dd-mm-yyyy">
+                                <input class="span2 nowdate" size="16" type="text" value="12-02-2012"
+                                       style="width:100px !important;">
+                                <span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">总人数</div>
+                        <div class="span3"><input type="text" value="20"></div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目内容</div>
+                        <div class="span9">
+                            <textarea name=""></textarea></div>
                     </div>
 
                     <div class="row-form clearfix">
                         <div class="span3">评价标准与形式</div>
-                        <div class="span9"><textarea name="" ></textarea></div>
+                        <div class="span9"><textarea name=""></textarea></div>
                     </div>
                     <div class="row-form clearfix">
                         <div class="span3">审核记录</div>
@@ -255,16 +483,11 @@
     </div>
 
 
-
-
-
-
-<!--详情-->
-
-    <div id="mymodal3" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
+    <div id="mymodal3" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+         aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 id="mymodallabel1">详情</h4>
+            <h4>详情</h4>
         </div>
         <div class="modal-body">
             <div class="row-fluid">
@@ -284,277 +507,496 @@
                     <div class="row-form clearfix">
                         <div class="span3">项目类别</div>
                         <div class="span3">
+                            <!-- <select class="input-large m-wrap" tabindex="1">
+                                <option value="category 1">创新实践</option>
+                                <option value="category 2">创业实践</option>
+                                <option value="category 3">社会实践</option>
+                                <option value="category 4">文体活动</option>
+                                <option value="category 5">志愿服务</option>
+                                <option value="category 6">讲座论坛</option>
+                                <option value="category 7">社团工作</option>
+                                <option value="category 8">国（境）内外交流</option>
+                                <option value="category 9">生活能力</option>
+                                <option value="category 10">思想品德</option>
+                                <option value="category 11">非学校组织的素质拓展课程</option>
+                            </select> -->
+                            非学校组织的素质拓展课程
+                        </div>
+                        <div class="span3">所属学院</div>
+                        <div class="span3">校级学生干部加分</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目名称</div>
+                        <div class="span3">校级学生干部加分</div>
+                        <div class="span3">负责人</div>
+                        <div class="span3">XXX</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">工作量</div>
+                        <div class="span3">20/40</div>
+                        <div class="span3">积分</div>
+                        <div class="span3">2.0</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">开始时间</div>
+                        <div class="span3">2017/09/28</div>
+                        <div class="span3">结束时间</div>
+                        <div class="span3">2017/09/28</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">参与人数</div>
+                        <div class="span3">20/40</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目内容</div>
+                        <div class="span9">
+                            校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分
+                        </div>
+                    </div>
 
-                    非学校组织的素质拓展课程
+                    <div class="row-form clearfix">
+                        <div class="span3">评价标准与形式</div>
+                        <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                    </div>
+
                 </div>
-                <div class="span3">所属学院</div>
-                <div class="span3">校级学生干部加分</div>
-            </div>
-            <div class="row-form clearfix">
-                <div class="span3">项目名称</div>
-                <div class="span3">校级学生干部加分</div>
-                <div class="span3">负责人</div>
-                <div class="span3">XXX</div>
-            </div>
-            <div class="row-form clearfix">
-                <div class="span3">工作量</div>
-                <div class="span3">20/40</div>
-                <div class="span3">积分</div>
-                <div class="span3">2.0</div>
-            </div>
-            <div class="row-form clearfix">
-                <div class="span3">开始时间</div>
-                <div class="span3">2017/09/28</div>
-                <div class="span3">结束时间</div>
-                <div class="span3">2017/09/28</div>
-            </div>
-            <div class="row-form clearfix">
-                <div class="span3">参与人数</div>
-                <div class="span3">20/40</div>
-            </div>
-            <div class="row-form clearfix">
-                <div class="span3">项目内容</div>
-                <div class="span9">
-                 校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
-             </div>
-
-             <div class="row-form clearfix">
-                <div class="span3">评价标准与形式</div>
-                <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                <div class="dr"><span></span></div>
             </div>
         </div>
-        <div class="dr"><span></span></div>
+        <div class="modal-footer">
+
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
     </div>
-</div>
-<div class="modal-footer">
-
-    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-</div>
-</div>
 
 
-
-
-
-
-<!--名单页面-->
-
-    <div id="mymodal5" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
+    <div id="mymodal4" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+         aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 id="mymodallabel1">名单</h4>
+            <h4>详情</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="block-fluid">
+                    <div class="row-form clearfix">
+                        <div class="span3">编号</div>
+                        <div class="span3">01</div>
+                        <div class="span3">代码</div>
+                        <div class="span3">010</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目申请日期</div>
+                        <div class="span3">2017/8/5</div>
+                        <div class="span3">状态</div>
+                        <div class="span3">已审核</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目类别</div>
+                        <div class="span3">
+                            <select class="input-large m-wrap" tabindex="1">
+                                <option value="category 1">创新实践</option>
+                                <option value="category 2">创业实践</option>
+                                <option value="category 3">社会实践</option>
+                                <option value="category 4">文体活动</option>
+                                <option value="category 5">志愿服务</option>
+                                <option value="category 6">讲座论坛</option>
+                                <option value="category 7">社团工作</option>
+                                <option value="category 8">国（境）内外交流</option>
+                                <option value="category 9">生活能力</option>
+                                <option value="category 10">思想品德</option>
+                                <option value="category 11">非学校组织的素质拓展课程</option>
+                            </select></div>
+                        <div class="span3">所属学院</div>
+                        <div class="span3"><input type="text" value="校级学生干部加分"></div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目名称</div>
+                        <div class="span3"><input type="text" value="校级学生干部加分"></div>
+                        <div class="span3">负责人</div>
+                        <div class="span3"><input type="text" value="XXX"></div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">工作量</div>
+                        <div class="span3"><input type="text" value="20/40"></div>
+                        <div class="span3">积分</div>
+                        <div class="span3"><input type="text" value="2.0"></div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">开始时间</div>
+                        <div class="span3">
+                            <div class="input-append date" id="datetimepicker" data-date="2017/09/14"
+                                 data-date-format="dd-mm-yyyy">
+                                <input class="span2 nowdate" size="16" type="text" value="12-02-2012"
+                                       style="width:100px !important;">
+                                <span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                        </div>
+                        <div class="span3">结束时间</div>
+                        <div class="span3">
+                            <div class="input-append date" id="datetimepicker3" data-date="2017/09/14"
+                                 data-date-format="dd-mm-yyyy">
+                                <input class="span2 nowdate" size="16" type="text" value="12-02-2012"
+                                       style="width:100px !important;">
+                                <span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">总人数</div>
+                        <div class="span3"><input type="text" value="20"></div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目内容</div>
+                        <div class="span9">
+                            <textarea name=""></textarea></div>
+                    </div>
+
+                    <div class="row-form clearfix">
+                        <div class="span3">评价标准与形式</div>
+                        <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                    </div>
+
+                    <div class="row-form clearfix">
+                        <div class="span3">审核记录</div>
+                        <div class="span3">已通过</div>
+                    </div>
+
+                </div>
+                <div class="dr"><span></span></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
+    </div>
+
+
+    <div id="mymodal5" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4>名单</h4>
         </div>
         <div class="modal-body">
 
             <div class="table-responsive">
-              <table class="table table-striped">
-                  <tr>
-                    <th>编号</th>
-                    <th>所属学院</th>
-                    <th>班级</th>
-                    <th>学号</th>
-                    <th>姓名</th>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>信息工程学院</td>
-                    <td>14微社交</td>
-                    <td>1422110120</td>
-                    <td>XXXXXX</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>信息工程学院</td>
-                    <td>14微社交</td>
-                    <td>1422110120</td>
-                    <td>XXX</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>信息工程学院</td>
-                    <td>14微社交</td>
-                    <td>1422110120</td>
-                    <td>XXX</td>
-                </tr>
-            </table>
+                <table class="table table-striped">
+                    <tr>
+                        <th>编号</th>
+                        <th>所属学院</th>
+                        <th>班级</th>
+                        <th>学号</th>
+                        <th>姓名</th>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>信息工程学院</td>
+                        <td>14微社交</td>
+                        <td>1422110120</td>
+                        <td>XXXXXX</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>信息工程学院</td>
+                        <td>14微社交</td>
+                        <td>1422110120</td>
+                        <td>XXX</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>信息工程学院</td>
+                        <td>14微社交</td>
+                        <td>1422110120</td>
+                        <td>XXX</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <!-- <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button> -->
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div id="mymodal6" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4>详情</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row-fluid">
+            <div class="block-fluid">
+                <div class="span8" style="border-right: 1px solid #ccc;">
+                    <div class="row-form clearfix">
+                        <div class="span3">编号</div>
+                        <div class="span3">01</div>
+                        <div class="span3">代码</div>
+                        <div class="span3">010</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目申请日期</div>
+                        <div class="span3">2017/8/5</div>
+                        <div class="span3">状态</div>
+                        <div class="span3">已报名</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目类别</div>
+                        <div class="span3">
+                            <!-- <select class="input-large m-wrap" tabindex="1">
+                                <option value="category 1">创新实践</option>
+                                <option value="category 2">创业实践</option>
+                                <option value="category 3">社会实践</option>
+                                <option value="category 4">文体活动</option>
+                                <option value="category 5">志愿服务</option>
+                                <option value="category 6">讲座论坛</option>
+                                <option value="category 7">社团工作</option>
+                                <option value="category 8">国（境）内外交流</option>
+                                <option value="category 9">生活能力</option>
+                                <option value="category 10">思想品德</option>
+                                <option value="category 11">非学校组织的素质拓展课程</option>
+                            </select> -->
+                            非学校组织的素质拓展课程
+                        </div>
+                        <div class="span3">所属学院</div>
+                        <div class="span3">校级学生干部加分</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目名称</div>
+                        <div class="span3">校级学生干部加分</div>
+                        <div class="span3">负责人</div>
+                        <div class="span3">XXX</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">工作量</div>
+                        <div class="span3">20/40</div>
+                        <div class="span3">积分</div>
+                        <div class="span3">2.0</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">开始时间</div>
+                        <div class="span3">2017/09/28</div>
+                        <div class="span3">结束时间</div>
+                        <div class="span3">2017/09/28</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">参与人数</div>
+                        <div class="span3">20/40</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目内容</div>
+                        <div class="span9">
+                            校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分
+                        </div>
+                    </div>
+
+                    <div class="row-form clearfix">
+                        <div class="span3">评价标准与形式</div>
+                        <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div id="main" style="height:150px; width:220px"></div>
+                    <div class="chart_list">
+                        <ul>
+                            <li><span>0.1</span>:(<span>10%</span>)</li>
+                            <li><span>0.1</span>:(<span>10%</span>)</li>
+                            <li><span>0.1</span>:(<span>10%</span>)</li>
+                            <li><span>0.1</span>:(<span>10%</span>)</li>
+                            <li><span>0.1</span>:(<span>10%</span>)</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="dr"><span></span></div>
         </div>
     </div>
     <div class="modal-footer">
-        <!-- <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button> -->
+
         <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
     </div>
 </div>
 
 
-
-
-
-
-
-</div>
-
-
-
 <script src="../../js/jquery.blockui.js"></script>
 
-   <!--[if lt ie 9]>
-   <script src="http://www.js-css.cn/js/excanvas.js"></script>
-   <script src="http://www.js-css.cn/js/respond.js"></script>
-   <![endif]-->
-   <script type="text/javascript" src="../../js/jquery.uniform.min.js"></script>
-   <script type="text/javascript" src="../../js/jquery.datatables.js"></script>
-   <script type="text/javascript" src="../../js/dt_bootstrap.js"></script>
-   <script src="../../js/jquery.scrollto.min.js"></script>
+<!--[if lt ie 9]>
+<script src="http://www.js-css.cn/js/excanvas.js"></script>
+<script src="http://www.js-css.cn/js/respond.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../js/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.datatables.js"></script>
+<script type="text/javascript" src="../../js/dt_bootstrap.js"></script>
+<script src="../../js/jquery.scrollto.min.js"></script>
 
 
+<!-- <script src="../../js/common-scripts.js"></script> -->
 
-   <!-- <script src="../../js/common-scripts.js"></script> -->
 
-
-   <script src="../../js/dynamic-table.js"></script>
-   <script src="../../js/tjs/my-project.js"></script>
-   <!--<script>
-
-    $(function(){
-     $(".dataTables_filter").find('input').attr('placeholder','空格分隔 编号、项目名称、负责人').css('width', '250px');;
-     var $checkall = $("input[name='checkall']");
-     var $btn = $(".btn-success");
-     $btn.click(function(){
-         if($checkall.is(":checked"))
-         {
-            alert("确定选择审核的全部内容吗");
+<script src="../../js/dynamic-table.js"></script>
+<!-- <script src="../../js/chart1.js"></script> -->
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
         }
     });
 
-     $(".group-checkable").click(function(){
-     //判断当前点击的复选框处于什么状态$(this).is(":checked") 返回的是布尔类型
-      if($(this).is(":checked")){
-          $("input[value='1']").prop("checked",true);
-      }else{
-         $("input[value='1']").prop("checked",false);
-     }
-     });
+    // 使用
+    require(
+        [
+            'echarts',
+            'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+        ],
+        function (ec) {
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = ec.init(document.getElementById('main'));
 
-     //页面加载项目类别筛选
-     $("#sample_1_length").find('label').after("<div class='selectlist'>
-                                                 <select name='select' style='width: 100%;' class='olor-wh'>
-                                                 <option value='4' class='yellow' id='get'>项目类别筛选...</option>
+            var option = {
+                title: {
+                    text: '成绩分析',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                /*  legend: {
+                 orient : 'vertical',
+                 x : 'left',
+                 data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                 },*/
 
-                                                 <option value='4'>校级学生干部加分</option>
-                                                 <option value='5'>项目类别</option>
-                                                 <option value='6'>项目类别</option>
+                calculable: true,
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '65%'],
+                        data: [
+                            {value: 335, name: '0.111'},
+                            {value: 310, name: '0.222'},
+                            {value: 234, name: '0.333'},
+                            {value: 135, name: '0.444'},
+                            {value: 1548, name: '0.555'}
+                        ]
+                    }
+                ]
+            };
 
-                                                 </select>
-                                                 </div>");
+            // 为echarts对象加载数据
+            myChart.setOption(option);
+        }
+    );
+</script>
+<script>
+    $(function () {
+        $(".dataTables_filter").find('input').attr('placeholder', '空格分隔 编号、项目名称、负责人').css('width', '250px');
+        ;
+        var $checkall = $("input[name='checkall']");
+        var $btn = $(".btn-success");
+        $btn.click(function () {
+            if ($checkall.is(":checked")) {
+                alert("确定选择审核的全部内容吗");
+            }
+        });
+        $(".group-checkable").click(function () {
+            //判断当前点击的复选框处于什么状态$(this).is(":checked") 返回的是布尔类型
+            if ($(this).is(":checked")) {
+                $("input[value='1']").prop("checked", true);
+            } else {
+                $("input[value='1']").prop("checked", false);
+            }
+        });
+        $("#sample_1_length").find('label').after('<div class="selectlist"><select name="projectCategory" id="projectCategory" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+        $("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
+        $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
+        $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
+        $(".selectlist").after('<div class="selectlist selectlist_second"><select name="ProjectStatus" id="ProjectStatus" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目状态筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+        $(".selectlist_second").after('<button class="btn btn-small btn-success"><i class="icon-cloud"></i>导出</button>');
+        $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
+            '62.9%');
+        $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
 
-     //ajax获取项目类别
-     $.ajax({
-         type: "GET",
-          url: 获取项目类别地址,
-         success: function (result) {
-             var htmls="";
-             for(var i=0;i<result.content[i].length;i++){
-               htmls+="<option value='"+(i+4)+"'>"+result.content[i].类别字段+"</option>";
+
+        $("textarea").html("校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分");
+
+
+        var newDate = new Date();
+        var str = "" + newDate.getFullYear() + "-";
+        str += (newDate.getMonth() + 1) + "-";
+        str += newDate.getDate();
+        var t = newDate.toJSON();
+
+        $('#datetimepicker,#datetimepicker1,#datetimepicker2,#datetimepicker3').datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView: 'month',
+            language: 'zh-CN',
+            todayBtn: 1,
+            autoclose: 1,
+            startDate: new Date(t),
+            todayHighlight: 1,
+            todayBtn: true,
+        });
+        $(".nowdate").val(str);
+
+
+    })
+
+</script>
+<script src="../../js/tjs/pagejs.js"></script>
+<script src="../../js/tjs/my_project.js"></script>
+
+<!-- <script type="text/javascript">
+    var pieData = [
+             {
+                 value: 300,
+                 color:"#F7464A",
+                 highlight: "#FF5A5E",
+                 label: "Red"
+             },
+             {
+                 value: 50,
+                 color: "#46BFBD",
+                 highlight: "#5AD3D1",
+                 label: "Green"
+             },
+             {
+                 value: 100,
+                 color: "#FDB45C",
+                 highlight: "#FFC870",
+                 label: "Yellow"
+             },
+             {
+                 value: 40,
+                 color: "#949FB1",
+                 highlight: "#A8B3C5",
+                 label: "Grey"
+             },
+             {
+                 value: 120,
+                 color: "#4D5360",
+                 highlight: "#616774",
+                 label: "Dark Grey"
              }
-             $("#get").append(htmls);
-           }
-     });
 
-     //页面加载
-     $("#sample_1_length").find('label').html("<span>每页显示</span>
-                                             <select class='input-small m-wrap' tabindex='1' id='select-small'>
+         ];
 
-                                             <option value='Category 1'>5</option>
-                                             <option value='Category 2'>10</option>
-                                             <option value='Category 3'>15</option>
-                                             <option value='Category 4'>20</option>
-
-                                             </select><span>条记录</span>");
-
-     var pages="";//每页几条数据
-     pages=$("#select-small option:selected").text();//获取每页显示几条数据
-
-     //页面加载
-     var maxpage="";//最大页数
-     var totalpage="";//总条数
-     maxpage=totalpage/pages;
-
-     $('#sample_1_info').html("当前显示<span>1</span>到<span>6</span>条,共<span>'+maxpage+'</span>条记录");
-
-
-     var nowpage="";//当前页
-     $('.pagination').html("<div class='pagination'>
-                             <ul>
-                             <li><a href=javascript:ajaxGetPage("+(nowpage-1)+","+pages+")>上一页</a>   <span  style='color:#B0B0B0'>上一页</span></li>
-                             <li><a href=''>1</a></li>
-                             <li><a href=''>2</a></li>
-                             <li><a href=''>3</a></li>
-                             <li class='hidden-phone'><a href=''>4</a></li>
-                             <li><a href=javascript:ajaxGetPage("+(nowpage+1)+","+pages+")>下一页</a>   <span  style='color:#B0B0B0'>下一页</span></li>
-                             </ul>
-                             </div>");
-
-     $(".selectlist").after("<div class='selectlist selectlist_second'>
-                             <select name='select' style='width: 100%;' class='color-wh'>
-                             <option value='4' class='yellow' id='getstatus'>项目状态筛选...</option>
-
-                             <option value='5'>项目类别</option>
-                             <option value='6'>项目类别</option>
-
-                             </select>
-                             </div>");
-
-     $.ajax({
-         type: "GET",
-          url: 获取项目状态地址,
-         success: function (result) {
-             var htmls="";
-             for(var i=0;i<result.content[i].length;i++){
-               htmls+="<option value='"+(i+5)+"'>"+result.content[i].status+"</option>";
-             }
-             $("#getstatus").append(htmls);
-           }
-     });
-
-     $(".selectlist_second").after("<button class='btn btn-small btn-success'>
-                                     <i class='icon-cloud'></i>
-                                     导出
-                                     </button>");
-
-     $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
-
-     $(".dataTables_filter").parent(".span6").css('width', '33.9%');
-
-
-     $("textarea").html("校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分");
-
-
-     var newDate = new Date();
-     var str = "" + newDate.getFullYear() + "-";
-     str += (newDate.getMonth()+1) + "-";
-     str += newDate.getDate();
-     var t= newDate.toJSON();
-
-     $('#datetimepicker,#datetimepicker1,#datetimepicker2').datetimepicker({
-         format: 'yyyy-mm-dd',
-         minView: 'month',
-         language:  'zh-CN',
-         todayBtn:  1,
-         autoclose: 1,
-         startDate:new Date(t),
-         todayHighlight: 1,
-         todayBtn: true,
-     });
-     $(".nowdate").val(str);
-
-
-
-
-     })
-    </script> -->
+         window.onload = function(){
+             var ctx = document.getElementById("chart-area").getContext("2d");
+             window.myPie = new Chart(ctx).Pie(pieData);
+         };
+</script> -->
 </body>
-
-
 
 
 </html>

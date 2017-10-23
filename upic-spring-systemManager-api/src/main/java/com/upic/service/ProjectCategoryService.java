@@ -41,4 +41,12 @@ public interface ProjectCategoryService {
      * @return
      */
     ProjectCategoryInfo getProjectCategoryById(long projectCategoryId);
+
+    /**
+     * 根据ID删除项目类别
+     *
+     * @param projectCategoryId
+     * @return
+     */
+    String deleteProjectCategory(long projectCategoryId);
 }

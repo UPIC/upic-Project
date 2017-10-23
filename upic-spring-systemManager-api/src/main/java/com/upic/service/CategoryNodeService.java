@@ -42,4 +42,12 @@ public interface CategoryNodeService {
      * @return
      */
     CategoryNodeInfo getCategoryNodeById(long categoryNodeId);
+
+    /**
+     * 根据fatherId查询项目节点列表
+     *
+     * @param fatherId
+     * @return
+     */
+    List<CategoryNodeInfo> getCategoryNodeByFatherId(long fatherId);
 }

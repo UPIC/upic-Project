@@ -48,4 +48,13 @@ public interface ResourceService {
      * @param resourceId
      */
     void deleteResource(long resourceId);
+
+    /**
+     * 根据fatherId查询
+     *
+     * @param fatherId
+     * @param pageable
+     * @return
+     */
+    Page<ResourceInfo> findByFatherId(long fatherId, Pageable pageable);
 }

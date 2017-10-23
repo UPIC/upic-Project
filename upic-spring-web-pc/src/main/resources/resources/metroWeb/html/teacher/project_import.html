@@ -27,6 +27,7 @@
      $(document).ready(function(){
       $("#main-content").css({
         minHeight: $(window).height()-100+"px"});
+       $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().append('<input type="search" id="search" style="float:right" class="search"/>')
      })
    </script>
    <style type="text/css" media="screen">
@@ -310,13 +311,15 @@
          $("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
         $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
-        $("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+        $("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" id="projectCategory" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
         /*$(".selectlist").after('<div class="selectlist selectlist_second"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目名称筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');*/
         $(".selectlist").after('<button class="btn btn-small btn-success"><i class="icon-cloud"></i>导入</button>');
 
         /*$(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/
-        $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
-        $(".dataTables_filter").parent(".span6").css('width', '33.9%');
+       $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
+          '62.9%');
+      $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
+
         $("textarea").html("校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分");
 
         var newDate = new Date();
