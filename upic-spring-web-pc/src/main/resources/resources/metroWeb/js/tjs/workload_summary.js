@@ -64,7 +64,7 @@ function addHtmls(datas, pageNum) {
         htmls += "</span>";
         htmls += "</td>";
         htmls += "<td class='center_td'>";
-        htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=commonAjax('" + dataUrl + "','" + requestData + "','getProjectInfo','GET')>查看详情</div></a></td>";
+        htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=commonAjax('" + dataUrl + "','userNum=" + data[i].userNum + "','getProjectInfo','GET')>查看详情</div></a></td>";
         htmls += "</tr>";
     }
     $("#data").html(htmls);
@@ -79,14 +79,14 @@ function getProjectInfo(data) {
     htmls += "<div class='span3'>年度</div>";
     htmls += "<div class='span3'>2016-2017</div>";
     htmls += "<div class='span3'>所属部门</div>";
-    htmls += "<div class='span3'>" + data.college + "</div>";
+    htmls += "<div class='span3'>" + data.content[0].college + "</div>";
 
     htmls += "</div>";
-    htmls += "div class='row-form clearfix'>";
+    htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>工号</div>";
-    htmls += "<div class='span3'>" + data.userNum + "</div>";
+    htmls += "<div class='span3'>" + data.content[0].userNum + "</div>";
     htmls += "<div class='span3'>负责人</div>";
-    htmls += "<div class='span3'>" + data.username + "</div>";
+    htmls += "<div class='span3'>" + data.content[0].username + "</div>";
     htmls += "</div>";
 
     htmls += "<table class='table table-bordered'>";
@@ -98,15 +98,15 @@ function getProjectInfo(data) {
     htmls += "</tr>";
     htmls += "</thead>";
 
-    htmls += "<tbody id='" + data.userNum + "'>";
+    htmls += "<tbody id='" + data.content[0].userNum + "A'>";
 
-    htmls += commonAjax(getProjectUrl, requestData, 'getProjectInfo2', 'GET', data.userNum);
+    commonAjax(getProjectUrl, 'guidanceNum=' + data.content[0].userNum, 'getProjectInfo2', 'GET', data.content[0].userNum + 'A');
 
     htmls += "</tbody>";
 
     htmls += "</table>";
 
-    $("#getProjectInfo").html(htmlss);
+    $("#getProjectInfo").html(htmls);
 }
 
 
@@ -120,19 +120,37 @@ function getWorkLoad2(res, id) {
 function getProjectInfo2(res, id) {
     var data = res.content;
     var htmls = "";
-    var totle = "";
     for (var i = 0; i < data.length; i++) {
         htmls += "<tr>";
-        htmls += "<td>" + data.projectCategory + "</td>";
-        htmls += "<td>";
-
+        htmls += "<td>" + data[i].projectCategory + "</td>";
+        htmls += "<td id='" + data[i].integral + "_" + data[i].projectNum + "'>";
+        commonAjax('/common/getSignUpNumberByProjectNum', 'projectNum=' + data[i].projectNum, 'getProjectGZL', 'GET', data[i].integral + "_" + data[i].projectNum);
         htmls += "</td>";
         htmls += "</tr>";
     }
     htmls += "<tr>";
-    htmls += "<td colspan='4' style='text-align:right;padding-right: 20px;'>总计工作量:<span>2</span></td>";
+    if (data.length == 0) {
+        htmls += "<td colspan='4' style='text-align:right;padding-right: 20px;'>总计工作量:<span>" + 0 + "</span></td>";
+    } else {
+        htmls += "<td colspan='4' style='text-align:right;padding-right: 20px;'>总计工作量:<span id='" + data[0].guidanceNum + "ProjectSpan'>";
+        commonAjax(getTeacherNowWorkloadSummaryUrl, 'teacherNum=' + data[0].guidanceNum, 'getProjectSpan', 'GET', data[0].guidanceNum + 'ProjectSpan');
+        htmls += "</span></td>";
+    }
     htmls += "</tr>";
-    //$("#")
+    $("#" + id).html(htmls);
 }
 
+function getProjectGZL(res, id) {
+    var totle = res * splitJson(id);
+    $("#" + id).html(totle);
+}
 
+function getProjectSpan(res, id) {
+    $("#" + id).html(res);
+}
+
+function splitJson(json) {
+    var projectCategorys = new Array();
+    projectCategorys = json.split("_");
+    return projectCategorys[0];
+}
