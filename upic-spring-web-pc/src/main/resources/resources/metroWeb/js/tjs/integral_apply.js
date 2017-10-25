@@ -69,7 +69,8 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].projectName + "</td>";
         htmls += "<td>";
         // onclick事件引号问题
-        htmls += "<div class='message_div' onclick=commonAjax(" + dataUrl + "," + requestData + ",'getProjectInfo','GET')><a href='#mymodal1' data-toggle='modal'>查看详情</a></div></td>";
+        htmls += "<div class='message_div' onclick=commonAjax('/common/getIntegralLogByProjectNumStudentNum','projectNum=" + data[i].integralLogId.projectNum + "&studentNum=" + data[i].integralLogId.studentNum + "','getProjectInfo','GET')><a href='#mymodal1' data-toggle='modal'>查看详情</a></div></td>";
+        //                                 onclick=commonAjax('" + dataUrl + "','userNum=" + data[i].userNum + "','getProjectInfo','GET')
         htmls += "</tr>";
     }
     $("#data").html(htmls);
@@ -80,9 +81,9 @@ function getProjectInfo(data) {
     var htmlss = "";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>申请日期</div>";
-    htmlss += "<div class='span3'>" + data.startTime + "</div>";
+    htmlss += "<div class='span3'>" + getDate(data.creatTime, "yyyy-MM-dd") + "</div>";
     htmlss += "<div class='span3'>姓名</div>";
-    htmlss += "<div class='span3'>" + data.userName + "</div>";
+    htmlss += "<div class='span3'>" + data.student + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>所属学院</div>";
@@ -98,11 +99,11 @@ function getProjectInfo(data) {
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>详情</div>";
-    htmlss += "<div class='span9'>" + data.content + "</div>";
+    htmlss += "<div class='span9'>" + data.event + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>作证材料</div>";
-    htmlss += "<div class='span9'><a class='tooltip1' href='" + data.picUrl + "'><img src='" + data.picUrl + "' ></a></div>";
+    htmlss += "<div class='span9'><a class='tooltip1' href='" + data.picUrl + "'><img src='" + data.pic + "' ></a></div>";
     htmlss += "</div>";
     htmlss += "</div>";
 

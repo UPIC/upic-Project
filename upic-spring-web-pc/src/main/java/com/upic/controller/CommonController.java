@@ -186,7 +186,10 @@ public class CommonController {
     public Page<ProjectInfo> getProject(@PageableDefault(size = 10) Pageable pageable, ProjectCondition p)
             throws Exception {
         try {
-            return projectService.searchProject(p, pageable);
+            System.out.println("!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$" + p.getGuidanceNum());
+            Page<ProjectInfo> projectInfoPage = projectService.searchProject(p, pageable);
+            System.out.println(projectInfoPage.getContent().toString());
+            return projectInfoPage;
         } catch (Exception e) {
             LOGGER.info("getProject:" + e.getMessage());
             return null;
@@ -765,6 +768,26 @@ public class CommonController {
     }
 
     /**
+     * 根据项目编号与用户编号获取积分
+     *
+     * @return
+     */
+    @GetMapping("/getIntegralLogByProjectNumStudentNum")
+    @ApiOperation("获取所有积分")
+    public IntegralLogInfo getAllIntegralLog(String projectNum, String studentNum) {
+        try {
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            integralLogIdInfo.setStudentNum(studentNum);
+            integralLogIdInfo.setProjectNum(projectNum);
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(integralLogIdInfo);
+            return integralLogInfo;
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogWithOutPass:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * 获取所有积分
      *
      * @param integralLogCondition
@@ -775,7 +798,9 @@ public class CommonController {
     @ApiOperation("获取所有积分")
     public Page<IntegralLogInfo> getAllIntegralLog(IntegralLogCondition integralLogCondition, @PageableDefault(size = 10) Pageable pageable) {
         try {
-            return integralLogService.searchIntegralLog(integralLogCondition, pageable);
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(integralLogCondition, pageable);
+            System.out.println("!#@$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$" + integralLogInfoPage.getContent().size());
+            return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getIntegralLogWithOutPass:" + e.getMessage());
             return null;
@@ -861,6 +886,7 @@ public class CommonController {
      * @return
      */
     @GetMapping("/searchProject")
+    @ApiOperation("查找项目")
     public Page<ProjectInfo> searchProject(ProjectCondition projectCondition, @PageableDefault(size = 10) Pageable pageable) {
         try {
             Page<ProjectInfo> projectInfoPage = projectService.searchProject(projectCondition, pageable);

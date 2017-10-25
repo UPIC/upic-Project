@@ -85,7 +85,7 @@
             <div class="widget-body form">
 
 
-                <form class="cmxform form-horizontal" id="commentform" method="get" action="#">
+                <form class="cmxform form-horizontal" id="commentform" method="POST" action="#">
                     <div class="control-group ">
                     <div class="span6">
                         <label for="cname" class="control-label">申报日期</label>
@@ -121,7 +121,7 @@
                     <div class="span6">
                         <label for="cname" class="control-label">项目类别</label>
                     <div class="controls">
-                          <select class="input-large m-wrap" tabindex="1">
+                          <select class="input-large m-wrap" tabindex="1" id="getAllProjectCategory">
                           <option value="category 1">--请选择项目类别--</option>
                               <option value="category 1">创新实践</option>
                               <option value="category 2">创业实践</option>
@@ -203,8 +203,8 @@
                       </div>
                     </div>
                     <div class="form-actions">
-                        <button class="btn btn-success" type="submit">保存</button>
-                        <button class="btn" type="button">取消</button>
+                        <button class="btn btn-success" type="submit" onclick="saveProject()">保存</button>
+                        <button class="btn" type="button" onclick="cancel()">取消</button>
                     </div>
 
 
@@ -289,6 +289,8 @@
 
 
  </script>
+ <script src="../../js/tjs/pagejs.js"></script>
+ <script src="../../js/tjs/project_apply.js"></script>
 </body>
 
 
