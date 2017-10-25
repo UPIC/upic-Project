@@ -23,6 +23,7 @@ public class ProjectSpec extends CommonSimpleSpecification<Project, ProjectCondi
         addBetweenCondition(queryWraper, "signUpEndTime");
         addEqualsCondition(queryWraper, "declareUnit");
         addEqualsCondition(queryWraper, "guidanceMan");
+        addEqualsCondition(queryWraper, "guidanceNum");
         addEqualsCondition(queryWraper, "maximum");
         addEqualsCondition(queryWraper, "implementationProcess");
         addEqualsCondition(queryWraper, "checkAssessmentCriteraAndForm");
