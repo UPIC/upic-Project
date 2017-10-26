@@ -50,4 +50,12 @@ public interface CategoryNodeService {
      * @return
      */
     List<CategoryNodeInfo> getCategoryNodeByFatherId(long fatherId);
+
+    /**
+     * 获取项目节点
+     *
+     * @param categoryNodeCondition
+     * @return
+     */
+    List<CategoryNodeInfo> searchCategoryNodeList(CategoryNodeCondition categoryNodeCondition);
 }

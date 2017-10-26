@@ -32,7 +32,6 @@ public class MailInfo extends BaseInfo {
     }
 
     public MailInfo(Long id, Date creatTime, String field1, String field2, String field3, String field4, String field5, String mailContent, MailTypeEnum type, String mailer, String mailNum, String title, String target, MailStatusEnum status, List<MailLogInfo> mailLogs) {
-        super(id, creatTime, field1, field2, field3, field4, field5);
         this.mailContent = mailContent;
         this.type = type;
         this.mailer = mailer;

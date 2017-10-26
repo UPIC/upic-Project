@@ -7,7 +7,6 @@ import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.service.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.log4j.lf5.viewer.categoryexplorer.CategoryNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +61,44 @@ public class CommonController {
     private ClazzService clazzService;
 
     /**
+     * 根据ID获取项目类别
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/getProjectCategoryById")
+    @ApiOperation("根据ID获取项目类别")
+    public ProjectCategoryInfo getProjectCategoryById(long id) {
+        try {
+            ProjectCategoryInfo projectCategoryInfo = projectCategoryService.getProjectCategoryById(id);
+            System.out.println(projectCategoryInfo);
+            return projectCategoryInfo;
+        } catch (Exception e) {
+            LOGGER.info("getProjectCategoryById:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 根据ID获取项目节点
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/getCategoryNodeById")
+    @ApiOperation("根据ID获取项目类别")
+    public CategoryNodeInfo getCategoryNodeById(long id) {
+        try {
+            CategoryNodeInfo categoryNodeInfo = categoryNodeService.getCategoryNodeById(id);
+            System.out.println(categoryNodeInfo);
+            return categoryNodeInfo;
+        } catch (Exception e) {
+            LOGGER.info("getCategoryNodeById:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * 添加项目类别
      *
      * @param projectCategoryInfo
@@ -98,16 +135,39 @@ public class CommonController {
     }
 
     /**
+     * 获取所有项目类别
+     *
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getAllProjectCategoryList")
+    @ApiOperation("获取所有项目类别")
+    public List<ProjectCategoryInfo> getAllProjectCategoryList(ProjectCategoryCondition projectCategoryCondition) throws Exception {
+        try {
+            List<ProjectCategoryInfo> projectCategoryInfoList = projectCategoryService.getAllProjectCategoryList(projectCategoryCondition);
+            for (ProjectCategoryInfo projectCategoryInfo : projectCategoryInfoList) {
+                System.out.println(projectCategoryInfo.toString());
+            }
+            return projectCategoryInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getAllProjectCategory:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
      * 更新项目类别
      *
-     * @param projectCategoryInfo
      * @return
      */
     @GetMapping("/updateProjectCategory")
     @ApiOperation("更新项目类别")
-    public ProjectCategoryInfo updateProjectCategory(ProjectCategoryInfo projectCategoryInfo) {
+    public ProjectCategoryInfo updateProjectCategory(long id, String categoryName) {
         try {
-            return projectCategoryService.updateProjectCategory(projectCategoryInfo);
+            ProjectCategoryInfo projectCategoryInfo = projectCategoryService.getProjectCategoryById(id);
+            projectCategoryInfo.setCategoryName(categoryName);
+            projectCategoryInfo = projectCategoryService.updateProjectCategory(projectCategoryInfo);
+            return projectCategoryInfo;
         } catch (Exception e) {
             LOGGER.info("updateProjectCategory:" + e.getMessage());
             return null;
@@ -144,23 +204,42 @@ public class CommonController {
     }
 
     /**
+     * 获取项目节点
+     *
+     * @param categoryNodeCondition
+     * @return
+     */
+    @GetMapping("/searchCategoryNodeList")
+    @ApiOperation("获取项目节点")
+    public List<CategoryNodeInfo> searchCategoryNodeList(CategoryNodeCondition categoryNodeCondition) {
+        try {
+            return categoryNodeService.searchCategoryNodeList(categoryNodeCondition);
+        } catch (Exception e) {
+            LOGGER.info("searchCategoryNodeList:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * 更新项目节点
      *
-     * @param categoryNodeInfo
      * @return
      */
     @GetMapping("/updateCategoryNode")
     @ApiOperation("更新项目节点")
-    public CategoryNodeInfo updateCategoryNode(CategoryNodeInfo categoryNodeInfo) {
+    public CategoryNodeInfo updateCategoryNode(long id, String nodeContent) {
         try {
-            return categoryNodeService.updateCategoryNode(categoryNodeInfo);
+            CategoryNodeInfo categoryNodeInfo = categoryNodeService.getCategoryNodeById(id);
+            categoryNodeInfo.setNodeContent(nodeContent);
+            categoryNodeInfo = categoryNodeService.updateCategoryNode(categoryNodeInfo);
+            return categoryNodeInfo;
         } catch (Exception e) {
             LOGGER.info("updateCategoryNode:" + e.getMessage());
             return null;
         }
     }
 
-//    @GetMapping("/deleteProjectCategory")
+//    @GetMapping("/deleteProjectCategory") // 待定
 //    @ApiOperation("删除项目类别")
 //    public String deleteProjectCategory(long projectCategoryId) {
 //        try {
@@ -484,7 +563,6 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/integralLogSearchBar")
-
     @ApiOperation("积分搜索条")
     public Page<IntegralLogInfo> integralLogSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("积分状态") IntegralLogStatusEnum status, @ApiParam("关键词") String keyword) throws Exception {
 

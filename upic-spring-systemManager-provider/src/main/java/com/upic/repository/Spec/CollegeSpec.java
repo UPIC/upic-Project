@@ -17,6 +17,8 @@ public class CollegeSpec extends CommonSimpleSpecification<College, BaseConditio
     protected void addCondition(QueryWraper<College> queryWraper) {
         addEqualsCondition(queryWraper,"college");
         addEqualsCondition(queryWraper,"status");
+        addEqualsCondition(queryWraper,"otherName");
+        addEqualsCondition(queryWraper,"rank");
         addEqualsCondition(queryWraper,"type");
     }
 }

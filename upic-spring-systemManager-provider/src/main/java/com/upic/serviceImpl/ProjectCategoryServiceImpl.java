@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/11.
  */
@@ -47,6 +50,7 @@ public class ProjectCategoryServiceImpl implements ProjectCategoryService {
             UpicBeanUtils.copyProperties(projectCategory, projectCategoryInfo);
             return projectCategoryInfo;
         } catch (Exception e) {
+            System.out.println("111123412341234123412341234123412341234123412341234" + e.getMessage());
             LOGGER.info("updateProjectCategory:项目类别" + projectCategoryInfo.toString() + "更新失败。错误信息：" + e.getMessage());
             return null;
         }
@@ -87,6 +91,24 @@ public class ProjectCategoryServiceImpl implements ProjectCategoryService {
         } catch (Exception e) {
             LOGGER.info("deleteProjectCategory：" + e.getMessage());
             return "ERROR";
+        }
+    }
+
+    @Override
+    public List<ProjectCategoryInfo> getAllProjectCategoryList(ProjectCategoryCondition projectCategoryCondition) {
+        List<ProjectCategory> projectCategoryList = null;
+        try {
+            List<ProjectCategoryInfo> projectCategoryInfoList = new ArrayList<>();
+            projectCategoryList = projectCategoryRepository.findAll(new ProjectCategorySpec(projectCategoryCondition));
+            for (ProjectCategory projectCategory : projectCategoryList) {
+                ProjectCategoryInfo projectCategoryInfo = new ProjectCategoryInfo();
+                UpicBeanUtils.copyProperties(projectCategory, projectCategoryInfo);
+                projectCategoryInfoList.add(projectCategoryInfo);
+            }
+            return projectCategoryInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getAllProjectCategoryList：" + e.getMessage());
+            return null;
         }
     }
 }

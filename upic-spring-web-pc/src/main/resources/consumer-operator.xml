@@ -32,4 +32,12 @@
                      version="1.0"
                      group="operate"
                      check="false"></dubbo:reference>
+    <dubbo:reference id="checkStatusService" interface="com.upic.service.CheckStatusService"
+                     version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="roleCheckStatusService" interface="com.upic.service.RoleCheckStatusService"
+                     version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
 </beans>

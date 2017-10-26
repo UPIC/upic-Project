@@ -27,5 +27,11 @@
     <dubbo:service interface="com.upic.service.OrginzationOperatorService"
                    ref="orginzationOperatorService" version="1.0"
                    group="operate"></dubbo:service>
+    <dubbo:service interface="com.upic.service.CheckStatusService"
+                   ref="checkStatusService" version="1.0"
+                   group="operate"></dubbo:service>
+    <dubbo:service interface="com.upic.service.RoleCheckStatusService"
+                   ref="roleCheckStatusService" version="1.0"
+                   group="operate"></dubbo:service>
 
 </beans>
