@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.upic.config;
+package com.upic.security.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

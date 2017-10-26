@@ -83,6 +83,10 @@
 		<upic-web-mobile.version>1.0</upic-web-mobile.version>
 		<upic-web-pc.version>1.0</upic-web-pc.version>
 		<!-- web end -->
+		<upic-security-config.version>1.0</upic-security-config.version>
+		<oauth2-weixin.version>1.0</oauth2-weixin.version>
+		<oauth2-weishao.version>1.0</oauth2-weishao.version>
+		<!-- config -->
 	</properties>
 
 	<dependencies>

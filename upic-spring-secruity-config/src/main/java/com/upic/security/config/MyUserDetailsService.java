@@ -1,31 +1,27 @@
-package com.upic.config;
+package com.upic.security.config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.social.security.SocialUser;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
 
-//import com.upic.po.Student;
-//import com.upic.repository.StudentRspoitory;
+import com.upic.dto.UserInfo;
+import com.upic.service.UserService;
+import com.upic.social.user.SocialUsers;
+
 
 @Component
-public abstract class MyUserDetailsService implements UserDetailsService,SocialUserDetailsService{
+public  class MyUserDetailsService implements UserDetailsService, SocialUserDetailsService {
+	@Autowired
+	private UserService userService;
 
-//	@Autowired
-//	private StudentRspoitory rspoitory;
-	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return loadUserByUserId(username);
@@ -33,7 +29,15 @@ public abstract class MyUserDetailsService implements UserDetailsService,SocialU
 
 	@Override
 	public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
-		return null;
+		UserInfo userInfo = userService.getUserByUserNum(userId);
+		if (userInfo == null) {
+			throw new UsernameNotFoundException("用户名不存在，请联系管理员！");
+		}
+		// 获取页请求页面权限
+		List<GrantedAuthority> createAuthorityList = AuthorityUtils.createAuthorityList("/*");
+		return new SocialUsers(userInfo.getUsername(), userInfo.getPassword(), createAuthorityList,
+				userInfo.getUserNum(), userInfo.getCollege(), userInfo.getMajor());
+
 	}
 
 }

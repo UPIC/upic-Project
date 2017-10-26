@@ -1,5 +1,4 @@
-package com.upic.config;
-
+package com.upic.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,7 @@ import org.springframework.social.security.SpringSocialConfigurer;
 
 @Configuration
 @EnableWebSecurity
-//@EnableOAuth2Sso
+// @EnableOAuth2Sso
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -29,44 +28,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 	}
 
-//	@Autowired
-//	private DataSource dataSource;
+	// @Autowired
+	// private DataSource dataSource;
 
-//	@Bean
-//	public PersistentTokenRepository persistentTokenRepository() {
-//		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-//		// tokenRepository.setCreateTableOnStartup(true);
-//		tokenRepository.setDataSource(dataSource);
-//		return tokenRepository;
-//	}
+	// @Bean
+	// public PersistentTokenRepository persistentTokenRepository() {
+	// JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+	// // tokenRepository.setCreateTableOnStartup(true);
+	// tokenRepository.setDataSource(dataSource);
+	// return tokenRepository;
+	// }
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		SpringSocialConfigurer configurer=new SpringSocialConfigurer();
-		configurer.signupUrl("/regist.html");
-		http.
-		httpBasic().
-		and().
-		formLogin().loginPage("/login.html").usernameParameter("user").passwordParameter("pass")
+
+		SpringSocialConfigurer configurer = new SpringSocialConfigurer();
+		configurer.signupUrl("/casgo");
+		http.httpBasic().and().formLogin().loginPage("/login.html").usernameParameter("user").passwordParameter("pass")
 				.successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)
 				.loginProcessingUrl("/auth").and()
-//				.rememberMe().tokenRepository(persistentTokenRepository()).and()
-//				.sessionManagement()
-//				.invalidSessionUrl("/session.html")
-//				.maximumSessions(1)
-//				.maxSessionsPreventsLogin(true).and()
-//				.and()
-				.csrf().
-				disable()
-//				csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-				.authorizeRequests().antMatchers("/connect/**","/signin","/stu", "/login.html", "/login","/auth","/session.html","/index.html","/auth/**","/regist.html", "/getRegistUserInfo","/registUser").permitAll()
-				.anyRequest()
-				.access("@checkAllSecurity.check(authentication,request)")
-//				.authenticated()
-				.and()
-				.apply(configurer)
-				;
+				// .rememberMe().tokenRepository(persistentTokenRepository()).and()
+				// .sessionManagement()
+				// .invalidSessionUrl("/session.html")
+				// .maximumSessions(1)
+				// .maxSessionsPreventsLogin(true).and()
+				// .and()
+				.csrf().disable()
+				// csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
+				.authorizeRequests()
+				.antMatchers("/connect/**", "/signin", "/login.html", "/login", "/auth", "/session.html",
+						"/index.html", "/auth/**", "/regist.html", "/getRegistUserInfo", "/registUser","/cas","/casgo")
+				.permitAll().anyRequest()
+//				.access("@checkAllSecurity.check(authentication,request)")
+				 .authenticated()
+				.and().apply(configurer);
 	}
 
 }

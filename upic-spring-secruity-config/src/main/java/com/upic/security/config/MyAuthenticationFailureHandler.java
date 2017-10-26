@@ -1,4 +1,4 @@
-package com.upic.config;
+package com.upic.security.config;
 
 import java.io.IOException;
 

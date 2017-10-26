@@ -1,4 +1,4 @@
-package com.upic.config;
+package com.upic.security.config;
 
 import java.util.Collection;
 
@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.security.SocialUser;
 import org.springframework.stereotype.Component;
 
 @Component("checkAllSecurity")

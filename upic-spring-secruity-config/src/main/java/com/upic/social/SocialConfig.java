@@ -12,8 +12,8 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
-//@Configuration
-//@EnableSocial
+@Configuration
+@EnableSocial
 public class SocialConfig extends SocialConfigurerAdapter {
 
 	@Autowired
