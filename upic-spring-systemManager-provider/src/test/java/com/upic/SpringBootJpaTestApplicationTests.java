@@ -171,7 +171,7 @@ public class SpringBootJpaTestApplicationTests {
     @Test
     public void testUpdateProjectCategory() {
         ProjectCategoryInfo projectCategoryInfo = projectCategoryService.getProjectCategoryById(1L);
-        projectCategoryInfo.setCategoryName(0 + "特殊项目");
+        projectCategoryInfo.setCategoryName("zhubuqing");
         projectCategoryService.updateProjectCategory(projectCategoryInfo);
     }
 

@@ -1434,7 +1434,7 @@
 		},
 		getZTreeObj: function(treeId) {
 			var o = data.getZTreeTools(treeId);
-			return o ? o : null;
+			return o ? o : ull;
 		},
 		destroy: function(treeId) {
 			if (!!treeId && treeId.length > 0) {

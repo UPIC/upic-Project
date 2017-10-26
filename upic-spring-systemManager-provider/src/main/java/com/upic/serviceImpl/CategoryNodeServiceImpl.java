@@ -100,4 +100,22 @@ public class CategoryNodeServiceImpl implements CategoryNodeService {
             return null;
         }
     }
+
+    @Override
+    public List<CategoryNodeInfo> searchCategoryNodeList(CategoryNodeCondition categoryNodeCondition) {
+        List<CategoryNode> categoryNodeList = null;
+        try {
+            categoryNodeList = categoryNodeRepository.findAll(new CategoryNodeSpec(categoryNodeCondition));
+            List<CategoryNodeInfo> categoryNodeInfoList = new ArrayList<>();
+            for (CategoryNode categoryNode : categoryNodeList) {
+                CategoryNodeInfo categoryNodeInfo = new CategoryNodeInfo();
+                UpicBeanUtils.copyProperties(categoryNode, categoryNodeInfo);
+                categoryNodeInfoList.add(categoryNodeInfo);
+            }
+            return categoryNodeInfoList;
+        } catch (Exception e) {
+            LOGGER.info("searchCategoryNodeList：" + e.getMessage());
+            return null;
+        }
+    }
 }

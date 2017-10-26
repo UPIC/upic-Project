@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/11.
  */
@@ -100,6 +103,35 @@ public class ResourceServiceImpl implements ResourceService {
         } catch (Exception e) {
             LOGGER.info("deleteResource:资源删除失败。错误信息：" + e.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public List<ResourceInfo> listResource(ResourceCondition resourceCondition) {
+        List<Resource> resourceList;
+        List<ResourceInfo> resourceInfoList = new ArrayList<>();
+        try {
+            resourceList = resourceRepository.findAll(new ResourceSpec(resourceCondition));
+            for (Resource resource : resourceList) {
+                filterResource(resource);
+                ResourceInfo resourceInfo = new ResourceInfo();
+                UpicBeanUtils.copyProperties(resource, resourceInfo);
+                resourceInfoList.add(resourceInfo);
+            }
+            return resourceInfoList;
+        } catch (Exception e) {
+            LOGGER.info("listResource。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
+
+    private void filterResource(Resource resource) {
+        if (resource == null) {
+
+        } else {
+            if (resource.getRoleResources() != null) {
+                resource.setRoleResources(null);
+            }
         }
     }
 }

@@ -24,7 +24,6 @@ public class MailLogInfo extends BaseInfo {
     }
 
     public MailLogInfo(Long id, Date creatTime, String field1, String field2, String field3, String field4, String field5, String operator, String operatorNum, String operation, MailLogTypeEnum type, MailInfo mail) {
-        super(id, creatTime, field1, field2, field3, field4, field5);
         this.operator = operator;
         this.operatorNum = operatorNum;
         this.operation = operation;

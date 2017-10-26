@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/operator")
 public class OperatorController {
@@ -174,6 +176,26 @@ public class OperatorController {
             return resourceService.searchResource(resourceCondition, pageable);
         } catch (Exception e) {
             LOGGER.info("searchResource:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 加载菜单列表
+     *
+     * @param resourceCondition
+     * @return
+     */
+    @GetMapping("/listResource")
+    @ApiOperation("加载菜单列表")
+    public List<ResourceInfo> listResource(ResourceCondition resourceCondition) {
+        try {
+            List<ResourceInfo> resourceInfoList = resourceService.listResource(resourceCondition);
+            System.out.println("1234wqwedu1dbjhqwebduqyb3dbwed" + resourceCondition);
+            System.out.println("ksdc1asdcnasdncasndckasdcasdcn" + resourceInfoList.toString());
+            return resourceInfoList;
+        } catch (Exception e) {
+            LOGGER.info("listResource:" + e.getMessage());
             return null;
         }
     }

@@ -49,4 +49,12 @@ public interface ProjectCategoryService {
      * @return
      */
     String deleteProjectCategory(long projectCategoryId);
+
+    /**
+     * 获取所有projectCategory
+     *
+     * @param projectCategoryCondition
+     * @return
+     */
+    List<ProjectCategoryInfo> getAllProjectCategoryList(ProjectCategoryCondition projectCategoryCondition);
 }

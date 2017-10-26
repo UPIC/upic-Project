@@ -9,6 +9,8 @@ import java.util.Date;
 public class BaseInfo implements Serializable {
     private Long id;
 
+    private int version;
+
     private Date creatTime;
 
     private String field1;
@@ -24,8 +26,9 @@ public class BaseInfo implements Serializable {
     public BaseInfo() {
     }
 
-    public BaseInfo(Long id, Date creatTime, String field1, String field2, String field3, String field4, String field5) {
+    public BaseInfo(Long id, int version, Date creatTime, String field1, String field2, String field3, String field4, String field5) {
         this.id = id;
+        this.version = version;
         this.creatTime = creatTime;
         this.field1 = field1;
         this.field2 = field2;
@@ -40,6 +43,14 @@ public class BaseInfo implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public Date getCreatTime() {
@@ -94,6 +105,7 @@ public class BaseInfo implements Serializable {
     public String toString() {
         return "BaseInfo{" +
                 "id=" + id +
+                ", version=" + version +
                 ", creatTime=" + creatTime +
                 ", field1='" + field1 + '\'' +
                 ", field2='" + field2 + '\'' +

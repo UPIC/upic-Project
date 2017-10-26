@@ -16,13 +16,19 @@ public class CollegeInfo extends BaseInfo {
 
     private CollegeTypeEnum type;
 
+    private String otherName;
+
+    private String rank;
+
     public CollegeInfo() {
     }
 
-    public CollegeInfo(String college, CollegeStatusEnum status, CollegeTypeEnum type) {
+    public CollegeInfo(String college, CollegeStatusEnum status, CollegeTypeEnum type, String otherName, String rank) {
         this.college = college;
         this.status = status;
         this.type = type;
+        this.otherName = otherName;
+        this.rank = rank;
     }
 
     public String getCollege() {
@@ -47,5 +53,32 @@ public class CollegeInfo extends BaseInfo {
 
     public void setType(CollegeTypeEnum type) {
         this.type = type;
+    }
+
+    public String getOtherName() {
+        return otherName;
+    }
+
+    public void setOtherName(String otherName) {
+        this.otherName = otherName;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    @Override
+    public String toString() {
+        return "CollegeInfo{" +
+                "college='" + college + '\'' +
+                ", status=" + status +
+                ", type=" + type +
+                ", otherName='" + otherName + '\'' +
+                ", rank='" + rank + '\'' +
+                '}';
     }
 }

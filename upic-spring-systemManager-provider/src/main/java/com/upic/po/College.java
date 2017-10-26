@@ -17,6 +17,10 @@ import javax.persistence.Enumerated;
 public class College extends BaseEntity {
     private String college;
 
+    private String otherName;
+
+    private String rank;
+
     @Enumerated(EnumType.STRING)
     private CollegeStatusEnum status;
 
