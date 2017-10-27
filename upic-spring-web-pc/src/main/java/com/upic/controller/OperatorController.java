@@ -173,9 +173,29 @@ public class OperatorController {
     @ApiOperation("加载菜单")
     public Page<ResourceInfo> searchResource(@PageableDefault(size = 10) Pageable pageable, ResourceCondition resourceCondition) {
         try {
-            return resourceService.searchResource(resourceCondition, pageable);
+            Page<ResourceInfo> resourceInfoPage = resourceService.searchResource(resourceCondition, pageable);
+            System.out.println(resourceInfoPage.toString());
+            return resourceInfoPage;
         } catch (Exception e) {
             LOGGER.info("searchResource:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 加载菜单ById
+     *
+     * @return
+     */
+    @GetMapping("/getResourceById")
+    @ApiOperation("加载菜单列表")
+    public ResourceInfo getResourceById(long id) {
+        try {
+            ResourceInfo resourceInfo = resourceService.getResourceById(id);
+            System.out.println(resourceInfo.toString());
+            return resourceInfo;
+        } catch (Exception e) {
+            LOGGER.info("getResourceById:" + e.getMessage());
             return null;
         }
     }

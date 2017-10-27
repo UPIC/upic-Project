@@ -157,5 +157,7 @@ public interface IntegralLogService {
      */
     Page<IntegralLogInfo> getIntegralLogWithOutPass(IntegralLogStatusEnum status, Pageable pageable);
 
-	void saveAll(List<Object> list);
+    void saveAll(List<Object> list);
+
+    List<Object> listIntegralLog(IntegralLogCondition condition);
 }

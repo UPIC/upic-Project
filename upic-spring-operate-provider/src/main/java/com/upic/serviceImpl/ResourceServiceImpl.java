@@ -73,6 +73,7 @@ public class ResourceServiceImpl implements ResourceService {
     public ResourceInfo getResourceById(long resourceId) {
         try {
             Resource resource = resourceRepository.findOne(resourceId);
+            filterResource(resource);
             ResourceInfo resourceInfo = new ResourceInfo();
             UpicBeanUtils.copyProperties(resource, resourceInfo);
             return resourceInfo;

@@ -4,6 +4,7 @@ import com.upic.common.beans.utils.UpicBeanUtils;
 import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
 import com.upic.condition.UserCondition;
+import com.upic.dto.IntegralLogInfo;
 import com.upic.dto.UserInfo;
 import com.upic.po.User;
 import com.upic.repository.Spec.UserSpec;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by zhubuqing on 2017/9/9.
@@ -101,6 +104,30 @@ public class UserServiceImpl implements UserService {
             });
         } catch (Exception e) {
             LOGGER.info("用户列表查询失败。userSearchBar：" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public void saveAll(List<Object> list) {
+        try {
+            User i = new User();
+            list.stream().parallel().forEach(x -> {
+                x = (IntegralLogInfo) x;
+                UpicBeanUtils.copyProperties(x, i);
+                userRepository.save(i);
+            });
+        } catch (Exception e) {
+            LOGGER.info("saveAll：" + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Object> listUser(UserCondition condition) {
+        try {
+            return userRepository.listUser(new UserSpec(condition));
+        } catch (Exception e) {
+            LOGGER.info("listUser：" + e.getMessage());
             return null;
         }
     }
