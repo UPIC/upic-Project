@@ -79,25 +79,24 @@
                 isParent = e.data.isParent,
                 nodes = zTree.getSelectedNodes(),
                 treeNode = nodes[0];
-
             if (treeNode) {
                 var categoryNode = {
                     fatherId: treeNode.myId,
                     nodeContent: "",
                     level: (treeNode.level + 1),
                     isLeaf: isTheParent(e.data.isParent),
-                    canAdd: false
+//                    canAdd: false
                 };
             } else {
                 var projectCategory = {
                     categoryName: "",
-                    canAdd: false
+//                    canAdd: false
                 };
             }
 
             if (treeNode) {
                 if (treeNode.isParent) {
-                    categoryNode.canAdd = true;
+//                    categoryNode.canAdd = true;
 
                     categoryNode.nodeContent = "new node" + (newCount++);
 
@@ -114,7 +113,7 @@
                     });
                 }
             } else {
-                projectCategory.canAdd = true;
+//                projectCategory.canAdd = true;
 
                 projectCategory.categoryName = "new node" + (newCount++);
 

@@ -248,7 +248,12 @@ public class OperatorController {
     @ApiOperation("更新菜单")
     public ResourceInfo updateResource(ResourceInfo resourceInfo) {
         try {
-            return resourceService.updateResource(resourceInfo);
+            ResourceInfo r = resourceService.getResourceById(resourceInfo.getId());
+            r.setResourceName(resourceInfo.getResourceName());
+            r.setUrl(resourceInfo.getUrl());
+            r = resourceService.updateResource(r);
+            System.out.println(r.toString());
+            return r;
         } catch (Exception e) {
             LOGGER.info("updateResource:" + e.getMessage());
             return null;
@@ -261,11 +266,13 @@ public class OperatorController {
      * @param resourceInfo
      * @return
      */
-    @GetMapping
+    @GetMapping("/addResource")
     @ApiOperation("添加菜单")
     public ResourceInfo addResource(ResourceInfo resourceInfo) {
         try {
-            return resourceService.addResource(resourceInfo);
+            ResourceInfo r = resourceService.addResource(resourceInfo);
+            System.out.println(r.toString());
+            return r;
         } catch (Exception e) {
             LOGGER.info("addResource:" + e.getMessage());
             return null;
