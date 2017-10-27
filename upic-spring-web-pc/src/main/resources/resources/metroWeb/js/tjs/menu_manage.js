@@ -74,11 +74,31 @@ function getResource(data) {
     htmls += "<div class='control-group'><label class='control-label'>上级菜单:</label>";
     htmls += "<div class='controls'><input type='text' class='input-large' disabled='disabled' value='" + data.fatherId + "'/>";
     htmls += "</div></div><div class='control-group'><label class='control-label'>菜单编号:</label>";
-    htmls += "<div class='controls'><input type='text' class='input-large' disabled='disabled' value='" + data.id + "'/></div></div>";
+    htmls += "<div class='controls'><input type='text' class='input-large' disabled='disabled' value='" + data.resourceNum + "'/></div></div>";
+    htmls += "<div class='control-group'><label class='control-label'>菜单名称:</label><div class='controls'>";
+    htmls += "<input id='resource_name' type='text' class='input-large' value='" + data.resourceName + "'/></div></div>";
     htmls += "<div class='control-group'><label class='control-label'>url:</label><div class='controls'>";
-    htmls += "<input type='text' class='input-large' value='" + data.url + "'/></div></div><div class='form-bottom'>";
-    htmls += "<button class='btn btn-mid btn-info'>保存</button></div></form>";
+    htmls += "<input id='resource_url' type='text' class='input-large' value='" + data.url + "'/></div></div><div class='form-bottom'>";
+    htmls += "<button class='btn btn-mid btn-info'><span onclick='saveResource(" + data.id + ")'>保存</span></button></div></form>";
     $("#menuManage").html(htmls);
+}
+
+function saveResource(id) {
+    $.ajax({
+        type: "GET",
+        url: "/operator/updateResource",
+        data: {
+            id: id,
+            resourceName: $("#resource_name").val(),
+            url: $("#resource_url").val()
+        },
+        success: function (result) {
+            // zNodes = {};
+            // commonAjax(getAllCategoryNodeUrl, requestData, "addAllCategoryNodeUrl", "GET");
+            // aAjax(getAllProjectCategoryUrl);
+            alert("保存成功");
+        }
+    });
 }
 
 function isLeaf(leaf) {
