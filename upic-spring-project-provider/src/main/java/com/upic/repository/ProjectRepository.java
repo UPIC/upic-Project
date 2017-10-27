@@ -3,6 +3,7 @@ package com.upic.repository;
 import com.upic.enums.RankEnum;
 import com.upic.po.Project;
 
+import com.upic.repository.spec.ProjectSpec;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,4 +35,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
     List<Project> getByGuidanceNum(String guidanceNum);
 
     Page<Project> getProjectByGuidanceNum(String guidanceNum, Pageable pageable);
+
+    List<Object> listProject(ProjectSpec projectSpec);
 }

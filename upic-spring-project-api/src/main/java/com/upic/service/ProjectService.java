@@ -126,4 +126,8 @@ public interface ProjectService {
      * @return
      */
     Page<ProjectInfo> getProjectByGuidanceNum(String guidanceNum, Pageable pageable);
+
+    List<Object> listProject(ProjectCondition condition);
+
+    void saveAll(List<Object> list);
 }

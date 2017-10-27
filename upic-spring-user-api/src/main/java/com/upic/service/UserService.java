@@ -5,6 +5,8 @@ import com.upic.dto.UserInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/7.
  */
@@ -57,4 +59,8 @@ public interface UserService {
      * @return
      */
     Page<UserInfo> userSearchBar(String keyword, Pageable pageable);
+
+    void saveAll(List<Object> list);
+
+    List<Object> listUser(UserCondition condition);
 }

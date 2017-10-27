@@ -253,6 +253,31 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    @Override
+    public List<Object> listProject(ProjectCondition condition) {
+        try {
+            return projectRepository.listProject(new ProjectSpec(condition));
+        } catch (Exception e) {
+            LOGGER.info("listProject：" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public void saveAll(List<Object> list) {
+        try {
+            Project i = new Project();
+            list.stream().parallel().forEach(x -> {
+                x = (ProjectInfo) x;
+                UpicBeanUtils.copyProperties(x, i);
+                projectRepository.save(i);
+            });
+        } catch (Exception e) {
+            LOGGER.info("saveAll:" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void filterProject(Project project) {
         if (project == null) {
 

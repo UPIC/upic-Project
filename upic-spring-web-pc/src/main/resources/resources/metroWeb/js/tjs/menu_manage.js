@@ -1,5 +1,7 @@
 var getAllResourceUrl = "/operator/listResource";
 
+var getResourceById = "/operator/getResourceById";
+
 var requestData = {};
 
 var zNodes = new Array();
@@ -27,7 +29,7 @@ var setting = {
         beforeRemove: beforeRemove,
         beforeRename: beforeRename,
         onRemove: onRemove,
-        // onClick: zTreeOnClick
+        onClick: zTreeOnClick
     }
 };
 
@@ -60,6 +62,23 @@ function getAllResource(datas) {
     }
 
     $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+}
+
+function zTreeOnClick(event, treeId, treeNode) {
+    commonAjax(getResourceById, "id=" + treeNode.myId, "getResource", "GET");
+}
+
+function getResource(data) {
+    var htmls = "";
+    htmls += "<form action='#' class='form-horizontal'>";
+    htmls += "<div class='control-group'><label class='control-label'>上级菜单:</label>";
+    htmls += "<div class='controls'><input type='text' class='input-large' disabled='disabled' value='" + data.fatherId + "'/>";
+    htmls += "</div></div><div class='control-group'><label class='control-label'>菜单编号:</label>";
+    htmls += "<div class='controls'><input type='text' class='input-large' disabled='disabled' value='" + data.id + "'/></div></div>";
+    htmls += "<div class='control-group'><label class='control-label'>url:</label><div class='controls'>";
+    htmls += "<input type='text' class='input-large' value='" + data.url + "'/></div></div><div class='form-bottom'>";
+    htmls += "<button class='btn btn-mid btn-info'>保存</button></div></form>";
+    $("#menuManage").html(htmls);
 }
 
 function isLeaf(leaf) {
