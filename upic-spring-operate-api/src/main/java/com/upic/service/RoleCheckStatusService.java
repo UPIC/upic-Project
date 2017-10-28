@@ -7,6 +7,8 @@ import com.upic.dto.RoleCheckStatusInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/7.
  */
@@ -44,4 +46,11 @@ public interface RoleCheckStatusService {
      * 删除角色
      */
     void deleteRoleCheckStatus(long roleCheckStatusId);
+
+    /**
+     * 根据部门别名查询审批状态列表
+     *
+     * @return
+     */
+    List<String> getCheckStatusEnumName(long roleId);
 }

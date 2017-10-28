@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -125,10 +126,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Object> listUser(UserCondition condition) {
         try {
-            return userRepository.listUser(new UserSpec(condition));
+            List<Object> objectList = new ArrayList<>();
+            objectList = toObject(userRepository.findAll(new UserSpec(condition)));
+            return objectList;
         } catch (Exception e) {
             LOGGER.info("listUser：" + e.getMessage());
             return null;
         }
+    }
+
+    static public <E> List<Object> toObject(List<E> list) {
+        List<Object> objlist = new ArrayList<Object>();
+        for (Object e : list) {
+            Object obj = (Object) e;
+            objlist.add(obj);
+        }
+        return objlist;
     }
 }

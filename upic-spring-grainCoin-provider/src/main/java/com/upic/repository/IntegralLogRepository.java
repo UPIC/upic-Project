@@ -54,6 +54,4 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
 
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1")
     Page<IntegralLog> getIntegralLogWithOutPass(IntegralLogStatusEnum status, Pageable pageable);
-
-    List<Object> listIntegralLog(IntegralLogSpec integralLogSpec);
 }

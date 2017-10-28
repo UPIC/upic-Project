@@ -322,7 +322,9 @@ public class IntegralLogServiceImpl implements IntegralLogService {
     @Override
     public List<Object> listIntegralLog(IntegralLogCondition condition) {
         try {
-            return integralLogRepository.listIntegralLog(new IntegralLogSpec(condition));
+            List<Object> objectList = new ArrayList<>();
+            objectList = toObject(integralLogRepository.findAll(new IntegralLogSpec(condition)));
+            return objectList;
         } catch (Exception e) {
             LOGGER.info("listIntegralLog:" + e.getMessage());
             e.printStackTrace();
@@ -330,4 +332,12 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         }
     }
 
+    static public <E> List<Object> toObject(List<E> list) {
+        List<Object> objlist = new ArrayList<Object>();
+        for (Object e : list) {
+            Object obj = (Object) e;
+            objlist.add(obj);
+        }
+        return objlist;
+    }
 }

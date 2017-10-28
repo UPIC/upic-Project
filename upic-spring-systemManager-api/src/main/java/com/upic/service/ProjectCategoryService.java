@@ -57,4 +57,6 @@ public interface ProjectCategoryService {
      * @return
      */
     List<ProjectCategoryInfo> getAllProjectCategoryList(ProjectCategoryCondition projectCategoryCondition);
+
+    List<String> getCategoryNameBySubordinateSectorOtherName(String subordinateSectorOtherName);
 }

@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/11.
  */
@@ -90,6 +93,26 @@ public class RoleCheckStatusServiceImpl implements RoleCheckStatusService {
             roleCheckStatusRepository.delete(roleCheckStatusId);
         } catch (Exception e) {
             LOGGER.info("deleteRoleCheckStatus。错误信息：" + e.getMessage());
+        }
+    }
+
+    /**
+     * Important！！！重要！！！！获取审批状态列表
+     * @param roleId
+     * @return
+     */
+    @Override
+    public List<String> getCheckStatusEnumName(long roleId) {
+        List<String> checkStatusList = new ArrayList<>();
+        try {
+            List<RoleCheckStatus> roleCheckStatusList = roleCheckStatusRepository.findByRoleId(roleId);
+            for (RoleCheckStatus roleCheckStatus : roleCheckStatusList) {
+                checkStatusList.add(roleCheckStatus.getEnumName());
+            }
+            return checkStatusList;
+        } catch (Exception e) {
+            LOGGER.info("getCheckStatusEnumName。错误信息：" + e.getMessage());
+            return null;
         }
     }
 }

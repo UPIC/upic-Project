@@ -18,6 +18,4 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @Query(value = "select user from User user where user.username like %?1% or user.userNum like %?1% or user.college like %?1%")
     Page<User> userSearchBar(String keyword, Pageable pageable);
-
-    List<Object> listUser(UserSpec userSpec);
 }

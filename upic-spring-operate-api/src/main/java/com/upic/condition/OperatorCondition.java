@@ -19,21 +19,26 @@ public class OperatorCondition extends BaseCondition {
 
     private String idcard; //身份证
 
+    private String college;
+
     private int type;
+
+    private String collegeOtherName;
 
     public OperatorCondition() {
         super();
     }
 
-    public OperatorCondition(String jobNum, String username, String email, OperatorStatusEnum status, String phone, String idcard, int type) {
-        super();
+    public OperatorCondition(String jobNum, String username, String email, OperatorStatusEnum status, String phone, String idcard, String college, int type, String collegeOtherName) {
         this.jobNum = jobNum;
         this.username = username;
         this.email = email;
         this.status = status;
         this.phone = phone;
         this.idcard = idcard;
+        this.college = college;
         this.type = type;
+        this.collegeOtherName = collegeOtherName;
     }
 
     public String getJobNum() {
@@ -84,11 +89,27 @@ public class OperatorCondition extends BaseCondition {
         this.idcard = idcard;
     }
 
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
     public int getType() {
         return type;
     }
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getCollegeOtherName() {
+        return collegeOtherName;
+    }
+
+    public void setCollegeOtherName(String collegeOtherName) {
+        this.collegeOtherName = collegeOtherName;
     }
 }

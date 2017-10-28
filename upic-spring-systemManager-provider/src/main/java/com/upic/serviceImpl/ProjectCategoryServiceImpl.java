@@ -111,4 +111,27 @@ public class ProjectCategoryServiceImpl implements ProjectCategoryService {
             return null;
         }
     }
+
+    /**
+     * 重要！！！！获取项目类别列表
+     *
+     * @param subordinateSectorOtherName
+     * @return
+     */
+    @Override
+    public List<String> getCategoryNameBySubordinateSectorOtherName(String subordinateSectorOtherName) {
+        List<String> categoryNameList = new ArrayList<>();
+        try {
+            List<ProjectCategory> projectCategoryList = projectCategoryRepository.findBySubordinateSectorOtherName(subordinateSectorOtherName);
+            for (ProjectCategory projectCategory : projectCategoryList) {
+                categoryNameList.add(projectCategory.getCategoryName());
+            }
+            return categoryNameList;
+        } catch (Exception e) {
+            LOGGER.info("getCategoryNameBySubordinateSectorOtherName：" + e.getMessage());
+            return null;
+        }
+    }
+
+
 }

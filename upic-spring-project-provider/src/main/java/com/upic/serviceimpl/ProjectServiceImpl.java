@@ -256,7 +256,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Object> listProject(ProjectCondition condition) {
         try {
-            return projectRepository.listProject(new ProjectSpec(condition));
+            List<Object> objectList = new ArrayList<>();
+            objectList = toObject(projectRepository.findAll(new ProjectSpec(condition)));
+            return objectList;
         } catch (Exception e) {
             LOGGER.info("listProject：" + e.getMessage());
             return null;
@@ -286,5 +288,14 @@ public class ProjectServiceImpl implements ProjectService {
                 project.setProjectLogs(null);
             }
         }
+    }
+
+    static public <E> List<Object> toObject(List<E> list) {
+        List<Object> objlist = new ArrayList<Object>();
+        for (Object e : list) {
+            Object obj = (Object) e;
+            objlist.add(obj);
+        }
+        return objlist;
     }
 }

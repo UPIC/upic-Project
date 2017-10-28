@@ -10,14 +10,16 @@ public class ProjectCategoryInfo extends BaseInfo {
 
     private String subordinateSector; //所属部门
 
+    private String subordinateSectorOtherName;
+
     public ProjectCategoryInfo() {
         super();
     }
 
-    public ProjectCategoryInfo(String categoryName, String subordinateSector) {
-        super();
+    public ProjectCategoryInfo(String categoryName, String subordinateSector, String subordinateSectorOtherName) {
         this.categoryName = categoryName;
         this.subordinateSector = subordinateSector;
+        this.subordinateSectorOtherName = subordinateSectorOtherName;
     }
 
     public String getCategoryName() {
@@ -36,11 +38,20 @@ public class ProjectCategoryInfo extends BaseInfo {
         this.subordinateSector = subordinateSector;
     }
 
+    public String getSubordinateSectorOtherName() {
+        return subordinateSectorOtherName;
+    }
+
+    public void setSubordinateSectorOtherName(String subordinateSectorOtherName) {
+        this.subordinateSectorOtherName = subordinateSectorOtherName;
+    }
+
     @Override
     public String toString() {
         return "ProjectCategoryInfo{" +
                 "categoryName='" + categoryName + '\'' +
                 ", subordinateSector='" + subordinateSector + '\'' +
+                ", subordinateSectorOtherName='" + subordinateSectorOtherName + '\'' +
                 '}';
     }
 }

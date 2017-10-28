@@ -35,6 +35,4 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
     List<Project> getByGuidanceNum(String guidanceNum);
 
     Page<Project> getProjectByGuidanceNum(String guidanceNum, Pageable pageable);
-
-    List<Object> listProject(ProjectSpec projectSpec);
 }

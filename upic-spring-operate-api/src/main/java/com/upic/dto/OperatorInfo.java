@@ -27,14 +27,17 @@ public class OperatorInfo extends BaseInfo {
 
     private int type; //
 
+    private String college;
+
+    private String collegeOtherName;
+
     private List<OperatorRoleInfo> operatorRoles;
 
     public OperatorInfo() {
         super();
     }
 
-    public OperatorInfo(String jobNum, String username, String password, String email, String pic, OperatorStatusEnum status, String phone, String idcard, int type, List<OperatorRoleInfo> operatorRoles) {
-        super();
+    public OperatorInfo(String jobNum, String username, String password, String email, String pic, OperatorStatusEnum status, String phone, String idcard, int type, String college, String collegeOtherName, List<OperatorRoleInfo> operatorRoles) {
         this.jobNum = jobNum;
         this.username = username;
         this.password = password;
@@ -44,6 +47,8 @@ public class OperatorInfo extends BaseInfo {
         this.phone = phone;
         this.idcard = idcard;
         this.type = type;
+        this.college = college;
+        this.collegeOtherName = collegeOtherName;
         this.operatorRoles = operatorRoles;
     }
 
@@ -119,6 +124,22 @@ public class OperatorInfo extends BaseInfo {
         this.type = type;
     }
 
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getCollegeOtherName() {
+        return collegeOtherName;
+    }
+
+    public void setCollegeOtherName(String collegeOtherName) {
+        this.collegeOtherName = collegeOtherName;
+    }
+
     public List<OperatorRoleInfo> getOperatorRoles() {
         return operatorRoles;
     }
@@ -139,6 +160,8 @@ public class OperatorInfo extends BaseInfo {
                 ", phone='" + phone + '\'' +
                 ", idcard='" + idcard + '\'' +
                 ", type=" + type +
+                ", college='" + college + '\'' +
+                ", collegeOtherName='" + collegeOtherName + '\'' +
                 '}';
     }
 }

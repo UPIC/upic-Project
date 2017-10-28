@@ -6,16 +6,17 @@ import lombok.Data;
 import javax.persistence.Entity;
 
 /**
+ * 审批状态表
  * Created by zhubuqing on 2017/8/4.
  */
 @Data
 @Entity
 public class CheckStatus extends BaseEntity {
-    private int num;
+    private int num; // 编号
 
-    private String type;
+    private String type; // 类型
 
-    private String enumName;
+    private String enumName; // 英文名
 
-    private String name;
+    private String name; // 中文名
 }

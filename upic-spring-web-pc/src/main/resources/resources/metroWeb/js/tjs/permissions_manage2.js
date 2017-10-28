@@ -24,9 +24,9 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + getDate(data[i].createTime) + "</td>";
         htmls += "<td>";
         htmls += "<div class='message_div'><a href='#mymodal10' data-toggle='modal'><span onclick=>【分配权限】</span></a>";
-        htmls += "span class='space'>|</span>";
+        htmls += "<span class='space'>|</span>";
         htmls += "<a href='#mymodal7' data-toggle='modal'><span onclick=change(" + data[i].userNum + "," + data[i].username + "," + data[i].type + ")>【修改】</span></a>";
-        htmls += "span class='space'>|</span>";
+        htmls += "<span class='space'>|</span>";
         htmls += "<a href='#mymodal8' data-toggle='modal'><span onclick=deleteA(" + data[i].userNum + "," + data[i].username + ")>【删除】</span></a>";
         htmls += "</div></td>";
         htmls += "</tr>";

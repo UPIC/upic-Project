@@ -3,6 +3,7 @@ package com.upic;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.po.OperatorRole;
+import com.upic.po.RoleCheckStatus;
 import com.upic.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringBootJpaTestApplication.class)
@@ -31,6 +33,9 @@ public class SpringBootJpaTestApplicationTests {
 
     @Autowired
     private RoleResourceService roleResourceService;
+
+    @Autowired
+    private RoleCheckStatusService roleCheckStatusService;
 
     /**
      * ************************************** Operator *****************************************
@@ -220,5 +225,13 @@ public class SpringBootJpaTestApplicationTests {
         RoleResourceInfo roleResourceInfo = new RoleResourceInfo();
         roleResourceInfo.setId(1L);
         roleResourceService.deleteRoleResource(roleResourceInfo);
+    }
+
+    /*********************************************审批过程！！！*********************************************/
+    @Test
+    public void testGetCheckStatusEnumName() {
+        long id = 1;
+        List<String> a = roleCheckStatusService.getCheckStatusEnumName(id);
+        System.out.println(a.toString());
     }
 }
