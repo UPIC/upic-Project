@@ -8,15 +8,25 @@ import com.upic.common.base.dto.BaseInfo;
 public class ConfirmationBasisInfo extends BaseInfo {
     private String content; //内容
 
+    private String projectNum;
+
+    private String projectName;
+
+    private String otherName;
+
+    private long categoryNodeId;
+
     private CategoryNodeInfo categoryNode; //项目类节点
 
     public ConfirmationBasisInfo() {
-        super();
     }
 
-    public ConfirmationBasisInfo(String content, CategoryNodeInfo categoryNode) {
-        super();
+    public ConfirmationBasisInfo(String content, String projectNum, String projectName, String otherName, long categoryNodeId, CategoryNodeInfo categoryNode) {
         this.content = content;
+        this.projectNum = projectNum;
+        this.projectName = projectName;
+        this.otherName = otherName;
+        this.categoryNodeId = categoryNodeId;
         this.categoryNode = categoryNode;
     }
 
@@ -26,6 +36,38 @@ public class ConfirmationBasisInfo extends BaseInfo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getProjectNum() {
+        return projectNum;
+    }
+
+    public void setProjectNum(String projectNum) {
+        this.projectNum = projectNum;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getOtherName() {
+        return otherName;
+    }
+
+    public void setOtherName(String otherName) {
+        this.otherName = otherName;
+    }
+
+    public long getCategoryNodeId() {
+        return categoryNodeId;
+    }
+
+    public void setCategoryNodeId(long categoryNodeId) {
+        this.categoryNodeId = categoryNodeId;
     }
 
     public CategoryNodeInfo getCategoryNode() {
@@ -40,6 +82,10 @@ public class ConfirmationBasisInfo extends BaseInfo {
     public String toString() {
         return "ConfirmationBasisInfo{" +
                 "content='" + content + '\'' +
+                ", projectNum='" + projectNum + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", otherName='" + otherName + '\'' +
+                ", categoryNodeId=" + categoryNodeId +
                 ", categoryNode=" + categoryNode +
                 '}';
     }

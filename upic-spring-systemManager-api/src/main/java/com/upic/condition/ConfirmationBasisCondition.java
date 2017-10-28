@@ -8,13 +8,24 @@ import com.upic.common.base.condition.BaseCondition;
 public class ConfirmationBasisCondition extends BaseCondition {
     private String content; //内容
 
+    private String projectNum;
+
+    private String projectName;
+
+    private String otherName;
+
+    private long categoryNodeId;
+
     public ConfirmationBasisCondition() {
         super();
     }
 
-    public ConfirmationBasisCondition(String content) {
-        super();
+    public ConfirmationBasisCondition(String content, String projectNum, String projectName, String otherName, long categoryNodeId) {
         this.content = content;
+        this.projectNum = projectNum;
+        this.projectName = projectName;
+        this.otherName = otherName;
+        this.categoryNodeId = categoryNodeId;
     }
 
     public String getContent() {
@@ -23,5 +34,37 @@ public class ConfirmationBasisCondition extends BaseCondition {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getProjectNum() {
+        return projectNum;
+    }
+
+    public void setProjectNum(String projectNum) {
+        this.projectNum = projectNum;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getOtherName() {
+        return otherName;
+    }
+
+    public void setOtherName(String otherName) {
+        this.otherName = otherName;
+    }
+
+    public long getCategoryNodeId() {
+        return categoryNodeId;
+    }
+
+    public void setCategoryNodeId(long categoryNodeId) {
+        this.categoryNodeId = categoryNodeId;
     }
 }

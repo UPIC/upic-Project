@@ -13,7 +13,11 @@ import javax.persistence.*;
 public class ConfirmationBasis extends BaseEntity {
     private String content; //内容
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = CategoryNode.class)
-    @JoinColumn(unique = true, nullable = false, updatable = false)
-    private CategoryNode categoryNode; //项目类节点
+    private String projectNum;
+
+    private String projectName;
+
+    private String otherName;
+
+    private long categoryNodeId;
 }
