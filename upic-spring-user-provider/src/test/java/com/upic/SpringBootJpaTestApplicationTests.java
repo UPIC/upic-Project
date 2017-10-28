@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringBootJpaTestApplication.class)
@@ -62,5 +63,12 @@ public class SpringBootJpaTestApplicationTests {
     @Test
     public void testDeleteUser() {
         userService.deleteUser("1504927905724");
+    }
+
+    @Test
+    public void testListUser() {
+        UserCondition condition = new UserCondition();
+        List<Object> l = userService.listUser(condition);
+        System.out.println(l.toString());
     }
 }

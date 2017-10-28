@@ -257,7 +257,11 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Object> listProject(ProjectCondition condition) {
         try {
             List<Object> objectList = new ArrayList<>();
-            objectList = toObject(projectRepository.findAll(new ProjectSpec(condition)));
+            List<Project> projectList = projectRepository.findAll(new ProjectSpec(condition));
+            for (Project p : projectList) {
+                filterProject(p);
+            }
+            objectList = toObject(projectList);
             return objectList;
         } catch (Exception e) {
             LOGGER.info("listProject：" + e.getMessage());
