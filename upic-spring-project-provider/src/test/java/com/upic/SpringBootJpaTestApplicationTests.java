@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -152,5 +153,12 @@ public class SpringBootJpaTestApplicationTests {
     public void testGetTeacherAllWorkloadSummary() {
         String teacherNum = "101045";
         System.out.println(projectService.getTeacherAllWorkloadSummary(teacherNum));
+    }
+
+    @Test
+    public void testListProject() {
+        ProjectCondition p = new ProjectCondition();
+        List<Object> o = projectService.listProject(p);
+        System.out.println(o.toString());
     }
 }

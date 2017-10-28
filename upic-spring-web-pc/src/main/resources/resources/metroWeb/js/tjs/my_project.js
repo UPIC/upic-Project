@@ -99,7 +99,7 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET')>名单</span></a></div></td>";
+            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
             htmls += " </tr>";
         }
     }
@@ -108,9 +108,9 @@ function addHtmls(datas, pageNum) {
     page(datas, dataUrl, datas.size, datas.number, requestData);
 
 }
-function getProjectInfo(data) {
+function getProjectInfo(data, sendData) {
     var status = "";
-    switch (data[i].implementationProcess) {
+    switch (data.implementationProcess) {
         case ("SAVED"):
             status = "已保存";
             break;
@@ -134,13 +134,13 @@ function getProjectInfo(data) {
     var htmls = "";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>编号</div>";
-    htmls += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</div>";
+    htmls += "<div class='span3'>" + sendData + "</div>";
     htmls += "<div class='span3'>代码</div>";
-    htmls += "<div class='span3'>" + data[i].projectNum + "</div>";
+    htmls += "<div class='span3'>" + data.projectNum + "</div>";
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>项目申请日期</div>";
-    htmls += "<div class='span3'>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</div>";
+    htmls += "<div class='span3'>" + getDate(data.startTime, "yyyy/MM/dd hh:mm") + "</div>";
     htmls += "<div class='span3'>状态</div>";
     htmls += "<div class='span3'>" + status + "</div>";
     htmls += "<div class='row-form clearfix'>";
@@ -160,19 +160,19 @@ function getProjectInfo(data) {
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>工作量</div>";
-    htmls += "<div class='span3'>" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</div>";
+    htmls += "<div class='span3'>" + (parseFloat(data.integral) * parseInt(data.maximum)) + "</div>";
     htmls += "<div class='span3'>积分</div>";
     htmls += "<div class='span3'>" + data.integral + "</div>";
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>开始时间</div>";
-    htmls += "<div class='span3'>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</div>";
+    htmls += "<div class='span3'>" + getDate(data.startTime, "yyyy/MM/dd hh:mm") + "</div>";
     htmls += "<div class='span3'>结束时间</div>";
-    htmls += "<div class='span3'>" + getDate(data[i].endTime, "yyyy/MM/dd hh:mm") + "</div>";
+    htmls += "<div class='span3'>" + getDate(data.endTime, "yyyy/MM/dd hh:mm") + "</div>";
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>参与人数</div>";
-    htmls += "<div class='span3'>20/" + data[i].maximum + "</div>";
+    htmls += "<div class='span3'>20/" + data.maximum + "</div>";
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>项目内容</div>";

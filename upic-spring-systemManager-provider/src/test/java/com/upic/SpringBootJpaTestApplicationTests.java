@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -36,7 +37,7 @@ public class SpringBootJpaTestApplicationTests {
 
     @Autowired
     private SystemAdministrationLogService systemAdministrationLogService;
-    
+
     @Autowired
     private UpicRedisComponent redisComponent;
 
@@ -219,5 +220,12 @@ public class SpringBootJpaTestApplicationTests {
             System.out.println(systemAdministrationLogInfo);
         }
     }
-   
+
+    /************************************审批流程！！！！************************************/
+    @Test
+    public void testGetCategoryNameBySubordinateSectorOtherName() {
+        String subordinateSectorOtherName = "5";
+        List<String> a = projectCategoryService.getCategoryNameBySubordinateSectorOtherName(subordinateSectorOtherName);
+        System.out.println(a.toString());
+    }
 }

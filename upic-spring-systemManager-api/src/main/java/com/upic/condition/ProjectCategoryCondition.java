@@ -10,14 +10,16 @@ public class ProjectCategoryCondition extends BaseCondition {
 
     private String subordinateSector; //所属部门
 
+    private String subordinateSectorOtherName;
+
     public ProjectCategoryCondition() {
         super();
     }
 
-    public ProjectCategoryCondition(String categoryName, String subordinateSector) {
-        super();
+    public ProjectCategoryCondition(String categoryName, String subordinateSector, String subordinateSectorOtherName) {
         this.categoryName = categoryName;
         this.subordinateSector = subordinateSector;
+        this.subordinateSectorOtherName = subordinateSectorOtherName;
     }
 
     public String getCategoryName() {
@@ -34,5 +36,13 @@ public class ProjectCategoryCondition extends BaseCondition {
 
     public void setSubordinateSector(String subordinateSector) {
         this.subordinateSector = subordinateSector;
+    }
+
+    public String getSubordinateSectorOtherName() {
+        return subordinateSectorOtherName;
+    }
+
+    public void setSubordinateSectorOtherName(String subordinateSectorOtherName) {
+        this.subordinateSectorOtherName = subordinateSectorOtherName;
     }
 }

@@ -14,4 +14,6 @@ public class ProjectCategory extends BaseEntity {
     private String categoryName; //项目类别名
 
     private String subordinateSector; //所属部门
+
+    private String subordinateSectorOtherName; //部门别名
 }
