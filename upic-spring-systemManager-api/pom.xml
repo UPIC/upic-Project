@@ -5,7 +5,7 @@
 
     <groupId>com.upic.systemManager.api</groupId>
     <artifactId>upic-spring-systemManager-api</artifactId>
-    <version>${student-systemManager-api.version}</version>
+    <version>${student-systemManage-api.version}</version>
     <packaging>jar</packaging>
 
     <name>upic-spring-systemManager-provider</name>

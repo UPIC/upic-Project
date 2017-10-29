@@ -81,6 +81,18 @@
 			<artifactId>upic-spring-user-api</artifactId>
 			<version>${student-user-api.version}</version>
 		</dependency>
+		
+		 <dependency>
+            <groupId>com.upic.systemManager.api</groupId>
+            <artifactId>upic-spring-systemManager-api</artifactId>
+            <version>${student-systemManage-api.version}</version>
+        </dependency>
+        
+         <dependency>
+            <groupId>com.upic.operate.api</groupId>
+            <artifactId>upic-spring-operate-api</artifactId>
+            <version>${student-operate-api.version}</version>
+        </dependency>
 	</dependencies>
 
 	<build>
