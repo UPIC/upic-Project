@@ -90,7 +90,7 @@
         <dependency>
             <groupId>com.upic.systemManager.api</groupId>
             <artifactId>upic-spring-systemManager-api</artifactId>
-            <version>${student-systemManager-api.version}</version>
+            <version>${student-systemManage-api.version}</version>
         </dependency>
 
         <dependency>
