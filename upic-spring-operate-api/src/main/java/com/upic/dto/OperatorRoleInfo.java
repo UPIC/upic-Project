@@ -10,9 +10,9 @@ import java.util.Date;
  * Created by zhubuqing on 2017/8/4.
  */
 public class OperatorRoleInfo extends BaseInfo {
-    private OperatorInfo operator; //操作员
+    private String jobNum; //操作员
 
-    private RoleInfo role; //角色
+    private long roleId;
 
     private OperatorRoleStatusEnum status; //状态
 
@@ -22,28 +22,27 @@ public class OperatorRoleInfo extends BaseInfo {
         super();
     }
 
-    public OperatorRoleInfo(Long id, Date creatTime, String field1, String field2, String field3, String field4, String field5, OperatorInfo operator, RoleInfo role, OperatorRoleStatusEnum status, OperatorRoleTypeEnum type) {
-        super();
-        this.operator = operator;
-        this.role = role;
+    public OperatorRoleInfo(String jobNum, long roleId, OperatorRoleStatusEnum status, OperatorRoleTypeEnum type) {
+        this.jobNum = jobNum;
+        this.roleId = roleId;
         this.status = status;
         this.type = type;
     }
 
-    public OperatorInfo getOperator() {
-        return operator;
+    public String getJobNum() {
+        return jobNum;
     }
 
-    public void setOperator(OperatorInfo operator) {
-        this.operator = operator;
+    public void setJobNum(String jobNum) {
+        this.jobNum = jobNum;
     }
 
-    public RoleInfo getRole() {
-        return role;
+    public long getRoleId() {
+        return roleId;
     }
 
-    public void setRole(RoleInfo role) {
-        this.role = role;
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 
     public OperatorRoleStatusEnum getStatus() {
@@ -65,8 +64,8 @@ public class OperatorRoleInfo extends BaseInfo {
     @Override
     public String toString() {
         return "OperatorRoleInfo{" +
-                "operator=" + operator +
-                ", role=" + role +
+                "jobNum='" + jobNum + '\'' +
+                ", roleId=" + roleId +
                 ", status=" + status +
                 ", type=" + type +
                 '}';

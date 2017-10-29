@@ -14,16 +14,21 @@ public class IntegralOperateLogCondition extends BaseCondition {
 
     private String integralLogId; //积分日志
 
+    private String finishCheckEnumName;
+
+    private String finishCheck;
+
     public IntegralOperateLogCondition() {
         super();
     }
 
-    public IntegralOperateLogCondition(String event, String operator, String operatorNum, String integralLogId) {
-        super();
+    public IntegralOperateLogCondition(String event, String operator, String operatorNum, String integralLogId, String finishCheckEnumName, String finishCheck) {
         this.event = event;
         this.operator = operator;
         this.operatorNum = operatorNum;
         this.integralLogId = integralLogId;
+        this.finishCheckEnumName = finishCheckEnumName;
+        this.finishCheck = finishCheck;
     }
 
     public String getEvent() {
@@ -56,5 +61,21 @@ public class IntegralOperateLogCondition extends BaseCondition {
 
     public void setIntegralLogId(String integralLogId) {
         this.integralLogId = integralLogId;
+    }
+
+    public String getFinishCheckEnumName() {
+        return finishCheckEnumName;
+    }
+
+    public void setFinishCheckEnumName(String finishCheckEnumName) {
+        this.finishCheckEnumName = finishCheckEnumName;
+    }
+
+    public String getFinishCheck() {
+        return finishCheck;
+    }
+
+    public void setFinishCheck(String finishCheck) {
+        this.finishCheck = finishCheck;
     }
 }

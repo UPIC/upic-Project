@@ -8,6 +8,10 @@ import com.upic.enums.OperatorRoleTypeEnum;
  * Created by zhubuqing on 2017/9/6.
  */
 public class OperatorRoleCondition extends BaseCondition {
+    private String jobNum; //操作员
+
+    private long roleId;
+
     private OperatorRoleStatusEnum status; //状态
 
     private OperatorRoleTypeEnum type; //类型
@@ -16,10 +20,27 @@ public class OperatorRoleCondition extends BaseCondition {
         super();
     }
 
-    public OperatorRoleCondition(OperatorRoleStatusEnum status, OperatorRoleTypeEnum type) {
-        super();
+    public OperatorRoleCondition(String jobNum, long roleId, OperatorRoleStatusEnum status, OperatorRoleTypeEnum type) {
+        this.jobNum = jobNum;
+        this.roleId = roleId;
         this.status = status;
         this.type = type;
+    }
+
+    public String getJobNum() {
+        return jobNum;
+    }
+
+    public void setJobNum(String jobNum) {
+        this.jobNum = jobNum;
+    }
+
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 
     public OperatorRoleStatusEnum getStatus() {

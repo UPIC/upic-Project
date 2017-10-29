@@ -7,6 +7,7 @@ import com.upic.condition.AdviceCondition;
 import com.upic.condition.ProjectCondition;
 import com.upic.dto.AdviceInfo;
 import com.upic.dto.ProjectInfo;
+import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.RankEnum;
 import com.upic.po.Advice;
 import com.upic.po.Project;
@@ -21,8 +22,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.upic.service.ProjectService;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -284,6 +290,48 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    @Override
+    public Page<ProjectInfo> getProjectBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable) {
+        Page<Project> projectPage = null;
+        try {
+            Specification<Project> projectSpecification = new Specification<Project>() {
+                @Override
+                public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                    List<Predicate> statusOrList = new ArrayList<>();
+                    for (ImplementationProcessEnum status : changeStatus(statusList)) {
+                        Predicate predicate = cb.equal(root.get("implementationProcess"), status);
+                        statusOrList.add(predicate);
+                    }
+                    Predicate[] statusPredicates = new Predicate[statusOrList.size()];
+                    statusPredicates = statusOrList.toArray(statusPredicates);
+                    Predicate statusOr = cb.or(statusPredicates);
+
+                    List<Predicate> projectCategoryOrList = new ArrayList<>();
+                    for (String projectCategory : projectCategoryList) {
+                        Predicate predicate = cb.equal(root.get("projectCategory"), projectCategory);
+                        projectCategoryOrList.add(predicate);
+                    }
+                    Predicate[] projectCategoryPredicates = new Predicate[statusOrList.size()];
+                    projectCategoryPredicates = projectCategoryOrList.toArray(projectCategoryPredicates);
+                    Predicate projectCategoryOr = cb.or(projectCategoryPredicates);
+
+                    Predicate and = cb.and(statusOr, projectCategoryOr);
+                    return and;
+                }
+            };
+            projectPage = projectRepository.findAll(projectSpecification, pageable);
+            return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
+                @Override
+                protected void doConvert(Project domain, ProjectInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getProjectBySql:" + e.getMessage());
+            return null;
+        }
+    }
+
     private void filterProject(Project project) {
         if (project == null) {
 
@@ -301,5 +349,29 @@ public class ProjectServiceImpl implements ProjectService {
             objlist.add(obj);
         }
         return objlist;
+    }
+
+    private List<ImplementationProcessEnum> changeStatus(List<String> statusList) {
+        List<ImplementationProcessEnum> statusEnums = new ArrayList<>();
+        for (String status : statusList) {
+            if (status == ImplementationProcessEnum.SAVED.name()) {
+                statusEnums.add(ImplementationProcessEnum.SAVED);
+            } else if (status == ImplementationProcessEnum.IN_AUDIT.name()) {
+                statusEnums.add(ImplementationProcessEnum.IN_AUDIT);
+            } else if (status == ImplementationProcessEnum.AUDITED.name()) {
+                statusEnums.add(ImplementationProcessEnum.AUDITED);
+            } else if (status == ImplementationProcessEnum.NOT_PASS.name()) {
+                statusEnums.add(ImplementationProcessEnum.NOT_PASS);
+            } else if (status == ImplementationProcessEnum.ENROLLMENT.name()) {
+                statusEnums.add(ImplementationProcessEnum.ENROLLMENT);
+            } else if (status == ImplementationProcessEnum.HAVE_IN_HAND.name()) {
+                statusEnums.add(ImplementationProcessEnum.HAVE_IN_HAND);
+            } else if (status == ImplementationProcessEnum.COMPLETED.name()) {
+                statusEnums.add(ImplementationProcessEnum.COMPLETED);
+            } else if (status == ImplementationProcessEnum.CHECKED.name()) {
+                statusEnums.add(ImplementationProcessEnum.CHECKED);
+            }
+        }
+        return statusEnums;
     }
 }

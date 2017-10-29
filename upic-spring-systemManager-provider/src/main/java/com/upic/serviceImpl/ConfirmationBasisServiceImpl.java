@@ -81,4 +81,17 @@ public class ConfirmationBasisServiceImpl implements ConfirmationBasisService {
             return null;
         }
     }
+
+    @Override
+    public ConfirmationBasisInfo getSystemProjectByCategoryNodeId(long categoryNodeId) {
+        try {
+            ConfirmationBasis confirmationBasis = confirmationBasisRepository.findByCategoryNodeId(categoryNodeId);
+            ConfirmationBasisInfo confirmationBasisInfo = new ConfirmationBasisInfo();
+            UpicBeanUtils.copyProperties(confirmationBasis, confirmationBasisInfo);
+            return confirmationBasisInfo;
+        } catch (Exception e) {
+            LOGGER.info("getSystemProjectByCategoryNodeId：" + e.getMessage());
+            return null;
+        }
+    }
 }

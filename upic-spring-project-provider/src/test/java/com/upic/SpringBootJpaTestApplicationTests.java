@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -160,5 +161,25 @@ public class SpringBootJpaTestApplicationTests {
         ProjectCondition p = new ProjectCondition();
         List<Object> o = projectService.listProject(p);
         System.out.println(o.toString());
+    }
+
+    @Test
+    public void testGetProjectBySql() {
+        List<String> statusList = new ArrayList<>();
+        List<String> projectCategoryList = new ArrayList<>();
+        PageRequest pageRequest = new PageRequest();
+        statusList.add("HAVE_IN_HAND");
+        statusList.add("SAVED");
+        projectCategoryList.add("社会实践积分（必修积分）");
+        projectCategoryList.add("社会实践积分（必修积分）1");
+
+        Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageRequest);
+        if (projectInfoPage != null) {
+            System.out.println(projectInfoPage.getTotalElements() + "");
+            System.out.println(projectInfoPage.getTotalPages());
+            for (ProjectInfo projectInfo : projectInfoPage.getContent()) {
+                System.out.println(projectInfo);
+            }
+        }
     }
 }

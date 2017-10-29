@@ -7,6 +7,7 @@ import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import com.upic.service.*;
 
+import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -340,6 +341,8 @@ public class StudetAllController {
      * @param baseModel
      * @return
      */
+    @ApiOperation("积分导入")
+    @GetMapping("loadIntegralLogInfo")
     public List<Object> loadIntegralLogInfo(@RequestParam("file") CommonsMultipartFile file, List<String> baseModel) {
         List<Object> list = null;
         try {
@@ -361,6 +364,8 @@ public class StudetAllController {
      *
      * @return
      */
+    @ApiOperation("积分导出")
+    @GetMapping("exportIntegralLog")
     public void exportIntegralLog(HttpServletResponse response, IntegralLogCondition condition, List<String> baseModel) {
         try {
             List<Object> byProjectNum = integralLogService.listIntegralLog(condition);
@@ -382,6 +387,8 @@ public class StudetAllController {
      * @param baseModel
      * @return
      */
+    @ApiOperation("项目导入")
+    @GetMapping("loadProjectInfo")
     public List<Object> loadProjectInfo(@RequestParam("file") CommonsMultipartFile file, List<String> baseModel) {
         List<Object> list = null;
         try {
@@ -403,6 +410,8 @@ public class StudetAllController {
      *
      * @return
      */
+    @ApiOperation("项目导出")
+    @GetMapping("exportProject")
     public void exportProject(HttpServletResponse response, ProjectCondition condition, List<String> baseModel) {
         try {
             List<Object> byProjectNum = projectService.listProject(condition);
@@ -424,6 +433,8 @@ public class StudetAllController {
      * @param baseModel
      * @return
      */
+    @ApiOperation("用户导入")
+    @GetMapping("loadUserInfo")
     public List<Object> loadUserInfo(@RequestParam("file") CommonsMultipartFile file, List<String> baseModel) {
         List<Object> list = null;
         try {
@@ -445,6 +456,8 @@ public class StudetAllController {
      *
      * @return
      */
+    @ApiOperation("用户导出")
+    @GetMapping("exportUser")
     public void exportUser(HttpServletResponse response, UserCondition condition, List<String> baseModel) {
         try {
             List<Object> byProjectNum = userService.listUser(condition);

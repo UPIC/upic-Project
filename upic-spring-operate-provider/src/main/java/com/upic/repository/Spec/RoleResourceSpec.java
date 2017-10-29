@@ -14,6 +14,8 @@ public class RoleResourceSpec extends CommonSimpleSpecification<RoleResource, Ro
     }
 
     protected void addCondition(QueryWraper<RoleResource> queryWraper) {
+        addEqualsCondition(queryWraper,"roleId");
+        addEqualsCondition(queryWraper,"resourceNum");
         addEqualsCondition(queryWraper,"status");
         addEqualsCondition(queryWraper,"type");
     }

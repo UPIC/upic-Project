@@ -73,7 +73,6 @@ public class ResourceServiceImpl implements ResourceService {
     public ResourceInfo getResourceById(long resourceId) {
         try {
             Resource resource = resourceRepository.findOne(resourceId);
-            filterResource(resource);
             ResourceInfo resourceInfo = new ResourceInfo();
             UpicBeanUtils.copyProperties(resource, resourceInfo);
             return resourceInfo;
@@ -114,7 +113,6 @@ public class ResourceServiceImpl implements ResourceService {
         try {
             resourceList = resourceRepository.findAll(new ResourceSpec(resourceCondition));
             for (Resource resource : resourceList) {
-                filterResource(resource);
                 ResourceInfo resourceInfo = new ResourceInfo();
                 UpicBeanUtils.copyProperties(resource, resourceInfo);
                 resourceInfoList.add(resourceInfo);
@@ -123,16 +121,6 @@ public class ResourceServiceImpl implements ResourceService {
         } catch (Exception e) {
             LOGGER.info("listResource。错误信息：" + e.getMessage());
             return null;
-        }
-    }
-
-    private void filterResource(Resource resource) {
-        if (resource == null) {
-
-        } else {
-            if (resource.getRoleResources() != null) {
-                resource.setRoleResources(null);
-            }
         }
     }
 }

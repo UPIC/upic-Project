@@ -6,7 +6,6 @@ import com.upic.enums.RoleTypeEnum;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by zhubuqing on 2017/8/4.
@@ -21,13 +20,4 @@ public class Role extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private RoleTypeEnum type; //角色类型
-
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "role")
-    private List<RoleResource> roleResources;
-
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "role")
-    private List<OperatorRole> operatorRoles;
-
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "role")
-    private List<RoleJurisdiction> roleJurisdictions;
 }

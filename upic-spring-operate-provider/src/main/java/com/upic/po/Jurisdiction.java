@@ -23,7 +23,4 @@ public class Jurisdiction extends BaseEntity {
     private String status; //状态
 
     private String type; // 类型
-
-    @OneToMany(mappedBy = "jurisdiction")
-    private List<RoleJurisdiction> roleJurisdictions;
 }

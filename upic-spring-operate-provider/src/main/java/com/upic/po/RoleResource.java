@@ -13,13 +13,9 @@ import javax.persistence.*;
 @Data
 @Entity
 public class RoleResource extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = Role.class)
-    @JoinColumn(unique = true, nullable = false, updatable = false)
-    private Role role; //角色
+    private long roleId; //角色
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = Resource.class)
-    @JoinColumn(unique = true, nullable = false, updatable = false)
-    private Resource resource; //菜单
+    private String resourceNum; //菜单编号
 
     private RoleResourceStatusEnum status; //状态
 
