@@ -45,9 +45,9 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.upic.systemManager.api</groupId>
-            <artifactId>upic-spring-systemManager-api</artifactId>
-            <version>${student-systemManager-api.version}</version>
+             <groupId>com.upic.systemManager.api</groupId>
+    		<artifactId>upic-spring-systemManager-api</artifactId>
+    		<version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.upic.user.api</groupId>
