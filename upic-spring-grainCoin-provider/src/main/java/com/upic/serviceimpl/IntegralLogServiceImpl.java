@@ -344,24 +344,33 @@ public class IntegralLogServiceImpl implements IntegralLogService {
             Specification<IntegralLog> integralLogSpecification = new Specification<IntegralLog>() {
                 @Override
                 public Predicate toPredicate(Root<IntegralLog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                    List<Predicate> statusOrList = new ArrayList<>();
-                    for (IntegralLogStatusEnum status : changeStatus(statusList)) {
-                        Predicate predicate = cb.equal(root.get("status"), status);
-                        statusOrList.add(predicate);
+                    Predicate statusOr = null;
+                    if (statusList.size() > 1) {
+                        List<Predicate> statusOrList = new ArrayList<>();
+                        for (IntegralLogStatusEnum status : changeStatus(statusList)) {
+                            Predicate predicate = cb.equal(root.get("status"), status);
+                            statusOrList.add(predicate);
+                        }
+                        Predicate[] statusPredicates = new Predicate[statusOrList.size()];
+                        statusPredicates = statusOrList.toArray(statusPredicates);
+                        statusOr = cb.or(statusPredicates);
+                    } else if (statusList.size() == 1) {
+                        statusOr = cb.equal(root.get("status"), changeStatus(statusList).get(0));
                     }
-                    Predicate[] statusPredicates = new Predicate[statusOrList.size()];
-                    statusPredicates = statusOrList.toArray(statusPredicates);
-                    Predicate statusOr = cb.or(statusPredicates);
 
-                    List<Predicate> projectCategoryOrList = new ArrayList<>();
-                    for (String projectCategory : projectCategoryList) {
-                        Predicate predicate = cb.equal(root.get("projectCategory"), projectCategory);
-                        projectCategoryOrList.add(predicate);
+                    Predicate projectCategoryOr = null;
+                    if (projectCategoryList.size() > 1) {
+                        List<Predicate> projectCategoryOrList = new ArrayList<>();
+                        for (String projectCategory : projectCategoryList) {
+                            Predicate predicate = cb.equal(root.get("projectCategory"), projectCategory);
+                            projectCategoryOrList.add(predicate);
+                        }
+                        Predicate[] projectCategoryPredicates = new Predicate[projectCategoryOrList.size()];
+                        projectCategoryPredicates = projectCategoryOrList.toArray(projectCategoryPredicates);
+                        projectCategoryOr = cb.or(projectCategoryPredicates);
+                    } else if (projectCategoryList.size() == 1) {
+                        projectCategoryOr = cb.equal(root.get("projectCategory"), projectCategoryList.get(0));
                     }
-                    Predicate[] projectCategoryPredicates = new Predicate[statusOrList.size()];
-                    projectCategoryPredicates = projectCategoryOrList.toArray(projectCategoryPredicates);
-                    Predicate projectCategoryOr = cb.or(projectCategoryPredicates);
-
                     Predicate and = cb.and(statusOr, projectCategoryOr);
                     return and;
                 }
