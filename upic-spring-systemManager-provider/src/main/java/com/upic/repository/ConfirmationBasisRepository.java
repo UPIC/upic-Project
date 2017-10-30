@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  */
 public interface ConfirmationBasisRepository extends JpaRepository<ConfirmationBasis, Long>, JpaSpecificationExecutor<ConfirmationBasis> {
 
+    ConfirmationBasis findByCategoryNodeId(long categoryNodeId);
 }

@@ -8,9 +8,9 @@ import com.upic.enums.RoleResourceTypeEnum;
  * Created by zhubuqing on 2017/8/4.
  */
 public class RoleResourceInfo extends BaseInfo {
-    private RoleInfo role; //角色
+    private long roleId; //角色
 
-    private ResourceInfo resource; //菜单
+    private String resourceNum; //菜单编号
 
     private RoleResourceStatusEnum status; //状态
 
@@ -20,28 +20,27 @@ public class RoleResourceInfo extends BaseInfo {
         super();
     }
 
-    public RoleResourceInfo(RoleInfo role, ResourceInfo resource, RoleResourceStatusEnum status, RoleResourceTypeEnum type) {
-        super();
-        this.role = role;
-        this.resource = resource;
+    public RoleResourceInfo(long roleId, String resourceNum, RoleResourceStatusEnum status, RoleResourceTypeEnum type) {
+        this.roleId = roleId;
+        this.resourceNum = resourceNum;
         this.status = status;
         this.type = type;
     }
 
-    public RoleInfo getRole() {
-        return role;
+    public long getRoleId() {
+        return roleId;
     }
 
-    public void setRole(RoleInfo role) {
-        this.role = role;
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 
-    public ResourceInfo getResource() {
-        return resource;
+    public String getResourceNum() {
+        return resourceNum;
     }
 
-    public void setResource(ResourceInfo resource) {
-        this.resource = resource;
+    public void setResourceNum(String resourceNum) {
+        this.resourceNum = resourceNum;
     }
 
     public RoleResourceStatusEnum getStatus() {
@@ -63,8 +62,8 @@ public class RoleResourceInfo extends BaseInfo {
     @Override
     public String toString() {
         return "RoleResourceInfo{" +
-                "role=" + role +
-                ", resource=" + resource +
+                "roleId=" + roleId +
+                ", resourceNum='" + resourceNum + '\'' +
                 ", status=" + status +
                 ", type=" + type +
                 '}';

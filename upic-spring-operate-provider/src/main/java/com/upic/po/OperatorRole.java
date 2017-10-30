@@ -13,13 +13,9 @@ import javax.persistence.*;
 @Data
 @Entity
 public class OperatorRole extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Operator.class)
-    @JoinColumn(unique = true, nullable = false, updatable = false)
-    private Operator operator; //操作员
+    private String jobNum; //操作员
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Role.class)
-    @JoinColumn(unique = true, nullable = false, updatable = false)
-    private Role role; //角色
+    private long roleId;
 
     private OperatorRoleStatusEnum status; //状态
 

@@ -21,12 +21,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 @Service("integralLogService")
@@ -332,6 +337,49 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         }
     }
 
+    @Override
+    public Page<IntegralLogInfo> getIntegralLogBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            Specification<IntegralLog> integralLogSpecification = new Specification<IntegralLog>() {
+                @Override
+                public Predicate toPredicate(Root<IntegralLog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                    List<Predicate> statusOrList = new ArrayList<>();
+                    for (IntegralLogStatusEnum status : changeStatus(statusList)) {
+                        Predicate predicate = cb.equal(root.get("status"), status);
+                        statusOrList.add(predicate);
+                    }
+                    Predicate[] statusPredicates = new Predicate[statusOrList.size()];
+                    statusPredicates = statusOrList.toArray(statusPredicates);
+                    Predicate statusOr = cb.or(statusPredicates);
+
+                    List<Predicate> projectCategoryOrList = new ArrayList<>();
+                    for (String projectCategory : projectCategoryList) {
+                        Predicate predicate = cb.equal(root.get("projectCategory"), projectCategory);
+                        projectCategoryOrList.add(predicate);
+                    }
+                    Predicate[] projectCategoryPredicates = new Predicate[statusOrList.size()];
+                    projectCategoryPredicates = projectCategoryOrList.toArray(projectCategoryPredicates);
+                    Predicate projectCategoryOr = cb.or(projectCategoryPredicates);
+
+                    Predicate and = cb.and(statusOr, projectCategoryOr);
+                    return and;
+                }
+            };
+            integralLogPage = integralLogRepository.findAll(integralLogSpecification, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                @Override
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogBySql:" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     static public <E> List<Object> toObject(List<E> list) {
         List<Object> objlist = new ArrayList<Object>();
         for (Object e : list) {
@@ -339,5 +387,25 @@ public class IntegralLogServiceImpl implements IntegralLogService {
             objlist.add(obj);
         }
         return objlist;
+    }
+
+    private List<IntegralLogStatusEnum> changeStatus(List<String> statusList) {
+        List<IntegralLogStatusEnum> statusEnums = new ArrayList<>();
+        for (String status : statusList) {
+            if (status == IntegralLogStatusEnum.PENDING_AUDIT.name()) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT);
+            } else if (status == IntegralLogStatusEnum.HAVEPASSED.name()) {
+                statusEnums.add(IntegralLogStatusEnum.HAVEPASSED);
+            } else if (status == IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT.name()) {
+                statusEnums.add(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT);
+            } else if (status == IntegralLogStatusEnum.ALREADY_SIGN_UP.name()) {
+                statusEnums.add(IntegralLogStatusEnum.ALREADY_SIGN_UP);
+            } else if (status == IntegralLogStatusEnum.SIGNED_IN.name()) {
+                statusEnums.add(IntegralLogStatusEnum.SIGNED_IN);
+            } else if (status == IntegralLogStatusEnum.COMPLETED.name()) {
+                statusEnums.add(IntegralLogStatusEnum.COMPLETED);
+            }
+        }
+        return statusEnums;
     }
 }

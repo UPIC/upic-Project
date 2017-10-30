@@ -14,6 +14,8 @@ public class OperatorRoleSpec extends CommonSimpleSpecification<OperatorRole, Op
     }
 
     protected void addCondition(QueryWraper<OperatorRole> queryWraper) {
+        addEqualsCondition(queryWraper,"jobNum");
+        addEqualsCondition(queryWraper,"roleId");
         addEqualsCondition(queryWraper,"status");
         addEqualsCondition(queryWraper,"type");
     }

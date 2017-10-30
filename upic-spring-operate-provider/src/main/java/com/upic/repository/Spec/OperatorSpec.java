@@ -14,12 +14,14 @@ public class OperatorSpec extends CommonSimpleSpecification<Operator, OperatorCo
     }
 
     protected void addCondition(QueryWraper<Operator> queryWraper) {
-        addEqualsCondition(queryWraper,"jobNum");
-        addEqualsCondition(queryWraper,"username");
-        addEqualsCondition(queryWraper,"email");
-        addEqualsCondition(queryWraper,"status");
-        addEqualsCondition(queryWraper,"phone");
-        addEqualsCondition(queryWraper,"idcard");
-        addEqualsCondition(queryWraper,"type");
+        addEqualsCondition(queryWraper, "jobNum");
+        addEqualsCondition(queryWraper, "username");
+        addEqualsCondition(queryWraper, "email");
+        addEqualsCondition(queryWraper, "status");
+        addEqualsCondition(queryWraper, "phone");
+        addEqualsCondition(queryWraper, "idcard");
+        addEqualsCondition(queryWraper, "type");
+        addEqualsCondition(queryWraper, "college");
+        addEqualsCondition(queryWraper, "collegeOtherName");
     }
 }

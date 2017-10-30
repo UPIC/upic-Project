@@ -160,4 +160,6 @@ public interface IntegralLogService {
     void saveAll(List<Object> list);
 
     List<Object> listIntegralLog(IntegralLogCondition condition);
+
+    Page<IntegralLogInfo> getIntegralLogBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable);
 }

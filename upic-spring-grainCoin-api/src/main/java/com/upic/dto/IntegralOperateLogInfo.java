@@ -16,14 +16,20 @@ public class IntegralOperateLogInfo extends BaseInfo {
 
     private String integralLogId; //积分日志
 
+    private String finishCheckEnumName;
+
+    private String finishCheck;
+
     public IntegralOperateLogInfo() {
     }
 
-    public IntegralOperateLogInfo(String event, String operator, String operatorNum, String integralLogId) {
+    public IntegralOperateLogInfo(String event, String operator, String operatorNum, String integralLogId, String finishCheckEnumName, String finishCheck) {
         this.event = event;
         this.operator = operator;
         this.operatorNum = operatorNum;
         this.integralLogId = integralLogId;
+        this.finishCheckEnumName = finishCheckEnumName;
+        this.finishCheck = finishCheck;
     }
 
     public String getEvent() {
@@ -58,6 +64,22 @@ public class IntegralOperateLogInfo extends BaseInfo {
         this.integralLogId = integralLogId;
     }
 
+    public String getFinishCheckEnumName() {
+        return finishCheckEnumName;
+    }
+
+    public void setFinishCheckEnumName(String finishCheckEnumName) {
+        this.finishCheckEnumName = finishCheckEnumName;
+    }
+
+    public String getFinishCheck() {
+        return finishCheck;
+    }
+
+    public void setFinishCheck(String finishCheck) {
+        this.finishCheck = finishCheck;
+    }
+
     @Override
     public String toString() {
         return "IntegralOperateLogInfo{" +
@@ -65,6 +87,8 @@ public class IntegralOperateLogInfo extends BaseInfo {
                 ", operator='" + operator + '\'' +
                 ", operatorNum='" + operatorNum + '\'' +
                 ", integralLogId='" + integralLogId + '\'' +
+                ", finishCheckEnumName='" + finishCheckEnumName + '\'' +
+                ", finishCheck='" + finishCheck + '\'' +
                 '}';
     }
 }

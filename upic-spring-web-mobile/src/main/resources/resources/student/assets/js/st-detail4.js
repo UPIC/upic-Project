@@ -2,7 +2,7 @@
  * @Author: Marte
  * @Date:   2017-10-07 12:28:15
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-10-07 12:35:33
+ * @Last Modified time: 2017-10-29 13:10:06
  */
 
 /*
@@ -83,7 +83,15 @@ function addHtmls(data) {
     htmls += "     <div class='list-det'>";
     htmls += "        可尝试重新提交材料";
     htmls += "     </div>";
-    htmls += "   </li>";
+    htmls += "   </li>"
+    htmls += "<li class='clearfix'>";
+    htmls += "<div class='list-name'>";
+    htmls += "失败原因：";
+    htmls += "</div>";
+    htmls += "<div class='list-det'>";
+    htmls += data.field1;
+    htmls += "</div>";
+    htmls += "</li>";
 
     $("#content").html(htmls)
 

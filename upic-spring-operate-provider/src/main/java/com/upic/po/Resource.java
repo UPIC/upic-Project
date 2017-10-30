@@ -32,7 +32,4 @@ public class Resource extends BaseEntity {
     private long fatherId; //上级ID
 
     private int isLeaf; //是否叶子
-
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "resource")
-    private List<RoleResource> roleResources;
 }

@@ -20,13 +20,11 @@ public class JurisdictionInfo extends BaseInfo {
 
     private String type; // 类型
 
-    private List<RoleJurisdictionInfo> roleJurisdictions;
-
     public JurisdictionInfo() {
         super();
     }
 
-    public JurisdictionInfo(String jurisdictionName, long resourceId, String remark, String url, String status, String type, List<RoleJurisdictionInfo> roleJurisdictions) {
+    public JurisdictionInfo(String jurisdictionName, long resourceId, String remark, String url, String status, String type) {
         super();
         this.jurisdictionName = jurisdictionName;
         this.resourceId = resourceId;
@@ -34,7 +32,6 @@ public class JurisdictionInfo extends BaseInfo {
         this.url = url;
         this.status = status;
         this.type = type;
-        this.roleJurisdictions = roleJurisdictions;
     }
 
     public String getJurisdictionName() {
@@ -83,14 +80,6 @@ public class JurisdictionInfo extends BaseInfo {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public List<RoleJurisdictionInfo> getRoleJurisdictions() {
-        return roleJurisdictions;
-    }
-
-    public void setRoleJurisdictions(List<RoleJurisdictionInfo> roleJurisdictions) {
-        this.roleJurisdictions = roleJurisdictions;
     }
 
     @Override

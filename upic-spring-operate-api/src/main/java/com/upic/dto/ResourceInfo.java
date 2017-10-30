@@ -4,8 +4,6 @@ import com.upic.common.base.dto.BaseInfo;
 import com.upic.enums.ResourceStatusEnum;
 import com.upic.enums.ResourceTypeEnum;
 
-import java.util.List;
-
 /**
  * Created by zhubuqing on 2017/8/4.
  */
@@ -26,13 +24,11 @@ public class ResourceInfo extends BaseInfo {
 
     private int isLeaf; //是否叶子
 
-    private List<RoleResourceInfo> roleResources;
-
     public ResourceInfo() {
         super();
     }
 
-    public ResourceInfo(String resourceNum, String resourceName, String url, ResourceStatusEnum status, ResourceTypeEnum type, int level, long fatherId, int isLeaf, List<RoleResourceInfo> roleResources) {
+    public ResourceInfo(String resourceNum, String resourceName, String url, ResourceStatusEnum status, ResourceTypeEnum type, int level, long fatherId, int isLeaf) {
         super();
         this.resourceNum = resourceNum;
         this.resourceName = resourceName;
@@ -42,7 +38,6 @@ public class ResourceInfo extends BaseInfo {
         this.level = level;
         this.fatherId = fatherId;
         this.isLeaf = isLeaf;
-        this.roleResources = roleResources;
     }
 
     public String getResourceNum() {
@@ -107,14 +102,6 @@ public class ResourceInfo extends BaseInfo {
 
     public void setIsLeaf(int isLeaf) {
         this.isLeaf = isLeaf;
-    }
-
-    public List<RoleResourceInfo> getRoleResources() {
-        return roleResources;
-    }
-
-    public void setRoleResources(List<RoleResourceInfo> roleResources) {
-        this.roleResources = roleResources;
     }
 
     @Override

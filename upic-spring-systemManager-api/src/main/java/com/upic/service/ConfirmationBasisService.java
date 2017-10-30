@@ -42,4 +42,12 @@ public interface ConfirmationBasisService {
      * @return
      */
     ConfirmationBasisInfo getByConfirmationBasisId(long confirmationBasisId);
+
+    /**
+     * 获取系统添加项目
+     *
+     * @param categoryNodeId
+     * @return
+     */
+    ConfirmationBasisInfo getSystemProjectByCategoryNodeId(long categoryNodeId);
 }

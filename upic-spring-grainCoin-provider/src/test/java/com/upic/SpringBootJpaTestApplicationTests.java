@@ -325,4 +325,18 @@ public class SpringBootJpaTestApplicationTests {
         List<Object> a = integralLogService.listIntegralLog(integralLogCondition);
         System.out.println(a.toString());
     }
+
+    @Test
+    public void testGetIntegralLogBySql() {
+        List<String> statusList = new ArrayList<>();
+        List<String> projectCategoryList = new ArrayList<>();
+        PageRequest pageRequest = new PageRequest();
+        statusList.add("ALREADY_SIGN_UP");
+        statusList.add("PENDING_AUDIT");
+        projectCategoryList.add("创新实践积分（选修积分）");
+        projectCategoryList.add("1创新实践积分（选修积分）");
+
+        Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogBySql(statusList, projectCategoryList, pageRequest);
+        integralLogInfoPage.getContent().forEach(t -> System.out.println(t.toString()));
+    }
 }

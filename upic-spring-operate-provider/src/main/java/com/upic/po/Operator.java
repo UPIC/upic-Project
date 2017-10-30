@@ -38,7 +38,4 @@ public class Operator extends BaseEntity {
     private String college;
 
     private String collegeOtherName;
-
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "operator")
-    private List<OperatorRole> operatorRoles;
 }

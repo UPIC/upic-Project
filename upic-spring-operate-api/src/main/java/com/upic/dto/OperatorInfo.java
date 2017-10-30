@@ -31,13 +31,11 @@ public class OperatorInfo extends BaseInfo {
 
     private String collegeOtherName;
 
-    private List<OperatorRoleInfo> operatorRoles;
-
     public OperatorInfo() {
         super();
     }
 
-    public OperatorInfo(String jobNum, String username, String password, String email, String pic, OperatorStatusEnum status, String phone, String idcard, int type, String college, String collegeOtherName, List<OperatorRoleInfo> operatorRoles) {
+    public OperatorInfo(String jobNum, String username, String password, String email, String pic, OperatorStatusEnum status, String phone, String idcard, int type, String college, String collegeOtherName) {
         this.jobNum = jobNum;
         this.username = username;
         this.password = password;
@@ -49,7 +47,6 @@ public class OperatorInfo extends BaseInfo {
         this.type = type;
         this.college = college;
         this.collegeOtherName = collegeOtherName;
-        this.operatorRoles = operatorRoles;
     }
 
     public String getJobNum() {
@@ -138,14 +135,6 @@ public class OperatorInfo extends BaseInfo {
 
     public void setCollegeOtherName(String collegeOtherName) {
         this.collegeOtherName = collegeOtherName;
-    }
-
-    public List<OperatorRoleInfo> getOperatorRoles() {
-        return operatorRoles;
-    }
-
-    public void setOperatorRoles(List<OperatorRoleInfo> operatorRoles) {
-        this.operatorRoles = operatorRoles;
     }
 
     @Override

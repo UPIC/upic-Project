@@ -13,6 +13,10 @@ import javax.persistence.*;
 public class IntegralOperateLog extends BaseEntity {
     private String event; //操作内容
 
+    private String finishCheckEnumName;
+
+    private String finishCheck;
+
     private String operator; //操作人
 
     private String operatorNum; //操作人编号

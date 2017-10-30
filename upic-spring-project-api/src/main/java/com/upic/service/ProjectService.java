@@ -130,4 +130,6 @@ public interface ProjectService {
     List<Object> listProject(ProjectCondition condition);
 
     void saveAll(List<Object> list);
+
+    Page<ProjectInfo> getProjectBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable);
 }
