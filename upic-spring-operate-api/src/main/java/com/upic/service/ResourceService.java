@@ -67,4 +67,12 @@ public interface ResourceService {
      * @return
      */
     List<ResourceInfo> listResource(ResourceCondition resourceCondition);
+
+    /**
+     * 根据角色ID查找菜单列表
+     *
+     * @param roleId
+     * @return
+     */
+    List<ResourceInfo> listResourceByRoleId(long roleId);
 }

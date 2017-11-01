@@ -222,6 +222,23 @@ public class OperatorController {
     }
 
     /**
+     * 加载菜单列表
+     *
+     * @return
+     */
+    @GetMapping("/listResourceByRoleId")
+    @ApiOperation("加载菜单列表")
+    public List<ResourceInfo> listResourceByRoleId(long roleId) {
+        try {
+            List<ResourceInfo> resourceInfoList = resourceService.listResourceByRoleId(roleId);
+            return resourceInfoList;
+        } catch (Exception e) {
+            LOGGER.info("listResource:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * 根据fatherId查询
      *
      * @param pageable
