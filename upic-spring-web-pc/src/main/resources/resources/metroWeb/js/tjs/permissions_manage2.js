@@ -206,6 +206,7 @@ function cleanUpZtree() {
 			}
 		};
 		setting.check.chkboxType = { "Y" : "ps", "N" : "ps" };
+		arryNodes=new Array();
 	for (var i = 0; i < allResource.length; i++) {
 		var zNode = new Object();
 		zNode.id = allResource[i].id;
@@ -300,3 +301,7 @@ function hideNodes() {
 	setTitle();
 	count();
 }
+$("#saveRoleResource").click(function(){
+	var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+	var nodes = treeObj.getCheckedNodes(true);
+});
