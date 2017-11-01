@@ -123,4 +123,22 @@ public class ResourceServiceImpl implements ResourceService {
             return null;
         }
     }
+
+    @Override
+    public List<ResourceInfo> listResourceByRoleId(long roleId) {
+        List<Resource> resourceList = new ArrayList<>();
+        List<ResourceInfo> resourceInfoList = new ArrayList<>();
+        try {
+            resourceList = resourceRepository.listResourceByRoleId(roleId);
+            for (Resource resource : resourceList) {
+                ResourceInfo resourceInfo = new ResourceInfo();
+                UpicBeanUtils.copyProperties(resource, resourceInfo);
+                resourceInfoList.add(resourceInfo);
+            }
+            return resourceInfoList;
+        } catch (Exception e) {
+            LOGGER.info("listResourceByRoleId：" + e.getMessage());
+            return null;
+        }
+    }
 }
