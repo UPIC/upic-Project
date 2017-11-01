@@ -162,17 +162,17 @@ public class SpringBootJpaTestApplicationTests {
     /**
      * ************************************** OperatorRole *****************************************
      */
-    @Test
-    public void testAddOperatorRole() {
-        for (long i = 5; i < 8; i++) {
-            OperatorRoleInfo operatorRoleInfo = new OperatorRoleInfo();
-            OperatorInfo operatorInfo = operatorService.getOperatorByOperatorId(i);
-            RoleInfo roleInfo = roleService.getRoleById(i);
-            operatorRoleInfo.setOperator(operatorInfo);
-            operatorRoleInfo.setRole(roleInfo);
-            operatorRoleService.addOperatorRole(operatorRoleInfo);
-        }
-    }
+//    @Test
+//    public void testAddOperatorRole() {
+//        for (long i = 5; i < 8; i++) {
+//            OperatorRoleInfo operatorRoleInfo = new OperatorRoleInfo();
+//            OperatorInfo operatorInfo = operatorService.getOperatorByOperatorId(i);
+//            RoleInfo roleInfo = roleService.getRoleById(i);
+//            operatorRoleInfo.setOperator(operatorInfo);
+//            operatorRoleInfo.setRole(roleInfo);
+//            operatorRoleService.addOperatorRole(operatorRoleInfo);
+//        }
+//    }
 
     @Test
     public void testSearchOperatorRole() {
@@ -196,17 +196,17 @@ public class SpringBootJpaTestApplicationTests {
     /**
      * ************************************** RoleResource *****************************************
      */
-    @Test
-    public void testAddRoleResource() {
-        for (long i = 15; i < 18; i++) {
-            RoleInfo roleInfo = roleService.getRoleById(i);
-            ResourceInfo resourceInfo = resourceService.getResourceById(i);
-            RoleResourceInfo roleResourceInfo = new RoleResourceInfo();
-            roleResourceInfo.setRole(roleInfo);
-            roleResourceInfo.setResource(resourceInfo);
-            roleResourceService.addRoleResource(roleResourceInfo);
-        }
-    }
+//    @Test
+//    public void testAddRoleResource() {
+//        for (long i = 15; i < 18; i++) {
+//            RoleInfo roleInfo = roleService.getRoleById(i);
+//            ResourceInfo resourceInfo = resourceService.getResourceById(i);
+//            RoleResourceInfo roleResourceInfo = new RoleResourceInfo();
+//            roleResourceInfo.setRole(roleInfo);
+//            roleResourceInfo.setResource(resourceInfo);
+//            roleResourceService.addRoleResource(roleResourceInfo);
+//        }
+//    }
 
     @Test
     public void testSearchRoleResource() {
