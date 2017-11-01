@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/11.
  */
@@ -84,6 +87,24 @@ public class RoleServiceImpl implements RoleService {
             roleRepository.delete(roleId);
         } catch (Exception e) {
             LOGGER.info("deleteRole:角色删除失败。错误信息：" + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<RoleInfo> getRoleByJobNum(String userNum) {
+        List<Role> roleList = new ArrayList<>();
+        List<RoleInfo> roleInfoList = new ArrayList<>();
+        try {
+            roleList = roleRepository.getRoleByJobNum(userNum);
+            for (Role role : roleList) {
+                RoleInfo roleInfo = new RoleInfo();
+                UpicBeanUtils.copyProperties(role, roleInfo);
+                roleInfoList.add(roleInfo);
+            }
+            return roleInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getRoleByJobNum：" + e.getMessage());
+            return null;
         }
     }
 }

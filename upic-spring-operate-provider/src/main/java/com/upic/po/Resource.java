@@ -32,4 +32,6 @@ public class Resource extends BaseEntity {
     private long fatherId; //上级ID
 
     private int isLeaf; //是否叶子
+
+    private int num;
 }

@@ -8,10 +8,7 @@ import com.upic.condition.ResourceCondition;
 import com.upic.condition.RoleCondition;
 import com.upic.dto.*;
 import com.upic.enums.OperatorStatusEnum;
-import com.upic.service.OperatorService;
-import com.upic.service.ResourceService;
-import com.upic.service.RoleResourceService;
-import com.upic.service.RoleService;
+import com.upic.service.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,6 +40,9 @@ public class OperatorController {
 
     @Autowired
     private RoleResourceService roleResourceService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 加载操作员
@@ -307,18 +308,18 @@ public class OperatorController {
      *
      * @return
      */
-	@PostMapping("/updateRoleResourceRelation")
+    @PostMapping("/updateRoleResourceRelation")
     @ApiOperation("更新角色菜单关系列表")
-    public String updateRoleResourceRelation(  String roleResourceInfoList, long roleId) {
-		List<RoleResourceInfo> parseArray = JSONArray.parseArray(roleResourceInfoList,RoleResourceInfo.class);
-    	List<RoleResourceInfo> beforeRoleResourceInfoList = null;
-    	String result = "ERROR";
-    	try {
-        	if(roleResourceInfoList!=null && !roleResourceInfoList.isEmpty()) {
-        		beforeRoleResourceInfoList = roleResourceService.getByRoleId(roleId);
-        		result = roleResourceService.updateRoleResource(parseArray,beforeRoleResourceInfoList);
-        	}
-            
+    public String updateRoleResourceRelation(String roleResourceInfoList, long roleId) {
+        List<RoleResourceInfo> parseArray = JSONArray.parseArray(roleResourceInfoList, RoleResourceInfo.class);
+        List<RoleResourceInfo> beforeRoleResourceInfoList = null;
+        String result = "ERROR";
+        try {
+            if (roleResourceInfoList != null && !roleResourceInfoList.isEmpty()) {
+                beforeRoleResourceInfoList = roleResourceService.getByRoleId(roleId);
+                result = roleResourceService.updateRoleResource(parseArray, beforeRoleResourceInfoList);
+            }
+
             return result;
         } catch (Exception e) {
             LOGGER.info("addRoleResource:" + e.getMessage());
@@ -326,6 +327,30 @@ public class OperatorController {
         }
     }
 
+    @GetMapping("/getResourceBySelf")
+    @ApiOperation("获取自己的菜单列表")
+    public List<ResourceInfo> getResourceBySelf() {
+        try {
+            List<RoleInfo> roleInfoList = roleService.getRoleByJobNum(getUser().getUserNum());
+            List<ResourceInfo> resourceInfoList = new ArrayList<>();
+            for (RoleInfo roleInfo : roleInfoList) {
+                List<ResourceInfo> resourceInfos = resourceService.getResourceBySelf(roleInfo.getId());
+                resourceInfoList.addAll(resourceInfos);
+            }
+            return resourceInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getResourceBySelf:" + e.getMessage());
+            return null;
+        }
+    }
+
 //    @GetMapping
 //    @ApiOperation("删除菜单")
+
+    private UserInfo getUser() {
+        String userNum = "1522110240";
+//        String userNum = UserUtils.getUser().getUserId();
+        UserInfo userInfo = userService.getUserByUserNum(userNum);
+        return userInfo;
+    }
 }

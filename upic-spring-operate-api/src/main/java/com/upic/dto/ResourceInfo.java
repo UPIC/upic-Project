@@ -24,12 +24,13 @@ public class ResourceInfo extends BaseInfo {
 
     private int isLeaf; //是否叶子
 
+    private int num;
+
     public ResourceInfo() {
         super();
     }
 
-    public ResourceInfo(String resourceNum, String resourceName, String url, ResourceStatusEnum status, ResourceTypeEnum type, int level, long fatherId, int isLeaf) {
-        super();
+    public ResourceInfo(String resourceNum, String resourceName, String url, ResourceStatusEnum status, ResourceTypeEnum type, int level, long fatherId, int isLeaf, int num) {
         this.resourceNum = resourceNum;
         this.resourceName = resourceName;
         this.url = url;
@@ -38,6 +39,7 @@ public class ResourceInfo extends BaseInfo {
         this.level = level;
         this.fatherId = fatherId;
         this.isLeaf = isLeaf;
+        this.num = num;
     }
 
     public String getResourceNum() {
@@ -104,6 +106,14 @@ public class ResourceInfo extends BaseInfo {
         this.isLeaf = isLeaf;
     }
 
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
     @Override
     public String toString() {
         return "ResourceInfo{" +
@@ -115,6 +125,7 @@ public class ResourceInfo extends BaseInfo {
                 ", level=" + level +
                 ", fatherId=" + fatherId +
                 ", isLeaf=" + isLeaf +
+                ", num=" + num +
                 '}';
     }
 }

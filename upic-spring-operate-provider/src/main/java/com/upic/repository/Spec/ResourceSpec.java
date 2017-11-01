@@ -22,5 +22,6 @@ public class ResourceSpec extends CommonSimpleSpecification<Resource, ResourceCo
         addEqualsCondition(queryWraper,"level");
         addEqualsCondition(queryWraper,"fatherId");
         addEqualsCondition(queryWraper,"isLeaf");
+        addEqualsCondition(queryWraper,"num");
     }
 }
