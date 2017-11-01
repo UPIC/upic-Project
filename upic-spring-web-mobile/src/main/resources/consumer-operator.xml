@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+    <!--<dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>-->
+
+    <dubbo:reference id="operatorRoleService" interface="com.upic.service.OperatorRoleService" version="1.0" group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="operatorService" interface="com.upic.service.OperatorService" version="1.0" group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="resourceService" interface="com.upic.service.ResourceService" version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="roleResourceService" interface="com.upic.service.RoleResourceService" version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="roleService" interface="com.upic.service.RoleService" version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="orginzationService" interface="com.upic.service.OrginzationService"
+                     version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="orginzationProjectCategoryService" interface="com.upic.service.OrginzationProjectCategoryService" version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="orginzationOperatorService" interface="com.upic.service.OrginzationOperatorService"
+                     version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="checkStatusService" interface="com.upic.service.CheckStatusService"
+                     version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+    <dubbo:reference id="roleCheckStatusService" interface="com.upic.service.RoleCheckStatusService"
+                     version="1.0"
+                     group="operate"
+                     check="false"></dubbo:reference>
+</beans>

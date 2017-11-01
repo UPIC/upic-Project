@@ -6,6 +6,7 @@ import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import com.upic.service.*;
 
+import com.upic.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class StudetAllController {
     private GrainCoinLogService grainCoinLogService;
 
     @Autowired
-    private ProjectService projectService;
+    private UserService userService;
 
     @Autowired
     private BannerService bannerService;
@@ -48,16 +49,7 @@ public class StudetAllController {
     @GetMapping("/getIntegeral")
     public double getIntegeral() throws Exception {
         try {
-            // Authentication authentication =
-            // SecurityContextHolder.getContext().getAuthentication();
-            // System.out.println(authentication);
-            // SocialUser user = null;
-            // if (authentication != null) {
-            // user = (SocialUser) authentication.getPrincipal();
-            // }
-            // if(user==null){
-            // throw new Exception("获取用户失败");
-            // }
+//            return integralLogService.watchIntegral(UserUtils.getUser().getUserId());
             return integralLogService.watchIntegral("1522110240");
         } catch (Exception e) {
             LOGGER.info("getIntegeral :" + e.getMessage());
@@ -74,16 +66,7 @@ public class StudetAllController {
     @GetMapping("/getGrainCoin")
     public double getGrainCoin() throws Exception {
         try {
-            // Authentication authentication =
-            // SecurityContextHolder.getContext().getAuthentication();
-            // System.out.println(authentication);
-            // SocialUser user = null;
-            // if (authentication != null) {
-            // user = (SocialUser) authentication.getPrincipal();
-            // }
-            // if(user==null){
-            // throw new Exception("获取用户失败");
-            // }
+//            return grainCoinLogService.watchGrainCoin(UserUtils.getUser().getUserId());
             return grainCoinLogService.watchGrainCoin("1522110240");
         } catch (Exception e) {
             LOGGER.info("getGrainCoin:" + e.getMessage());
@@ -170,15 +153,19 @@ public class StudetAllController {
     @PostMapping("/postIntegralLog")
     public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo) throws Exception {
         try {
+            String userNum = UserUtils.getUser().getUserId();
+
             System.out.println(integralLogInfo.toString());
 
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + (new Date()).getTime());
-            integralLogIdInfo.setStudentNum("1522110240");
+            integralLogIdInfo.setStudentNum(userNum);
 
-            integralLogInfo.setCollege("信息工程学院");
-            integralLogInfo.setClazz("15微社交");
-            integralLogInfo.setStudent("章威男");
+            UserInfo userInfo = userService.getUserByUserNum(userNum);
+
+            integralLogInfo.setCollege(userInfo.getCollege());
+            integralLogInfo.setClazz(userInfo.getClazz());
+            integralLogInfo.setStudent(userInfo.getUsername());
             integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
             integralLogInfo.setType(IntegralLogTypeEnum.VOLUNTARY_APPLICATION);
             integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);

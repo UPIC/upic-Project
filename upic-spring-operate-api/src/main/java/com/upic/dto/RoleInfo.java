@@ -14,15 +14,17 @@ public class RoleInfo extends BaseInfo {
 
     private RoleTypeEnum type; //角色类型
 
+    private String content;
+
     public RoleInfo() {
         super();
     }
 
-    public RoleInfo(String roleName, RoleStatusEnum status, RoleTypeEnum type) {
-        super();
+    public RoleInfo(String roleName, RoleStatusEnum status, RoleTypeEnum type, String content) {
         this.roleName = roleName;
         this.status = status;
         this.type = type;
+        this.content = content;
     }
 
     public String getRoleName() {
@@ -49,12 +51,21 @@ public class RoleInfo extends BaseInfo {
         this.type = type;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return "RoleInfo{" +
                 "roleName='" + roleName + '\'' +
                 ", status=" + status +
                 ", type=" + type +
+                ", content='" + content + '\'' +
                 '}';
     }
 }

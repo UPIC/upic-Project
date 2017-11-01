@@ -1,6 +1,6 @@
 var dataUrl = "/common/getProjectWithoutSignUp";
 var getProjectInfo="/common/getProjectInfo";
-var searchKeyWordUrl = "";
+var searchKeyWordUrl = "/common/integralLogSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getStatusUrl = "/common/getCollege";
 var pageSize = 0;
@@ -30,7 +30,7 @@ function addProjectType(res) {
     $("#projectCategory").html(htmls);
 }
 
-function addCollegeUrl(res) {
+function addStatus(res) {
     var data = res.content;
     var htmls = "";
     htmls += "<option value='4' class='yellow'>学院筛选...</option>";
@@ -54,14 +54,14 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].integral + "</td>";
         htmls += "<td>" + getDate(data[i].signUpEndTime, "yyyy-MM-dd") + "</td>";
         htmls += "<td>";
-        htmls += "<div class='message_div' onclick=commonAjax('"+getProjectInfo+"','projectNum=" + data[i].projectNum + "','getProjectInfo','GET')><a href='#mymodal1' data-toggle='modal' >报名</a></div></td>";
+        htmls += "<div class='message_div' onclick=commonAjax('"+getProjectInfo+"','projectNum=" + data[i].projectNum + "','getProjectInfoA','GET')><a href='#mymodal1' data-toggle='modal' >报名</a></div></td>";
         htmls += "</tr>";
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
 }
 
-function getProjectInfo(result) {
+function getProjectInfoA(result) {
     var htmlss = "";
         htmlss += "<div class='modal-header'>";
         htmlss += "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
@@ -115,8 +115,6 @@ function getProjectInfo(result) {
     }
 
 function apply(pN){//报名按钮
-
-
 
 }
 

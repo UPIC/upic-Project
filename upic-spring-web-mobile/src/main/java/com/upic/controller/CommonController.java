@@ -3,6 +3,7 @@ package com.upic.controller;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.service.*;
+import com.upic.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class CommonController {
     @Autowired
     private CategoryNodeService categoryNodeService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 获取用户信息
      *
@@ -52,13 +56,13 @@ public class CommonController {
      */
     @GetMapping("/getUserInfo")
     public UserInfo getUserInfo() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("山鸡");
-        userInfo.setPic("assets/i/shanji.jpg");
         try { // 1.获取认证信息 2.根据用户信息查询
+            String userNum = UserUtils.getUser().getUserId();
+            return userService.getUserByUserNum(userNum);
         } catch (Exception e) {
+            LOGGER.info("getUserInfo:" + e.getMessage());
+            return null;
         }
-        return userInfo;
     }
 
     /*********************************************项目类别*********************************************/

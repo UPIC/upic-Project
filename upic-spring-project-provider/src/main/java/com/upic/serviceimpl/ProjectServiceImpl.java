@@ -341,6 +341,31 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    @Override
+    public List<Object> exportProjectByGuidanceNum(String guidanceNum) {
+        List<Project> projectList = new ArrayList<Project>();
+        try {
+            projectList = projectRepository.exportProjectByGuidanceNum(guidanceNum);
+            List<Object> objectList = toObject(projectList);
+            return objectList;
+        } catch (Exception e) {
+            LOGGER.info("exportProjectByGuidanceNum：" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Object> exportProjectSearchBar(String userNum, String keyword) {
+        List<Project> projectPage = null;
+        try {
+            projectPage = projectRepository.exportProjectSearchBar(userNum, keyword);
+            return toObject(projectPage);
+        } catch (Exception e) {
+            LOGGER.info("projectSearchBar:项目" + projectPage.toString() + "更新失败。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
+
     private void filterProject(Project project) {
         if (project == null) {
 

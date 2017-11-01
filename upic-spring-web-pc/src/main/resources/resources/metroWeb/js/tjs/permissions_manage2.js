@@ -1,29 +1,55 @@
-var data2Url = "";
+var data2Url = "/operator/searchRole";
 var changeRoleInfoUrl = "";
 var deleteRoleUrl = "";
-var pageSize = 0;
-var totalPages = -1;
-var pageNum = 0;
-var requestData = {};
+var pageSize2 = 0;
+var totalPages2 = -1;
+var pageNum2 = 0;
+var requestData2 = {};
+var zNodes = [];
+var searchResource = "";
+var getAllResourceUrl = "/operator/listResource";
 
-$(function () {
-    pageSize = $("#select-small").children('option:selected').text();
-    getData(pageNum, data2Url);
-})
+function getJueSe() {
+    pageSize2 = $("#select-small2").children('option:selected').text();
+    getData2(pageNum2, data2Url);
+}
 
-function addHtmls(datas, pageNum) {
-    totalPages = datas.totalElements;
+//ajax获取页面内容
+function getData2(pageNum2, data2Url, pageSize2) {
+    requestData2.size = parseInt($("#select-small2").children('option:selected')
+        .text());
+    requestData2.page = pageNum2;
+    $.ajax({
+        type: "GET",
+        url: data2Url,
+        data: requestData2,
+        beforeSend: function (XMLHttpRequest) {
+        },
+        success: function (result) {
+            if (result != "" && result != null) {
+                addHtmls2(result, pageNum2, requestData2);
+            }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+        },
+        error: function () {
+        }
+    });
+}
+
+function addHtmls2(datas) {
+    totalPages2 = datas.totalElements;
     var data = datas.content;
     var htmls = "";
     for (var i = 0; i < data.length; i++) {
         htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].userNum + "'/></td>";
-        htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
-        htmls += "<td>" + data[i].username + "</td>";
-        htmls += "<td>" + data[i].usertype + "</td>";
+        htmls += "<td class='center_td'>" + (parseInt(pageNum2) * parseInt(pageSize2) + i + 1) + "</td>";
+        htmls += "<td>" + data[i].roleName + "</td>";
+        htmls += "<td>" + data[i].type + "</td>";
         htmls += "<td>" + data[i].content + "</td>";
-        htmls += "<td>" + getDate(data[i].createTime) + "</td>";
+        htmls += "<td>" + getDate(data[i].creatTime, 'yyyy-MM-dd') + "</td>";
         htmls += "<td>";
-        htmls += "<div class='message_div'><a href='#mymodal10' data-toggle='modal'><span onclick=>【分配权限】</span></a>";
+        htmls += "<div class='message_div'><a href='#mymodal10' data-toggle='modal'><span onclick=fenPeiQuanXian('" + data[i].id + "')>【分配权限】</span></a>";
         htmls += "<span class='space'>|</span>";
         htmls += "<a href='#mymodal7' data-toggle='modal'><span onclick=change(" + data[i].userNum + "," + data[i].username + "," + data[i].type + ")>【修改】</span></a>";
         htmls += "<span class='space'>|</span>";
@@ -31,8 +57,8 @@ function addHtmls(datas, pageNum) {
         htmls += "</div></td>";
         htmls += "</tr>";
     }
-    $("#data").html(htmls);
-    page(datas, data2Url, datas.size, datas.number);
+    $("#data2").html(htmls);
+    page2(datas, data2Url, datas.size, datas.number);
 }
 
 function change(num, name, type) {
@@ -116,4 +142,25 @@ function deleteRole(num) {
             alert("删除成功")
         }
     });
+}
+
+function fenPeiQuanXian(roleId) {
+    var allResource = getAllResource();
+}
+
+function getAllResource() {
+    var allResource = "";
+    $.ajax({
+        type: "GET",
+        url: getAllResourceUrl,
+        data: "",
+        success: function (result) {
+            allResource = result;
+        }
+    });
+    return allResource;
+}
+
+function searchResourceAddHtml(datas) {
+
 }

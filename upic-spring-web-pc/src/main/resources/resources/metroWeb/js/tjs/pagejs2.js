@@ -1,76 +1,55 @@
-//ajax获取页面内容
-function getData(pageNum, dataUrl, pageSize) {
-    requestData.size = parseInt($("#select-small").children('option:selected')
-        .text());
-    requestData.page = pageNum;
-    $.ajax({
-        type: "GET",
-        url: dataUrl,
-        data: requestData,
-        beforeSend: function (XMLHttpRequest) {
-        },
-        success: function (result) {
-            if (result != "" && result != null) {
-                addHtmls(result, pageNum, requestData);
-            }
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-        },
-        error: function () {
-        }
-    });
-}
 
-function page(data, dataUrl, pageSize, pageNum) {
-    var totalData = "当前显示<span>" + (parseInt(pageNum) * parseInt(pageSize) + 1)
+
+function page2(data2, data2Url, pageSize2, pageNum2) {
+    var totalData = "当前显示<span>" + (parseInt(pageNum2) * parseInt(pageSize2) + 1)
         + "</span>到<span>"
-        + (parseInt(pageNum) * parseInt(pageSize) + data.content.length)
-        + "</span>条,共<span>" + data.totalElements + "</span>条记录";
-    $('#sample_1_info').html(totalData);
-    loadPage(dataUrl, data.totalPages, pageSize, pageNum);
+        + (parseInt(pageNum2) * parseInt(pageSize2) + data2.content.length)
+        + "</span>条,共<span>" + data2.totalElements + "</span>条记录";
+    $('#sample_1_2_info').html(totalData);
+    loadPage2(data2Url, data2.totalPages, pageSize2, pageNum2);
 }
 
 // 分页
-function loadPage(dataUrl, totalPages, pageSize, pageNum) {
+function loadPage2(data2Url, totalPages2, pageSize2, pageNum2) {
     // var pageNum=requestData.page;
     var htmls = "<div class='pagination'><ul>";
-    if ((parseInt(pageNum) + 1) == 1) {
+    if ((parseInt(pageNum2) + 1) == 1) {
         htmls += "<li><a href='#'>上一页</a></li>";
     } else {
-        htmls += "<li><a href='javasist:;' onClick='getData(" + (pageNum - 1)
-            + ",\"" + dataUrl + "\"," + pageSize + ")'>上一页</a></li>";
+        htmls += "<li><a href='javasist:;' onClick='getData2(" + (pageNum2 - 1)
+            + ",\"" + data2Url + "\"," + pageSize2 + ")'>上一页</a></li>";
     }
-    for (var i = parseInt(pageNum + 1); i <= totalPages; i++) {
-        if ((totalPages - parseInt(pageNum + 1)) < 6) {
-            if (i == parseInt(pageNum + 1)) {
-                htmls += "<li><a href='#'>" + parseInt(pageNum + 1)
+    for (var i = parseInt(pageNum2 + 1); i <= totalPages2; i++) {
+        if ((totalPages2 - parseInt(pageNum2 + 1)) < 6) {
+            if (i == parseInt(pageNum2 + 1)) {
+                htmls += "<li><a href='#'>" + parseInt(pageNum2 + 1)
                     + "</a></li>";
             } else {
-                htmls += "<li><a href='javasist:;' onClick='getData(" + (i - 1)
-                    + ",\"" + dataUrl + "\"," + pageSize + ")'>" + i
+                htmls += "<li><a href='javasist:;' onClick='getData2(" + (i - 1)
+                    + ",\"" + data2Url + "\"," + pageSize2 + ")'>" + i
                     + "</a></li>";
             }
         } else {
-            if (i < (parseInt(pageNum + 1) + 2)) {
-                htmls += "<li><a href='javasist:;' onClick='getData(" + (i - 1)
-                    + ",\"" + dataUrl + "\"," + pageSize + ")'>" + i
+            if (i < (parseInt(pageNum2 + 1) + 2)) {
+                htmls += "<li><a href='javasist:;' onClick='getData2(" + (i - 1)
+                    + ",\"" + data2Url + "\"," + pageSize2 + ")'>" + i
                     + "</a></li>";
-            } else if (i > (totalPages - 2)) {getData(pageNum, data2Url);
-                htmls += "<li><a href='javasist:;' onClick='getData(" + (i - 1)
-                    + ",\"" + dataUrl + "\"," + pageSize + ")'>" + i
+            } else if (i > (totalPages2 - 2)) {getData2(pageNum2, data2Url);
+                htmls += "<li><a href='javasist:;' onClick='getData2(" + (i - 1)
+                    + ",\"" + data2Url + "\"," + pageSize2 + ")'>" + i
                     + "</a></li>";
-            } else if (i == (parseInt(pageNum + 1) + 3)) {
+            } else if (i == (parseInt(pageNum2 + 1) + 3)) {
                 htmls += "<li><a href='#'>...</a></li>";
             }
         }
     }
-    if (totalPages == 1 || (parseInt(pageNum) + 1) == totalPages) {
+    if (totalPages2 == 1 || (parseInt(pageNum2) + 1) == totalPages2) {
         htmls += "<li><a href='#'>下一页</a></li>";
     } else {
-        htmls += "<li><a href='javasist:;' onClick='getData(" + (pageNum + 1)
-            + ",\"" + dataUrl + "\"," + pageSize + ")'>下一页</a></li>";
+        htmls += "<li><a href='javasist:;' onClick='getData2(" + (pageNum2 + 1)
+            + ",\"" + data2Url + "\"," + pageSize2 + ")'>下一页</a></li>";
     }
-    $('.pagination').html(htmls);
+    $("#widget_tab2").find('.pagination').html(htmls);
 }
 
 function getDate(date, rule) {
@@ -126,20 +105,20 @@ Date.prototype.pattern = function (fmt) {
 var oldVal = "";
 $(function () {
     // pageSize监听
-    $("#select-small").change(function () {
-        pageSize = parseInt($(this).children('option:selected').text());// 这就是selected的值
-        getData(0, dataUrl);
+    $("#select-small2").change(function () {
+        pageSize2 = parseInt($(this).children('option:selected').text());// 这就是selected的值
+        getData2(0, data2Url);
     });
     // input监听事件
     $('#search').bind('input propertychange', function () {
         if ($.trim($(this).val()) == oldVal) {
-            getData(0, dataUrl);
+            getData2(0, data2Url);
             return;
         }
         oldVal = $.trim($(this).val());
         if ($(this).val().length > 0) {
-            requestData.keyword = oldVal;
-            getData(0, searchKeyWordUrl);
+            requestData1.keyword = oldVal;
+            getData2(0, searchKeyWordUrl);
         }
     });
 })
@@ -150,7 +129,7 @@ function registSelect(id) {
         var name = $(this).attr("name");
         var value = $(this).children('option:selected').text();
         eval('(' + "requestData." + name + "=\"" + value + '\")');
-        getData(0, dataUrl);
+        getData2(0, data2Url);
     });
 }
 

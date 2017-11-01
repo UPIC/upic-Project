@@ -1,23 +1,46 @@
 var data3Url = "";
-var pageSize = 0;
-var totalPages = -1;
-var pageNum = 0;
-var requestData = {};
+var pageSize3 = 0;
+var totalPages3 = -1;
+var pageNum3 = 0;
+var requestData3 = {};
 
-$(function () {
-    pageSize = $("#select-small").children('option:selected').text()
-    getData(pageNum, data3Url);
-    registSelect(operationType);
-    registSelect(operationStatus);
-})
+function getCaoZuoRiZhi() {
+    pageSize3 = $("#select-small").children('option:selected').text()
+    getData3(pageNum3, data3Url);
+    registSelect("operationType");
+    registSelect("operationStatus");
+}
 
-function addHtmls(datas, pageNum) {
-    totalPages = datas.totalElements;
+//ajax获取页面内容
+function getData3(pageNum3, data3Url, pageSize3) {
+    requestData3.size = parseInt($("#select-small1").children('option:selected')
+        .text());
+    requestData3.page = pageNum3;
+    $.ajax({
+        type: "GET",
+        url: data3Url,
+        data: requestData3,
+        beforeSend: function (XMLHttpRequest) {
+        },
+        success: function (result) {
+            if (result != "" && result != null) {
+                addHtmls2(result, pageNum3, requestData3);
+            }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+        },
+        error: function () {
+        }
+    });
+}
+
+function addHtmls3(datas) {
+    totalPage3 = datas.totalElements;
     var data = datas.content;
     var htmls = "";
     for (var i = 0; i < data.length; i++) {
         htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].logNum + "'/></td>";
-        htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
+        htmls += "<td class='center_td'>" + (parseInt(pageNum3) * parseInt(pageSize3) + i + 1) + "</td>";
         htmls += "<td>" + data[i].createTime + "</td>";
         htmls += "<td>" + data[i].userName + "</td>";
         htmls += "<td>" + data[i].operationType + "</td>";
@@ -27,7 +50,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<div class='message_div'><a href='#mymodal9' data-toggle='modal'><span onclick=commonAjax('" + data3Url + "','logNum=" + data[i].logNum + "','getLogInfo','GET')>【查看详情】</span></a></div></td>";
         htmls += "</tr>";
     }
-    $("#data").html(htmls);
+    $("#data3").html(htmls);
     page(datas, data3Url, datas.size, datas.number);
 }
 

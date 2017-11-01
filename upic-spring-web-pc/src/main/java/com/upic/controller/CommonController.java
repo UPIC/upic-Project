@@ -1,12 +1,15 @@
 package com.upic.controller;
 
+import com.upic.common.document.excel.ExcelDocument;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.service.*;
+//import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -522,11 +529,11 @@ public class CommonController {
     @ApiOperation("查询我未报名、并且在报名期间内的活动（学生移动端全部活动查询）")
     public Page<ProjectInfo> getProjectWithoutSignUp(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
-            Page<ProjectInfo> projectInfoPage = projectService.getProjectWithoutSignUp(new Date(), pageable);
-            return projectInfoPage;
-        } catch (Exception e) {
-            LOGGER.info("getProjectWithoutSignUp:" + e.getMessage());
-            throw new Exception("getProjectWithoutSignUp" + e.getMessage());
+            Page<ProjectInfo> projectWithoutSignUp = projectService.getProjectWithoutSignUp(new Date(), pageable);
+            return projectWithoutSignUp;
+        } catch (Exception exception) {
+            LOGGER.info("getProjectWithoutSignUp:" + exception.getMessage());
+            throw new Exception("getProjectWithoutSignUp" + exception.getMessage());
         }
     }
 
@@ -565,7 +572,6 @@ public class CommonController {
     @GetMapping("/integralLogSearchBar")
     @ApiOperation("积分搜索条")
     public Page<IntegralLogInfo> integralLogSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("积分状态") IntegralLogStatusEnum status, @ApiParam("关键词") String keyword) throws Exception {
-
         try {
             return integralLogService.integralLogSearchBar(status, keyword, pageable);
         } catch (Exception e) {
@@ -612,6 +618,27 @@ public class CommonController {
         } catch (Exception e) {
             LOGGER.info("myProjectSearchBar:" + e.getMessage());
             throw new Exception("myProjectSearchBar" + e.getMessage());
+        }
+    }
+
+    /**
+     * 项目导出
+     *
+     * @return
+     */
+    @ApiOperation("项目导出")
+    @GetMapping("exportProjectSearchBar")
+    public void exportProjectSearchBar(HttpServletResponse response, String keyword, List<String> baseModel) {
+        try {
+            List<Object> byProjectNum = projectService.exportProjectSearchBar(getUser().getUserNum(), keyword);
+            Workbook wk = ExcelDocument.download((String[]) baseModel.toArray(), ProjectInfo.class, byProjectNum);
+            downLoadExcel(response, wk, "project");
+        } catch (Exception e) {
+            LOGGER.info("exportProject:" + e.getMessage());
+            try {
+                response.getWriter().println("下载失败！");
+            } catch (IOException e1) {
+            }
         }
     }
 
@@ -748,6 +775,27 @@ public class CommonController {
         } catch (Exception e) {
             LOGGER.info("getGrainCoinLog:" + e.getMessage());
             throw new Exception("getGrainCoinLog" + e.getMessage());
+        }
+    }
+
+    /**
+     * 积分导出
+     *
+     * @return
+     */
+    @ApiOperation("积分导出")
+    @GetMapping("exportGrainCoinLog")
+    public void exportGrainCoinLog(HttpServletResponse response, GrainCoinLogCondition condition, List<String> baseModel) {
+        try {
+            List<Object> byProjectNum = grainCoinLogService.exportGrainCoinLog(condition);
+            Workbook wk = ExcelDocument.download((String[]) baseModel.toArray(), IntegralLogInfo.class, byProjectNum);
+            downLoadExcel(response, wk, "integralLog");
+        } catch (Exception e) {
+            LOGGER.info("exportGrainCoinLog:" + e.getMessage());
+            try {
+                response.getWriter().println("下载失败！");
+            } catch (IOException e1) {
+            }
         }
     }
 
@@ -957,6 +1005,27 @@ public class CommonController {
     }
 
     /**
+     * 我的项目导出
+     *
+     * @return
+     */
+    @ApiOperation("我的项目导出")
+    @GetMapping("exportProjectByGuidanceNum")
+    public void exportProjectByGuidanceNum(HttpServletResponse response, String guidanceNum, List<String> baseModel) {
+        try {
+            List<Object> byProjectNum = projectService.exportProjectByGuidanceNum(guidanceNum);
+            Workbook wk = ExcelDocument.download((String[]) baseModel.toArray(), ProjectInfo.class, byProjectNum);
+            downLoadExcel(response, wk, "project");
+        } catch (Exception e) {
+            LOGGER.info("exportProjectByGuidanceNum:" + e.getMessage());
+            try {
+                response.getWriter().println("下载失败！");
+            } catch (IOException e1) {
+            }
+        }
+    }
+
+    /**
      * 查询project
      *
      * @param projectCondition
@@ -1050,17 +1119,26 @@ public class CommonController {
     }
 
     private UserInfo getUser() {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //SocialUser so=(SocialUser) authentication.getPrincipal();
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("山鸡");
-        userInfo.setClazz("15微社交");
-        userInfo.setCollege("信息工程学院");
-        userInfo.setEarnedPoints(4);
-        userInfo.setEarningPoints(6);
-        userInfo.setMajor("计算机科学与技术.社交网络");
-        userInfo.setUserNum("1522110240");
-        userInfo.setPic("assets/i/shanji.jpg");
+        String userNum = "1522110240";
+//        String userNum = UserUtils.getUser().getUserId();
+        UserInfo userInfo = userService.getUserByUserNum(userNum);
         return userInfo;
+    }
+
+    private void downLoadExcel(HttpServletResponse response, Workbook wk, String fileName) throws Exception {
+        OutputStream outputStream = null;
+        try {
+            response.reset();
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Connection", "close");
+            response.setHeader("Content-Type", "application/octet-stream");
+            outputStream = response.getOutputStream();
+            wk.write(outputStream);
+            outputStream.flush();
+        } finally {
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        }
     }
 }

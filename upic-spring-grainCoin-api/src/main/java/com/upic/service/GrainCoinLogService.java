@@ -6,6 +6,8 @@ import com.upic.dto.IntegralOperateLogInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/6.
  */
@@ -26,6 +28,8 @@ public interface GrainCoinLogService {
      * @return
      */
     Page<GrainCoinLogInfo> searchPrizeByCondition(GrainCoinLogCondition grainCoinLogCondition, Pageable pageable);
+
+    List<Object> exportGrainCoinLog(GrainCoinLogCondition condition);
 
     /**
      * 奖品兑换
