@@ -5,13 +5,11 @@ import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.upic.condition.OperatorCondition;
 import com.upic.condition.ResourceCondition;
 import com.upic.condition.RoleCondition;
-import com.upic.dto.OperateLogInfo;
-import com.upic.dto.OperatorInfo;
-import com.upic.dto.ResourceInfo;
-import com.upic.dto.RoleInfo;
+import com.upic.dto.*;
 import com.upic.enums.OperatorStatusEnum;
 import com.upic.service.OperatorService;
 import com.upic.service.ResourceService;
+import com.upic.service.RoleResourceService;
 import com.upic.service.RoleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,9 @@ public class OperatorController {
 
     @Autowired
     private ResourceService resourceService;
+
+    @Autowired
+    private RoleResourceService roleResourceService;
 
     /**
      * 加载操作员
@@ -293,6 +294,23 @@ public class OperatorController {
             return r;
         } catch (Exception e) {
             LOGGER.info("addResource:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 添加角色菜单关系
+     *
+     * @return
+     */
+    @GetMapping("/addRoleResource")
+    @ApiOperation("添加菜单")
+    public String addRoleResource(List<RoleResourceInfo> roleResourceInfoList) {
+        try {
+            String result = roleResourceService.addAll(roleResourceInfoList);
+            return result;
+        } catch (Exception e) {
+            LOGGER.info("addRoleResource:" + e.getMessage());
             return null;
         }
     }
