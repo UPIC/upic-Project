@@ -141,4 +141,22 @@ public class ResourceServiceImpl implements ResourceService {
             return null;
         }
     }
+
+    @Override
+    public List<ResourceInfo> getResourceBySelf(Long id) {
+        List<Resource> resourceList = new ArrayList<>();
+        List<ResourceInfo> resourceInfoList = new ArrayList<>();
+        try {
+            resourceList = resourceRepository.listResourceByRoleId(id);
+            for (Resource resource : resourceList) {
+                ResourceInfo resourceInfo = new ResourceInfo();
+                UpicBeanUtils.copyProperties(resource, resourceInfo);
+                resourceInfoList.add(resourceInfo);
+            }
+            return resourceInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getFirstResourceBySelf：" + e.getMessage());
+            return null;
+        }
+    }
 }

@@ -24,12 +24,13 @@ public class ResourceCondition extends BaseCondition {
 
     private Integer isLeaf; //是否叶子
 
+    private int num;
+
     public ResourceCondition() {
         super();
     }
 
-    public ResourceCondition(String resourceNum, String resourceName, String url, ResourceStatusEnum status, ResourceTypeEnum type, Integer level, Long fatherId, Integer isLeaf) {
-        super();
+    public ResourceCondition(String resourceNum, String resourceName, String url, ResourceStatusEnum status, ResourceTypeEnum type, Integer level, Long fatherId, Integer isLeaf, int num) {
         this.resourceNum = resourceNum;
         this.resourceName = resourceName;
         this.url = url;
@@ -38,6 +39,7 @@ public class ResourceCondition extends BaseCondition {
         this.level = level;
         this.fatherId = fatherId;
         this.isLeaf = isLeaf;
+        this.num = num;
     }
 
     public String getResourceNum() {
@@ -102,5 +104,13 @@ public class ResourceCondition extends BaseCondition {
 
     public void setIsLeaf(Integer isLeaf) {
         this.isLeaf = isLeaf;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }

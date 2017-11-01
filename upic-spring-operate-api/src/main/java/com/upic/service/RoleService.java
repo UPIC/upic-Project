@@ -5,6 +5,8 @@ import com.upic.dto.RoleInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/7.
  */
@@ -48,4 +50,12 @@ public interface RoleService {
      * @param roleId
      */
     void deleteRole(long roleId);
+
+    /**
+     * 根据工号查找角色
+     *
+     * @param userNum
+     * @return
+     */
+    List<RoleInfo> getRoleByJobNum(String userNum);
 }

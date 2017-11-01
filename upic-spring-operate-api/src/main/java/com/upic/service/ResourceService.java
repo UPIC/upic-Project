@@ -75,4 +75,11 @@ public interface ResourceService {
      * @return
      */
     List<ResourceInfo> listResourceByRoleId(long roleId);
+
+    /**
+     * 根据角色ID查找level为1的菜单列表
+     * @param id
+     * @return
+     */
+    List<ResourceInfo> getResourceBySelf(Long id);
 }
