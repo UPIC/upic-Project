@@ -34,13 +34,20 @@ public interface RoleResourceService {
      * @param roleResourceInfo
      */
     void deleteRoleResource(RoleResourceInfo roleResourceInfo);
-    
+
     /**
      * 查询角色资源关系（条件）
      *
      * @param roleResourceCondition
-     * @param pageable
      * @return
      */
     List<RoleResourceInfo> findAll(RoleResourceCondition roleResourceCondition);
+
+    /**
+     * 添加角色资源关系
+     *
+     * @param roleResourceInfoList
+     * @return
+     */
+    String addAll(List<RoleResourceInfo> roleResourceInfoList);
 }
