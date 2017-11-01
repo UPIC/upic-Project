@@ -1,6 +1,7 @@
 var data2Url = "/operator/searchRole";
 var changeRoleInfoUrl = "";
 var deleteRoleUrl = "";
+var updateRoleResourceRelationUrl = "/operator/updateRoleResourceRelation"
 var pageSize2 = 0;
 var totalPages2 = -1;
 var pageNum2 = 0;
@@ -163,9 +164,11 @@ function deleteRole(num) {
 /** *****************************************分配权限*************************************************** */
 var allResource = "";
 var roleResource = "";
+var roleId = "";
 var arryNodes = new Array();
-function fenPeiQuanXian(roleId) {
-	getAllResource(1, roleId, getAllResourceUrl);
+function fenPeiQuanXian(roleIds) {
+	getAllResource(1, roleIds, getAllResourceUrl);
+	roleId = roleIds;
 }
 
 function getAllResource(type, roleId, url) {
@@ -190,23 +193,26 @@ function getAllResource(type, roleId, url) {
 
 function cleanUpZtree() {
 	var setting = {
-			check : {
+		check : {
+			enable : true
+		},
+		data : {
+			key : {
+				title : "title"
+			},
+			simpleData : {
 				enable : true
-			},
-			data : {
-				key : {
-					title : "title"
-				},
-				simpleData : {
-					enable : true
-				}
-			},
-			callback : {
-				onCheck: onCheck
 			}
-		};
-		setting.check.chkboxType = { "Y" : "ps", "N" : "ps" };
-		arryNodes=new Array();
+		},
+		callback : {
+			onCheck : onCheck
+		}
+	};
+	setting.check.chkboxType = {
+		"Y" : "ps",
+		"N" : "ps"
+	};
+	arryNodes = new Array();
 	for (var i = 0; i < allResource.length; i++) {
 		var zNode = new Object();
 		zNode.id = allResource[i].id;
@@ -215,6 +221,7 @@ function cleanUpZtree() {
 		zNode.isParent = isLeaf(allResource[i].isLeaf);
 
 		zNode.myId = allResource[i].id;
+		zNode.resourceNum = allResource[i].resourceNum;
 		zNode.resourceName = allResource[i].resourceName;
 		zNode.url = allResource[i].url;
 		zNode.status = allResource[i].status;
@@ -240,6 +247,10 @@ function cleanUpZtree() {
 }
 function isLeaf(leaf) {
 	return (leaf == 0 ? true : false);
+}
+
+function isParent(parent) {
+	return parent ? 0 : 1;
 }
 
 function onCheck(e, treeId, treeNode) {
@@ -301,7 +312,29 @@ function hideNodes() {
 	setTitle();
 	count();
 }
-$("#saveRoleResource").click(function(){
+$("#saveRoleResource").click(function() {
 	var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
 	var nodes = treeObj.getCheckedNodes(true);
+	var newNodes = new Array();
+	
+	for(var i = 0; i < nodes.length; i++) {
+		var newNode = new Object();
+		newNode.roleId = roleId;
+		newNode.resourceNum = nodes[i].resourceNum;
+		newNodes.push(newNode);
+	}
+	var jsonStr=JSON.stringify(newNodes);
+	var requestData=new Object();
+	requestData.roleId=roleId;
+	requestData.roleResourceInfoList=jsonStr;
+	commonAjax(updateRoleResourceRelationUrl,requestData,"nodeUpdateRelation","POST")
 });
+
+function nodeUpdateRelation(data){
+	if(data==="SUCCESS"){
+		alert("更新成功");
+		window.location.reload();
+	}else{
+		alert("更新失败请重试");
+	}
+}

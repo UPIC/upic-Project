@@ -2,6 +2,7 @@ package com.upic.controller;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.alibaba.fastjson.JSONArray;
 import com.upic.condition.OperatorCondition;
 import com.upic.condition.ResourceCondition;
 import com.upic.condition.RoleCondition;
@@ -17,6 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -303,11 +307,18 @@ public class OperatorController {
      *
      * @return
      */
-    @GetMapping("/addRoleResource")
-    @ApiOperation("添加菜单")
-    public String addRoleResource(List<RoleResourceInfo> roleResourceInfoList) {
-        try {
-            String result = roleResourceService.addAll(roleResourceInfoList);
+	@PostMapping("/updateRoleResourceRelation")
+    @ApiOperation("更新角色菜单关系列表")
+    public String updateRoleResourceRelation(  String roleResourceInfoList, long roleId) {
+		List<RoleResourceInfo> parseArray = JSONArray.parseArray(roleResourceInfoList,RoleResourceInfo.class);
+    	List<RoleResourceInfo> beforeRoleResourceInfoList = null;
+    	String result = "ERROR";
+    	try {
+        	if(roleResourceInfoList!=null && !roleResourceInfoList.isEmpty()) {
+        		beforeRoleResourceInfoList = roleResourceService.getByRoleId(roleId);
+        		result = roleResourceService.updateRoleResource(parseArray,beforeRoleResourceInfoList);
+        	}
+            
             return result;
         } catch (Exception e) {
             LOGGER.info("addRoleResource:" + e.getMessage());
