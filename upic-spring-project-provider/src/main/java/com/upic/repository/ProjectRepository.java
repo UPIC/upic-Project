@@ -35,4 +35,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
     List<Project> getByGuidanceNum(String guidanceNum);
 
     Page<Project> getProjectByGuidanceNum(String guidanceNum, Pageable pageable);
+
+    @Query(value = "select project from Project project where project.guidanceNum = ?1")
+    List<Project> exportProjectByGuidanceNum(String guidanceNum);
+
+    @Query(value = "select project from Project project where project.guidanceNum = ?1 and (project.projectNum like %?2% or project.projectName like %?2% or project.guidanceMan like %?2%)")
+    List<Project> exportProjectSearchBar(String userNum, String keyword);
 }

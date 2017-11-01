@@ -35,98 +35,98 @@ import com.upic.social.user.SocialUsers;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService, SocialUserDetailsService {
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	private RoleCheckStatusService roleCheckStatusService;
+    @Autowired
+    private RoleCheckStatusService roleCheckStatusService;
 
-	@Autowired
-	private ProjectCategoryService projectCategoryService;
+    @Autowired
+    private ProjectCategoryService projectCategoryService;
 
-	// @Autowired
-	// private RoleService roleService;
+    // @Autowired
+    // private RoleService roleService;
 
-	@Autowired
-	private OperatorRoleService operatorRoleService;
+    @Autowired
+    private OperatorRoleService operatorRoleService;
 
-	@Autowired
-	private RoleResourceService roleResourceService;
+    @Autowired
+    private RoleResourceService roleResourceService;
 
-	@Autowired
-	private OperatorService operatorService;
+    @Autowired
+    private OperatorService operatorService;
 
-	@Autowired
-	private ResourceService resourceService;
+    @Autowired
+    private ResourceService resourceService;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return loadUserByUserId(username);
-	}
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return loadUserByUserId(username);
+    }
 
-	@Override
-	public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
-		UserInfo userInfo = userService.getUserByUserNum(userId);
-		OperatorRoleCondition operatorRoleCondition = new OperatorRoleCondition();
+    @Override
+    public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
+        UserInfo userInfo = userService.getUserByUserNum(userId);
+        OperatorRoleCondition operatorRoleCondition = new OperatorRoleCondition();
 
-		RoleResourceCondition roleResourceCondition = new RoleResourceCondition();
+        RoleResourceCondition roleResourceCondition = new RoleResourceCondition();
 
-		ResourceCondition resourceCondition = new ResourceCondition();
+        ResourceCondition resourceCondition = new ResourceCondition();
 
-		if (userInfo == null) {
-			throw new UsernameNotFoundException("用户名不存在，请联系管理员！");
-		}
+        if (userInfo == null) {
+            throw new UsernameNotFoundException("用户名不存在，请联系管理员！");
+        }
 
-		operatorRoleCondition.setJobNum(userInfo.getUserNum());
+        operatorRoleCondition.setJobNum(userInfo.getUserNum());
 
-		OperatorInfo o = operatorService.getByJobNum(userInfo.getUserNum());
+        OperatorInfo o = operatorService.getByJobNum(userInfo.getUserNum());
 
-		List<GrantedAuthority> createAuthorityList = null;
+        List<GrantedAuthority> createAuthorityList = null;
 
-		// 加载所有菜单角色资源
-		List<RoleResourceInfo> listAll = new ArrayList<RoleResourceInfo>();
+        // 加载所有菜单角色资源
+        List<RoleResourceInfo> listAll = new ArrayList<RoleResourceInfo>();
 
-		// 准备审批字段
-		List<String> checkList = new ArrayList<String>();
+        // 准备审批字段
+        List<String> checkList = new ArrayList<String>();
 
-		// 所有的菜單
-		List<ResourceInfo> resourceList = new ArrayList<ResourceInfo>();
+        // 所有的菜單
+        List<ResourceInfo> resourceList = new ArrayList<ResourceInfo>();
 
-		// 获取所有项目类别
-		List<String> categoryName = new ArrayList<String>();
+        // 获取所有项目类别
+        List<String> categoryName = new ArrayList<String>();
 
-		createAuthorityList = AuthorityUtils.createAuthorityList("/*");
-		// 用户基本身份类别
-		UserTypeEnum u = userInfo.getType().equals(UserTypeEnum.STUDENT) ? UserTypeEnum.STUDENT : UserTypeEnum.TEACHER;
-		Page<OperatorRoleInfo> searchOperatorRole = operatorRoleService.searchOperatorRole(operatorRoleCondition,
-				new PageRequest(1, 150));
-		initData(searchOperatorRole, listAll, roleResourceCondition, resourceCondition, resourceList, checkList,
-				categoryName, o, u);
-		return new SocialUsers(userId, "", createAuthorityList, userInfo.getUsername(), userInfo.getCollege(),
-				userInfo.getMajor(), checkList, categoryName, resourceList);
-	}
+        createAuthorityList = AuthorityUtils.createAuthorityList("/*");
+        // 用户基本身份类别
+        UserTypeEnum u = userInfo.getType().equals(UserTypeEnum.STUDENT) ? UserTypeEnum.STUDENT : UserTypeEnum.TEACHER;
+        Page<OperatorRoleInfo> searchOperatorRole = operatorRoleService.searchOperatorRole(operatorRoleCondition,
+                new PageRequest(1, 150));
+        initData(searchOperatorRole, listAll, roleResourceCondition, resourceCondition, resourceList, checkList,
+                categoryName, o, u);
+        return new SocialUsers(userId, "", createAuthorityList, userInfo.getUsername(), userInfo.getCollege(),
+                userInfo.getMajor(), checkList, categoryName, resourceList);
+    }
 
-	private void initData(Page<OperatorRoleInfo> searchOperatorRole, List<RoleResourceInfo> listAll,
-			RoleResourceCondition roleResourceCondition, ResourceCondition resourceCondition,
-			List<ResourceInfo> resourceList, List<String> checkList, List<String> categoryName, OperatorInfo o,
-			UserTypeEnum u) {
-		// 根据角色ID找出所有菜单 foreach
-		searchOperatorRole.getContent().stream().parallel().forEach(x -> {
-			// 根据角色id找出资源
-			roleResourceCondition.setRoleId(x.getRoleId());
-			listAll.addAll(roleResourceService.findAll(roleResourceCondition));
-			if (u.equals(UserTypeEnum.TEACHER)) {
-				// 所有审批状态
-				checkList.addAll(roleCheckStatusService.getCheckStatusEnumName(x.getRoleId()));
-			}
-		});
-		listAll.stream().parallel().forEach(x -> {
-			resourceCondition.setResourceNum(x.getResourceNum());
-			resourceList.addAll(resourceService.listResource(resourceCondition));
-		});
-		if (u.equals(UserTypeEnum.TEACHER)) {
-			// 获取所有项目类别
-			categoryName = projectCategoryService.getCategoryNameBySubordinateSectorOtherName(o.getCollegeOtherName());
-		}
-	}
+    private void initData(Page<OperatorRoleInfo> searchOperatorRole, List<RoleResourceInfo> listAll,
+                          RoleResourceCondition roleResourceCondition, ResourceCondition resourceCondition,
+                          List<ResourceInfo> resourceList, List<String> checkList, List<String> categoryName, OperatorInfo o,
+                          UserTypeEnum u) {
+        // 根据角色ID找出所有菜单 foreach
+        searchOperatorRole.getContent().stream().parallel().forEach(x -> {
+            // 根据角色id找出资源
+            roleResourceCondition.setRoleId(x.getRoleId());
+            listAll.addAll(roleResourceService.findAll(roleResourceCondition));
+            if (u.equals(UserTypeEnum.TEACHER)) {
+                // 所有审批状态
+                checkList.addAll(roleCheckStatusService.getCheckStatusEnumName(x.getRoleId()));
+            }
+        });
+        listAll.stream().parallel().forEach(x -> {
+            resourceCondition.setResourceNum(x.getResourceNum());
+            resourceList.addAll(resourceService.listResource(resourceCondition));
+        });
+        if (u.equals(UserTypeEnum.TEACHER)) {
+            // 获取所有项目类别
+            categoryName = projectCategoryService.getCategoryNameBySubordinateSectorOtherName(o.getCollegeOtherName());
+        }
+    }
 }

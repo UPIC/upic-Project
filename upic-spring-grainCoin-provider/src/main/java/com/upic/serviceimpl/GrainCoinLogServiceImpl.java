@@ -5,9 +5,7 @@ import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
 import com.upic.condition.GrainCoinLogCondition;
 import com.upic.dto.GrainCoinLogInfo;
-import com.upic.dto.PrizeInfo;
 import com.upic.po.GrainCoinLog;
-import com.upic.po.Prize;
 import com.upic.repository.GrainCoinLogRepository;
 import com.upic.repository.PrizeRepository;
 import com.upic.repository.Spec.GrainCoinLogSpec;
@@ -19,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("grainCoinLogService")
@@ -31,6 +30,7 @@ public class GrainCoinLogServiceImpl implements GrainCoinLogService {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(GrainCoinLogServiceImpl.class);
 
+    @Override
     public double watchGrainCoin(String userNum) {
         try {
             return grainCoinLogRepository.findByUserNum(userNum);
@@ -40,6 +40,7 @@ public class GrainCoinLogServiceImpl implements GrainCoinLogService {
         }
     }
 
+    @Override
     public Page<GrainCoinLogInfo> searchPrizeByCondition(GrainCoinLogCondition grainCoinLogCondition, Pageable pageable) {
         Page<GrainCoinLog> grainCoinLogs = null;
         try {
@@ -54,6 +55,27 @@ public class GrainCoinLogServiceImpl implements GrainCoinLogService {
             LOGGER.info("searchPrizeByCondition:批量查看素拓记录失败。错误信息：" + e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<Object> exportGrainCoinLog(GrainCoinLogCondition condition) {
+        List<GrainCoinLog> grainCoinLogs = new ArrayList<>();
+        try {
+            grainCoinLogs = grainCoinLogRepository.findAll(new GrainCoinLogSpec(condition));
+            return toObject(grainCoinLogs);
+        } catch (Exception e) {
+            LOGGER.info("exportGrainCoinLog:批量查看素拓记录失败。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
+
+    static public <E> List<Object> toObject(List<E> list) {
+        List<Object> objlist = new ArrayList<Object>();
+        for (Object e : list) {
+            Object obj = (Object) e;
+            objlist.add(obj);
+        }
+        return objlist;
     }
 
 //    public GrainCoinLogInfo exchangePrize(long prizeId, GrainCoinLogInfo grainCoinLogInfo) {

@@ -7,6 +7,7 @@ import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import com.upic.service.*;
 
+//import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
@@ -475,13 +476,9 @@ public class StudetAllController {
     /*****************************************导入导出*****************************************/
 
     private UserInfo getUser() {
-        // Authentication authentication =
-        // SecurityContextHolder.getContext().getAuthentication();
-        // SocialUser so=(SocialUser) authentication.getPrincipal();
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("山鸡");
-        userInfo.setUserNum("1522110240");
-        userInfo.setPic("assets/i/shanji.jpg");
+        String userNum = "1522110240";
+//        String userNum = UserUtils.getUser().getUserId();
+        UserInfo userInfo = userService.getUserByUserNum(userNum);
         return userInfo;
     }
 

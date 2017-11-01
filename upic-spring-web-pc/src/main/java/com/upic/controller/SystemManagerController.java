@@ -9,6 +9,8 @@ import com.upic.dto.UserInfo;
 import com.upic.service.ConfirmationBasisService;
 import com.upic.service.IntegralLogService;
 import com.upic.service.ProjectService;
+import com.upic.service.UserService;
+//import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +35,9 @@ public class SystemManagerController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private UserService userService;
 
     @ApiOperation("教师获取需要审批的积分申报")
     @GetMapping("/getIntegralLogBySql")
@@ -72,17 +77,9 @@ public class SystemManagerController {
     }
 
     private UserInfo getUser() {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //SocialUser so=(SocialUser) authentication.getPrincipal();
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("山鸡");
-        userInfo.setClazz("15微社交");
-        userInfo.setCollege("信息工程学院");
-        userInfo.setEarnedPoints(8);
-        userInfo.setEarningPoints(10);
-        userInfo.setMajor("计算机科学与技术.社交网络");
-        userInfo.setUserNum("1522110240");
-        userInfo.setPic("assets/i/shanji.jpg");
+        String userNum = "1522110240";
+//        String userNum = UserUtils.getUser().getUserId();
+        UserInfo userInfo = userService.getUserByUserNum(userNum);
         return userInfo;
     }
 }

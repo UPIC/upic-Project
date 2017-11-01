@@ -5,6 +5,7 @@ import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.upic.condition.OperatorCondition;
 import com.upic.condition.ResourceCondition;
 import com.upic.condition.RoleCondition;
+import com.upic.dto.OperateLogInfo;
 import com.upic.dto.OperatorInfo;
 import com.upic.dto.ResourceInfo;
 import com.upic.dto.RoleInfo;

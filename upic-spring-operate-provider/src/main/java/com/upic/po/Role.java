@@ -15,6 +15,8 @@ import javax.persistence.*;
 public class Role extends BaseEntity {
     private String roleName; //角色名
 
+    private String content; //角色描述
+
     @Enumerated(EnumType.STRING)
     private RoleStatusEnum status; //角色状态
 

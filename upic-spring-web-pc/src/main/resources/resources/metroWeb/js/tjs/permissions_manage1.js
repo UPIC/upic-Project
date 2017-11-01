@@ -1,47 +1,87 @@
-var data1Url = "";
+var data1Url = "/operator/searchOperator";
 var chakanUrl = "";
 var xiugaiUrl = "";
 var shezhimimaUrl = "";
 var dongjieUrl = "";
 var saveUserInfoUrl = "";
 var saveUserStatusUrl = "";
-var pageSize = 0;
-var totalPages = -1;
-var pageNum = 0;
-var requestData = {};
+var pageSize1 = 0;
+var totalPages1 = -1;
+var pageNum1 = 0;
+var requestData1 = {};
 
 $(function () {
-    pageSize = $("#select-small").children('option:selected').text()
-    getData(pageNum, data1Url);
-    registSelect(userType);
-    registSelect(userStatus);
+    pageSize1 = $("#select-small3").children('option:selected').text();
+    getData1(pageNum1, data1Url);
+    registSelect("userType");
+    registSelect("userStatus");
 })
 
-function addHtmls(datas, pageNum) {
+//ajax获取页面内容
+function getData1(pageNum1, data1Url, pageSize1) {
+    requestData1.size = parseInt($("#select-small3").children('option:selected')
+        .text());
+    requestData1.page = pageNum1;
+    $.ajax({
+        type: "GET",
+        url: data1Url,
+        data: requestData1,
+        beforeSend: function (XMLHttpRequest) {
+        },
+        success: function (result) {
+            if (result != "" && result != null) {
+                addHtmls1(result, pageNum1, requestData1);
+            }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+        },
+        error: function () {
+        }
+    });
+}
+
+
+function getCaoZuoYuan() {
+    pageSize1 = $("#select-small3").children('option:selected').text();
+    getData1(pageNum1, data1Url);
+    registSelect("userType");
+    registSelect("userStatus");
+}
+
+function addHtmls1(datas) {
     totalPages = datas.totalElements;
     var data = datas.content;
     var htmls = "";
     for (var i = 0; i < data.length; i++) {
-        htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].userNum + "'/></td>";
-        htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
-        htmls += "<td>" + data[i].userNum + "</td>";
-        htmls += "<td>" + data[i].userName + "</td>";
-        htmls += "<td>" + data[i].userStatus + "</td>";
-        htmls += "<td>" + data[i].userType + "</td>";
+        htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].jobNum + "'/></td>";
+        htmls += "<td class='center_td'>" + (parseInt(pageNum1) * parseInt(pageSize1) + i + 1) + "</td>";
+        htmls += "<td>" + data[i].jobNum + "</td>";
+        htmls += "<td>" + data[i].username + "</td>";
+        if (data[i].status === "FROZE") {
+            htmls += "<td>冻结</td>";
+        } else {
+            htmls += "<td>正常</td>";
+        }
+        if (data[i].type === 0) {
+            htmls += "<td>学生</td>";
+        } else {
+            htmls += "<td>教师</td>";
+        }
+        // htmls += "<td>" + data[i].type + "</td>";
         htmls += "<td>";
         htmls += "<div class='message_di'>";
-        htmls += "<a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + chakanUrl + "','userNum=" + data[i].userNum + "','chakan','GET')>【查看】</span></a>";
+        htmls += "<a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + chakanUrl + "','userNum=" + data[i].jobNum + "','chakan','GET')>【查看】</span></a>";
         htmls += "<span class='space'>|</span>";
-        htmls += "<a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + chakanUrl + "','userNum=" + data[i].userNum + "','xiugai','GET')>【修改】</span></a>";
+        htmls += "<a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + chakanUrl + "','userNum=" + data[i].jobNum + "','xiugai','GET')>【修改】</span></a>";
         htmls += "<span class='space'>|</span>";
-        htmls += "<a href='#mymodal' data-toggle='modal'><span onclick=shezhimima(" + data[i].userNum + "," + data[i].userName + ")>【重置密码】</span></a>";
+        htmls += "<a href='#mymodal' data-toggle='modal'><span onclick=shezhimima(" + data[i].jobNum + "," + data[i].username + ")>【重置密码】</span></a>";
         htmls += "<span class='space'>|</span>";
-        htmls += "<a href='#mymodal5' data-toggle='modal'><sapn onclick=dongjie(" + data[i].userNum + "," + data[i].userName + ")>【冻结】</sapn></a>";
+        htmls += "<a href='#mymodal5' data-toggle='modal'><sapn onclick=dongjie(" + data[i].jobNum + "," + data[i].username + ")>【冻结】</sapn></a>";
         htmls += "</div></td>";
         htmls += "</tr>";
     }
-    $("#data").html(htmls);
-    page(datas, data1Url, datas.size, datas.number);
+    $("#data1").html(htmls);
+    page1(datas, data1Url, datas.size, datas.number);
 }
 
 function chakan(data) {
