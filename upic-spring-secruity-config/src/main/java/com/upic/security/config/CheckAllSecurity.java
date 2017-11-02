@@ -16,8 +16,9 @@ import org.springframework.stereotype.Component;
 @Component("checkAllSecurity")
 public class CheckAllSecurity {
 
-	private final List<String> staticUrl=Arrays.asList("/metroWeb/css/","/metroWeb/js/","/metroWeb/img/","/metroWeb/others/");
-	
+	private final List<String> staticUrl = Arrays.asList("/metroWeb/css/", "/metroWeb/js/", "/metroWeb/img/",
+			"/metroWeb/others/");
+
 	public boolean check(Authentication authentication, HttpServletRequest request) {
 		if (authentication == null) {
 			return false;
@@ -28,18 +29,21 @@ public class CheckAllSecurity {
 		Object principal = authentication.getPrincipal();
 
 		if (principal != null && principal instanceof UserDetails) {
+
 			Collection<? extends GrantedAuthority> authorities = ((UserDetails) principal).getAuthorities();
 			for (GrantedAuthority g : authorities) {
-			
+				if (g.getAuthority().startsWith("/*")) {
+					return true;
+				}
 				if (request.getRequestURI().startsWith(g.getAuthority())) {
 					return true;
 				}
 			}
 			for (String g : staticUrl) {
-			if(request.getRequestURI().startsWith(g)) {
-				return true;
-			}
-			System.out.println("sorry!");
+				if (request.getRequestURI().startsWith(g)) {
+					return true;
+				}
+				System.out.println("sorry!");
 			}
 		}
 

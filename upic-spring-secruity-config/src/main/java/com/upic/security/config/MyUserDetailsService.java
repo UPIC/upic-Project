@@ -104,8 +104,8 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         // 获取所有项目类别
         List<String> categoryName = new ArrayList<String>();
 
-//        createAuthorityList = AuthorityUtils.createAuthorityList("/*");
-        createAuthorityList = AuthorityUtils.createAuthorityList("/operator/searchRole","/operator/listResource","/operator/listResourceByRoleId","/metroWeb/html/teacher/permissions_manager.html");
+        createAuthorityList = AuthorityUtils.createAuthorityList("/*");
+//        createAuthorityList = AuthorityUtils.createAuthorityList("/operator/searchRole","/operator/listResource","/operator/listResourceByRoleId","/metroWeb/html/teacher/permissions_manager.html");
         // 用户基本身份类别
         UserTypeEnum u = userInfo.getType().equals(UserTypeEnum.STUDENT) ? UserTypeEnum.STUDENT : UserTypeEnum.TEACHER;
         Page<OperatorRoleInfo> searchOperatorRole = operatorRoleService.searchOperatorRole(operatorRoleCondition,
@@ -136,11 +136,11 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
             checkList.addAll(roleCheckStatusService.getCheckStatusEnumName(x.getRoleId()));
             
         });
-        listAll.stream().parallel().forEach(x -> {
+        listAll.stream().forEach(x -> {
             resourceCondition.setResourceNum(x.getResourceNum());
             resourceList.addAll(resourceService.listResource(resourceCondition));
         });
-        if (u.equals(UserTypeEnum.TEACHER)) {
+        if (u.equals(UserTypeEnum.TEACHER)&& o!=null) {
             // 获取所有项目类别
             categoryName = projectCategoryService.getCategoryNameBySubordinateSectorOtherName(o.getCollegeOtherName());
         }

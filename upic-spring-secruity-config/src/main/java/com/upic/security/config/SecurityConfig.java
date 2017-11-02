@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		SpringSocialConfigurer configurer = new SpringSocialConfigurer();
 		configurer.signupUrl("/casgo");
-		http.httpBasic().and().formLogin()
+		http.httpBasic().and().headers().disable().formLogin()
 //		.loginPage("/login.html")
 		.usernameParameter("user").passwordParameter("pass")
 				.successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)

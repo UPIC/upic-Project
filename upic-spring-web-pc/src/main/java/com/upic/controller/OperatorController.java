@@ -9,6 +9,9 @@ import com.upic.condition.RoleCondition;
 import com.upic.dto.*;
 import com.upic.enums.OperatorStatusEnum;
 import com.upic.service.*;
+import com.upic.social.user.SocialUsers;
+import com.upic.utils.UserUtils;
+
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -349,13 +352,8 @@ public class OperatorController {
     @ApiOperation("获取自己的菜单列表")
     public List<ResourceInfo> getResourceBySelf() {
         try {
-            List<RoleInfo> roleInfoList = roleService.getRoleByJobNum(getUser().getUserNum());
-            List<ResourceInfo> resourceInfoList = new ArrayList<>();
-            for (RoleInfo roleInfo : roleInfoList) {
-                List<ResourceInfo> resourceInfos = resourceService.getResourceBySelf(roleInfo.getId());
-                resourceInfoList.addAll(resourceInfos);
-            }
-            return resourceInfoList;
+            List<ResourceInfo> resourceList = getUser().getResourceList();
+            return resourceList;
         } catch (Exception e) {
             LOGGER.info("getResourceBySelf:" + e.getMessage());
             return null;
@@ -365,10 +363,10 @@ public class OperatorController {
 //    @GetMapping
 //    @ApiOperation("删除菜单")
 
-    private UserInfo getUser() {
-        String userNum = "1522110240";
-//        String userNum = UserUtils.getUser().getUserId();
-        UserInfo userInfo = userService.getUserByUserNum(userNum);
-        return userInfo;
+    private SocialUsers getUser() {
+//        String userNum = "1522110240";
+        SocialUsers user= UserUtils.getUser();
+//        UserInfo userInfo = userService.getUserByUserNum(userNum);
+        return user;
     }
 }
