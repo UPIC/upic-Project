@@ -108,7 +108,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<ResourceInfo> listResource(ResourceCondition resourceCondition) {
-        List<Resource> resourceList;
+        List<Resource> resourceList = null;
         List<ResourceInfo> resourceInfoList = new ArrayList<>();
         try {
             resourceList = resourceRepository.findAll(new ResourceSpec(resourceCondition));
