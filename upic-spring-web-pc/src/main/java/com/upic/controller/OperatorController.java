@@ -230,6 +230,24 @@ public class OperatorController {
     /**
      * 加载菜单列表
      *
+     * @param resourceCondition
+     * @return
+     */
+    @GetMapping("/listAllResource")
+    @ApiOperation("加载菜单列表")
+    public List<ResourceInfo> listAllResource(ResourceCondition resourceCondition) {
+        try {
+            List<ResourceInfo> resourceInfoList = resourceService.listResource(resourceCondition);
+            return resourceInfoList;
+        } catch (Exception e) {
+            LOGGER.info("listResource:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 加载菜单列表
+     *
      * @return
      */
     @GetMapping("/listResourceByRoleId")
