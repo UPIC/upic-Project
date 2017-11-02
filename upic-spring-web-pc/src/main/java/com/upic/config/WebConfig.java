@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.neusoft.education.tp.sso.client.filter.DefaultCASFilter;
 import com.upic.interceptor.WebHandlerInteceptor;
 import com.upic.listener.StartListener;
 
@@ -27,17 +29,20 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		super.addInterceptors(registry);
 	}
 
-//	@Bean
-//	public FilterRegistrationBean charEnconding() {
-//		FilterRegistrationBean filter = new FilterRegistrationBean();
-//		CharacterEncodingFilter cf = new CharacterEncodingFilter("UTF-8");
-//		filter.setFilter(cf);
-//		List<String> urls = new ArrayList<String>();
-//		urls.add("/*");
-//		filter.setUrlPatterns(urls);
-//		return filter;
-//
-//	}
+	/**
+	 * 学校CAS认证过滤器
+	 * @return
+	 */
+	@Bean
+	public FilterRegistrationBean cas() {
+		FilterRegistrationBean filter = new FilterRegistrationBean();
+		DefaultCASFilter cf = new DefaultCASFilter();
+		filter.setFilter(cf);
+		List<String> urls = new ArrayList<>();
+		urls.add("/cas");
+		filter.setUrlPatterns(urls);
+		return filter;
+	}
 
 	@Bean
 	public ServletListenerRegistrationBean servletListenerRegistrationBean() {
@@ -45,5 +50,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		servletListenerRegistrationBean.setListener(new StartListener());
 		return servletListenerRegistrationBean;
 	}
-
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//	    registry.addResourceHandler("/metroWeb/css/**","/metroWeb/js/**","/metroWeb/img/**","/metroWeb/others/**")
+//	            .addResourceLocations("classpath:/metroWeb/");
+//	}
 }

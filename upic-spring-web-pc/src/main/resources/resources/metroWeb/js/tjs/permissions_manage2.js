@@ -229,8 +229,9 @@ function cleanUpZtree() {
 		zNode.level = allResource[i].level;
 		zNode.myFatherId = allResource[i].fatherId;
 		for (var j = 0; j < roleResource.length; j++) {
-			allResource[i].id = roleResource[j].id;
+			if(allResource[i].id == roleResource[j].id){
 			zNode.checked = true;
+		}
 		}
 		zNode.open = true;
 		arryNodes.push(zNode);

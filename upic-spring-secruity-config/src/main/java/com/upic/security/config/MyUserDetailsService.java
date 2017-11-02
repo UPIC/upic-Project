@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import com.upic.condition.RoleResourceCondition;
 import com.upic.dto.OperatorInfo;
 import com.upic.dto.OperatorRoleInfo;
 import com.upic.dto.ResourceInfo;
+import com.upic.dto.RoleInfo;
 import com.upic.dto.RoleResourceInfo;
 import com.upic.dto.UserInfo;
 import com.upic.enums.UserTypeEnum;
@@ -30,6 +32,7 @@ import com.upic.service.ProjectCategoryService;
 import com.upic.service.ResourceService;
 import com.upic.service.RoleCheckStatusService;
 import com.upic.service.RoleResourceService;
+import com.upic.service.RoleService;
 import com.upic.service.UserService;
 import com.upic.social.user.SocialUsers;
 
@@ -44,8 +47,8 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
     @Autowired
     private ProjectCategoryService projectCategoryService;
 
-    // @Autowired
-    // private RoleService roleService;
+     @Autowired
+     private RoleService roleService;
 
     @Autowired
     private OperatorRoleService operatorRoleService;
@@ -66,6 +69,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
 
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
+    	BCryptPasswordEncoder b=new BCryptPasswordEncoder();
         UserInfo userInfo = userService.getUserByUserNum(userId);
         OperatorRoleCondition operatorRoleCondition = new OperatorRoleCondition();
 
@@ -76,6 +80,11 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         if (userInfo == null) {
             throw new UsernameNotFoundException("用户名不存在，请联系管理员！");
         }
+        RoleInfo roleByalins =null;
+//        if(userInfo.getType().equals(UserTypeEnum.STUDENT)) {
+        	//加入别名
+        	roleByalins=roleService.getRoleByalins(userInfo.getType().name());
+//        }
 
         operatorRoleCondition.setJobNum(userInfo.getUserNum());
 
@@ -95,30 +104,37 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         // 获取所有项目类别
         List<String> categoryName = new ArrayList<String>();
 
-        createAuthorityList = AuthorityUtils.createAuthorityList("/*");
+//        createAuthorityList = AuthorityUtils.createAuthorityList("/*");
+        createAuthorityList = AuthorityUtils.createAuthorityList("/operator/searchRole","/operator/listResource","/operator/listResourceByRoleId","/metroWeb/html/teacher/permissions_manager.html");
         // 用户基本身份类别
         UserTypeEnum u = userInfo.getType().equals(UserTypeEnum.STUDENT) ? UserTypeEnum.STUDENT : UserTypeEnum.TEACHER;
         Page<OperatorRoleInfo> searchOperatorRole = operatorRoleService.searchOperatorRole(operatorRoleCondition,
                 new PageRequest(1, 150));
         initData(searchOperatorRole, listAll, roleResourceCondition, resourceCondition, resourceList, checkList,
-                categoryName, o, u);
-        return new SocialUsers(userId, "", createAuthorityList, userInfo.getUsername(), userInfo.getCollege(),
+                categoryName, o, u,roleByalins);
+        return new SocialUsers(userId, b.encode(userId), createAuthorityList, userInfo.getUsername(), userInfo.getCollege(),
                 userInfo.getMajor(), checkList, categoryName, resourceList);
     }
 
     private void initData(Page<OperatorRoleInfo> searchOperatorRole, List<RoleResourceInfo> listAll,
                           RoleResourceCondition roleResourceCondition, ResourceCondition resourceCondition,
                           List<ResourceInfo> resourceList, List<String> checkList, List<String> categoryName, OperatorInfo o,
-                          UserTypeEnum u) {
+                          UserTypeEnum u, RoleInfo roleByalins) {
+    	
+    		//老师或者学生获取共同资源
+    	 roleResourceCondition.setRoleId(roleByalins.getId());
+         listAll.addAll(roleResourceService.findAll(roleResourceCondition));
+         
+         
         // 根据角色ID找出所有菜单 foreach
         searchOperatorRole.getContent().stream().parallel().forEach(x -> {
             // 根据角色id找出资源
             roleResourceCondition.setRoleId(x.getRoleId());
             listAll.addAll(roleResourceService.findAll(roleResourceCondition));
-            if (u.equals(UserTypeEnum.TEACHER)) {
-                // 所有审批状态
-                checkList.addAll(roleCheckStatusService.getCheckStatusEnumName(x.getRoleId()));
-            }
+            
+            // 所有审批状态
+            checkList.addAll(roleCheckStatusService.getCheckStatusEnumName(x.getRoleId()));
+            
         });
         listAll.stream().parallel().forEach(x -> {
             resourceCondition.setResourceNum(x.getResourceNum());

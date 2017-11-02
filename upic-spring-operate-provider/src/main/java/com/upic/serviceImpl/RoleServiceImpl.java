@@ -107,4 +107,17 @@ public class RoleServiceImpl implements RoleService {
             return null;
         }
     }
+
+	@Override
+	public RoleInfo getRoleByalins(String alinsNum) {
+		 try {
+	            Role role = roleRepository.getRoleByAliasName(alinsNum);
+	            RoleInfo roleInfo = new RoleInfo();
+	            UpicBeanUtils.copyProperties(role, roleInfo);
+	            return roleInfo;
+	        } catch (Exception e) {
+	            LOGGER.info("getRoleByalins:角色查询失败。错误信息：" + e.getMessage());
+	            return null;
+	        }
+	    }
 }

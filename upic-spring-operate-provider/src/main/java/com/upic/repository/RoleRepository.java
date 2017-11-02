@@ -15,4 +15,8 @@ public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificat
 
     @Query(value = "select role from Role role, OperatorRole operatorRole where role.id = operatorRole.roleId and operatorRole.jobNum = ?1")
     List<Role> getRoleByJobNum(String userNum);
+    
+    
+    @Query
+    Role getRoleByAliasName(String aliasName);
 }

@@ -44,7 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		SpringSocialConfigurer configurer = new SpringSocialConfigurer();
 		configurer.signupUrl("/casgo");
-		http.httpBasic().and().formLogin().loginPage("/login.html").usernameParameter("user").passwordParameter("pass")
+		http.httpBasic().and().formLogin()
+//		.loginPage("/login.html")
+		.usernameParameter("user").passwordParameter("pass")
 				.successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)
 				.loginProcessingUrl("/auth").and()
 				// .rememberMe().tokenRepository(persistentTokenRepository()).and()
@@ -56,11 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable()
 				// csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
 				.authorizeRequests()
-				.antMatchers("/connect/**", "/signin", "/login.html", "/login", "/auth", "/session.html",
-						"/index.html", "/auth/**", "/regist.html", "/getRegistUserInfo", "/registUser","/cas","/casgo")
+				.antMatchers("/connect/**",  "/login.html", "/login", "/auth", "/auth/**","/cas","/casgo")
 				.permitAll().anyRequest()
-//				.access("@checkAllSecurity.check(authentication,request)")
-				 .authenticated()
+				.access("@checkAllSecurity.check(authentication,request)")
+//				 .authenticated()
 				.and().apply(configurer);
 	}
 

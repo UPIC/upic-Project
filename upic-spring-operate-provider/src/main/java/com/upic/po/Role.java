@@ -22,4 +22,6 @@ public class Role extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private RoleTypeEnum type; //角色类型
+    
+    private String aliasName; //别名
 }

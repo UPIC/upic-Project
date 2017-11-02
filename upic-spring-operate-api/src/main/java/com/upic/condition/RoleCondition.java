@@ -14,7 +14,18 @@ public class RoleCondition extends BaseCondition {
 
     private RoleTypeEnum type; //角色类型
 
-    public RoleCondition() {
+    private String content;
+    
+    private String aliasName; //英文别名
+    public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public RoleCondition() {
         super();
     }
 
@@ -48,4 +59,13 @@ public class RoleCondition extends BaseCondition {
     public void setType(RoleTypeEnum type) {
         this.type = type;
     }
+
+	public String getAliasName() {
+		return aliasName;
+	}
+
+	public void setAliasName(String aliasName) {
+		this.aliasName = aliasName;
+	}
+    
 }

@@ -58,4 +58,12 @@ public interface RoleService {
      * @return
      */
     List<RoleInfo> getRoleByJobNum(String userNum);
+    
+    /**
+     * 根据别名查找角色
+     *
+     * @param userNum
+     * @return
+     */
+    RoleInfo getRoleByalins(String alinsNum);
 }
