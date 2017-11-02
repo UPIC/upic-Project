@@ -56,6 +56,12 @@
             height: 280px;
             z-index: 11520;
         }
+        .hide2 textarea {
+            width: 90%;
+            margin: 10px 0px 10px 10px;
+            height: 280px;
+            z-index: 11520;
+        }
     </style>
 </head>
 <body class="fixed-top">
@@ -277,8 +283,23 @@
         </div>
     </div>
 </div>
+ <div id="mymodal2" class="modal hide fade" tabindex="-1" role="dialog"
+         aria-labelledby="mymodallabel1" aria-hidden="true">
+<div class="hide2">
+        <div class="modal-header">
 
-
+            <h4>审核不通过原因</h4>
+        </div>
+        <div class="">
+            <textarea name="1" id="notPassCause">111</textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick=notPass()>提交</button>
+            <button class="btn btn-default " data-dismiss="modal" aria-hidden="true">关闭
+            </button>
+        </div>
+    </div>
+    </div>
 <script src="../../js/jquery.nicescroll.js" type="text/javascript"></script>
 <!--    <script src="../../js/bootstrap.min.js"></script> -->
 <script src="../../js/jquery.blockui.js"></script>
@@ -335,7 +356,7 @@
                 '<div class="selectlist selectlist_second"> <select id="ProjectStatus" name="ProjectStatus" style="width: 100%;" class="color-wh"> <option value="4" class="yellow">项目状态筛选...</option> <option value="5">项目类别</option> <option value="6">项目类别</option> </select> </div>');
         $(".selectlist_second")
             .after(
-                '<button class="btn btn-small btn-info">审核通过</button><button class="btn btn-small btn-danger">审核不通过</button>');
+                '<button class="btn btn-small btn-info" id=pass()>审核通过</button><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-danger btn-no">审核不通过</button></a>');
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
             '62.9%');
         $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');

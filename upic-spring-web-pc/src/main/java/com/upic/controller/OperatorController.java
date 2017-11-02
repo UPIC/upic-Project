@@ -9,8 +9,8 @@ import com.upic.condition.RoleCondition;
 import com.upic.dto.*;
 import com.upic.enums.OperatorStatusEnum;
 import com.upic.service.*;
-import com.upic.social.user.SocialUsers;
-import com.upic.utils.UserUtils;
+//import com.upic.social.user.SocialUsers;
+//import com.upic.utils.UserUtils;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -348,25 +346,25 @@ public class OperatorController {
         }
     }
 
-    @GetMapping("/getResourceBySelf")
-    @ApiOperation("获取自己的菜单列表")
-    public List<ResourceInfo> getResourceBySelf() {
-        try {
-            List<ResourceInfo> resourceList = getUser().getResourceList();
-            return resourceList;
-        } catch (Exception e) {
-            LOGGER.info("getResourceBySelf:" + e.getMessage());
-            return null;
-        }
-    }
-
-//    @GetMapping
-//    @ApiOperation("删除菜单")
-
-    private SocialUsers getUser() {
-//        String userNum = "1522110240";
-        SocialUsers user= UserUtils.getUser();
-//        UserInfo userInfo = userService.getUserByUserNum(userNum);
-        return user;
-    }
+//    @GetMapping("/getResourceBySelf")
+//    @ApiOperation("获取自己的菜单列表")
+//    public List<ResourceInfo> getResourceBySelf() {
+//        try {
+//            List<ResourceInfo> resourceList = getUser().getResourceList();
+//            return resourceList;
+//        } catch (Exception e) {
+//            LOGGER.info("getResourceBySelf:" + e.getMessage());
+//            return null;
+//        }
+//    }
+//
+////    @GetMapping
+////    @ApiOperation("删除菜单")
+//
+//    private SocialUsers getUser() {
+////        String userNum = "1522110240";
+//        SocialUsers user= UserUtils.getUser();
+////        UserInfo userInfo = userService.getUserByUserNum(userNum);
+//        return user;
+//    }
 }

@@ -10,6 +10,7 @@ var getGrainCoinUrl = "/stu/getGrainCoin";
 var getGraincoinLogPage = "/common/getGraincoinLogPage";
 var getPrize = "/common/getPrize";
 var getHistoryPrize = "/common/getHistoryPrize";
+var changePrize = "";
 
 $(function () {
     /**
@@ -27,11 +28,6 @@ $(function () {
      * 获取兑换记录
      */
     ajaxs("type=PAYMENT", "duiHuanJiLu", getGraincoinLogPage);
-
-    /**
-     * 获取兑换物品
-     */
-    ajaxs("", "duiHuanWuPin", getPrize);
 
     /**
      * 获取历史物品

@@ -66,7 +66,7 @@ function addHtmls(result, method, j) {
             htmls += "<td>" + result.content[i].integral + "</td>";
             htmls += "<td>" + result.content[i].maximum + "</td>";
             htmls += "<td>" + (result.content[i].integral * result.content[i].maximum) + "</td>";
-            htmls += "<td>" + result.content[i].creatTime + "</td>";
+            htmls += "<td>" + getDate(result.content[i].creatTime, "yyyy-MM-dd") + "</td>";
             htmls += "<td>" + status + "</td>";
             htmls += "<td>";
             htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=ajaxs('projectNum=" + result.content[i].projectNum + "','info','" + getProjectInfo + "','" + (i + 1) + "')>查看详情</div></a></td>";
@@ -130,6 +130,6 @@ function addHtmls(result, method, j) {
 
 function splitJson(json) {
     var projectCategorys = new Array();
-    projectCategorys = json.split(">");
+    projectCategorys = json.split("/");
     return projectCategorys[0];
 }

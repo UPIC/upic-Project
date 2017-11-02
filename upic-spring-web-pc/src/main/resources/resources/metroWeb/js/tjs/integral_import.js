@@ -9,8 +9,17 @@ var pageNum = 0;
 var requestData = {};
 
 //上传文件
-function getFile(file) {
+function getFile() {
     //ajax方法上传文件到后台
+    var files = $('input[name="inputFile"]').prop('files');//获取到文件列表
+    $.ajax({
+        type: "POST",
+        url: daoruUrl,
+        data: files,
+        success: function (result) {
+            alert("已导入")
+        }
+    });
 }
 
 
@@ -55,14 +64,14 @@ function addHtmls(datas, pageNum) {
 
         htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].projectNum + "'/></td>";
         htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
-        htmls += "<td id='" + data[i].projectNum + data[i] + userNum + "a'>" + data[i].projectNum + "</td>";
-        htmls += "<td id='" + data[i].projectNum + data[i] + userNum + "b'>" + data[i].projectCategory + "</td>";
-        htmls += "<td id='" + data[i].projectNum + data[i] + userNum + "c'>" + data[i].projectName + "</td>";
-        htmls += "<td id='" + data[i].projectNum + data[i] + userNum + "d'>" + data[i].college + "</td>";
-        htmls += "<td id='" + data[i].projectNum + data[i] + userNum + "e'>" + data[i].clazz + "</td>";
-        htmls += "<td id='" + data[i].projectNum + data[i] + userNum + "f'>" + data[i].userNum + "</td>";
-        htmls += "<td id='" + data[i].projectNum + data[i] + userNum + "g'>" + data[i].username + "</td>";
-        htmls += "<td id='" + data[i].projectNum + data[i] + userNum + "h'>" + data[i].integral + "</td>";
+        htmls += "<td name='projectNum' id='" + data[i].projectNum + data[i] + userNum + "a'>" + data[i].projectNum + "</td>";
+        htmls += "<td name='projectCategory' id='" + data[i].projectNum + data[i] + userNum + "b'>" + data[i].projectCategory + "</td>";
+        htmls += "<td name='projectName' id='" + data[i].projectNum + data[i] + userNum + "c'>" + data[i].projectName + "</td>";
+        htmls += "<td name='college' id='" + data[i].projectNum + data[i] + userNum + "d'>" + data[i].college + "</td>";
+        htmls += "<td name='clazz' id='" + data[i].projectNum + data[i] + userNum + "e'>" + data[i].clazz + "</td>";
+        htmls += "<td name='userNum' id='" + data[i].projectNum + data[i] + userNum + "f'>" + data[i].userNum + "</td>";
+        htmls += "<td name='username' id='" + data[i].projectNum + data[i] + userNum + "g'>" + data[i].username + "</td>";
+        htmls += "<td name='integral' id='" + data[i].projectNum + data[i] + userNum + "h'>" + data[i].integral + "</td>";
         htmls += "<td class='center_td'><div class='message_div'><a href='#mymodal3' data-toggle='modal'>";
         htmls += "<span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','bianji','GET')>编辑</span>";
         htmls += "</a><span class='space'>|</span><a>";
@@ -154,5 +163,34 @@ function sub(id) {
             alert("已提交")
         }
     });
+
+}
+
+function subAll(){
+    var DataList = new Array();
+    var Data={};
+    //获取选中框的projectNum放入list
+    $("input[type=checkbox]:checked").each(function(){
+        Data.projectNum=($(this).find(".projectNum").val());
+         Data.projectCategory=($(this).find(".projectCategory").val());
+          Data.projectName=($(this).find(".projectName").val());
+           Data.college=($(this).find(".college").val());
+            Data.clazz=($(this).find(".clazz").val());
+             Data.userNum=($(this).find(".userNum").val());
+              Data.username=($(this).find(".username").val());
+               Data.integral=($(this).find(".integral").val());
+                Data.status="";
+                DataList.push(Data);
+    });
+    $.ajax({
+        type: "GET",
+        url: saveUrl,
+        data: DataList,
+        success: function (result) {
+            alert("已提交")
+        }
+    });
+
+
 
 }

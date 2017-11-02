@@ -7,13 +7,16 @@ import java.util.Map;
  * Created by zhubuqing on 2017/8/5.
  */
 public enum IntegralLogStatusEnum {
-    PENDING_AUDIT("待审核", 1),
-    HAVEPASSED("审核成功", 2),
-    FAILURE_TO_PASS_THE_AUDIT("审核失败", 3),
+    SAVE("保存", 1),
+    PENDING_AUDIT("待初审", 2),
+    PENDING_AUDIT_AGAIN("待复审", 3),
+    PENDING_AUDIT_FINAL("待终审", 4),
+    HAVEPASSED("审核成功", 5),
+    FAILURE_TO_PASS_THE_AUDIT("审核失败", 6),
 
-    ALREADY_SIGN_UP("已报名", 4),
-    SIGNED_IN("已签到", 5),
-    COMPLETED("已完成", 6);
+    ALREADY_SIGN_UP("已报名", 7),
+    SIGNED_IN("已签到", 8),
+    COMPLETED("已完成", 9);
 
     private String content;
 

@@ -3,6 +3,8 @@ package com.upic.controller;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.condition.*;
 import com.upic.dto.*;
+import com.upic.enums.GrainCoinLogStatusEnum;
+import com.upic.enums.GrainCoinLogTypeEnum;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import com.upic.service.*;
@@ -171,13 +173,12 @@ public class StudetAllController {
      * @throws Exception
      */
     @GetMapping("/getBanner")
-    public Page<BannerInfo> getBanner(@PageableDefault(size = 10) Pageable pageable, BannerCondition b)
-            throws Exception {
+    public Page<BannerInfo> getBanner(@PageableDefault(size = 10) Pageable pageable, BannerCondition b) {
         try {
             return bannerService.searchBanner(b, pageable);
         } catch (Exception e) {
             LOGGER.info("getBanner:" + e.getMessage());
-            throw new Exception(e.getMessage());
+            return null;
         }
     }
 
@@ -188,8 +189,22 @@ public class StudetAllController {
      * @return
      */
     @GetMapping("/getExchangePrize")
-    public PrizeInfo getExchangePrize(Long prizeId) {
-        return null;
+    public String getExchangePrize(Long prizeId) {
+        try {
+            PrizeInfo prizeInfo = prizeService.getPrizeById(prizeId);
+            if (prizeInfo != null) {
+                GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
+                grainCoinLogInfo.setEvent(getUser().getUserNum() + "兑换" + prizeInfo.getPrizeName());
+                grainCoinLogInfo.setPrizeId(prizeId);
+                grainCoinLogInfo.setScore(-prizeInfo.getScore());
+                grainCoinLogInfo.setType(GrainCoinLogTypeEnum.PAYMENT);
+                grainCoinLogInfo.setStatus(GrainCoinLogStatusEnum.HAVEDONE);
+                return "SUCCESS";
+            }
+        } catch (Exception e) {
+            LOGGER.info("getExchangePrize:" + e.getMessage());
+        }
+        return "ERROR";
     }
 
     /**

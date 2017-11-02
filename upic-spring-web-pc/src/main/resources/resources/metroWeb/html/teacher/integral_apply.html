@@ -169,7 +169,7 @@
                   <div class="row-form clearfix">
                     <label>请输入审核不通过理由</label>
                     <div>
-                      <textarea name="" style="width:90%" placeholder="请输入理由"></textarea>
+                      <textarea name="" style="width:90%" id="notPassCause" placeholder="请输入理由"></textarea>
                     </div>
                   </div>
                 </div>
@@ -177,7 +177,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定</button>
+              <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick=notPass()>确定</button>
               <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
             </div>
           </div>
@@ -268,7 +268,7 @@
         $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
 
-        $(".selectlist_second").after('<button class="btn btn-small btn-info">审核通过</button><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-danger">审核不通过</button></a>');
+        $(".selectlist_second").after('<button class="btn btn-small btn-info" onclick=pass()>审核通过</button><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-danger">审核不通过</button></a>');
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
         $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
 
