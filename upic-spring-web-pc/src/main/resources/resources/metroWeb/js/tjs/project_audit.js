@@ -126,6 +126,14 @@ function getProjectInfo(data) {
         statuss = "已验收"
     }
 
+
+    htmlss += "<div class='modal-header'>";
+    htmlss += "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
+    htmlss += "<h4>详情</h4>";
+    htmlss += "</div>";
+    htmlss += "<div class='modal-body'>";
+    htmlss += "<div class='row-fluid'>";
+    htmlss += "<div class='block-fluid'>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>编号</div>";
     htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</div>";
@@ -156,10 +164,107 @@ function getProjectInfo(data) {
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>评价标准与形式</div>";
-    htmlss += "<div class='span9'></div>";
+    htmlss += "<div class='span9'>"+data.checkAssessmentCriteraAndForms+"</div>";
+    htmlss += "</div>";
+    htmlss += "</div>";
+    htmlss += "<div class='dr'>";
+    htmlss += "<span></span>";
+    htmlss += "</div>";
+    htmlss += "</div>";
+    htmlss += "</div>";
+    htmlss += "<div class='modal-footer'>";
+    htmlss += "<button class='btn btn-info' data-dismiss='modal' aria-hidden='true' onclick=passOne(" + data.projectNum + ")>审核通过</button>";
+    htmlss += "<button class='btn btn-danger fal' href='#myModal2' data-toggle='modal'>审核不通过</button>";
+    htmlss += "<button class='btn btn-default' data-dismiss='modal' aria-hidden='true'>关闭</button>";
+    htmlss += "</div>";
+    htmlss += "</div>";
+    htmlss += "<div class='hide1' style='display: none;'>";
+    htmlss += "<div class='modal-header'>";
+    htmlss += "<h4>审核不通过原因</h4>";
+    htmlss += "</div>";
+    htmlss += "<div class="">";
+    htmlss += "<textarea name='1' id='textarea'>111</textarea>";
+    htmlss += "</div>";
+    htmlss += "<div class='modal-footer'>";
+    htmlss += "<button class='btn btn-primary close-btn' onclick=notPassOne(" + data.projectNum + ")>提交</button>";
+    htmlss += "<button class='btn btn-default close-btn'>关闭</button>";
+    htmlss += "</div>";
     htmlss += "</div>";
 
     $("#getProjectInfo").html(htmlss);
 }
 
+function passOne(projectNum){
+    $.ajax({
+        type: "GET",
+        url: updateIntegralLogStatus,
+        data:{
+            "projectNum":projectNum,
+            "status":"审核通过"
+        },
+        success: function (result) {
+            alert("已发送 审核通过请求")
+        }
+    });
+}
 
+function notPassOne(projectNum){
+    var textarea=$("#textarea").text();
+    $.ajax({
+        type: "GET",
+        url: updateIntegralLogStatus,
+        data:{
+            "projectNum":projectNum,
+            "status":"审核不通过"，
+            "cause":textarea
+        },
+        success: function (result) {
+            alert("已发送 审核不通过请求")
+        }
+    });
+}
+
+function pass(){
+    var projectNumList = new Array();
+    //获取选中框的projectNum放入list
+    $("input[type=checkbox]:checked").each(function(){
+        projectNumList.push($(this).attr("id"));
+    });
+    //status改为PASS
+    var status="PASS";
+    //3者一起发送请求
+    $.ajax({
+        type: "GET",
+        url: updateIntegralLogStatus,
+        data:{
+            "projectNumList":projectNumList,
+            "status":status
+        },
+        success: function (result) {
+            alert("已发送 审核通过请求")
+        }
+    });
+}
+
+function notPass(){
+    var projectNumList = new Array();
+    $("input[type=checkbox]:checked").each(function(){
+        projectNumList.push($(this).attr("id"));
+    });
+    var status="NOTPASS";
+    var notPassCause=$("#notPassCause").attr("placeholder");
+    $.ajax({
+        type: "GET",
+        url: updateIntegralLogStatus,
+        data:{
+            "projectNumList":projectNumList,
+            "studentNumList":studentNumList,
+            "status":status,
+            "content":notPassCause
+        },
+        success: function (result) {
+            alert("已发送 审核不通过请求")
+        }
+    });
+
+}

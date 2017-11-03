@@ -311,7 +311,7 @@
 
         $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
-        $(".selectlist_second").after('<a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile(this)"></a><button class="btn btn-small btn-primary">提交</button>');
+        $(".selectlist_second").after('<form method="post" enctype=”multipart/form-data”><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form><button class="btn btn-small btn-primary" onclick=subAll()>提交</button>');
 
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
             '62.9%');
