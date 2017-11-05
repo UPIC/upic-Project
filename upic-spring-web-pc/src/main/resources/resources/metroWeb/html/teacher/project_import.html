@@ -49,6 +49,36 @@
 #select-small{
   width:55px;
 }
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 14px;
+    float:left;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+.span6 form{
+  margin:0;
+}
 </style>
 </head>
 
@@ -263,7 +293,7 @@
       $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
       $("#sample_1_length").find('label').after('<div class="selectlist"><select name="getProjectType" id="getProjectType" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
       /*$(".selectlist").after('<div class="selectlist selectlist_second"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目名称筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');*/
-      $(".selectlist").after('<button class="btn btn-small btn-success"><i class="icon-cloud"></i>导入</button>');
+      $(".selectlist").after('<form method="post" enctype="multipart/form-data"><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form><button class="btn btn-small btn-primary" onclick=subAll()>提交</button>');
 
       /*$(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/
       $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',

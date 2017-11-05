@@ -2,7 +2,7 @@
  * @Author: Marte
  * @Date:   2017-10-12 08:40:02
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-10-20 09:51:38
+ * @Last Modified time: 2017-11-03 10:12:08
  */
 
 var dataUrl = "/common/getProject";
@@ -121,4 +121,48 @@ function getProjectInfo(data) {
     $("#getProjectInfo").html(htmlss);
 }
 
+function pass(){
+    var projectNumList = new Array();
+    //获取选中框的projectNum放入list
+    $("input[type=checkbox]:checked").each(function(){
+        projectNumList.push($(this).attr("id"));
+    });
+    //status改为PASS
+    var status="PASS";
+    //3者一起发送请求
+    $.ajax({
+        type: "GET",
+        url: changeStatusUrl,
+        data:{
+            "projectNumList":projectNumList,
+            "status":status
+        },
+        success: function (result) {
+            alert("已发送 审核通过请求")
+        }
+    });
+    getData(pageNum, dataUrl);
+}
 
+function notPass(){
+    var projectNumList = new Array();
+    //获取选中框的projectNum放入list
+    $("input[type=checkbox]:checked").each(function(){
+        projectNumList.push($(this).attr("id"));
+    });
+    var status="NOTPASS";
+
+    $.ajax({
+        type: "GET",
+        url: changeStatusUrl,
+        data:{
+            "projectNumList":projectNumList,
+            "status":status,
+        },
+        success: function (result) {
+            alert("已发送 审核不通过请求")
+        }
+    });
+    getData(pageNum, dataUrl);
+
+}

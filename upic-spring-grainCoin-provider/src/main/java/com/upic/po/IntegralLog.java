@@ -1,6 +1,5 @@
 package com.upic.po;
 
-import com.upic.common.base.entiy.BaseEntity;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import lombok.Data;

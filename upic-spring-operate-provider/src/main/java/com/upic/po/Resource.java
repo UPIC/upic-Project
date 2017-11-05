@@ -6,7 +6,6 @@ import com.upic.enums.ResourceTypeEnum;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by zhubuqing on 2017/8/4.
