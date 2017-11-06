@@ -26,49 +26,68 @@ public class SocialUsers extends User implements SocialUserDetails {
 	private List<String> projectCategoryList;
 	//所有菜单
 	private List<ResourceInfo> resourceList;
-	@Override
-	public String getUserId() {
-		return this.userNum;
-	}
+	
+	private String rank;
+
 	public String getUserNum() {
 		return userNum;
 	}
+
 	public void setUserNum(String userNum) {
 		this.userNum = userNum;
 	}
+
 	public String getCollege() {
 		return college;
 	}
+
 	public void setCollege(String college) {
 		this.college = college;
 	}
+
 	public String getMajor() {
 		return major;
 	}
+
 	public void setMajor(String major) {
 		this.major = major;
 	}
+
 	public List<String> getStatusList() {
 		return statusList;
 	}
+
 	public void setStatusList(List<String> statusList) {
 		this.statusList = statusList;
 	}
+
 	public List<String> getProjectCategoryList() {
 		return projectCategoryList;
 	}
+
 	public void setProjectCategoryList(List<String> projectCategoryList) {
 		this.projectCategoryList = projectCategoryList;
 	}
+
 	public List<ResourceInfo> getResourceList() {
 		return resourceList;
 	}
+
 	public void setResourceList(List<ResourceInfo> resourceList) {
 		this.resourceList = resourceList;
 	}
+
+	public String getRank() {
+		return rank;
+	}
+
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+
 	public SocialUsers(String username, String password, Collection<? extends GrantedAuthority> authorities,
 			String userNum, String college, String major, List<String> statusList, List<String> projectCategoryList,
-			List<ResourceInfo> resourceList) {
+			List<ResourceInfo> resourceList, String rank) {
 		super(username, password, authorities);
 		this.userNum = userNum;
 		this.college = college;
@@ -76,6 +95,7 @@ public class SocialUsers extends User implements SocialUserDetails {
 		this.statusList = statusList;
 		this.projectCategoryList = projectCategoryList;
 		this.resourceList = resourceList;
+		this.rank = rank;
 	}
-
+	
 }

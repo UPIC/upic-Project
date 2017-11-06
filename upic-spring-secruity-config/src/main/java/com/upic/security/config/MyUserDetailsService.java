@@ -82,6 +82,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         if (userInfo == null) {
             throw new UsernameNotFoundException("用户名不存在，请联系管理员！");
         }
+        String rank=null;
         RoleInfo roleByalins = null;
         // if(userInfo.getType().equals(UserTypeEnum.STUDENT)) {
         // 加入别名
@@ -113,16 +114,16 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         Page<OperatorRoleInfo> searchOperatorRole = operatorRoleService.searchOperatorRole(operatorRoleCondition,
                 new PageRequest(0, 150));
         initData(searchOperatorRole, listAll, roleResourceCondition, resourceCondition, resourceList, checkList,
-                categoryName, o, u, roleByalins);
+                categoryName, o, u, roleByalins,rank);
         deleteRepete(resourceList);
         return new SocialUsers(userId, b.encode(userId), createAuthorityList, userInfo.getUsername(), userInfo.getCollege(),
-                userInfo.getMajor(), checkList, categoryName, resourceList);
+                userInfo.getMajor(), checkList, categoryName, resourceList,rank);
     }
 
     private void initData(Page<OperatorRoleInfo> searchOperatorRole, List<RoleResourceInfo> listAll,
                           RoleResourceCondition roleResourceCondition, ResourceCondition resourceCondition,
                           List<ResourceInfo> resourceList, List<String> checkList, List<String> categoryName, OperatorInfo o,
-                          UserTypeEnum u, RoleInfo roleByalins) {
+                          UserTypeEnum u, RoleInfo roleByalins,String rank) {
 
         // 老师或者学生获取共同资源
         roleResourceCondition.setRoleId(roleByalins.getId());
@@ -145,6 +146,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         if (u.equals(UserTypeEnum.TEACHER) && o != null) {
             // 获取所有项目类别
             categoryName.addAll(projectCategoryService.getCategoryNameBySubordinateSectorOtherName(o.getCollegeOtherName()));
+//            rank=o.getRank();
         }
     }
 
