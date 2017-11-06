@@ -11,6 +11,8 @@ import com.upic.enums.OperatorStatusEnum;
 import com.upic.service.*;
 //import com.upic.social.user.SocialUsers;
 //import com.upic.utils.UserUtils;
+import com.upic.social.user.SocialUsers;
+import com.upic.utils.UserUtils;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -346,25 +348,25 @@ public class OperatorController {
         }
     }
 
-//    @GetMapping("/getResourceBySelf")
-//    @ApiOperation("获取自己的菜单列表")
-//    public List<ResourceInfo> getResourceBySelf() {
-//        try {
-//            List<ResourceInfo> resourceList = getUser().getResourceList();
-//            return resourceList;
-//        } catch (Exception e) {
-//            LOGGER.info("getResourceBySelf:" + e.getMessage());
-//            return null;
-//        }
-//    }
+    @GetMapping("/getResourceBySelf")
+    @ApiOperation("获取自己的菜单列表")
+    public List<ResourceInfo> getResourceBySelf() {
+        try {
+            List<ResourceInfo> resourceList = getUser().getResourceList();
+            return resourceList;
+        } catch (Exception e) {
+            LOGGER.info("getResourceBySelf:" + e.getMessage());
+            return null;
+        }
+    }
 //
 ////    @GetMapping
 ////    @ApiOperation("删除菜单")
 //
-//    private SocialUsers getUser() {
-////        String userNum = "1522110240";
-//        SocialUsers user= UserUtils.getUser();
-////        UserInfo userInfo = userService.getUserByUserNum(userNum);
-//        return user;
-//    }
+    private SocialUsers getUser() {
+//        String userNum = "1522110240";
+        SocialUsers user= UserUtils.getUser();
+//        UserInfo userInfo = userService.getUserByUserNum(userNum);
+        return user;
+    }
 }
