@@ -256,7 +256,7 @@
                     <td class="center_td"><img src="../../img/avatar1.jpg" alt=""></td>
                     <td>1400</td>
                     <td>2017.1.1</td>
-                    <td>
+                    <td class="center_td">
                         <button class="btn btn-small">上架</button>
                         <button class="btn btn-small down">下架</button>
                     </td>
@@ -307,7 +307,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button>
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" >保存</button>
             <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
         </div>
     </div>
@@ -317,36 +317,36 @@
          aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 id="mymodallabel1">编辑</h4>
+            <h4>编辑</h4>
         </div>
         <div class="modal-body">
             <div class="row-fluid">
                 <div class="block-fluid">
                     <div class="row-form clearfix">
                         <div class="span3">上传日期</div>
-                        <div class="span3">最好自动获取当前时间</div>
+                        <div class="span3" id="getN"></div>
                     </div>
                     <div class="row-form clearfix">
                         <div class="span3">奖品名称</div>
-                        <div class="span3"><input type="text"/></div>
+                        <div class="span3"><input type="text" id="pName"/></div>
                         <div class="span3">所需素拓币</div>
-                        <div class="span3"><input type="text"/></div>
+                        <div class="span3"><input type="text" id="pCoin"/></div>
                     </div>
 
                     <div class="row-form clearfix">
                         <div class="span3">简介</div>
-                        <div class="span9"><textarea></textarea></div>
+                        <div class="span9"><textarea id="pContent"></textarea></div>
                     </div>
                     <div class="row-form clearfix">
                         <div class="span3">图片</div>
-                        <div class="span9"><input type="file" name=""></div>
+                        <div class="span9"><input type="file" name="" id="pPic"></div>
                     </div>
                 </div>
                 <div class="dr"><span></span></div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button>
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick=shangchuan()>保存</button>
             <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
         </div>
     </div>
@@ -374,6 +374,23 @@
 
 <script src="../../js/dynamic-table.js"></script>
 <script>
+
+function p(s) {
+    return s < 10 ? '0' + s: s;
+
+}
+
+var myDate = new Date();
+//获取当前年
+var year=myDate.getFullYear();
+//获取当前月
+var month=myDate.getMonth()+1;
+//获取当前日
+var date=myDate.getDate();
+
+var now=year+'-'+p(month)+"-"+p(date);
+$("#getN").html(now);
+
     $(function () {
         $(".dataTables_filter").find('input').attr('placeholder', '空格分隔 编号、项目名称、负责人').css('width', '250px');
         ;
@@ -391,7 +408,6 @@
 
         $(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');
         $("#sample_1_filter").hide();
-        $(".textarea1").html("校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分");
     })
 </script>
 <script src="../../js/tjs/pagejs.js"></script>

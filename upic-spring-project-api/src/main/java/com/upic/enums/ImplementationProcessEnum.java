@@ -23,6 +23,8 @@ public enum ImplementationProcessEnum {
 
     private String content;
 
+    // AA
+
     private int num;
 
     ImplementationProcessEnum() {
