@@ -61,7 +61,8 @@ public class SystemManagerController {
             SocialUsers s=getUser();
             List<String> statusList = s.getStatusList();
             List<String> projectCategoryList = s.getProjectCategoryList();
-            return projectService.getProjectBySql(statusList, projectCategoryList, pageable);
+            Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageable);
+            return projectInfoPage;
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
             return null;
