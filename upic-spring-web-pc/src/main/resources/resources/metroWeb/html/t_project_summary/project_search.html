@@ -301,7 +301,7 @@
         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
         $("#sample_1_length").find('label').after('<div class="selectlist"><select name="getProjectType" id="getProjectType" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
         $(".selectlist").after('<div class="selectlist selectlist_second"><select name="getCollege" id="getCollege" style="width: 100%;" class="color-wh"><option value="4" class="yellow">所属学院筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
-        $(".selectlist_second").after('<button class="btn btn-small btn-success"><i class="icon-cloud"></i>导出</button>');
+        $(".selectlist_second").after('<button class="btn btn-small btn-success" id="exportBtn"><i class="icon-cloud"></i>导出</button>');
 
         /*$(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',

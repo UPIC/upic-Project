@@ -3,10 +3,8 @@ package com.upic.po;
 import com.upic.common.base.entiy.BaseEntity;
 import com.upic.enums.OperatorStatusEnum;
 import lombok.Data;
-import sun.security.provider.MD5;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * 操作员

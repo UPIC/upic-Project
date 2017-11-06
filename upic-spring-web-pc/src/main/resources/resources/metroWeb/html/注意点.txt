@@ -1,0 +1,7 @@
+\s-integralquery  integral_query.html                      my_integral.html
+这两张名字一开始不对应，名字交换了一下，对应js最好也换一下名字
+
+
+还有s-index  页面侧栏样式错了
+
+原来的user teacher没删除  先留着

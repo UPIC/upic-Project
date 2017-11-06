@@ -11,8 +11,17 @@
  };
 
 //上传文件
-function getFile(file){
+function getFile() {
     //ajax方法上传文件到后台
+    var files = $('input[name="inputFile"]').prop('files');//获取到文件列表
+    $.ajax({
+        type: "POST",
+        url: daoruUrl,
+        data: files,
+        success: function (result) {
+            alert("已导入")
+        }
+    });
 }
 
 
@@ -44,13 +53,13 @@ function addHtmls(datas,pageNum) {
 
       htmls+="<tr><td><input type='checkbox' class='checkboxes' value='1' id='"+data[i].projectNum+"'/></td>";
       htmls+="<td class='center_td'>"+(parseInt(pageNum)*parseInt(pageSize)+i+1)+"</td>";
-      htmls+="<td id='"+data[i].projectNum+"a'>"+data[i].projectNum+"</td>";
-      htmls+="<td id='"+data[i].projectNum+"b'>"+data[i].projectCategory+"</td>";
-      htmls+="<td id='"+data[i].projectNum+"c'>"+data[i].projectName+"</td>";
-      htmls+="<td id='"+data[i].projectNum+"d'>"+data[i].integral+"</td>";
-      htmls+="<td id='"+data[i].projectNum+"e'>"+data[i].number+"</td>";
-      htmls+="<td id='"+data[i].projectNum+"f'>"+data[i].number*data[i].integral+"</td>";
-      htmls+="<td id='"+data[i].projectNum+"g'>"+data[i].creatTime+"</td>";
+      htmls+="<td name='projectNum' id='"+data[i].projectNum+"a'>"+data[i].projectNum+"</td>";
+      htmls+="<td name='projectCategory' id='"+data[i].projectNum+"b'>"+data[i].projectCategory+"</td>";
+      htmls+="<td name='projectName' id='"+data[i].projectNum+"c'>"+data[i].projectName+"</td>";
+      htmls+="<td name='integral' id='"+data[i].projectNum+"d'>"+data[i].integral+"</td>";
+      htmls+="<td name='number' id='"+data[i].projectNum+"e'>"+data[i].number+"</td>";
+      htmls+="<td name='gzl' id='"+data[i].projectNum+"f'>"+data[i].number*data[i].integral+"</td>";
+      htmls+="<td name='creatTime' id='"+data[i].projectNum+"g'>"+data[i].creatTime+"</td>";
       htmls+="<td class='center_td'><div class='message_div'><a href='#mymodal2' data-toggle='modal'>";
       htmls+="<span onclick=commonAjax('"+dataUrl+"','projectNum="+data[i].projectNum+"','bianji','GET')>编辑</span>";
       htmls+="</a><span class='space'>|</span><a>";
@@ -201,4 +210,29 @@ function sub(id){
   }
 });
 
+}
+
+function subAll(){
+    var DataList = new Array();
+    var Data={};
+    //获取选中框的projectNum放入list
+    $("input[type=checkbox]:checked").each(function(){
+        Data.projectNum=($(this).find(".projectNum").val());
+         Data.projectCategory=($(this).find(".projectCategory").val());
+          Data.projectName=($(this).find(".projectName").val());
+          Data.integral=($(this).find(".integral").val());
+           Data.number=($(this).find(".number").val());
+            Data.gzl=($(this).find(".gzl").val());
+             Data.creatTime=($(this).find(".creatTime").val());
+
+                DataList.push(Data);
+    });
+    $.ajax({
+        type: "GET",
+        url: saveUrl,
+        data: DataList,
+        success: function (result) {
+            alert("已提交")
+        }
+    });
 }
