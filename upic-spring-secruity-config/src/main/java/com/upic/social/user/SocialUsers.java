@@ -29,6 +29,23 @@ public class SocialUsers extends User implements SocialUserDetails {
 	
 	private String rank;
 
+	//部门别名
+	private String collegeAli;
+
+	public SocialUsers(String username, String password, Collection<? extends GrantedAuthority> authorities,
+			String userNum, String college, String major, List<String> statusList, List<String> projectCategoryList,
+			List<ResourceInfo> resourceList, String rank, String collegeAli) {
+		super(username, password, authorities);
+		this.userNum = userNum;
+		this.college = college;
+		this.major = major;
+		this.statusList = statusList;
+		this.projectCategoryList = projectCategoryList;
+		this.resourceList = resourceList;
+		this.rank = rank;
+		this.collegeAli = collegeAli;
+	}
+
 	public String getUserNum() {
 		return userNum;
 	}
@@ -85,17 +102,12 @@ public class SocialUsers extends User implements SocialUserDetails {
 		this.rank = rank;
 	}
 
-	public SocialUsers(String username, String password, Collection<? extends GrantedAuthority> authorities,
-			String userNum, String college, String major, List<String> statusList, List<String> projectCategoryList,
-			List<ResourceInfo> resourceList, String rank) {
-		super(username, password, authorities);
-		this.userNum = userNum;
-		this.college = college;
-		this.major = major;
-		this.statusList = statusList;
-		this.projectCategoryList = projectCategoryList;
-		this.resourceList = resourceList;
-		this.rank = rank;
+	public String getCollegeAli() {
+		return collegeAli;
+	}
+
+	public void setCollegeAli(String collegeAli) {
+		this.collegeAli = collegeAli;
 	}
 
 	@Override

@@ -173,13 +173,13 @@ public class SpringBootJpaTestApplicationTests {
         projectCategoryList.add("社会实践积分（必修积分）");
         projectCategoryList.add("社会实践积分（必修积分）1");
 
-        Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageRequest);
-        if (projectInfoPage != null) {
-            System.out.println(projectInfoPage.getTotalElements() + "");
-            System.out.println(projectInfoPage.getTotalPages());
-            for (ProjectInfo projectInfo : projectInfoPage.getContent()) {
-                System.out.println(projectInfo);
-            }
-        }
+//        Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageRequest);
+//        if (projectInfoPage != null) {
+//            System.out.println(projectInfoPage.getTotalElements() + "");
+//            System.out.println(projectInfoPage.getTotalPages());
+//            for (ProjectInfo projectInfo : projectInfoPage.getContent()) {
+//                System.out.println(projectInfo);
+//            }
+//        }
     }
 }
