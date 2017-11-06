@@ -337,14 +337,31 @@ public class ProjectServiceImpl implements ProjectService {
                     } else if (projectCategoryList.size() == 1) {
                         projectCategoryOr = cb.equal(root.get("projectCategory"), projectCategoryList.get(0));
                     }
-                    Predicate and = cb.and(changeStatus(statusList).size()==0?null:statusOr, projectCategoryOr);
-                    return and;
+//                    Predicate and = changeStatus(statusList).size()==0?cb.and( projectCategoryOr):cb.and(statusOr, projectCategoryOr);
+                    Predicate status=null;
+//                    Predicate projectCategory=null;
+                    Predicate result=null;
+                    if(changeStatus(statusList).size()>0) {
+                    	 status = cb.and( statusOr);
+                    }
+                    if(projectCategoryOr!=null) {
+                    	if(status==null) {
+                    		result=cb.and(projectCategoryOr);
+                    	}else {
+                    		result=cb.and(projectCategoryOr,status);
+                    	}
+                    }
+                    if(projectCategoryOr==null) {
+                    	result=status;
+                    }
+                    return result;
                 }
             };
             projectPage = projectRepository.findAll(projectSpecification, pageable);
             return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
                 @Override
                 protected void doConvert(Project domain, ProjectInfo info) throws Exception {
+                	filterProject(domain);
                     UpicBeanUtils.copyProperties(domain, info);
                 }
             });
