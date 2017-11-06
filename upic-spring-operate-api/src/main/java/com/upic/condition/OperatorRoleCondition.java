@@ -10,7 +10,7 @@ import com.upic.enums.OperatorRoleTypeEnum;
 public class OperatorRoleCondition extends BaseCondition {
     private String jobNum; //操作员
 
-    private long roleId;
+    private Long roleId;
 
     private OperatorRoleStatusEnum status; //状态
 
@@ -20,7 +20,7 @@ public class OperatorRoleCondition extends BaseCondition {
         super();
     }
 
-    public OperatorRoleCondition(String jobNum, long roleId, OperatorRoleStatusEnum status, OperatorRoleTypeEnum type) {
+    public OperatorRoleCondition(String jobNum, Long roleId, OperatorRoleStatusEnum status, OperatorRoleTypeEnum type) {
         this.jobNum = jobNum;
         this.roleId = roleId;
         this.status = status;
@@ -35,11 +35,11 @@ public class OperatorRoleCondition extends BaseCondition {
         this.jobNum = jobNum;
     }
 
-    public long getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(long roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
