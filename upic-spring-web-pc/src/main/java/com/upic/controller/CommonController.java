@@ -7,6 +7,8 @@ import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.service.*;
 //import com.upic.utils.UserUtils;
+import com.upic.social.user.SocialUsers;
+import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -305,7 +307,6 @@ public class CommonController {
             LOGGER.info("getProject:" + e.getMessage());
             return null;
         }
-
     }
 
     /**
@@ -575,7 +576,7 @@ public class CommonController {
         try {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum(projectNum);
-            integralLogIdInfo.setStudentNum(getUser().getUserNum());
+            integralLogIdInfo.setStudentNum(getUser().getUserId());
             return integralLogService.getByIntegralLogId(integralLogIdInfo);
         } catch (Exception e) {
             LOGGER.info("getProjectWithoutSignUp:" + e.getMessage());
@@ -639,7 +640,7 @@ public class CommonController {
     @ApiOperation("我的项目搜索条")
     public Page<ProjectInfo> myProjectSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("关键词") String keyword) throws Exception {
         try {
-            return projectService.projectSearchBar(getUser().getUserNum(), keyword, pageable);
+            return projectService.projectSearchBar(getUser().getUserId(), keyword, pageable);
         } catch (Exception e) {
             LOGGER.info("myProjectSearchBar:" + e.getMessage());
             throw new Exception("myProjectSearchBar" + e.getMessage());
@@ -655,7 +656,7 @@ public class CommonController {
     @GetMapping("exportProjectSearchBar")
     public void exportProjectSearchBar(HttpServletResponse response, String keyword, List<String> baseModel) {
         try {
-            List<Object> byProjectNum = projectService.exportProjectSearchBar(getUser().getUserNum(), keyword);
+            List<Object> byProjectNum = projectService.exportProjectSearchBar(getUser().getUserId(), keyword);
             Workbook wk = ExcelDocument.download((String[]) baseModel.toArray(), ProjectInfo.class, byProjectNum);
             downLoadExcel(response, wk, "project");
         } catch (Exception e) {
@@ -890,7 +891,7 @@ public class CommonController {
     public IntegralLogInfo getIntegralLogByIntegralLogId(String projectNum) throws Exception {
         try {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
-            integralLogIdInfo.setStudentNum(getUser().getUserNum());
+            integralLogIdInfo.setStudentNum(getUser().getUserId());
             integralLogIdInfo.setProjectNum(projectNum);
             return integralLogService.getByIntegralLogId(integralLogIdInfo);
         } catch (Exception e) {
@@ -1020,7 +1021,7 @@ public class CommonController {
     @GetMapping("/getProjectByGuidanceNum")
     public Page<ProjectInfo> getProjectByGuidanceNum(@PageableDefault(size = 10) Pageable pageable) {
         try {
-            Page<ProjectInfo> projectInfoPage = projectService.getProjectByGuidanceNum(getUser().getUserNum(), pageable);
+            Page<ProjectInfo> projectInfoPage = projectService.getProjectByGuidanceNum(getUser().getUserId(), pageable);
             System.out.println(projectInfoPage.toString());
             return projectInfoPage;
         } catch (Exception e) {
@@ -1140,14 +1141,12 @@ public class CommonController {
      */
     @GetMapping("/getUserInfo")
     public UserInfo getUserInfo() {
-        return getUser();
+        UserInfo userInfo = userService.getUserByUserNum(getUser().getUserId());
+        return userInfo;
     }
 
-    private UserInfo getUser() {
-        String userNum = "1522110240";
-//        String userNum = UserUtils.getUser().getUserId();
-        UserInfo userInfo = userService.getUserByUserNum(userNum);
-        return userInfo;
+    private SocialUsers getUser() {
+        return UserUtils.getUser();
     }
 
     private void downLoadExcel(HttpServletResponse response, Workbook wk, String fileName) throws Exception {
