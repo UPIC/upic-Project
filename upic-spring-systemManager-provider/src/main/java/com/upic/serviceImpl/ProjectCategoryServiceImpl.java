@@ -120,7 +120,7 @@ public class ProjectCategoryServiceImpl implements ProjectCategoryService {
      */
     @Override
     public List<String> getCategoryNameBySubordinateSectorOtherName(String subordinateSectorOtherName) {
-        List<String> categoryNameList = new ArrayList<>();
+        List<String> categoryNameList = new ArrayList<String>();
         try {
             List<ProjectCategory> projectCategoryList = projectCategoryRepository.findBySubordinateSectorOtherName(subordinateSectorOtherName);
             for (ProjectCategory projectCategory : projectCategoryList) {

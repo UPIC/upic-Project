@@ -33,7 +33,7 @@ function addProjectType(res) {
 function addCollegeUrl(res) {
     var data = res.content;
     var htmls = "";
-    htmls += "<option value='4' class='yellow'>学院筛选...</option>";
+    htmls += "<option value='4' class='yellow'>项目状态筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].status + "</option>";

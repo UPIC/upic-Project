@@ -3,6 +3,7 @@ var getProjectInfo="/common/getProjectInfo";
 var searchKeyWordUrl = "/common/integralLogSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getStatusUrl = "/common/getCollege";
+var baomingUrl="";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -33,7 +34,7 @@ function addProjectType(res) {
 function addStatus(res) {
     var data = res.content;
     var htmls = "";
-    htmls += "<option value='4' class='yellow'>学院筛选...</option>";
+    htmls += "<option value='4' class='yellow'>状态筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].status + "</option>";
@@ -115,6 +116,16 @@ function getProjectInfoA(result) {
     }
 
 function apply(pN){//报名按钮
+     $.ajax({
+        type: 'GET',
+        url: baomingUrl,
+        data: {
+            projectNum: pN
+        },
+        success: function (result) {
+           alert("已报名")
+        }
+    });
 
 }
 

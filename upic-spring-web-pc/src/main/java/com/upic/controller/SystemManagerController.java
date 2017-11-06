@@ -45,7 +45,9 @@ public class SystemManagerController {
     @GetMapping("/getIntegralLogBySql")
     public Page<IntegralLogInfo> getIntegralLogBySql(Pageable pageable) {
         try {
-            return integralLogService.getIntegralLogBySql(getUser().getStatusList(), getUser().getProjectCategoryList(), pageable);
+            List<String> statusList = getUser().getStatusList();
+            List<String> projectCategoryList = getUser().getProjectCategoryList();
+            return integralLogService.getIntegralLogBySql(statusList, projectCategoryList, pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
             return null;
@@ -56,7 +58,10 @@ public class SystemManagerController {
     @GetMapping("/getProjectBySql")
     public Page<ProjectInfo> getProjectBySql(Pageable pageable) {
         try {
-            return projectService.getProjectBySql(getUser().getStatusList(), getUser().getProjectCategoryList(), pageable);
+            SocialUsers s=getUser();
+            List<String> statusList = s.getStatusList();
+            List<String> projectCategoryList = s.getProjectCategoryList();
+            return projectService.getProjectBySql(statusList, projectCategoryList, pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
             return null;
