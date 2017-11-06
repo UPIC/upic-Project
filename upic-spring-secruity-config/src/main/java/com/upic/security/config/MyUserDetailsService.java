@@ -109,7 +109,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         // 用户基本身份类别
         UserTypeEnum u = userInfo.getType().equals(UserTypeEnum.STUDENT) ? UserTypeEnum.STUDENT : UserTypeEnum.TEACHER;
         Page<OperatorRoleInfo> searchOperatorRole = operatorRoleService.searchOperatorRole(operatorRoleCondition,
-                new PageRequest(1, 150));
+                new PageRequest(0, 150));
         initData(searchOperatorRole, listAll, roleResourceCondition, resourceCondition, resourceList, checkList,
                 categoryName, o, u,roleByalins);
         return new SocialUsers(userId, b.encode(userId), createAuthorityList, userInfo.getUsername(), userInfo.getCollege(),

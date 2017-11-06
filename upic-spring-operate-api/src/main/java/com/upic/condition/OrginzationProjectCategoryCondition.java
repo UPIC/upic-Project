@@ -12,7 +12,7 @@ public class OrginzationProjectCategoryCondition extends BaseCondition {
 
     private String orginationNum; //组织编号
 
-    private long projectCategoryId; //项目类别ID
+    private Long projectCategoryId; //项目类别ID
 
     private String projectCategory; //项目类别
 
@@ -20,7 +20,7 @@ public class OrginzationProjectCategoryCondition extends BaseCondition {
         super();
     }
 
-    public OrginzationProjectCategoryCondition(String orginationName, String orginationNum, long projectCategoryId, String projectCategory) {
+    public OrginzationProjectCategoryCondition(String orginationName, String orginationNum, Long projectCategoryId, String projectCategory) {
         this.orginationName = orginationName;
         this.orginationNum = orginationNum;
         this.projectCategoryId = projectCategoryId;
@@ -43,7 +43,7 @@ public class OrginzationProjectCategoryCondition extends BaseCondition {
         this.orginationNum = orginationNum;
     }
 
-    public long getProjectCategoryId() {
+    public Long getProjectCategoryId() {
         return projectCategoryId;
     }
 
