@@ -36,19 +36,19 @@ public class UserCondition extends BaseCondition {
 
     private Date birthdayTo;
 
-    private double earnedPoints;
+    private Double earnedPoints;
 
-    private double earnedPointsTo;
+    private Double earnedPointsTo;
 
-    private double earningPoints;
+    private Double earningPoints;
 
-    private double earningPointsTo;
+    private Double earningPointsTo;
 
     public UserCondition() {
         super();
     }
 
-    public UserCondition(String userNum, String username, String college, String major, String clazz, String phone, String idCard, String email, UserStatusEnum status, String nickName, UserTypeEnum type, Date birthday, Date birthdayTo, double earnedPoints, double earnedPointsTo, double earningPoints, double earningPointsTo) {
+    public UserCondition(String userNum, String username, String college, String major, String clazz, String phone, String idCard, String email, UserStatusEnum status, String nickName, UserTypeEnum type, Date birthday, Date birthdayTo, Double earnedPoints, Double earnedPointsTo, Double earningPoints, Double earningPointsTo) {
         this.userNum = userNum;
         this.username = username;
         this.college = college;
@@ -172,7 +172,7 @@ public class UserCondition extends BaseCondition {
         this.birthdayTo = birthdayTo;
     }
 
-    public double getEarnedPoints() {
+    public Double getEarnedPoints() {
         return earnedPoints;
     }
 
@@ -180,7 +180,7 @@ public class UserCondition extends BaseCondition {
         this.earnedPoints = earnedPoints;
     }
 
-    public double getEarnedPointsTo() {
+    public Double getEarnedPointsTo() {
         return earnedPointsTo;
     }
 
@@ -188,7 +188,7 @@ public class UserCondition extends BaseCondition {
         this.earnedPointsTo = earnedPointsTo;
     }
 
-    public double getEarningPoints() {
+    public Double getEarningPoints() {
         return earningPoints;
     }
 
@@ -196,7 +196,7 @@ public class UserCondition extends BaseCondition {
         this.earningPoints = earningPoints;
     }
 
-    public double getEarningPointsTo() {
+    public Double getEarningPointsTo() {
         return earningPointsTo;
     }
 
