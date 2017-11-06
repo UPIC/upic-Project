@@ -45,7 +45,7 @@ import java.util.Map;
  */
 @Service("projectService")
 public class ProjectServiceImpl implements ProjectService {
-	 protected static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
     @Autowired
     private ProjectRepository projectRepository;
 
@@ -53,11 +53,11 @@ public class ProjectServiceImpl implements ProjectService {
     private AdviceRepository adviceRepository;
 
     @Autowired
-	private JobLauncher jobLauncher;
-	
-	@Autowired
-	private Job job;
-   
+    private JobLauncher jobLauncher;
+
+    @Autowired
+    private Job job;
+
 
     public ProjectInfo addProject(ProjectInfo projectInfo) {
         try {
@@ -405,32 +405,42 @@ public class ProjectServiceImpl implements ProjectService {
                 statusEnums.add(ImplementationProcessEnum.SAVED);
             } else if (status == ImplementationProcessEnum.IN_AUDIT.name()) {
                 statusEnums.add(ImplementationProcessEnum.IN_AUDIT);
+            } else if (status == ImplementationProcessEnum.IN_AUDIT_AGAIN.name()) {
+                statusEnums.add(ImplementationProcessEnum.IN_AUDIT_AGAIN);
+            } else if (status == ImplementationProcessEnum.IN_AUDIT_FINAL.name()) {
+                statusEnums.add(ImplementationProcessEnum.IN_AUDIT_FINAL);
             } else if (status == ImplementationProcessEnum.AUDITED.name()) {
                 statusEnums.add(ImplementationProcessEnum.AUDITED);
-            } else if (status == ImplementationProcessEnum.NOT_PASS.name()) {
-                statusEnums.add(ImplementationProcessEnum.NOT_PASS);
             } else if (status == ImplementationProcessEnum.ENROLLMENT.name()) {
                 statusEnums.add(ImplementationProcessEnum.ENROLLMENT);
             } else if (status == ImplementationProcessEnum.HAVE_IN_HAND.name()) {
                 statusEnums.add(ImplementationProcessEnum.HAVE_IN_HAND);
             } else if (status == ImplementationProcessEnum.COMPLETED.name()) {
                 statusEnums.add(ImplementationProcessEnum.COMPLETED);
+            } else if (status == ImplementationProcessEnum.CHECKING.name()) {
+                statusEnums.add(ImplementationProcessEnum.CHECKING);
+            } else if (status == ImplementationProcessEnum.CHECKING_AGAIN.name()) {
+                statusEnums.add(ImplementationProcessEnum.CHECKING_AGAIN);
+            } else if (status == ImplementationProcessEnum.CHECKING_FINAL.name()) {
+                statusEnums.add(ImplementationProcessEnum.CHECKING_FINAL);
             } else if (status == ImplementationProcessEnum.CHECKED.name()) {
                 statusEnums.add(ImplementationProcessEnum.CHECKED);
+            } else if (status == ImplementationProcessEnum.NOT_PASS.name()) {
+                statusEnums.add(ImplementationProcessEnum.NOT_PASS);
             }
         }
         return statusEnums;
     }
 
     /**
-     * 定时任务 
+     * 定时任务
      * 每天晚上十二点执行
      */
-	@Override
-	@Scheduled(cron = "0 0 0 * *")
-	public void task() throws Exception {
-		Map<String, JobParameter> param = new HashMap<>();
-		param.put("startTime", new JobParameter(new Date()));
-		jobLauncher.run(job, new JobParameters(param));	
-	}
+    @Override
+    @Scheduled(cron = "0 0 0 * *")
+    public void task() throws Exception {
+        Map<String, JobParameter> param = new HashMap<>();
+        param.put("startTime", new JobParameter(new Date()));
+        jobLauncher.run(job, new JobParameters(param));
+    }
 }
