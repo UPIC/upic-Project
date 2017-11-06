@@ -16,6 +16,7 @@ public class ProjectLogSpec extends CommonSimpleSpecification<ProjectLog, Projec
     protected void addCondition(QueryWraper<ProjectLog> queryWraper) {
         addLikeCondition(queryWraper,"operation");
         addEqualsCondition(queryWraper,"operatorName");
+        addEqualsCondition(queryWraper,"projectId");
         addEqualsCondition(queryWraper,"operatorNum");
     }
 }

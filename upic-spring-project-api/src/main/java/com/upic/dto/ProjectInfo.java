@@ -49,8 +49,6 @@ public class ProjectInfo extends BaseInfo {
 
     private String unit; //单位
 
-    private List<ProjectLogInfo> projectLogs;
-
     private int onOff; //二维码开关
 
     private String refreshTime; //刷新时间
@@ -59,11 +57,13 @@ public class ProjectInfo extends BaseInfo {
 
     private long projectCategoryId;
 
+    private String collegeOtherName;
+
     public ProjectInfo() {
         super();
     }
 
-    public ProjectInfo(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, double integral, Date startTime, Date endTime, Date signUpStartTime, Date signUpEndTime, int maximum, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, List<ProjectLogInfo> projectLogs, int onOff, String refreshTime, ProjectTypeEnum type, long projectCategoryId) {
+    public ProjectInfo(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, double integral, Date startTime, Date endTime, Date signUpStartTime, Date signUpEndTime, int maximum, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, int onOff, String refreshTime, ProjectTypeEnum type, long projectCategoryId, String collegeOtherName) {
         this.projectNum = projectNum;
         this.declareUnit = declareUnit;
         this.projectName = projectName;
@@ -82,11 +82,11 @@ public class ProjectInfo extends BaseInfo {
         this.projectAddWay = projectAddWay;
         this.rankEnum = rankEnum;
         this.unit = unit;
-        this.projectLogs = projectLogs;
         this.onOff = onOff;
         this.refreshTime = refreshTime;
         this.type = type;
         this.projectCategoryId = projectCategoryId;
+        this.collegeOtherName = collegeOtherName;
     }
 
     public String getProjectNum() {
@@ -233,14 +233,6 @@ public class ProjectInfo extends BaseInfo {
         this.unit = unit;
     }
 
-    public List<ProjectLogInfo> getProjectLogs() {
-        return projectLogs;
-    }
-
-    public void setProjectLogs(List<ProjectLogInfo> projectLogs) {
-        this.projectLogs = projectLogs;
-    }
-
     public int getOnOff() {
         return onOff;
     }
@@ -273,6 +265,14 @@ public class ProjectInfo extends BaseInfo {
         this.projectCategoryId = projectCategoryId;
     }
 
+    public String getCollegeOtherName() {
+        return collegeOtherName;
+    }
+
+    public void setCollegeOtherName(String collegeOtherName) {
+        this.collegeOtherName = collegeOtherName;
+    }
+
     @Override
     public String toString() {
         return "ProjectInfo{" +
@@ -298,6 +298,7 @@ public class ProjectInfo extends BaseInfo {
                 ", refreshTime='" + refreshTime + '\'' +
                 ", type=" + type +
                 ", projectCategoryId=" + projectCategoryId +
+                ", collegeOtherName='" + collegeOtherName + '\'' +
                 '}';
     }
 }

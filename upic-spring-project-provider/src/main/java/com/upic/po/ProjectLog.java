@@ -11,9 +11,7 @@ import javax.persistence.*;
 @Data
 @Entity
 public class ProjectLog extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = Project.class)
-    @JoinColumn(unique = true, nullable = false, updatable = false)
-    private Project project; //项目
+    private long projectId;
 
     private String operation; //操作内容
 

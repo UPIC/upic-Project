@@ -70,6 +70,5 @@ public class Project extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProjectAddWayEnum projectAddWay; //项目添加方式
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "project")
-    private List<ProjectLog> projectLogs;
+    private String collegeOtherName;
 }

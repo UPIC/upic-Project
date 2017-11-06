@@ -112,7 +112,6 @@ public class ProjectServiceImpl implements ProjectService {
                         @Override
                         protected void doConvert(Project domain, ProjectInfo info) throws Exception {
                             // 过滤懒加载
-                            filterProject(domain);
                             UpicBeanUtils.copyProperties(domain, info);
                         }
                     });
@@ -125,8 +124,6 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectInfo getProjectByNum(String projectNum) {
         try {
             Project project = projectRepository.findByProjectNum(projectNum);
-
-            filterProject(project);
             if (project == null)
                 throw new Exception();
 
@@ -159,7 +156,6 @@ public class ProjectServiceImpl implements ProjectService {
             return QueryResultConverter.convert(projectPage, page,
                     new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
                         protected void doConvert(Project domain, ProjectInfo info) throws Exception {
-                            filterProject(domain);
                             UpicBeanUtils.copyProperties(domain, info);
                         }
                     });
@@ -175,7 +171,6 @@ public class ProjectServiceImpl implements ProjectService {
             projectPage = projectRepository.getProjectWithoutSignUp(now, pageable);
             return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
                 protected void doConvert(Project domain, ProjectInfo info) throws Exception {
-                    filterProject(domain);
                     UpicBeanUtils.copyProperties(domain, info);
                 }
             });
@@ -192,7 +187,6 @@ public class ProjectServiceImpl implements ProjectService {
             return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
                 @Override
                 protected void doConvert(Project domain, ProjectInfo info) throws Exception {
-                    filterProject(domain);
                     UpicBeanUtils.copyProperties(domain, info);
                 }
             });
@@ -209,7 +203,6 @@ public class ProjectServiceImpl implements ProjectService {
             return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
                 @Override
                 protected void doConvert(Project domain, ProjectInfo info) throws Exception {
-                    filterProject(domain);
                     UpicBeanUtils.copyProperties(domain, info);
                 }
             });
@@ -262,7 +255,6 @@ public class ProjectServiceImpl implements ProjectService {
             return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
                 @Override
                 protected void doConvert(Project domain, ProjectInfo info) throws Exception {
-                    filterProject(domain);
                     UpicBeanUtils.copyProperties(domain, info);
                 }
             });
@@ -277,9 +269,6 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             List<Object> objectList = new ArrayList<>();
             List<Project> projectList = projectRepository.findAll(new ProjectSpec(condition));
-            for (Project p : projectList) {
-                filterProject(p);
-            }
             objectList = toObject(projectList);
             return objectList;
         } catch (Exception e) {
@@ -339,21 +328,21 @@ public class ProjectServiceImpl implements ProjectService {
                     }
 
 //                    Predicate and = changeStatus(statusList).size()==0?cb.and( projectCategoryOr):cb.and(statusOr, projectCategoryOr);
-                    Predicate status=null;
+                    Predicate status = null;
 //                    Predicate projectCategory=null;
-                    Predicate result=null;
-                    if(changeStatus(statusList).size()>0) {
-                    	 status = cb.and( statusOr);
+                    Predicate result = null;
+                    if (changeStatus(statusList).size() > 0) {
+                        status = cb.and(statusOr);
                     }
-                    if(projectCategoryOr!=null) {
-                    	if(status==null) {
-                    		result=cb.and(projectCategoryOr);
-                    	}else {
-                    		result=cb.and(projectCategoryOr,status);
-                    	}
+                    if (projectCategoryOr != null) {
+                        if (status == null) {
+                            result = cb.and(projectCategoryOr);
+                        } else {
+                            result = cb.and(projectCategoryOr, status);
+                        }
                     }
-                    if(projectCategoryOr==null) {
-                    	result=status;
+                    if (projectCategoryOr == null) {
+                        result = status;
                     }
                     return result;
 
@@ -363,7 +352,6 @@ public class ProjectServiceImpl implements ProjectService {
             return QueryResultConverter.convert(projectPage, pageable, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
                 @Override
                 protected void doConvert(Project domain, ProjectInfo info) throws Exception {
-                	filterProject(domain);
                     UpicBeanUtils.copyProperties(domain, info);
                 }
             });
@@ -395,16 +383,6 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (Exception e) {
             LOGGER.info("projectSearchBar:项目" + projectPage.toString() + "更新失败。错误信息：" + e.getMessage());
             return null;
-        }
-    }
-
-    private void filterProject(Project project) {
-        if (project == null) {
-
-        } else {
-            if (project.getProjectLogs() != null) {
-                project.setProjectLogs(null);
-            }
         }
     }
 

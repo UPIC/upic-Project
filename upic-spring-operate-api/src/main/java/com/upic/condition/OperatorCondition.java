@@ -25,11 +25,13 @@ public class OperatorCondition extends BaseCondition {
 
     private String collegeOtherName;
 
+    private Integer rank;
+
     public OperatorCondition() {
         super();
     }
 
-    public OperatorCondition(String jobNum, String username, String email, OperatorStatusEnum status, String phone, String idcard, String college, Integer type, String collegeOtherName) {
+    public OperatorCondition(String jobNum, String username, String email, OperatorStatusEnum status, String phone, String idcard, String college, Integer type, String collegeOtherName, Integer rank) {
         this.jobNum = jobNum;
         this.username = username;
         this.email = email;
@@ -39,6 +41,7 @@ public class OperatorCondition extends BaseCondition {
         this.college = college;
         this.type = type;
         this.collegeOtherName = collegeOtherName;
+        this.rank = rank;
     }
 
     public String getJobNum() {
@@ -101,7 +104,7 @@ public class OperatorCondition extends BaseCondition {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -111,5 +114,13 @@ public class OperatorCondition extends BaseCondition {
 
     public void setCollegeOtherName(String collegeOtherName) {
         this.collegeOtherName = collegeOtherName;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 }
