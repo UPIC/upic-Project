@@ -136,4 +136,8 @@ public interface ProjectService {
     List<Object> exportProjectByGuidanceNum(String guidanceMnum);
 
     List<Object> exportProjectSearchBar(String userNum, String keyword);
+    /**
+     * 定时任务
+     */
+    void task() throws Exception;
 }

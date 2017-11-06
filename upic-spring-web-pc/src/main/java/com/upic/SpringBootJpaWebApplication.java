@@ -10,7 +10,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2 
 //@EnableJdbcHttpSession
 @ImportResource("classpath:consumer.xml")
-
 public class SpringBootJpaWebApplication {
 
 	public static void main(String[] args) {
