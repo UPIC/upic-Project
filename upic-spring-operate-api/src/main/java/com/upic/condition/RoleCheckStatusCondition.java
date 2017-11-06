@@ -12,14 +12,14 @@ public class RoleCheckStatusCondition extends BaseCondition {
 
     private String checkStatusName;
 
-    private int num;
+    private Integer num;
 
-    private long roleId;
+    private Long roleId;
 
     public RoleCheckStatusCondition() {
     }
 
-    public RoleCheckStatusCondition(String roleName, String enumName, String checkStatusName, int num, long roleId) {
+    public RoleCheckStatusCondition(String roleName, String enumName, String checkStatusName, Integer num, Long roleId) {
         this.roleName = roleName;
         this.enumName = enumName;
         this.checkStatusName = checkStatusName;
@@ -51,7 +51,7 @@ public class RoleCheckStatusCondition extends BaseCondition {
         this.checkStatusName = checkStatusName;
     }
 
-    public int getNum() {
+    public Integer getNum() {
         return num;
     }
 
@@ -59,7 +59,7 @@ public class RoleCheckStatusCondition extends BaseCondition {
         this.num = num;
     }
 
-    public long getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 

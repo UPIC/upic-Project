@@ -60,19 +60,19 @@ public class ProjectCondition extends BaseCondition {
 
     private String unit;
 
-    private int onOff; //二维码开关
+    private Integer onOff; //二维码开关
 
     private String refreshTime; //刷新时间
 
     private ProjectTypeEnum type;
 
-    private long projectCategoryId;
+    private Long projectCategoryId;
 
     public ProjectCondition() {
         super();
     }
 
-    public ProjectCondition(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, Double integral, Double integralTo, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, Date signUpStartTime, Date signUpStartTimeTo, Date signUpEndTime, Date signUpEndTimeTo, Integer maximum, Integer maximumTo, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, int onOff, String refreshTime, ProjectTypeEnum type, long projectCategoryId) {
+    public ProjectCondition(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, Double integral, Double integralTo, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, Date signUpStartTime, Date signUpStartTimeTo, Date signUpEndTime, Date signUpEndTimeTo, Integer maximum, Integer maximumTo, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, Integer onOff, String refreshTime, ProjectTypeEnum type, Long projectCategoryId) {
         this.projectNum = projectNum;
         this.declareUnit = declareUnit;
         this.projectName = projectName;
@@ -295,7 +295,7 @@ public class ProjectCondition extends BaseCondition {
         this.unit = unit;
     }
 
-    public int getOnOff() {
+    public Integer getOnOff() {
         return onOff;
     }
 
@@ -319,7 +319,7 @@ public class ProjectCondition extends BaseCondition {
         this.type = type;
     }
 
-    public long getProjectCategoryId() {
+    public Long getProjectCategoryId() {
         return projectCategoryId;
     }
 

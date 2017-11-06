@@ -14,13 +14,13 @@ public class ConfirmationBasisCondition extends BaseCondition {
 
     private String otherName;
 
-    private long categoryNodeId;
+    private Long categoryNodeId;
 
     public ConfirmationBasisCondition() {
         super();
     }
 
-    public ConfirmationBasisCondition(String content, String projectNum, String projectName, String otherName, long categoryNodeId) {
+    public ConfirmationBasisCondition(String content, String projectNum, String projectName, String otherName, Long categoryNodeId) {
         this.content = content;
         this.projectNum = projectNum;
         this.projectName = projectName;
@@ -60,7 +60,7 @@ public class ConfirmationBasisCondition extends BaseCondition {
         this.otherName = otherName;
     }
 
-    public long getCategoryNodeId() {
+    public Long getCategoryNodeId() {
         return categoryNodeId;
     }
 

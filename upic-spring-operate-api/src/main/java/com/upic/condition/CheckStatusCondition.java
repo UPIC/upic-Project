@@ -6,7 +6,7 @@ import com.upic.common.base.condition.BaseCondition;
  * Created by zhubuqing on 2017/9/6.
  */
 public class CheckStatusCondition extends BaseCondition {
-    private int num;
+    private Integer num;
 
     private String type;
 
@@ -17,14 +17,14 @@ public class CheckStatusCondition extends BaseCondition {
     public CheckStatusCondition() {
     }
 
-    public CheckStatusCondition(int num, String type, String enumName, String name) {
+    public CheckStatusCondition(Integer num, String type, String enumName, String name) {
         this.num = num;
         this.type = type;
         this.enumName = enumName;
         this.name = name;
     }
 
-    public int getNum() {
+    public Integer getNum() {
         return num;
     }
 

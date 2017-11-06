@@ -106,19 +106,17 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
 		// 获取所有项目类别
 		List<String> categoryName = new ArrayList<String>();
 
-		createAuthorityList = AuthorityUtils.createAuthorityList("/*");
-		// createAuthorityList =
-		// AuthorityUtils.createAuthorityList("/operator/searchRole","/operator/listResource","/operator/listResourceByRoleId","/metroWeb/html/teacher/permissions_manager.html");
-		// 用户基本身份类别
-		UserTypeEnum u = userInfo.getType().equals(UserTypeEnum.STUDENT) ? UserTypeEnum.STUDENT : UserTypeEnum.TEACHER;
-		Page<OperatorRoleInfo> searchOperatorRole = operatorRoleService.searchOperatorRole(operatorRoleCondition,
-				new PageRequest(0, 150));
-		initData(searchOperatorRole, listAll, roleResourceCondition, resourceCondition, resourceList, checkList,
-				categoryName, o, u, roleByalins);
-		deleteRepete(resourceList);
-		return new SocialUsers(userId, b.encode(userId), createAuthorityList, userInfo.getUsername(),
-				userInfo.getCollege(), userInfo.getMajor(), checkList, categoryName, resourceList);
-	}
+        createAuthorityList = AuthorityUtils.createAuthorityList("/*");
+//        createAuthorityList = AuthorityUtils.createAuthorityList("/operator/searchRole","/operator/listResource","/operator/listResourceByRoleId","/metroWeb/html/teacher/permissions_manager.html");
+        // 用户基本身份类别
+        UserTypeEnum u = userInfo.getType().equals(UserTypeEnum.STUDENT) ? UserTypeEnum.STUDENT : UserTypeEnum.TEACHER;
+        Page<OperatorRoleInfo> searchOperatorRole = operatorRoleService.searchOperatorRole(operatorRoleCondition,
+                new PageRequest(0, 150));
+        initData(searchOperatorRole, listAll, roleResourceCondition, resourceCondition, resourceList, checkList,
+                categoryName, o, u,roleByalins);
+        return new SocialUsers(userId, b.encode(userId), createAuthorityList, userInfo.getUsername(), userInfo.getCollege(),
+                userInfo.getMajor(), checkList, categoryName, resourceList);
+    }
 
 	private void initData(Page<OperatorRoleInfo> searchOperatorRole, List<RoleResourceInfo> listAll,
 			RoleResourceCondition roleResourceCondition, ResourceCondition resourceCondition,

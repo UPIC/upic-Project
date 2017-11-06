@@ -21,7 +21,7 @@ public class OperatorCondition extends BaseCondition {
 
     private String college;
 
-    private int type;
+    private Integer type;
 
     private String collegeOtherName;
 
@@ -29,7 +29,7 @@ public class OperatorCondition extends BaseCondition {
         super();
     }
 
-    public OperatorCondition(String jobNum, String username, String email, OperatorStatusEnum status, String phone, String idcard, String college, int type, String collegeOtherName) {
+    public OperatorCondition(String jobNum, String username, String email, OperatorStatusEnum status, String phone, String idcard, String college, Integer type, String collegeOtherName) {
         this.jobNum = jobNum;
         this.username = username;
         this.email = email;
@@ -97,7 +97,7 @@ public class OperatorCondition extends BaseCondition {
         this.college = college;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
