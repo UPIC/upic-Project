@@ -144,7 +144,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         });
         if (u.equals(UserTypeEnum.TEACHER) && o != null) {
             // 获取所有项目类别
-            categoryName = projectCategoryService.getCategoryNameBySubordinateSectorOtherName(o.getCollegeOtherName());
+            categoryName.addAll(projectCategoryService.getCategoryNameBySubordinateSectorOtherName(o.getCollegeOtherName()));
         }
     }
 
