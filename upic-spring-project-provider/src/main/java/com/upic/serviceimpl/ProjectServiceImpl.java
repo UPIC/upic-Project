@@ -337,7 +337,7 @@ public class ProjectServiceImpl implements ProjectService {
                     } else if (projectCategoryList.size() == 1) {
                         projectCategoryOr = cb.equal(root.get("projectCategory"), projectCategoryList.get(0));
                     }
-                    Predicate and = cb.and(changeStatus(statusList).size()==0?null:statusOr, projectCategoryOr);
+                    Predicate and = cb.and(changeStatus(statusList).size() == 0 ? null : statusOr, projectCategoryOr);
                     return and;
                 }
             };
@@ -401,31 +401,31 @@ public class ProjectServiceImpl implements ProjectService {
     private List<ImplementationProcessEnum> changeStatus(List<String> statusList) {
         List<ImplementationProcessEnum> statusEnums = new ArrayList<>();
         for (String status : statusList) {
-            if (status == ImplementationProcessEnum.SAVED.name()) {
+            if (status.equals(ImplementationProcessEnum.SAVED.name())) {
                 statusEnums.add(ImplementationProcessEnum.SAVED);
-            } else if (status == ImplementationProcessEnum.IN_AUDIT.name()) {
+            } else if (status.equals(ImplementationProcessEnum.IN_AUDIT.name())) {
                 statusEnums.add(ImplementationProcessEnum.IN_AUDIT);
-            } else if (status == ImplementationProcessEnum.IN_AUDIT_AGAIN.name()) {
+            } else if (status.equals(ImplementationProcessEnum.IN_AUDIT_AGAIN.name())) {
                 statusEnums.add(ImplementationProcessEnum.IN_AUDIT_AGAIN);
-            } else if (status == ImplementationProcessEnum.IN_AUDIT_FINAL.name()) {
+            } else if (status.equals(ImplementationProcessEnum.IN_AUDIT_FINAL.name())) {
                 statusEnums.add(ImplementationProcessEnum.IN_AUDIT_FINAL);
-            } else if (status == ImplementationProcessEnum.AUDITED.name()) {
+            } else if (status.equals(ImplementationProcessEnum.AUDITED.name())) {
                 statusEnums.add(ImplementationProcessEnum.AUDITED);
-            } else if (status == ImplementationProcessEnum.ENROLLMENT.name()) {
+            } else if (status.equals(ImplementationProcessEnum.ENROLLMENT.name())) {
                 statusEnums.add(ImplementationProcessEnum.ENROLLMENT);
-            } else if (status == ImplementationProcessEnum.HAVE_IN_HAND.name()) {
+            } else if (status.equals(ImplementationProcessEnum.HAVE_IN_HAND.name())) {
                 statusEnums.add(ImplementationProcessEnum.HAVE_IN_HAND);
-            } else if (status == ImplementationProcessEnum.COMPLETED.name()) {
+            } else if (status.equals(ImplementationProcessEnum.COMPLETED.name())) {
                 statusEnums.add(ImplementationProcessEnum.COMPLETED);
-            } else if (status == ImplementationProcessEnum.CHECKING.name()) {
+            } else if (status.equals(ImplementationProcessEnum.CHECKING.name())) {
                 statusEnums.add(ImplementationProcessEnum.CHECKING);
-            } else if (status == ImplementationProcessEnum.CHECKING_AGAIN.name()) {
+            } else if (status.equals(ImplementationProcessEnum.CHECKING_AGAIN.name())) {
                 statusEnums.add(ImplementationProcessEnum.CHECKING_AGAIN);
-            } else if (status == ImplementationProcessEnum.CHECKING_FINAL.name()) {
+            } else if (status.equals(ImplementationProcessEnum.CHECKING_FINAL.name())) {
                 statusEnums.add(ImplementationProcessEnum.CHECKING_FINAL);
-            } else if (status == ImplementationProcessEnum.CHECKED.name()) {
+            } else if (status.equals(ImplementationProcessEnum.CHECKED.name())) {
                 statusEnums.add(ImplementationProcessEnum.CHECKED);
-            } else if (status == ImplementationProcessEnum.NOT_PASS.name()) {
+            } else if (status.equals(ImplementationProcessEnum.NOT_PASS.name())) {
                 statusEnums.add(ImplementationProcessEnum.NOT_PASS);
             }
         }
