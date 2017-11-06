@@ -43,9 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		SpringSocialConfigurer configurer = new SpringSocialConfigurer();
-		configurer.signupUrl("/casgo");
+		configurer.signupUrl("/cas");
 		http.httpBasic().and().headers().frameOptions().disable().and().formLogin()
-//		.loginPage("/login.html")
+		.loginPage("/cas")
 		.usernameParameter("user").passwordParameter("pass")
 				.successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)
 				.loginProcessingUrl("/auth").and()
