@@ -97,5 +97,10 @@ public class SocialUsers extends User implements SocialUserDetails {
 		this.resourceList = resourceList;
 		this.rank = rank;
 	}
+
+	@Override
+	public String getUserId() {
+		return super.getUsername();
+	}
 	
 }
