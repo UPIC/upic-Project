@@ -23,5 +23,6 @@ public class OperatorSpec extends CommonSimpleSpecification<Operator, OperatorCo
         addEqualsCondition(queryWraper, "type");
         addEqualsCondition(queryWraper, "college");
         addEqualsCondition(queryWraper, "collegeOtherName");
+        addEqualsCondition(queryWraper, "rank");
     }
 }

@@ -6,32 +6,23 @@ import com.upic.common.base.dto.BaseInfo;
  * Created by zhubuqing on 2017/8/4.
  */
 public class ProjectLogInfo extends BaseInfo {
-    private ProjectInfo project; //项目
-
     private String operation; //操作内容
 
     private String operatorName; //操作人
 
     private String operatorNum; //操作人编号
 
+    private long projectId;
+
     public ProjectLogInfo() {
         super();
     }
 
-    public ProjectLogInfo(ProjectInfo project, String operation, String operatorName, String operatorNum) {
-        super();
-        this.project = project;
+    public ProjectLogInfo(String operation, String operatorName, String operatorNum, long projectId) {
         this.operation = operation;
         this.operatorName = operatorName;
         this.operatorNum = operatorNum;
-    }
-
-    public ProjectInfo getProject() {
-        return project;
-    }
-
-    public void setProject(ProjectInfo project) {
-        this.project = project;
+        this.projectId = projectId;
     }
 
     public String getOperation() {
@@ -58,13 +49,21 @@ public class ProjectLogInfo extends BaseInfo {
         this.operatorNum = operatorNum;
     }
 
+    public long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
+    }
+
     @Override
     public String toString() {
         return "ProjectLogInfo{" +
-                "project=" + project +
-                ", operation='" + operation + '\'' +
+                "operation='" + operation + '\'' +
                 ", operatorName='" + operatorName + '\'' +
                 ", operatorNum='" + operatorNum + '\'' +
+                ", projectId=" + projectId +
                 '}';
     }
 }

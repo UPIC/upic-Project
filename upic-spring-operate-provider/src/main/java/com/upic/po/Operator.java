@@ -36,4 +36,6 @@ public class Operator extends BaseEntity {
     private String college;
 
     private String collegeOtherName;
+
+    private int rank;
 }

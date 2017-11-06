@@ -10,16 +10,18 @@ public class ProjectLogCondition extends BaseCondition {
 
     private String operatorName; //操作人
 
+    private Long projectId;
+
     private String operatorNum; //操作人编号
 
     public ProjectLogCondition() {
         super();
     }
 
-    public ProjectLogCondition(String operation, String operatorName, String operatorNum) {
-        super();
+    public ProjectLogCondition(String operation, String operatorName, Long projectId, String operatorNum) {
         this.operation = operation;
         this.operatorName = operatorName;
+        this.projectId = projectId;
         this.operatorNum = operatorNum;
     }
 
@@ -37,6 +39,14 @@ public class ProjectLogCondition extends BaseCondition {
 
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     public String getOperatorNum() {
