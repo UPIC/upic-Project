@@ -5,16 +5,14 @@
  * @Last Modified time: 2017-11-03 10:12:08
  */
 
-var dataUrl = "/common/getProject";
+var dataUrl = "/systemManager/getProjectBySql";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectNumUrl = "";
 var getProjectStatusUrl = "";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
-var requestData = {
-    implementationProcess: "COMPLETED"//
-};
+var requestData = {};
 
 $(function () {
     pageSize = $("#select-small").children('option:selected').text()
@@ -56,7 +54,6 @@ function addHtmls(datas, pageNum) {
         if (data[i].implementationProcess === "COMPLETED") {
             statuss = "未验收"
         }
-        ;
 
         htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].projectNum + "'/></td>";
         htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
@@ -84,7 +81,6 @@ function getProjectInfo(data) {
     if (data[i].implementationProcess === "COMPLETED") {
         statuss = "未验收"
     }
-    ;
 
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>编号</div>";
@@ -121,21 +117,21 @@ function getProjectInfo(data) {
     $("#getProjectInfo").html(htmlss);
 }
 
-function pass(){
+function pass() {
     var projectNumList = new Array();
     //获取选中框的projectNum放入list
-    $("input[type=checkbox]:checked").each(function(){
+    $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
     });
     //status改为PASS
-    var status="PASS";
+    var status = "PASS";
     //3者一起发送请求
     $.ajax({
         type: "GET",
         url: changeStatusUrl,
-        data:{
-            "projectNumList":projectNumList,
-            "status":status
+        data: {
+            "projectNumList": projectNumList,
+            "status": status
         },
         success: function (result) {
             alert("已发送 审核通过请求")
@@ -144,20 +140,20 @@ function pass(){
     getData(pageNum, dataUrl);
 }
 
-function notPass(){
+function notPass() {
     var projectNumList = new Array();
     //获取选中框的projectNum放入list
-    $("input[type=checkbox]:checked").each(function(){
+    $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
     });
-    var status="NOTPASS";
+    var status = "NOTPASS";
 
     $.ajax({
         type: "GET",
         url: changeStatusUrl,
-        data:{
-            "projectNumList":projectNumList,
-            "status":status,
+        data: {
+            "projectNumList": projectNumList,
+            "status": status,
         },
         success: function (result) {
             alert("已发送 审核不通过请求")

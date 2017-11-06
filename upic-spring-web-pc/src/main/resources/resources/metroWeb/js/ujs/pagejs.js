@@ -183,3 +183,9 @@ function commonAjax(url, requestData, methodName, requestType, sendData) {
         }
     });
 }
+
+function splitJson(json) {
+    var projectCategorys = new Array();
+    projectCategorys = json.split("/");
+    return projectCategorys[0];
+}
