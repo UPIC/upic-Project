@@ -11,6 +11,8 @@ import com.upic.service.IntegralLogService;
 import com.upic.service.ProjectService;
 import com.upic.service.UserService;
 //import com.upic.utils.UserUtils;
+import com.upic.social.user.SocialUsers;
+import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,22 +45,18 @@ public class SystemManagerController {
     @GetMapping("/getIntegralLogBySql")
     public Page<IntegralLogInfo> getIntegralLogBySql(Pageable pageable) {
         try {
-            List<String> statusList = new ArrayList<>();
-            List<String> projectCategoryList = new ArrayList<>();
-            return integralLogService.getIntegralLogBySql(statusList, projectCategoryList, pageable);
+            return integralLogService.getIntegralLogBySql(getUser().getStatusList(), getUser().getProjectCategoryList(), pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
             return null;
         }
     }
 
-    @ApiOperation("教师获取需要审批的积分申报")
+    @ApiOperation("教师获取需要审批的项目申报")
     @GetMapping("/getProjectBySql")
     public Page<ProjectInfo> getProjectBySql(Pageable pageable) {
         try {
-            List<String> statusList = new ArrayList<>();
-            List<String> projectCategoryList = new ArrayList<>();
-            return projectService.getProjectBySql(statusList, projectCategoryList, pageable);
+            return projectService.getProjectBySql(getUser().getStatusList(), getUser().getProjectCategoryList(), pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
             return null;
@@ -76,10 +74,7 @@ public class SystemManagerController {
         }
     }
 
-    private UserInfo getUser() {
-        String userNum = "1522110240";
-//        String userNum = UserUtils.getUser().getUserId();
-        UserInfo userInfo = userService.getUserByUserNum(userNum);
-        return userInfo;
+    private SocialUsers getUser() {
+        return UserUtils.getUser();
     }
 }

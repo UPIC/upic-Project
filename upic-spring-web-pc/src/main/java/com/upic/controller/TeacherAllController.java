@@ -7,6 +7,8 @@ import com.upic.dto.IntegralLogInfo;
 import com.upic.dto.ProjectInfo;
 import com.upic.service.IntegralLogService;
 import com.upic.service.ProjectService;
+import com.upic.social.user.SocialUsers;
+import com.upic.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,5 +61,9 @@ public class TeacherAllController {
             LOGGER.info("getUserListByProjectNum:" + e.getMessage());
             throw new Exception("getUserListByProjectNum:" + e.getMessage());
         }
+    }
+
+    private SocialUsers getUser() {
+        return UserUtils.getUser();
     }
 }
