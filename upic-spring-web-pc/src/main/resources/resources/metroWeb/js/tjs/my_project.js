@@ -5,6 +5,7 @@
  * @Last Modified time: 2017-10-20 09:20:00
  */
 var dataUrl = "/common/getProjectByGuidanceNum";
+var getProjectByProjectNum = "/common/getProjectInfo";
 var searchKeyWordUrl = "/common/myProjectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getPeopleByProjectNumUrl = "";
@@ -106,8 +107,8 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += " <div class='message_div'><a href='#mymodal2' data-toggle='modal'>编辑</a><span class='space'>|</span><a>提交</a></div></td>";
-            htmls += " </tr>";
+            htmls += "<div class='message_div'><a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + getProjectByProjectNum + "','projectNum=" + data[i].projectNum + "','updateProjectInfo','GET')>编辑</span></a><span class='space'>|</span><a>提交</a></div></td>";
+            htmls += "</tr>";
         } else {
             htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].projectNum + "'/></td>";
             htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
@@ -120,7 +121,7 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
+            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + getProjectByProjectNum + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
             htmls += " </tr>";
         }
     }
@@ -135,20 +136,41 @@ function getProjectInfo(data, sendData) {
         case ("SAVED"):
             status = "已保存";
             break;
-        case ("NOT_PASS"):
-            status = "未通过"
-            break;
         case ("IN_AUDIT"):
-            status = "审核中"
+            status = "待初审"
+            break;
+        case ("IN_AUDIT_AGAIN"):
+            status = "待复审"
+            break;
+        case ("IN_AUDIT_FINAL"):
+            status = "待终审"
             break;
         case ("AUDITED"):
             status = "已审核"
+            break;
+        case ("ENROLLMENT"):
+            status = "报名中"
             break;
         case ("HAVE_IN_HAND"):
             status = "进行中"
             break;
         case ("COMPLETED"):
             status = "已完成"
+            break;
+        case ("CHECKING"):
+            status = "待初验"
+            break;
+        case ("CHECKING_AGAIN"):
+            status = "待复验"
+            break;
+        case ("CHECKING_FINAL"):
+            status = "待终验"
+            break;
+        case ("CHECKED"):
+            status = "已验收"
+            break;
+        case ("NOT_PASS"):
+            status = "未通过"
             break;
         default:
     }
@@ -216,4 +238,8 @@ function getPeopleInfo(data) {
         htmlss += "<tr><td>" + (i + 1) + "</td><td>" + data[i].college + "</td><td>" + data[i].clazz + "</td><td>" + data[i].studentNum + "</td><td>" + data[i].studentName + "</td></tr>";
     }
     $("#getPeopleInfo").html(htmlss);
+}
+
+function updateProjectInfo(data, sendData) {
+
 }
