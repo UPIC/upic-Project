@@ -8,13 +8,10 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.neusoft.education.tp.sso.client.filter.DefaultCASFilter;
-//import com.neusoft.education.tp.sso.client.filter.DefaultCASFilter;
 import com.upic.interceptor.WebHandlerInteceptor;
 import com.upic.listener.StartListener;
 
