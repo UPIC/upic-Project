@@ -1,7 +1,7 @@
 var dataUrl = "";
 var searchKeyWordUrl = "";
-var getProjectTypeUrl = "";
-var getProjectStatusUrl = "";
+var getProjectTypeUrl = "/common/getAllProjectCategory";
+// var getProjectStatusUrl = "";
 var saveUrl = "";
 var pageSize = 0;
 var totalPages = -1;
@@ -26,9 +26,9 @@ function getFile() {
 $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
-    commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
+    // commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
     registSelect("getProjectType");
-    registSelect("getProjectStatus");
+    // registSelect("getProjectStatus");
     getData(pageNum, dataUrl);
 })
 
@@ -44,16 +44,16 @@ function addProjectType(res) {
 }
 
 
-function addProjectType(res) {
-    var data = res.content;
-    var htmls = "";
-    htmls += "<option value='4' class='yellow'>项目状态筛选...</option>";
-
-    for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i].status + "</option>";
-    }
-    $("#getProjectStatus").html(htmls);
-}
+// function getProjectStatus(res) {
+//     var data = res.content;
+//     var htmls = "";
+//     htmls += "<option value='4' class='yellow'>项目状态筛选...</option>";
+//
+//     for (var i = 0; i < data.length; i++) {
+//         htmls += "<option value='" + (i + 4) + "'>" + data[i].status + "</option>";
+//     }
+//     $("#getProjectStatus").html(htmls);
+// }
 
 
 function addHtmls(datas, pageNum) {
@@ -61,7 +61,6 @@ function addHtmls(datas, pageNum) {
     var data = datas.content;
     var htmls = "";
     for (var i = 0; i < data.length; i++) {
-
         htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].projectNum + "'/></td>";
         htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
         htmls += "<td name='projectNum' id='" + data[i].projectNum + data[i] + userNum + "a'>" + data[i].projectNum + "</td>";

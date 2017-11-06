@@ -61,6 +61,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].student + "</td>";
         htmls += "<td>" + data[i].projectCategory + "</td>";
         htmls += "<td>" + data[i].projectName + "</td>";
+        htmls += "<td style='display:none' id='status'>" + data[i].status + "</td>";
         htmls += "<td>";
         // onclick事件引号问题
         htmls += "<div class='message_div' onclick=commonAjax('/common/getIntegralLogByProjectNumStudentNum','projectNum=" + data[i].integralLogId.projectNum + "&studentNum=" + data[i].integralLogId.studentNum + "','getProjectInfo','GET')><a href='#mymodal1' data-toggle='modal'>查看详情</a></div></td>";
@@ -104,27 +105,29 @@ function getProjectInfo(data) {
     $("#getProjectInfo").html(htmlss);
 }
 
-function pass(){
+function pass() {
     var projectNumList = new Array();
     var studentNumList = new Array();
+    var statusList=new Array();
     //获取选中框的projectNum放入list
-    $("input[type=checkbox]:checked").each(function(){
+    $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
+        statusList.push($(this).attr("status"))
     });
     //获取studentNum放入list2
-    $("input[type=checkbox]:checked").each(function(){
+    $("input[type=checkbox]:checked").each(function () {
         studentNumList.push($(this).find("#studentNum").val());
     });
     //status改为PASS
-    var status="PASS";
+    var status = "PASS";
     //3者一起发送请求
     $.ajax({
         type: "GET",
         url: updateIntegralLogStatus,
-        data:{
-            "projectNumList":projectNumList,
-            "studentNumList":studentNumList,
-            "status":status
+        data: {
+            "projectNumList": projectNumList,
+            "studentNumList": studentNumList,
+            "status": statusList
         },
         success: function (result) {
             alert("已发送 审核通过请求")
@@ -132,36 +135,36 @@ function pass(){
     });
 }
 
-function notPass(){
+function notPass() {
     var projectNumList = new Array();
     var studentNumList = new Array();
     //获取选中框的projectNum放入list
-    $("input[type=checkbox]:checked").each(function(){
+    $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
     });
     //获取studentNum放入list2
-    $("input[type=checkbox]:checked").each(function(){
+    $("input[type=checkbox]:checked").each(function () {
         studentNumList.push($(this).find("#studentNum").val());
-    //status改为PASS
-    var status="NOTPASS";
+        //status改为PASS
+        var status = "NOTPASS";
 
-    var notPassCause=$("#notPassCause").attr("placeholder");
-    $.ajax({
-        type: "GET",
-        url: updateIntegralLogStatus,
-        data:{
-            "projectNumList":projectNumList,
-            "studentNumList":studentNumList,
-            "status":status,
-            "content":notPassCause
-        },
-        success: function (result) {
-            alert("已发送 审核不通过请求")
-        }
-    });
+        var notPassCause = $("#notPassCause").attr("placeholder");
+        $.ajax({
+            type: "GET",
+            url: updateIntegralLogStatus,
+            data: {
+                "projectNumList": projectNumList,
+                "studentNumList": studentNumList,
+                "status": status,
+                "content": notPassCause
+            },
+            success: function (result) {
+                alert("已发送 审核不通过请求")
+            }
+        });
 
+    })
 }
-
 
 
 

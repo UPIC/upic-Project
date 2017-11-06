@@ -132,12 +132,37 @@ public class CommonController {
      */
     @GetMapping("/getAllProjectCategory")
     @ApiOperation("获取所有项目类别")
-    public Page<ProjectCategoryInfo> getAllProjectCategory(@PageableDefault(size = 20) Pageable pageable, ProjectCategoryCondition p) throws Exception {
+    public Page<ProjectCategoryInfo> getAllProjectCategory(@PageableDefault(size = 20) Pageable pageable, ProjectCategoryCondition p) {
         try {
             return projectCategoryService.searchProjectCategory(p, pageable);
         } catch (Exception e) {
             LOGGER.info("getAllProjectCategory:" + e.getMessage());
-            throw new Exception(e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/getAllProjectImplementationProcess")
+    @ApiOperation("获取项目状态")
+    public List<String> getAllProjectImplementationProcess() {
+        try {
+            List<String> implementationProcessList = new ArrayList<String>();
+            implementationProcessList.add(ImplementationProcessEnum.SAVED.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.IN_AUDIT.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.IN_AUDIT_AGAIN.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.IN_AUDIT_FINAL.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.AUDITED.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.ENROLLMENT.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.HAVE_IN_HAND.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.COMPLETED.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.CHECKING.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.CHECKING_AGAIN.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.CHECKING_FINAL.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.CHECKED.getContent());
+            implementationProcessList.add(ImplementationProcessEnum.NOT_PASS.getContent());
+            return implementationProcessList;
+        } catch (Exception e) {
+            LOGGER.info("getAllProjectImplementationProcess:" + e.getMessage());
+            return null;
         }
     }
 
@@ -900,7 +925,7 @@ public class CommonController {
      */
     @GetMapping("/getIntegralLogByProjectNumStudentNum")
     @ApiOperation("获取所有积分")
-    public IntegralLogInfo getAllIntegralLog(String projectNum, String studentNum) {
+    public IntegralLogInfo getIntegralLogByProjectNumStudentNum(String projectNum, String studentNum) {
         try {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setStudentNum(studentNum);

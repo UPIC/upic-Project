@@ -8,7 +8,7 @@ var dataUrl = "/common/getProjectByGuidanceNum";
 var searchKeyWordUrl = "/common/myProjectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getPeopleByProjectNumUrl = "";
-var getProjectStatusUrl = "";
+var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -18,7 +18,7 @@ $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
-    // commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
+    commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
     registSelect("projectCategory");
     registSelect("ProjectStatus");
 })
@@ -35,12 +35,12 @@ function addProjectType(res) {
 }
 
 function addProjectStatus(res) {
-    var data = res.content;
+    var data = res;
     var htmls = "";
     htmls += "<option value='4' class='yellow'>项目状态筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i].status + "</option>";
+        htmls += "<option value='" + (i + 4) + "'>" + data[i] + "</option>";
     }
     $("#ProjectStatus").html(htmls);
 
@@ -56,20 +56,41 @@ function addHtmls(datas, pageNum) {
             case ("SAVED"):
                 status = "已保存";
                 break;
-            case ("NOT_PASS"):
-                status = "未通过"
-                break;
             case ("IN_AUDIT"):
-                status = "审核中"
+                status = "待初审"
+                break;
+            case ("IN_AUDIT_AGAIN"):
+                status = "待复审"
+                break;
+            case ("IN_AUDIT_FINAL"):
+                status = "待终审"
                 break;
             case ("AUDITED"):
                 status = "已审核"
+                break;
+            case ("ENROLLMENT"):
+                status = "报名中"
                 break;
             case ("HAVE_IN_HAND"):
                 status = "进行中"
                 break;
             case ("COMPLETED"):
                 status = "已完成"
+                break;
+            case ("CHECKING"):
+                status = "待初验"
+                break;
+            case ("CHECKING_AGAIN"):
+                status = "待复验"
+                break;
+            case ("CHECKING_FINAL"):
+                status = "待终验"
+                break;
+            case ("CHECKED"):
+                status = "已验收"
+                break;
+            case ("NOT_PASS"):
+                status = "未通过"
                 break;
             default:
         }

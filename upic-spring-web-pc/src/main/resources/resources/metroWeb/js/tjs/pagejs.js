@@ -55,7 +55,8 @@ function loadPage(dataUrl, totalPages, pageSize, pageNum) {
                 htmls += "<li><a href='javasist:;' onClick='getData(" + (i - 1)
                     + ",\"" + dataUrl + "\"," + pageSize + ")'>" + i
                     + "</a></li>";
-            } else if (i > (totalPages - 2)) {getData(pageNum, data2Url);
+            } else if (i > (totalPages - 2)) {
+                getData(pageNum, data2Url);
                 htmls += "<li><a href='javasist:;' onClick='getData(" + (i - 1)
                     + ",\"" + dataUrl + "\"," + pageSize + ")'>" + i
                     + "</a></li>";
