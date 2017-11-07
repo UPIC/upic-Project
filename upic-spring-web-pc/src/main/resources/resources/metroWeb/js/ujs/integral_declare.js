@@ -52,7 +52,7 @@ $(function() {
 
 function submit() {
 	var data = new Object();
-	if (parseInt($("#integral").attr('value')) ==0) {
+	if (parseInt($("#integral").attr('value')) == 0) {
 		alert("请选择项目类别");
 		return;
 	}
@@ -67,7 +67,7 @@ function submit() {
 			return;
 		}
 		data.projectName = $("#selectProject").find("option:selected").text();
-		//项目编号
+		// 项目编号
 		data.field2 = val;
 		data.field1 = "radioselect1";
 	} else if (selectRadioIdName == "radioselect2") {
@@ -79,7 +79,9 @@ function submit() {
 		data.projectName = val;
 		data.field1 = "radioselect2";
 	}
-	data.integral=parseInt($("#integral").attr('value'));
+	data.projectCategory=$("#1").find("option:selected").text();
+	data.event=getEvent();
+	data.integral = parseInt($("#integral").attr('value'));
 	$.ajax({
 		type : 'POST',
 		url : submitUrl,
@@ -210,5 +212,12 @@ function ajaxs(datas, method, urls) {
 }
 
 function getEvent() {
-
+	var str = "";
+	for (var i = 1; i <= selectIdNum; i++) {
+		if (i != 1) {
+			str += "/";
+		}
+		str += $("#" + i + " option:selected").text();
+	}
+	return str;
 }

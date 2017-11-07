@@ -276,8 +276,8 @@ public class StudetAllController {
 				integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + cte.getAllFirstLetter(integralLogInfo.getProjectName()));
 			}
 			integralLogInfo.setIntegralLogId(integralLogIdInfo);
-			integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);
 			integralLogInfo.setCollegeOtherName(userInfo.getCollegeAli());
+			integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);
 			return integralLogInfo;
 		} catch (Exception e) {
 			LOGGER.info("postIntegralLog:" + e.getMessage());
