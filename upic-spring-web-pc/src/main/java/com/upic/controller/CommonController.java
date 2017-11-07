@@ -1,5 +1,6 @@
 package com.upic.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.condition.*;
 import com.upic.dto.*;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -721,13 +723,34 @@ public class CommonController {
      */
     @GetMapping("/updateProject")
     @ApiOperation("更新项目")
-    public ProjectInfo updateProject(ProjectInfo projectInfo) throws Exception {
+    public ProjectInfo updateProject(ProjectInfo projectInfo) {
         try {
             return projectService.updateProject(projectInfo);
         } catch (Exception e) {
             LOGGER.info("updateProject:" + e.getMessage());
-            throw new Exception("updateProject" + e.getMessage());
+            return null;
         }
+    }
+
+    @GetMapping("/changeAllProjectStatus")
+    @ApiOperation("审核、验证，通过、不通过")
+    public String changeAllProjectStatus(String projectNumList, String status) {
+        try {
+            List<String> projectNumLists=JSONArray.parseArray(projectNumList,String.class);
+            for (String projectNum : projectNumLists) {
+                ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
+                if (!status.equals("PASS") ) {
+                    projectInfo.setImplementationProcess(ImplementationProcessEnum.NOT_PASS);
+                } else {
+                    projectInfo.setImplementationProcess(changeProjectStatus(projectInfo.getImplementationProcess()));
+                }
+                projectService.updateProject(projectInfo);
+                return "SUCCESS";
+            }
+        } catch (Exception e) {
+            LOGGER.info("changeAllProjectStatus:" + e.getMessage());
+        }
+        return null;
     }
 
     /**
@@ -1207,6 +1230,22 @@ public class CommonController {
             if (outputStream != null) {
                 outputStream.close();
             }
+        }
+    }
+
+    private ImplementationProcessEnum changeProjectStatus(ImplementationProcessEnum implementationProcessEnum) {
+        if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT) {
+            return ImplementationProcessEnum.IN_AUDIT_AGAIN;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT_AGAIN) {
+            return ImplementationProcessEnum.IN_AUDIT_FINAL;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT_FINAL) {
+            return ImplementationProcessEnum.AUDITED;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING) {
+            return ImplementationProcessEnum.CHECKING_AGAIN;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING_AGAIN) {
+            return ImplementationProcessEnum.CHECKING_FINAL;
+        } else {
+            return ImplementationProcessEnum.CHECKED;
         }
     }
 }

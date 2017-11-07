@@ -10,6 +10,7 @@ var getProjectInfoUrl = "/common/getProjectInfo";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectCategoryUrl = "/common/getAllProjectCategory";
 var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
+var changeStatusUrl = "/common/changeAllProjectStatus";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -25,6 +26,7 @@ $(function () {
     registSelect("projectNum");
     registSelect("ProjectStatus");
 })
+
 function addProjectCategory(res) {
     var data = res.content;
     var htmls = "";
@@ -46,7 +48,6 @@ function addProjectStatus(res) {
     }
     $("#projectStatus").html(htmls);
 }
-
 
 function addHtmls(datas, pageNum) {
     totalPages = datas.totalElements;
@@ -75,14 +76,13 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + getDate(data[i].endTime, "yyyy/MM/dd hh:mm") + "</td>";
         htmls += "<td class='center_td'>" + statuss + "</td>";
         htmls += "<td class='center_td'><a href='#mymodal1'";
-        htmls += "data-toggle='modal'><div class='message_div' onclick=commonAjax('" + getProjectInfoUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET')>查看详情</div></a></td></tr>";
+        htmls += "data-toggle='modal'><div class='message_div' onclick=commonAjax('" + getProjectInfoUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (i + 1) + "')>查看详情</div></a></td></tr>";
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
 }
 
-
-function getProjectInfo(data) {
+function getProjectInfo(data, j) {
     var htmlss = "";
     var statuss = "";
     if (data.implementationProcess === "CHECKING") {
@@ -95,7 +95,7 @@ function getProjectInfo(data) {
 
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>编号</div>";
-    htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</div>";
+    htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
     htmlss += "<div class='span3'>代码</div>";
     htmlss += "<div class='span3'>" + data.projectNum + "</div>";
     htmlss += "</div>";
@@ -108,8 +108,8 @@ function getProjectInfo(data) {
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目类别</div>";
     htmlss += "<div class='span3'>" + data.projectCategory + "</div>";
-    htmlss += "<div class='span3'>所属学院</div>";
-    htmlss += "<div class='span3'>" + data.college + "</div>";
+    htmlss += "<div class='span3'>申报单位</div>";
+    htmlss += "<div class='span3'>" + data.declareUnit + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目名称</div>";
@@ -118,11 +118,12 @@ function getProjectInfo(data) {
     htmlss += "<div class='span3'>" + data.guidanceMan + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
-    htmlss += "<div class='span3'>" + data.content + "</div>";
+    htmlss += "<div class='span3'>项目内容</div>";
+    htmlss += "<div class='span9'>" + data.content + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>评价标准与形式</div>";
-    htmlss += "<div class='span9'></div>";
+    htmlss += "<div class='span9'>" + data.checkAssessmentCriteraAndForm + "</div>";
     htmlss += "</div>";
 
     $("#getProjectInfo").html(htmlss);
@@ -134,6 +135,7 @@ function pass() {
     $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
     });
+    var str=JSON.stringify(projectNumList);
     //status改为PASS
     var status = "PASS";
     //3者一起发送请求
@@ -141,14 +143,17 @@ function pass() {
         type: "GET",
         url: changeStatusUrl,
         data: {
-            "projectNumList": projectNumList,
-            "status": status
+            projectNumList: str,
+            status: status
         },
         success: function (result) {
-            alert("已发送 审核通过请求")
+            if (result === "SUCCESS") {
+                alert("已发送审核通过请求。")
+            }
+            getData(pageNum, dataUrl);
         }
     });
-    getData(pageNum, dataUrl);
+
 }
 
 function notPass() {
@@ -157,19 +162,20 @@ function notPass() {
     $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
     });
-    var status = "NOTPASS";
+    var status = "NOT_PASS";
 
     $.ajax({
         type: "GET",
         url: changeStatusUrl,
         data: {
-            "projectNumList": projectNumList,
-            "status": status,
+            projectNumList: projectNumList,
+            status: status,
         },
         success: function (result) {
-            alert("已发送 审核不通过请求")
+            if (result === "SUCCESS") {
+                alert("已发送审核未通过请求。")
+            }
         }
     });
     getData(pageNum, dataUrl);
-
 }
