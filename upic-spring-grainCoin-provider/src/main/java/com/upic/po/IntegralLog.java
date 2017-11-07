@@ -64,5 +64,7 @@ public class IntegralLog implements Serializable {
     private Date addTime;
 
     private String projectName;
+
+    private String collegeOtherName;
 }
 

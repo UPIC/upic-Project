@@ -293,7 +293,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Page<ProjectInfo> getProjectBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable,String rank, String colloge) {
+    public Page<ProjectInfo> getProjectBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable, String rank, String colloge) {
         Page<Project> projectPage = null;
         try {
             Specification<Project> projectSpecification = new Specification<Project>() {
@@ -344,9 +344,9 @@ public class ProjectServiceImpl implements ProjectService {
                     if (projectCategoryOr == null) {
                         result = status;
                     }
-                    if(rank.equals("3")) {
-                    	Predicate equal = cb.equal(root.get("collegeOtherName"), colloge);
-                    	result=cb.and(result,equal);
+                    if (rank.equals("3")) {
+                        Predicate equal = cb.equal(root.get("collegeOtherName"), colloge);
+                        result = cb.and(result, equal);
                     }
                     return result;
 

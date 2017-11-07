@@ -161,5 +161,5 @@ public interface IntegralLogService {
 
     List<Object> listIntegralLog(IntegralLogCondition condition);
 
-    Page<IntegralLogInfo> getIntegralLogBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable);
+    Page<IntegralLogInfo> getIntegralLogBySql(List<String> statusList, List<String> projectCategoryList, String rank, String colloge, Pageable pageable);
 }

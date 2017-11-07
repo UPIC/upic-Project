@@ -45,9 +45,12 @@ public class SystemManagerController {
     @GetMapping("/getIntegralLogBySql")
     public Page<IntegralLogInfo> getIntegralLogBySql(Pageable pageable) {
         try {
-            List<String> statusList = getUser().getStatusList();
-            List<String> projectCategoryList = getUser().getProjectCategoryList();
-            return integralLogService.getIntegralLogBySql(statusList, projectCategoryList, pageable);
+            SocialUsers s = getUser();
+            List<String> statusList = s.getStatusList();
+            List<String> projectCategoryList = s.getProjectCategoryList();
+            String rank = s.getRank();
+            String colloge = s.getCollegeAli();
+            return integralLogService.getIntegralLogBySql(statusList, projectCategoryList, rank, colloge, pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
             return null;
@@ -58,12 +61,12 @@ public class SystemManagerController {
     @GetMapping("/getProjectBySql")
     public Page<ProjectInfo> getProjectBySql(Pageable pageable) {
         try {
-            SocialUsers s=getUser();
+            SocialUsers s = getUser();
             List<String> statusList = s.getStatusList();
             List<String> projectCategoryList = s.getProjectCategoryList();
-            String rank=s.getRank();
-            String colloge=s.getCollegeAli();
-            Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageable,rank,colloge);
+            String rank = s.getRank();
+            String colloge = s.getCollegeAli();
+            Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageable, rank, colloge);
             return projectInfoPage;
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
