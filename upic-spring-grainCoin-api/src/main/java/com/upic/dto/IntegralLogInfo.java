@@ -47,10 +47,12 @@ public class IntegralLogInfo implements Serializable {
 
     private String projectCategory;
 
+    private String collegeOtherName;
+
     public IntegralLogInfo() {
     }
 
-    public IntegralLogInfo(IntegralLogIdInfo integralLogId, String event, double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, List<String> integralLogPic, Date creatTime, String field1, String field2, String field3, String field4, String field5, Date addTime, String projectName, String projectCategory) {
+    public IntegralLogInfo(IntegralLogIdInfo integralLogId, String event, double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, List<String> integralLogPic, Date creatTime, String field1, String field2, String field3, String field4, String field5, Date addTime, String projectName, String projectCategory, String collegeOtherName) {
         this.integralLogId = integralLogId;
         this.event = event;
         this.integral = integral;
@@ -69,6 +71,7 @@ public class IntegralLogInfo implements Serializable {
         this.addTime = addTime;
         this.projectName = projectName;
         this.projectCategory = projectCategory;
+        this.collegeOtherName = collegeOtherName;
     }
 
     public IntegralLogIdInfo getIntegralLogId() {
@@ -215,6 +218,14 @@ public class IntegralLogInfo implements Serializable {
         this.projectCategory = projectCategory;
     }
 
+    public String getCollegeOtherName() {
+        return collegeOtherName;
+    }
+
+    public void setCollegeOtherName(String collegeOtherName) {
+        this.collegeOtherName = collegeOtherName;
+    }
+
     @Override
     public String toString() {
         return "IntegralLogInfo{" +
@@ -235,6 +246,7 @@ public class IntegralLogInfo implements Serializable {
                 ", addTime=" + addTime +
                 ", projectName='" + projectName + '\'' +
                 ", projectCategory='" + projectCategory + '\'' +
+                ", collegeOtherName='" + collegeOtherName + '\'' +
                 '}';
     }
 

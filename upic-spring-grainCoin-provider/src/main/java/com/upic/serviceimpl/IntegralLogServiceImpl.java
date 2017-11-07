@@ -338,7 +338,7 @@ public class IntegralLogServiceImpl implements IntegralLogService {
     }
 
     @Override
-    public Page<IntegralLogInfo> getIntegralLogBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable) {
+    public Page<IntegralLogInfo> getIntegralLogBySql(List<String> statusList, List<String> projectCategoryList, String rank, String colloge, Pageable pageable) {
         Page<IntegralLog> integralLogPage = null;
         try {
             Specification<IntegralLog> integralLogSpecification = new Specification<IntegralLog>() {
@@ -371,8 +371,31 @@ public class IntegralLogServiceImpl implements IntegralLogService {
                     } else if (projectCategoryList.size() == 1) {
                         projectCategoryOr = cb.equal(root.get("projectCategory"), projectCategoryList.get(0));
                     }
-                    Predicate and = cb.and(statusOr, projectCategoryOr);
-                    return and;
+//                    Predicate and = cb.and(statusOr, projectCategoryOr);
+//                    return and;
+
+//                    Predicate and = changeStatus(statusList).size()==0?cb.and( projectCategoryOr):cb.and(statusOr, projectCategoryOr);
+                    Predicate status = null;
+//                    Predicate projectCategory=null;
+                    Predicate result = null;
+                    if (changeStatus(statusList).size() > 0) {
+                        status = cb.and(statusOr);
+                    }
+                    if (projectCategoryOr != null) {
+                        if (status == null) {
+                            result = cb.and(projectCategoryOr);
+                        } else {
+                            result = cb.and(projectCategoryOr, status);
+                        }
+                    }
+                    if (projectCategoryOr == null) {
+                        result = status;
+                    }
+                    if (rank.equals("3")) {
+                        Predicate equal = cb.equal(root.get("collegeOtherName"), colloge);
+                        result = cb.and(result, equal);
+                    }
+                    return result;
                 }
             };
             integralLogPage = integralLogRepository.findAll(integralLogSpecification, pageable);
@@ -401,17 +424,23 @@ public class IntegralLogServiceImpl implements IntegralLogService {
     private List<IntegralLogStatusEnum> changeStatus(List<String> statusList) {
         List<IntegralLogStatusEnum> statusEnums = new ArrayList<>();
         for (String status : statusList) {
-            if (status == IntegralLogStatusEnum.PENDING_AUDIT.name()) {
+            if (status.equals(IntegralLogStatusEnum.SAVE.name())) {
+                statusEnums.add(IntegralLogStatusEnum.SAVE);
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT.name())) {
                 statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT);
-            } else if (status == IntegralLogStatusEnum.HAVEPASSED.name()) {
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN.name())) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_FINAL.name())) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_FINAL);
+            } else if (status.equals(IntegralLogStatusEnum.HAVEPASSED.name())) {
                 statusEnums.add(IntegralLogStatusEnum.HAVEPASSED);
-            } else if (status == IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT.name()) {
+            } else if (status.equals(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT.name())) {
                 statusEnums.add(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT);
-            } else if (status == IntegralLogStatusEnum.ALREADY_SIGN_UP.name()) {
+            } else if (status.equals(IntegralLogStatusEnum.ALREADY_SIGN_UP.name())) {
                 statusEnums.add(IntegralLogStatusEnum.ALREADY_SIGN_UP);
-            } else if (status == IntegralLogStatusEnum.SIGNED_IN.name()) {
+            } else if (status.equals(IntegralLogStatusEnum.SIGNED_IN.name())) {
                 statusEnums.add(IntegralLogStatusEnum.SIGNED_IN);
-            } else if (status == IntegralLogStatusEnum.COMPLETED.name()) {
+            } else if (status.equals(IntegralLogStatusEnum.COMPLETED.name())) {
                 statusEnums.add(IntegralLogStatusEnum.COMPLETED);
             }
         }
