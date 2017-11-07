@@ -289,6 +289,18 @@ public class CommonController {
 //        }
 //    }
 
+    @GetMapping("/getCategoryNodeByFatherId")
+    @ApiOperation("根据FatherId获取项目节点")
+    public List<CategoryNodeInfo> getCategoryNodeByFatherId(long fatherId) {
+        try {
+            List<CategoryNodeInfo> categoryNodeInfoList = categoryNodeService.getCategoryNodeByFatherId(fatherId);
+            return categoryNodeInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getCategoryNodeByFatherId:" + e.getMessage());
+            return null;
+        }
+    }
+
     /**
      * 根据条件查询活动*
      *
