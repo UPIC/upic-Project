@@ -52,6 +52,7 @@ function addHtmls(datas, pageNum) {
     for (var i = 0; i < data.length; i++) {
         var statuss = "";
         if (data[i].implementationProcess === "IN_AUDIT" || data[i].implementationProcess === "IN_AUDIT_AGAIN" || data[i].implementationProcess === "IN_AUDIT_FINAL") {
+        } else {
             if (data[i].implementationProcess === "CHECKING") {
                 statuss = "待初验";
             } else if (data[i].implementationProcess === "CHECKING_AGAIN") {

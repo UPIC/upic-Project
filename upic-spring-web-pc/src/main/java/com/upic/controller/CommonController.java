@@ -69,6 +69,9 @@ public class CommonController {
     @Autowired
     private ClazzService clazzService;
 
+    @Autowired
+    private ConfirmationBasisService confirmationBasisService;
+
     /**
      * 根据ID获取项目类别
      *
@@ -297,6 +300,18 @@ public class CommonController {
             return categoryNodeInfoList;
         } catch (Exception e) {
             LOGGER.info("getCategoryNodeByFatherId:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/getConfirmationBasisByCategoryNodeId")
+    @ApiOperation("根据项目节点ID获取固定项目")
+    public List<ConfirmationBasisInfo> getConfirmationBasisByCategoryNodeId(long categoryNodeId) {
+        try {
+            List<ConfirmationBasisInfo> confirmationBasisInfoList = confirmationBasisService.getByCategoryNodeId(categoryNodeId);
+            return confirmationBasisInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getConfirmationBasisByCategoryNodeId:" + e.getMessage());
             return null;
         }
     }
