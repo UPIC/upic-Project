@@ -1,4 +1,4 @@
-var dataUrl = "/common/getProject";
+var dataUrl = "/systemManager/getProjectBySql";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var pageSize = 0;
@@ -164,7 +164,7 @@ function getProjectInfo(data) {
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>评价标准与形式</div>";
-    htmlss += "<div class='span9'>"+data.checkAssessmentCriteraAndForms+"</div>";
+    htmlss += "<div class='span9'>" + data.checkAssessmentCriteraAndForms + "</div>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='dr'>";
@@ -182,7 +182,7 @@ function getProjectInfo(data) {
     htmlss += "<div class='modal-header'>";
     htmlss += "<h4>审核不通过原因</h4>";
     htmlss += "</div>";
-    htmlss += "<div class="">";
+    htmlss += "<div class=''>";
     htmlss += "<textarea name='1' id='textarea'>111</textarea>";
     htmlss += "</div>";
     htmlss += "<div class='modal-footer'>";
@@ -194,13 +194,13 @@ function getProjectInfo(data) {
     $("#getProjectInfo").html(htmlss);
 }
 
-function passOne(projectNum){
+function passOne(projectNum) {
     $.ajax({
         type: "GET",
         url: updateIntegralLogStatus,
-        data:{
-            "projectNum":projectNum,
-            "status":"审核通过"
+        data: {
+            "projectNum": projectNum,
+            "status": "审核通过"
         },
         success: function (result) {
             alert("已发送 审核通过请求")
@@ -208,15 +208,15 @@ function passOne(projectNum){
     });
 }
 
-function notPassOne(projectNum){
-    var textarea=$("#textarea").text();
+function notPassOne(projectNum) {
+    var textarea = $("#textarea").text();
     $.ajax({
         type: "GET",
         url: updateIntegralLogStatus,
-        data:{
-            "projectNum":projectNum,
-            "status":"审核不通过"，
-            "cause":textarea
+        data: {
+            "projectNum": projectNum,
+            "status": "审核不通过",
+            "cause": textarea
         },
         success: function (result) {
             alert("已发送 审核不通过请求")
@@ -224,21 +224,21 @@ function notPassOne(projectNum){
     });
 }
 
-function pass(){
+function pass() {
     var projectNumList = new Array();
     //获取选中框的projectNum放入list
-    $("input[type=checkbox]:checked").each(function(){
+    $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
     });
     //status改为PASS
-    var status="PASS";
+    var status = "PASS";
     //3者一起发送请求
     $.ajax({
         type: "GET",
         url: updateIntegralLogStatus,
-        data:{
-            "projectNumList":projectNumList,
-            "status":status
+        data: {
+            "projectNumList": projectNumList,
+            "status": status
         },
         success: function (result) {
             alert("已发送 审核通过请求")
@@ -246,21 +246,21 @@ function pass(){
     });
 }
 
-function notPass(){
+function notPass() {
     var projectNumList = new Array();
-    $("input[type=checkbox]:checked").each(function(){
+    $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
     });
-    var status="NOTPASS";
-    var notPassCause=$("#notPassCause").attr("placeholder");
+    var status = "NOTPASS";
+    var notPassCause = $("#notPassCause").attr("placeholder");
     $.ajax({
         type: "GET",
         url: updateIntegralLogStatus,
-        data:{
-            "projectNumList":projectNumList,
-            "studentNumList":studentNumList,
-            "status":status,
-            "content":notPassCause
+        data: {
+            "projectNumList": projectNumList,
+            "studentNumList": studentNumList,
+            "status": status,
+            "content": notPassCause
         },
         success: function (result) {
             alert("已发送 审核不通过请求")
