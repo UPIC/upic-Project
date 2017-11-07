@@ -131,7 +131,7 @@ public interface ProjectService {
 
     void saveAll(List<Object> list);
 
-    Page<ProjectInfo> getProjectBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable, String rank, String colloge);
+    Page<ProjectInfo> getProjectBySql(List<String> statusList, List<String> projectCategoryList, Pageable pageable, String rank, String colloge, String type);
 
     List<Object> exportProjectByGuidanceNum(String guidanceMnum);
 

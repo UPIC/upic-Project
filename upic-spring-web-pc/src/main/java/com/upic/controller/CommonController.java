@@ -146,6 +146,11 @@ public class CommonController {
         }
     }
 
+    /**
+     * 获取项目状态
+     *
+     * @return
+     */
     @GetMapping("/getAllProjectImplementationProcess")
     @ApiOperation("获取项目状态")
     public List<String> getAllProjectImplementationProcess() {
@@ -292,6 +297,12 @@ public class CommonController {
 //        }
 //    }
 
+    /**
+     * 根据FatherId获取项目节点
+     *
+     * @param fatherId
+     * @return
+     */
     @GetMapping("/getCategoryNodeByFatherId")
     @ApiOperation("根据FatherId获取项目节点")
     public List<CategoryNodeInfo> getCategoryNodeByFatherId(long fatherId) {
@@ -304,6 +315,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * 根据项目节点ID获取固定项目
+     *
+     * @param categoryNodeId
+     * @return
+     */
     @GetMapping("/getConfirmationBasisByCategoryNodeId")
     @ApiOperation("根据项目节点ID获取固定项目")
     public List<ConfirmationBasisInfo> getConfirmationBasisByCategoryNodeId(long categoryNodeId) {

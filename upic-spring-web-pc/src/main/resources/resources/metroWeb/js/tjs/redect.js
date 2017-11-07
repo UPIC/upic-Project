@@ -41,7 +41,9 @@ function addProjectCategory(cn){
      $.ajax({
         type : "GET",
         url : addProjectCategoryUrl,
-        data : categoryName=cn,
+        data : {
+          "categoryName":cn
+        },
         success : function(result) {
            alert(result)
        }
@@ -86,11 +88,11 @@ function updateProjectCategory(categoryid,old){
         type : "GET",
         url : updateProjectCategoryUrl,
         data : {
-            id : categoryid,
-            categoryName : old
+            "id" : categoryid,
+            "categoryName" : old
         }
         success : function(result) {
-           alert(result)
+           alert("已修改");
        }
    });
 }

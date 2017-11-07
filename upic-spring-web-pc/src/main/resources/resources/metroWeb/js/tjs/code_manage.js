@@ -61,7 +61,7 @@ function addHtmls(datas,pageNum) {
         htmls+="<tr><td><input type='checkbox' class='checkboxes' value='1' id='"+data[i].projectNum+"'/></td>";
         htmls+="<td class='center_td'>";
         htmls+="<div class='common-row'>";
-        htmls+="<div class='cell-right'><span class='"+turnOnOrTurnOff+"' themeColor='#6d9eeb' id='"+data[i].projectNum+"' onclick'changeStatus("+data[i].projectNum+","+tOrF+")'></span></div>";
+        htmls+="<div class='cell-right'><span class='"+turnOnOrTurnOff+"' themeColor='#6d9eeb' id='"+data[i].projectNum+"' onclick=changeStatus("+data[i].projectNum+","+tOrF+")'></span></div>";
         htmls+="</div>";
         htmls+="</td>";
         htmls+="<td class='center_td'>"+data[i].projectNum+"</td>";
@@ -121,8 +121,8 @@ function changeStatus(pN,juge){
         type: 'GET',
         url: changeCodeUrl,
         data: {
-           projectNum : pN,
-           onOff :  juge
+           "projectNum" : pN,
+           "onOff" :  juge
         },
         success: function (result) {
             alert(result);
