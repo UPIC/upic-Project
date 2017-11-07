@@ -18,20 +18,19 @@ public class AdviceInfo extends BaseInfo {
 
     private AdviceTypeEnum type; //类型
 
-    private ProjectInfo project;
+    private long projectId;
 
     public AdviceInfo() {
         super();
     }
 
-    public AdviceInfo(String advice, String operator, String operatorNum, AdviceStatusOperationEnum statusOperation, AdviceTypeEnum type, ProjectInfo project) {
-        super();
+    public AdviceInfo(String advice, String operator, String operatorNum, AdviceStatusOperationEnum statusOperation, AdviceTypeEnum type, long projectId) {
         this.advice = advice;
         this.operator = operator;
         this.operatorNum = operatorNum;
         this.statusOperation = statusOperation;
         this.type = type;
-        this.project = project;
+        this.projectId = projectId;
     }
 
     public String getAdvice() {
@@ -74,12 +73,12 @@ public class AdviceInfo extends BaseInfo {
         this.type = type;
     }
 
-    public ProjectInfo getProject() {
-        return project;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setProject(ProjectInfo project) {
-        this.project = project;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
     @Override
@@ -90,7 +89,7 @@ public class AdviceInfo extends BaseInfo {
                 ", operatorNum='" + operatorNum + '\'' +
                 ", statusOperation=" + statusOperation +
                 ", type=" + type +
-                ", project=" + project +
+                ", projectId=" + projectId +
                 '}';
     }
 }

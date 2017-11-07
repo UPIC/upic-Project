@@ -11,5 +11,7 @@
     <dubbo:protocol name="dubbo" port="20883"/>
     <dubbo:service interface="com.upic.service.ProjectService" ref="projectService" version="1.0"
                    group="project"></dubbo:service>
+    <dubbo:service interface="com.upic.service.AdviceService" ref="adviceService" version="1.0"
+                   group="project"></dubbo:service>
 
 </beans>

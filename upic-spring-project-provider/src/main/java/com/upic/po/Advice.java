@@ -25,7 +25,5 @@ public class Advice extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AdviceTypeEnum type; //类型
 
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = Project.class)
-    @JoinColumn(unique = true, nullable = false, updatable = false)
-    private Project project;
+    private long projectId;
 }

@@ -91,15 +91,15 @@
                         <label for="cname" class="control-label">申报日期</label>
                     <div class="controls">
                           <div class="input-append date" id="datetimepicker" data-date="2017/09/14" data-date-format="dd-mm-yyyy">
-                       <input class="span2 nowdate" size="16" type="text" value="12-02-2012">
+                       <input class="span2 nowdate" size="16" type="text" value="" id="creatTime">
                        <span class="add-on"><i class="icon-th"></i></span>
                       </div>
                     </div>
                     </div>
                     <div class="span6">
                        <label for="cname" class="control-label">工作量</label>
-                       <div class="controls">
-                        40
+                       <div class="controls" id="gzl">
+
                        </div>
                     </div>
                     </div>
@@ -107,7 +107,7 @@
                     <div class="span6">
                         <label for="cname" class="control-label">申报单位</label>
                     <div class="controls">
-                          <select class="input-large m-wrap" tabindex="1">
+                          <select class="input-large m-wrap" tabindex="1" id="declareUnit">
                           <option value="category 1">信息工程学院</option>
                               <option value="category 1">团委</option>
 
@@ -117,7 +117,7 @@
                     <div class="span6">
                        <label for="cname" class="control-label">负责人</label>
                        <div class="controls">
-                        <input type="text" value="XXX">
+                        <input type="text" value="" id="guidanceMan">
                        </div>
                     </div>
                     </div>
@@ -125,7 +125,7 @@
                     <div class="span6">
                         <label for="cname" class="control-label">项目类别</label>
                     <div class="controls">
-                          <select class="input-large m-wrap" tabindex="1">
+                          <select class="input-large m-wrap" tabindex="1" id="getAllProjectCategory">
                           <option value="category 1">--请选择项目类别--</option>
                               <option value="category 1">创新实践</option>
                               <option value="category 2">创业实践</option>
@@ -144,7 +144,7 @@
                     <div class="span6">
                        <label for="cname" class="control-label">项目名称</label>
                        <div class="controls">
-                        <input type="text" name="">
+                        <input type="text" name="" id="projectName">
                        </div>
                     </div>
                     </div>
@@ -152,13 +152,13 @@
                     <div class="span6">
                         <label for="cname" class="control-label">积分</label>
                     <div class="controls">
-                          <input type="text">
+                          <input type="number" step="0.1"  min="0" id="integral">
                     </div>
                     </div>
                     <div class="span6">
                        <label for="cname" class="control-label">最大参与人数</label>
                        <div class="controls">
-                        <input type="text" name="">
+                        <input type="text" name="" id="maximum">
                        </div>
                     </div>
                     </div>
@@ -167,7 +167,7 @@
                         <label for="cname" class="control-label">开设时间</label>
                     <div class="controls">
                           <div class="input-append date" id="datetimepicker1" data-date="2017/09/14" data-date-format="dd-mm-yyyy">
-                       <input class="span2 nowdate" size="16" type="text" value="12-02-2012">
+                       <input class="span2 nowdate" size="16" type="text" value="" id="startTime">
                        <span class="add-on"><i class="icon-th"></i></span>
                       </div>
                     </div>
@@ -176,7 +176,7 @@
                        <label for="cname" class="control-label">结束时间</label>
                        <div class="controls">
                           <div class="input-append date" id="datetimepicker2" data-date="2017/09/14" data-date-format="dd-mm-yyyy">
-                       <input class="span2 nowdate" size="16" type="text" value="12-02-2012">
+                       <input class="span2 nowdate" size="16" type="text" value="" id="endTime">
                        <span class="add-on"><i class="icon-th"></i></span>
                       </div>
                     </div>
@@ -195,7 +195,7 @@
                         <label for="cname" class="control-label">报名开始时间</label>
                     <div class="controls">
                           <div class="input-append date form_datetime" id="datetimepicker1" data-date="2017/09/14" data-date-format="dd-mm-yyyy">
-                       <input class="span2 nowdate" size="16" type="text" value="12-02-2012">
+                       <input class="span2" size="16" type="text" value="" id="signUpStartTime">
                        <span class="add-on"><i class="icon-th"></i></span>
                       </div>
                     </div>
@@ -204,7 +204,7 @@
                        <label for="cname" class="control-label">报名结束时间</label>
                        <div class="controls">
                           <div class="input-append date" id="datetimepicker2" data-date="2017/09/14" data-date-format="dd-mm-yyyy">
-                       <input class="span2 nowdate" size="16" type="text" value="12-02-2012">
+                       <input class="span2" size="16" type="text" value="" id="signUpEndTime">
                        <span class="add-on"><i class="icon-th"></i></span>
                       </div>
                     </div>
@@ -214,7 +214,7 @@
                       <div class="span10">
                         <label for="cname" class="control-label">项目主要内容</label>
                         <div class="controls">
-                        <textarea class="span9"></textarea>
+                        <textarea class="span9" id="content"></textarea>
                         </div>
                       </div>
                     </div>
@@ -222,7 +222,7 @@
                       <div class="span10">
                         <label for="cname" class="control-label">项目实施进程</label>
                         <div class="controls">
-                        <textarea class="span9"></textarea>
+                        <textarea class="span9" id="implementationProcess"></textarea>
                         </div>
                       </div>
                     </div>
@@ -230,13 +230,13 @@
                       <div class="span10">
                         <label for="cname" class="control-label">考核评价标准与形式</label>
                         <div class="controls">
-                        <textarea class="span9"></textarea>
+                        <textarea class="span9" id="checkAssessmentCriteraAndForm"></textarea>
                         </div>
                       </div>
                     </div>
                     <div class="form-actions">
-                        <button class="btn btn-success" type="submit">保存</button>
-                        <button class="btn" type="button">取消</button>
+                        <button class="btn btn-success" type="submit" onclick=saveProject()>保存</button>
+                        <button class="btn" type="button" onclick=cancel()>取消</button>
                     </div>
 
 
@@ -339,6 +339,7 @@ $("#check1").click(function(){
       $("#checkif").hide();
     }
   });
+
  </script>
 </body>
 

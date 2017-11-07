@@ -18,17 +18,19 @@ public class AdviceCondition extends BaseCondition {
 
     private AdviceTypeEnum type; //类型
 
+    private Long projectId;
+
     public AdviceCondition() {
         super();
     }
 
-    public AdviceCondition(String advice, String operator, String operatorNum, AdviceStatusOperationEnum statusOperation, AdviceTypeEnum type) {
-        super();
+    public AdviceCondition(String advice, String operator, String operatorNum, AdviceStatusOperationEnum statusOperation, AdviceTypeEnum type, Long projectId) {
         this.advice = advice;
         this.operator = operator;
         this.operatorNum = operatorNum;
         this.statusOperation = statusOperation;
         this.type = type;
+        this.projectId = projectId;
     }
 
     public String getAdvice() {
@@ -69,5 +71,13 @@ public class AdviceCondition extends BaseCondition {
 
     public void setType(AdviceTypeEnum type) {
         this.type = type;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }
