@@ -2,14 +2,48 @@ var dataUrl="";
 var addUserUrl="/common/addUser";//添加用户
 var searchKeyWordUrl="/common/userSearchBar";//搜索条
 var updateUser="/common/updateUser"//更新用户
-//导入用户
+var daoruUrl="";//导入用户
 var pageSize = 0;
 var totalPages=-1;
 var pageNum=0;
 
 function getFile(){//获取EXCEL
+  //ajax方法上传文件到后台
+    var files = $('input[name="inputFile"]').prop('files');//获取到文件列表
+    $.ajax({
+        type: "POST",
+        url: daoruUrl,
+        data: files,
+        success: function (result) {
+            alert("已导入")
+        }
+    });
 
+}
 
+function addOne(){
+  var Data={};
+  Data.college=$("#college1").val();
+  Data.clazz=$("#clazz1").text();
+  Data.userNum=$("#userNum1").val();
+  Data.userName=$("#userName1").val();
+
+  Data.status="";//保存状态码
+  $.ajax({
+    type : "POST",
+    url : addUserUrl,
+    data : Data,
+    success : function(result) {
+      alert("已新建用户")
+  }
+});
+}
+
+function clearStr(){
+  $("#college1").val("");
+  $("#clazz1").text("");
+  $("#userNum1").val("");
+  $("#userName1").val("");
 }
 
 $(function(){
@@ -86,7 +120,7 @@ function save(){
   Data.status="";//保存状态码
   $.ajax({
     type : "POST",
-    url : saveUrl,
+    url : updateUser,
     data : Data,
     success : function(result) {
       alert("已保存")

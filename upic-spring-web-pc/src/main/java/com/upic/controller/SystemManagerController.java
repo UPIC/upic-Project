@@ -59,14 +59,14 @@ public class SystemManagerController {
 
     @ApiOperation("教师获取需要审批的项目申报")
     @GetMapping("/getProjectBySql")
-    public Page<ProjectInfo> getProjectBySql(Pageable pageable) {
+    public Page<ProjectInfo> getProjectBySql(String type, Pageable pageable) {
         try {
             SocialUsers s = getUser();
             List<String> statusList = s.getStatusList();
             List<String> projectCategoryList = s.getProjectCategoryList();
             String rank = s.getRank();
             String colloge = s.getCollegeAli();
-            Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageable, rank, colloge);
+            Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageable, rank, colloge, type);
             return projectInfoPage;
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());

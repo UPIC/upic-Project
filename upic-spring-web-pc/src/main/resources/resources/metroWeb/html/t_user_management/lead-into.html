@@ -60,9 +60,6 @@
 .export{
   margin-left:10px;
 }
-.new{
-  margin-left:10px;
-}
 #mymodal1{
   width:600px;
 }
@@ -89,6 +86,37 @@
 }
 #select-small{
   width:55px;
+}
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 14px;
+    float:left;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+.span6 form{
+  margin-left:10px;
+  float: left;
 }
 </style>
 </head>
@@ -166,15 +194,15 @@
           <div class="block-fluid">
             <div class="row-form clearfix">
               <div class="span3">所属学院</div>
-              <div class="span3"><input type="text" name="" ></div>
+              <div class="span3"><input type="text" name="" id="college1" ></div>
               <div class="span3">班级</div>
-              <div class="span3"><input type="text" name="" ></div>
+              <div class="span3"><input type="text" name="" id="clazz1"></div>
             </div>
             <div class="row-form clearfix">
               <div class="span3">学号</div>
-              <div class="span3"><input type="text" name="" ></div>
+              <div class="span3"><input type="text" name="" id="userNum1"></div>
               <div class="span3">姓名</div>
-              <div class="span3"><input type="text" name="" ></div>
+              <div class="span3"><input type="text" name="" id="username1"></div>
             </div>
 
           </div>
@@ -182,8 +210,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button>
-        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="addOne()">保存</button>
+        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true" onclick="clearStr()">关闭</button>
       </div>
     </div>
 
@@ -269,10 +297,13 @@
       $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
      /* $("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
      $(".selectlist").after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目名称筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');*/
-     $("#sample_1_length").after('<a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-warning new"><i class="icon-plus icon-white"></i>新建</button></a><button class="btn btn-small btn-success"><i class="icon-cloud"></i>导入</button>');
+     /*$("#sample_1_length").after('<a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-warning new"><i class="icon-plus icon-white"></i>新建</button></a><form method="post" enctype="multipart/form-data"><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form>');*/
+    $("#sample_1_length").after('<form method="post" enctype="multipart/form-data"><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-warning new"><i class="icon-plus icon-white"></i>新建</button></a>');
+
+
      /*        $(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/
-     $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
-     $(".dataTables_filter").parent(".span6").css('width', '33.9%');
+     $("#sample_1_wrapper>.row-fluid>.span6").first().css('width','62.9%');
+      $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
    })
  </script>
  <script src="../../js/tjs/pagejs.js"></script>
