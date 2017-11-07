@@ -276,10 +276,10 @@
             <h4 id="myModalLabel2">审核不通过原因</h4>
         </div>
         <div class="">
-            <textarea name="1">111</textarea>
+            <textarea name="1" id="fail_reason">111</textarea>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary close-btn">提交</button>
+            <button class="btn btn-primary close-btn" onclick="notPass()">提交</button>
             <button class="btn btn-default close-btn">关闭</button>
         </div>
     </div>
@@ -354,10 +354,10 @@
 
         $(".selectlist")
             .after(
-                '<div class="selectlist selectlist_second"> <select id="ProjectStatus" name="ProjectStatus" style="width: 100%;" class="color-wh"> <option value="4" class="yellow">项目状态筛选...</option> <option value="5">项目类别</option> <option value="6">项目类别</option> </select> </div>');
+                '<div class="selectlist selectlist_second"> <select id="projectStatus" name="ProjectStatus" style="width: 100%;" class="color-wh"> <option value="4" class="yellow">项目状态筛选...</option> <option value="5">项目类别</option> <option value="6">项目类别</option> </select> </div>');
         $(".selectlist_second")
             .after(
-                '<button class="btn btn-small btn-info" id=pass()>审核通过</button><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-danger btn-no">审核不通过</button></a>');
+                '<button class="btn btn-small btn-info" onclick="pass()">审核通过</button><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-danger btn-no">审核不通过</button></a>');
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
             '62.9%');
         $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');

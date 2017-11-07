@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.condition.*;
 import com.upic.dto.*;
+import com.upic.enums.AdviceStatusOperationEnum;
 import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.service.*;
@@ -73,6 +74,9 @@ public class CommonController {
 
     @Autowired
     private ConfirmationBasisService confirmationBasisService;
+
+    @Autowired
+    private AdviceService adviceService;
 
     /**
      * 根据ID获取项目类别
@@ -734,13 +738,21 @@ public class CommonController {
 
     @GetMapping("/changeAllProjectStatus")
     @ApiOperation("审核、验证，通过、不通过")
-    public String changeAllProjectStatus(String projectNumList, String status) {
+    public String changeAllProjectStatus(String projectNumList, String status, String failReason) {
         try {
             List<String> projectNumLists=JSONArray.parseArray(projectNumList,String.class);
             for (String projectNum : projectNumLists) {
                 ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
                 if (!status.equals("PASS") ) {
                     projectInfo.setImplementationProcess(ImplementationProcessEnum.NOT_PASS);
+                    AdviceInfo adviceInfo = new AdviceInfo();
+                    adviceInfo.setAdvice(failReason);
+                    adviceInfo.setCreatTime(new Date());
+                    adviceInfo.setOperator(getUser().getUserNum());
+                    adviceInfo.setOperatorNum(getUser().getUserId());
+                    adviceInfo.setStatusOperation(AdviceStatusOperationEnum.NOT_PASS);
+                    adviceInfo.setProjectId(projectInfo.getId());
+                    adviceService.addAdvice(adviceInfo);
                 } else {
                     projectInfo.setImplementationProcess(changeProjectStatus(projectInfo.getImplementationProcess()));
                 }

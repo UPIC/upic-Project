@@ -10,4 +10,6 @@
 
     <dubbo:reference id="projectService" interface="com.upic.service.ProjectService" version="1.0" group="project"
                      check="false"></dubbo:reference>
+    <dubbo:reference id="adviceService" interface="com.upic.service.AdviceService" version="1.0" group="project"
+                     check="false"></dubbo:reference>
 </beans>

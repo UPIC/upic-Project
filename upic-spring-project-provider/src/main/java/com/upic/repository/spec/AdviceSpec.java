@@ -19,5 +19,6 @@ public class AdviceSpec extends CommonSimpleSpecification<Advice, AdviceConditio
         addEqualsCondition(queryWraper, "operatorNum");
         addEqualsCondition(queryWraper, "statusOperation");
         addEqualsCondition(queryWraper, "type");
+        addEqualsCondition(queryWraper, "projectId");
     }
 }

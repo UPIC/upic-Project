@@ -135,7 +135,7 @@ function pass() {
     $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
     });
-    var str=JSON.stringify(projectNumList);
+    var str = JSON.stringify(projectNumList);
     //status改为PASS
     var status = "PASS";
     //3者一起发送请求
@@ -153,7 +153,6 @@ function pass() {
             getData(pageNum, dataUrl);
         }
     });
-
 }
 
 function notPass() {
@@ -163,19 +162,20 @@ function notPass() {
         projectNumList.push($(this).attr("id"));
     });
     var status = "NOT_PASS";
+    var str = JSON.stringify(projectNumList);
 
     $.ajax({
         type: "GET",
         url: changeStatusUrl,
         data: {
-            projectNumList: projectNumList,
+            projectNumList: str,
             status: status,
         },
         success: function (result) {
             if (result === "SUCCESS") {
                 alert("已发送审核未通过请求。")
             }
+            getData(pageNum, dataUrl);
         }
     });
-    getData(pageNum, dataUrl);
 }
