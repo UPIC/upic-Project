@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,6 +92,24 @@ public class ConfirmationBasisServiceImpl implements ConfirmationBasisService {
             return confirmationBasisInfo;
         } catch (Exception e) {
             LOGGER.info("getSystemProjectByCategoryNodeId：" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<ConfirmationBasisInfo> getByCategoryNodeId(long categoryNodeId) {
+        try {
+            List<ConfirmationBasis> confirmationBasisList = new ArrayList<ConfirmationBasis>();
+            confirmationBasisList = confirmationBasisRepository.getByCategoryNodeId(categoryNodeId);
+            List<ConfirmationBasisInfo> confirmationBasisInfoList = new ArrayList<ConfirmationBasisInfo>();
+            for (ConfirmationBasis confirmationBasis : confirmationBasisList) {
+                ConfirmationBasisInfo confirmationBasisInfo = new ConfirmationBasisInfo();
+                UpicBeanUtils.copyProperties(confirmationBasis, confirmationBasisInfo);
+                confirmationBasisInfoList.add(confirmationBasisInfo);
+            }
+            return confirmationBasisInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getByCategoryNodeId：" + e.getMessage());
             return null;
         }
     }

@@ -50,4 +50,12 @@ public interface ConfirmationBasisService {
      * @return
      */
     ConfirmationBasisInfo getSystemProjectByCategoryNodeId(long categoryNodeId);
+
+    /**
+     * 根据项目节点ID获取固定项目
+     *
+     * @param categoryNodeId
+     * @return
+     */
+    List<ConfirmationBasisInfo> getByCategoryNodeId(long categoryNodeId);
 }
