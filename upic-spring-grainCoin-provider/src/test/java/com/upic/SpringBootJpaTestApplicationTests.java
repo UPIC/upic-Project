@@ -334,7 +334,7 @@ public class SpringBootJpaTestApplicationTests {
         statusList.add("PENDING_AUDIT");
         projectCategoryList.add("1创新实践积分（选修积分）");
 
-        Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogBySql(statusList, projectCategoryList, pageRequest);
-        integralLogInfoPage.getContent().forEach(t -> System.out.println(t.toString()));
+//        Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogBySql(statusList, projectCategoryList, pageRequest);
+//        integralLogInfoPage.getContent().forEach(t -> System.out.println(t.toString()));
     }
 }
