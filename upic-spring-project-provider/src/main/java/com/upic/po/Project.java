@@ -71,4 +71,6 @@ public class Project extends BaseEntity {
     private ProjectAddWayEnum projectAddWay; //项目添加方式
 
     private String collegeOtherName;
+
+    private String projectImplementationProcess;
 }

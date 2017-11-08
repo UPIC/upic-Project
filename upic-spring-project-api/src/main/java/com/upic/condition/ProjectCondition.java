@@ -70,11 +70,13 @@ public class ProjectCondition extends BaseCondition {
 
     private String collegeOtherName;
 
+    private String projectImplementationProcess;
+
     public ProjectCondition() {
         super();
     }
 
-    public ProjectCondition(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, Double integral, Double integralTo, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, Date signUpStartTime, Date signUpStartTimeTo, Date signUpEndTime, Date signUpEndTimeTo, Integer maximum, Integer maximumTo, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, Integer onOff, String refreshTime, ProjectTypeEnum type, Long projectCategoryId, String collegeOtherName) {
+    public ProjectCondition(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, Double integral, Double integralTo, Date startTime, Date startTimeTo, Date endTime, Date endTimeTo, Date signUpStartTime, Date signUpStartTimeTo, Date signUpEndTime, Date signUpEndTimeTo, Integer maximum, Integer maximumTo, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, Integer onOff, String refreshTime, ProjectTypeEnum type, Long projectCategoryId, String collegeOtherName, String projectImplementationProcess) {
         this.projectNum = projectNum;
         this.declareUnit = declareUnit;
         this.projectName = projectName;
@@ -104,6 +106,7 @@ public class ProjectCondition extends BaseCondition {
         this.type = type;
         this.projectCategoryId = projectCategoryId;
         this.collegeOtherName = collegeOtherName;
+        this.projectImplementationProcess = projectImplementationProcess;
     }
 
     public String getProjectNum() {
@@ -344,5 +347,13 @@ public class ProjectCondition extends BaseCondition {
 
     public void setCollegeOtherName(String collegeOtherName) {
         this.collegeOtherName = collegeOtherName;
+    }
+
+    public String getProjectImplementationProcess() {
+        return projectImplementationProcess;
+    }
+
+    public void setProjectImplementationProcess(String projectImplementationProcess) {
+        this.projectImplementationProcess = projectImplementationProcess;
     }
 }
