@@ -736,14 +736,22 @@ public class CommonController {
         }
     }
 
+    /**
+     * 项目审核、验证，通过、不通过
+     *
+     * @param projectNumList
+     * @param status
+     * @param failReason
+     * @return
+     */
     @GetMapping("/changeAllProjectStatus")
     @ApiOperation("审核、验证，通过、不通过")
     public String changeAllProjectStatus(String projectNumList, String status, String failReason) {
         try {
-            List<String> projectNumLists=JSONArray.parseArray(projectNumList,String.class);
+            List<String> projectNumLists = JSONArray.parseArray(projectNumList, String.class);
             for (String projectNum : projectNumLists) {
                 ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
-                if (!status.equals("PASS") ) {
+                if (!status.equals("PASS")) {
                     projectInfo.setImplementationProcess(ImplementationProcessEnum.NOT_PASS);
                     AdviceInfo adviceInfo = new AdviceInfo();
                     adviceInfo.setAdvice(failReason);
@@ -757,6 +765,28 @@ public class CommonController {
                     projectInfo.setImplementationProcess(changeProjectStatus(projectInfo.getImplementationProcess()));
                 }
                 projectService.updateProject(projectInfo);
+                return "SUCCESS";
+            }
+        } catch (Exception e) {
+            LOGGER.info("changeAllProjectStatus:" + e.getMessage());
+        }
+        return null;
+    }
+
+    @GetMapping("/changeAllIntegralLogStatus")
+    @ApiOperation("审核，通过、不通过")
+    public String changeAllIntegralLogStatus(String projectNumList, String studentNumList, String status, String failReason) {
+        try {
+            List<String> projectNums = JSONArray.parseArray(projectNumList, String.class);
+            List<String> studentNums = JSONArray.parseArray(projectNumList, String.class);
+            for (int i = 0; i < projectNums.size(); i++) {
+                IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(studentNums.get(i), projectNums.get(i)));
+                if (!status.equals("PASS")) {
+                    integralLogInfo.setStatus(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT);
+                } else {
+                    integralLogInfo.setStatus(changeIntegralLogStatus(integralLogInfo.getStatus()));
+                }
+                integralLogService.changeAllIntegralLogStatus(integralLogInfo);
                 return "SUCCESS";
             }
         } catch (Exception e) {
@@ -1258,6 +1288,18 @@ public class CommonController {
             return ImplementationProcessEnum.CHECKING_FINAL;
         } else {
             return ImplementationProcessEnum.CHECKED;
+        }
+    }
+
+    private IntegralLogStatusEnum changeIntegralLogStatus(IntegralLogStatusEnum status) {
+        if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE) {
+            return IntegralLogStatusEnum.PENDING_AUDIT;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_AGAIN;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_AGAIN) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FINAL;
+        } else {
+            return IntegralLogStatusEnum.HAVEPASSED;
         }
     }
 }

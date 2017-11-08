@@ -1,7 +1,7 @@
-var dataUrl = "/common/getAllIntegralLog";//获取积分列表
+var dataUrl = "/systemManager/getIntegralLogBySql";//获取积分列表
 var getAllProjectCategory = "/common/getAllProjectCategory";//获取项目类别
 var searchKeyWordUrl = "/common/integralLogSearchBar";//搜索条(String status=PENDING_AUDIT, String keyword)
-var updateIntegralLogStatus = "/common/updateIntegralLogStatus";
+var updateIntegralLogStatus = "/common/changeAllIntegralLogStatus";
 //修改积分状态(List<String> studentNumList, List<String> projectNumList, IntegralLogStatusEnum status)
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getCollegeUrl = "/common/getCollege";
@@ -9,7 +9,7 @@ var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
 var requestData = {
-    status: 'PENDING_AUDIT'
+    type: "C"
 };
 
 $(function () {
@@ -48,11 +48,6 @@ function addHtmls(datas, pageNum) {
     var data = datas.content;
     var htmls = "";
     for (var i = 0; i < data.length; i++) {
-        requestData = {
-            status: 'PENDING_AUDIT',
-            projectNum: data[i].integralLogId.projectNum,
-            studentNum: data[i].integralLogId.studentNum
-        };
         htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].integralLogId.projectNum + "'/></td>";
         htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
         htmls += "<td>" + data[i].college + "</td>";
@@ -63,9 +58,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].projectName + "</td>";
         htmls += "<td style='display:none' id='status'>" + data[i].status + "</td>";
         htmls += "<td>";
-        // onclick事件引号问题
         htmls += "<div class='message_div' onclick=commonAjax('/common/getIntegralLogByProjectNumStudentNum','projectNum=" + data[i].integralLogId.projectNum + "&studentNum=" + data[i].integralLogId.studentNum + "','getProjectInfo','GET')><a href='#mymodal1' data-toggle='modal'>查看详情</a></div></td>";
-        //                                 onclick=commonAjax('" + dataUrl + "','userNum=" + data[i].userNum + "','getProjectInfo','GET')
         htmls += "</tr>";
     }
     $("#data").html(htmls);
@@ -108,16 +101,19 @@ function getProjectInfo(data) {
 function pass() {
     var projectNumList = new Array();
     var studentNumList = new Array();
-    var statusList=new Array();
     //获取选中框的projectNum放入list
     $("input[type=checkbox]:checked").each(function () {
         projectNumList.push($(this).attr("id"));
-        statusList.push($(this).attr("status"))
     });
     //获取studentNum放入list2
     $("input[type=checkbox]:checked").each(function () {
         studentNumList.push($(this).find("#studentNum").val());
     });
+
+    var projectStr = JSON.stringify(projectNumList);
+
+    var studentStr = JSON.stringify(studentNumList);
+
     //status改为PASS
     var status = "PASS";
     //3者一起发送请求
@@ -125,12 +121,15 @@ function pass() {
         type: "GET",
         url: updateIntegralLogStatus,
         data: {
-            "projectNumList": projectNumList,
-            "studentNumList": studentNumList,
-            "status": statusList
+            projectNumList: projectStr,
+            studentNumList: studentStr,
+            status: status
         },
         success: function (result) {
-            alert("已发送 审核通过请求")
+            if (result === "SUCCESS") {
+                alert("已发送 审核通过请求");
+            }
+            getData(pageNum, dataUrl);
         }
     });
 }
@@ -145,25 +144,34 @@ function notPass() {
     //获取studentNum放入list2
     $("input[type=checkbox]:checked").each(function () {
         studentNumList.push($(this).find("#studentNum").val());
-        //status改为PASS
-        var status = "NOTPASS";
+    });
 
-        var notPassCause = $("#notPassCause").attr("placeholder");
-        $.ajax({
-            type: "GET",
-            url: updateIntegralLogStatus,
-            data: {
-                "projectNumList": projectNumList,
-                "studentNumList": studentNumList,
-                "status": status,
-                "content": notPassCause
-            },
-            success: function (result) {
+    var projectStr = JSON.stringify(projectNumList);
+
+    var studentStr = JSON.stringify(studentNumList);
+
+    //status改为PASS
+    var status = "NOTPASS";
+
+    var notPassCause = $("#notPassCause").attr("placeholder");
+    $.ajax({
+        type: "GET",
+        url: updateIntegralLogStatus,
+        data: {
+            projectNumList: projectStr,
+            studentNumList: studentStr,
+            status: status,
+            failReason: notPassCause
+        },
+        success: function (result) {
+            if (result === "SUCCESS") {
                 alert("已发送 审核不通过请求")
             }
-        });
+            getData(pageNum, dataUrl);
+        }
+    });
 
-    })
+
 }
 
 
