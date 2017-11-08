@@ -119,7 +119,7 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
                 categoryName, o, u, roleByalins,rank,ainColloge);
         deleteRepete(resourceList);
         return new SocialUsers(userId, b.encode(userId), createAuthorityList, userInfo.getUsername(), userInfo.getCollege(),
-                userInfo.getMajor(), checkList, categoryName, resourceList,rank.toString(),ainColloge.toString());
+                userInfo.getMajor(), checkList, categoryName, resourceList,rank.toString(),ainColloge.toString(),userInfo.getClazz());
     }
 
     private void initData(Page<OperatorRoleInfo> searchOperatorRole, List<RoleResourceInfo> listAll,

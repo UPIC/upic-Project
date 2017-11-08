@@ -780,8 +780,9 @@ public class CommonController {
         return null;
     }
 
-    @GetMapping("/changeAllIntegralLogStatus")
+    @PostMapping("/changeAllIntegralLogStatus")
     @ApiOperation("审核，通过、不通过")
+
     public String changeAllIntegralLogStatus(String projectNumList, String studentNumList, String status, String failReason) {
         try {
             List<String> projectNums = JSONArray.parseArray(projectNumList, String.class);
