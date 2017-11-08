@@ -65,7 +65,7 @@ public class ProjectInfo extends BaseInfo {
         super();
     }
 
-    public ProjectInfo(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, double integral, Date startTime, Date endTime, Date signUpStartTime, Date signUpEndTime, int maximum, String content, ImplementationProcessEnum implementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, int onOff, String refreshTime, ProjectTypeEnum type, long projectCategoryId, String collegeOtherName) {
+    public ProjectInfo(String projectNum, String declareUnit, String projectName, String guidanceMan, String guidanceNum, String projectCategory, double integral, Date startTime, Date endTime, Date signUpStartTime, Date signUpEndTime, int maximum, String content, ImplementationProcessEnum implementationProcess, String projectImplementationProcess, String checkAssessmentCriteraAndForm, ProjectAddWayEnum projectAddWay, RankEnum rankEnum, String unit, int onOff, String refreshTime, ProjectTypeEnum type, long projectCategoryId, String collegeOtherName) {
         this.projectNum = projectNum;
         this.declareUnit = declareUnit;
         this.projectName = projectName;
@@ -80,6 +80,7 @@ public class ProjectInfo extends BaseInfo {
         this.maximum = maximum;
         this.content = content;
         this.implementationProcess = implementationProcess;
+        this.projectImplementationProcess = projectImplementationProcess;
         this.checkAssessmentCriteraAndForm = checkAssessmentCriteraAndForm;
         this.projectAddWay = projectAddWay;
         this.rankEnum = rankEnum;
@@ -203,6 +204,14 @@ public class ProjectInfo extends BaseInfo {
         this.implementationProcess = implementationProcess;
     }
 
+    public String getProjectImplementationProcess() {
+        return projectImplementationProcess;
+    }
+
+    public void setProjectImplementationProcess(String projectImplementationProcess) {
+        this.projectImplementationProcess = projectImplementationProcess;
+    }
+
     public String getCheckAssessmentCriteraAndForm() {
         return checkAssessmentCriteraAndForm;
     }
@@ -292,6 +301,7 @@ public class ProjectInfo extends BaseInfo {
                 ", maximum=" + maximum +
                 ", content='" + content + '\'' +
                 ", implementationProcess=" + implementationProcess +
+                ", projectImplementationProcess='" + projectImplementationProcess + '\'' +
                 ", checkAssessmentCriteraAndForm='" + checkAssessmentCriteraAndForm + '\'' +
                 ", projectAddWay=" + projectAddWay +
                 ", rankEnum=" + rankEnum +
