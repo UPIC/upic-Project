@@ -9,6 +9,7 @@ import com.upic.dto.*;
 import com.upic.enums.AdviceStatusOperationEnum;
 import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.IntegralLogStatusEnum;
+import com.upic.enums.ProjectAddWayEnum;
 import com.upic.service.*;
 import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
@@ -549,6 +550,10 @@ public class CommonController {
             ProjectInfo p = JSON.parseObject(projectInfo, ProjectInfo.class);
             p.setProjectNum("SQ" + getUser().getUserId() + new Date().getTime());
             p.setImplementationProcess(ImplementationProcessEnum.SAVED);
+            p.setGuidanceNum(getUser().getUserId());
+            p.setProjectAddWay(ProjectAddWayEnum.MANUAL_ADDITION);
+            p.setUnit(getUser().getCollege());
+
             p = projectService.addProject(p);
             return p;
         } catch (Exception e) {

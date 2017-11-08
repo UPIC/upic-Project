@@ -14,7 +14,11 @@ function saveProject() {
 
     Data.creatTime = $("#creatTime").val();
     Data.projectCategory = $("#getAllProjectCategory option:selected").text();
+    Data.projectCategoryId = $("#getAllProjectCategory option:selected").attr("id");
+
     Data.declareUnit = $("#declareUnit option:selected").text();
+    Data.collegeOtherName = $("#declareUnit option:selected").attr("id");
+
     Data.projectName = $("#projectName").val();
     Data.guidanceMan = $("#guidanceMan").val();
 
@@ -27,10 +31,9 @@ function saveProject() {
     Data.signUpStartTime = $("#signUpStartTime").val();
     Data.signUpEndTime = $("#signUpEndTime").val();
 
-
     Data.content = $("#content").val();
     Data.projectImplementationProcess = $("#projectImplementationProcess").val();
-    Data.checkAssessmentCriteraAndForm = $("#checkAssessmentCriteraAndForm").text();
+    Data.checkAssessmentCriteraAndForm = $("#checkAssessmentCriteraAndForm").val();
 
     var str = JSON.stringify(Data);
 
@@ -62,7 +65,7 @@ $(function () {
             htmls += "<option value='category 1'>--请选择项目类别--</option>";
 
             for (var i = 0; i < data.length; i++) {
-                htmls += "<option value='category 1'>" + data[i].categoryName + "</option>";
+                htmls += "<option value='category 1' id='" + data[i].id + "'>" + data[i].categoryName + "</option>";
             }
             $("#getAllProjectCategory").html(htmls);
         }
@@ -75,7 +78,7 @@ $(function () {
             var data = result.content;
             var htmls = "";
             for (var i = 0; i < data.length; i++) {
-                htmls += "<option value='category 1'>" + data[i].college + "</option>";
+                htmls += "<option value='category 1' id='" + data[i].otherName + "'>" + data[i].college + "</option>";
             }
             $("#declareUnit").html(htmls);
         }
