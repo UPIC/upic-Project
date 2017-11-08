@@ -34,5 +34,6 @@ public class ProjectSpec extends CommonSimpleSpecification<Project, ProjectCondi
         addEqualsCondition(queryWraper, "type");
         addEqualsCondition(queryWraper, "projectCategoryId");
         addEqualsCondition(queryWraper, "collegeOtherName");
+        addEqualsCondition(queryWraper, "projectImplementationProcess");
     }
 }

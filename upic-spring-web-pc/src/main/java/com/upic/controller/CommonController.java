@@ -1,6 +1,8 @@
 package com.upic.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.condition.*;
 import com.upic.dto.*;
@@ -19,10 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -543,11 +542,13 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/addProject")
+    @PostMapping("/addProject")
     @ApiOperation("项目申报")
-    public ProjectInfo addProject(ProjectInfo projectInfo) throws Exception {
+    public ProjectInfo addProject(String projectInfo) throws Exception {
         try {
-            return projectService.addProject(projectInfo);
+            ProjectInfo p = JSON.parseObject(projectInfo, ProjectInfo.class);
+            p.setImplementationProcess(ImplementationProcessEnum.SAVED);
+            return projectService.addProject(p);
         } catch (Exception e) {
             LOGGER.info("addProject:" + e.getMessage());
             throw new Exception("addProject" + e.getMessage());

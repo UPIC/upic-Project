@@ -41,6 +41,8 @@ public class ProjectInfo extends BaseInfo {
 
     private ImplementationProcessEnum implementationProcess; //项目实施进程
 
+    private String projectImplementationProcess;
+
     private String checkAssessmentCriteraAndForm; //考核评价标准与形式
 
     private ProjectAddWayEnum projectAddWay; //项目添加方式
