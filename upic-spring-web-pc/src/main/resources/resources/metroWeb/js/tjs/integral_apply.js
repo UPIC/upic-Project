@@ -95,7 +95,6 @@ function getProjectInfo(data) {
     htmlss += "<div class='span9'><a class='tooltip1' href='" + data.picUrl + "'><img src='" + data.pic + "' ></a></div>";
     htmlss += "</div>";
     htmlss += "</div>";
-
     $("#getProjectInfo").html(htmlss);
 }
 
