@@ -90,7 +90,7 @@ public class SpringBootJpaTestApplicationTests {
         AdviceInfo a = new AdviceInfo();
         a.setAdvice("通过");
         a.setOperator("DTZ");
-        a.setProject(p);
+//        a.setProject(p);
         a.setOperatorNum("1422110108");
         System.out.println(projectService.changeProjectStatus(a));
     }

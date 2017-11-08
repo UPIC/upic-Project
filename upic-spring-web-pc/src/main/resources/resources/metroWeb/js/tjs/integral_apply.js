@@ -17,6 +17,9 @@ $(function () {
     commonAjax(getCollegeUrl, null, "addCollegeUrl", "GET");
     registSelect("projectCategory");
     registSelect("getCollege");
+    $("#failSubmit").click(function(){
+    	notPass();
+    })
 })
 
 function addProjectType(res) {
@@ -116,7 +119,7 @@ function pass() {
     var status = "PASS";
     //3者一起发送请求
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: updateIntegralLogStatus,
         data: {
             projectNumList: projectStr,
@@ -151,9 +154,9 @@ function notPass() {
     //status改为PASS
     var status = "NOTPASS";
 
-    var notPassCause = $("#notPassCause").attr("placeholder");
+    var notPassCause = $("#notPassCause").attr("value");
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: updateIntegralLogStatus,
         data: {
             projectNumList: projectStr,

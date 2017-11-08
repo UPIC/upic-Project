@@ -266,21 +266,20 @@ public class StudetAllController {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             SocialUsers userInfo = UserUtils.getUser();
             integralLogIdInfo.setStudentNum(userInfo.getUserId());
+            ChineseCharToEn cte = new ChineseCharToEn();
             if (integralLogInfo.getField1().equals("radioselect1")) {
                 integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + integralLogInfo.getField2());
             } else {
-                ChineseCharToEn cte = new ChineseCharToEn();
                 integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + cte.getAllFirstLetter(integralLogInfo.getProjectName()));
             }
 
-            UserInfo user = userService.getUserByUserNum(userInfo.getUserId());
-            integralLogInfo.setClazz(user.getClazz());
-            integralLogInfo.setCollege(user.getCollege());
+            integralLogInfo.setClazz(userInfo.getClazz());
+            integralLogInfo.setCollege(userInfo.getCollege());
             integralLogInfo.setCreatTime(new Date());
-            integralLogInfo.setStudent(user.getUsername());
+            integralLogInfo.setStudent(userInfo.getUserNum());
             integralLogInfo.setIntegralLogId(integralLogIdInfo);
+            integralLogInfo.setCollegeOtherName(cte.getAllFirstLetter(userInfo.getCollege()).toUpperCase());
             integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);
-            integralLogInfo.setCollegeOtherName(userInfo.getCollegeAli());
             return integralLogInfo;
         } catch (Exception e) {
             LOGGER.info("postIntegralLog:" + e.getMessage());
