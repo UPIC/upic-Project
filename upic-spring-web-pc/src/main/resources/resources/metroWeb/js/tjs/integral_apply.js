@@ -8,8 +8,7 @@ var getCollegeUrl = "/common/getCollege";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
-var requestData = {
-};
+var requestData = {};
 
 $(function () {
     pageSize = $("#select-small").children('option:selected').text()
@@ -47,10 +46,10 @@ function addHtmls(datas, pageNum) {
     var data = datas.content;
     var htmls = "";
     for (var i = 0; i < data.length; i++) {
-        htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].integralLogId.projectNum + "'/></td>";
+        htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].integralLogId.projectNum + "' name='" + data[i].integralLogId.studentNum + "'/></td>";
         htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
         htmls += "<td>" + data[i].college + "</td>";
-        htmls += "<td id='studentNum'>" + data[i].integralLogId.studentNum + "</td>";
+        htmls += "<td>" + data[i].integralLogId.studentNum + "</td>";
         htmls += "<td>" + data[i].clazz + "</td>";
         htmls += "<td>" + data[i].student + "</td>";
         htmls += "<td>" + data[i].projectCategory + "</td>";
@@ -106,7 +105,7 @@ function pass() {
     });
     //获取studentNum放入list2
     $("input[type=checkbox]:checked").each(function () {
-        studentNumList.push($(this).find("#studentNum").val());
+        studentNumList.push($(this).attr("name"));
     });
 
     var projectStr = JSON.stringify(projectNumList);
@@ -142,7 +141,7 @@ function notPass() {
     });
     //获取studentNum放入list2
     $("input[type=checkbox]:checked").each(function () {
-        studentNumList.push($(this).find("#studentNum").val());
+        studentNumList.push($(this).attr("name"));
     });
 
     var projectStr = JSON.stringify(projectNumList);

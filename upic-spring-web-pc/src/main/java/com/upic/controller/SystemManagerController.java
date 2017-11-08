@@ -50,7 +50,7 @@ public class SystemManagerController {
             List<String> projectCategoryList = new ArrayList<>();
             String rank = s.getRank();
             String colloge = s.getCollegeAli();
-            if (type.equals("C") && rank.equals("3")) {
+            if (type != null && type.equals("C") && rank.equals("3")) {
                 projectCategoryList.add("PENDING_AUDIT_BEFORE");
             } else {
                 projectCategoryList = s.getProjectCategoryList();
