@@ -8,7 +8,6 @@ import com.upic.enums.AdviceStatusOperationEnum;
 import com.upic.enums.ImplementationProcessEnum;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.service.*;
-//import com.upic.utils.UserUtils;
 import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
@@ -775,22 +774,24 @@ public class CommonController {
 
     @GetMapping("/changeAllIntegralLogStatus")
     @ApiOperation("审核，通过、不通过")
-    public String changeAllIntegralLogStatus(String projectNumList, String studentNumList, String status, String failReason) {
+    public String changeAllIntegralLogStatus(@RequestBody String projectNumList, @RequestBody String studentNumList, String status, String failReason) {
         try {
             List<String> projectNums = JSONArray.parseArray(projectNumList, String.class);
-            List<String> studentNums = JSONArray.parseArray(projectNumList, String.class);
+            List<String> studentNums = JSONArray.parseArray(studentNumList, String.class);
             for (int i = 0; i < projectNums.size(); i++) {
                 IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(studentNums.get(i), projectNums.get(i)));
-                if (!status.equals("PASS")) {
-                    integralLogInfo.setStatus(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT);
-                } else {
-                    integralLogInfo.setStatus(changeIntegralLogStatus(integralLogInfo.getStatus()));
+                if (integralLogInfo != null) {
+                    if (!status.equals("PASS")) {
+                        integralLogInfo.setStatus(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT);
+                    } else {
+                        integralLogInfo.setStatus(changeIntegralLogStatus(integralLogInfo.getStatus()));
+                    }
+                    integralLogService.changeAllIntegralLogStatus(integralLogInfo);
                 }
-                integralLogService.changeAllIntegralLogStatus(integralLogInfo);
                 return "SUCCESS";
             }
         } catch (Exception e) {
-            LOGGER.info("changeAllProjectStatus:" + e.getMessage());
+            LOGGER.info("changeAllIntegralLogStatus:" + e.getMessage());
         }
         return null;
     }
