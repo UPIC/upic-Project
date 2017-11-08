@@ -1155,11 +1155,15 @@ public class CommonController {
      * @return
      */
     @ApiOperation("我的项目导出")
-    @GetMapping("exportProjectByGuidanceNum")
-    public void exportProjectByGuidanceNum(HttpServletResponse response, String guidanceNum, List<String> baseModel) {
+    @GetMapping("/exportProjectByGuidanceNum")
+    public void exportProjectByGuidanceNum(HttpServletResponse response, String guidanceNum, String baseModel) {
         try {
-            List<Object> byProjectNum = projectService.exportProjectByGuidanceNum(guidanceNum);
-            Workbook wk = ExcelDocument.download((String[]) baseModel.toArray(), ProjectInfo.class, byProjectNum);
+        	
+        	List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+        	String[] desc = new String[]{};
+        	String[] array = parseArray.toArray(desc);
+            List<Object> byProjectNum = projectService.exportProjectByGuidanceNum(getUser().getUserId());
+            Workbook wk = ExcelDocument.download(array, ProjectInfo.class, byProjectNum);
             downLoadExcel(response, wk, "project");
         } catch (Exception e) {
             LOGGER.info("exportProjectByGuidanceNum:" + e.getMessage());

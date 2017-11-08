@@ -370,7 +370,13 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> projectList = new ArrayList<Project>();
         try {
             projectList = projectRepository.exportProjectByGuidanceNum(guidanceNum);
-            List<Object> objectList = toObject(projectList);
+            List<ProjectInfo> convert = QueryResultConverter.convert(projectList, new AbstractDomain2InfoConverter<Project, ProjectInfo>() {
+                @Override
+                protected void doConvert(Project domain, ProjectInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+            List<Object> objectList = toObject(convert);
             return objectList;
         } catch (Exception e) {
             LOGGER.info("exportProjectByGuidanceNum：" + e.getMessage());

@@ -10,6 +10,7 @@ var searchKeyWordUrl = "/common/myProjectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getPeopleByProjectNumUrl = "";
 var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
+var exportExcelUrl="/common/exportProjectByGuidanceNum";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -22,6 +23,32 @@ $(function () {
     commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
     registSelect("projectCategory");
     registSelect("ProjectStatus");
+    
+    $("#exportBtn").click(function(){
+    	var baseModels=["projectNum","declareUnit","projectName","guidanceMan","guidanceNum","projectCategory","integral","startTime","endTime","maximum"];
+    	var str=JSON.stringify(baseModels);
+//    	requestData.baseModel=str;
+//    	 $.ajax({
+//    	        type: "GET",
+//    	        url: exportExcelUrl,
+//    	        data: requestData,
+//    	        beforeSend: function (XMLHttpRequest) {
+//    	        },
+//    	        success: function (result) {
+//    	            if (result != "" && result != null) {
+//    	                addHtmls(result, pageNum, requestData);
+//    	            }
+//    	        },
+//    	        complete: function (XMLHttpRequest, textStatus) {
+//    	        },
+//    	        error: function () {
+//    	        }
+//    	    });
+    	 var form = $("<form></form>").attr("action", exportExcelUrl).attr("method", "GET");
+         form.append($("<input></input>").attr("type", "hidden").attr("name", "baseModel").attr("value", str));
+         form.appendTo('body').submit().remove();
+         form.submit();
+    })
 })
 
 function addProjectType(res) {
