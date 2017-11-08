@@ -547,8 +547,10 @@ public class CommonController {
     public ProjectInfo addProject(String projectInfo) throws Exception {
         try {
             ProjectInfo p = JSON.parseObject(projectInfo, ProjectInfo.class);
+            p.setProjectNum("SQ" + getUser().getUserId() + new Date().getTime());
             p.setImplementationProcess(ImplementationProcessEnum.SAVED);
-            return projectService.addProject(p);
+            p = projectService.addProject(p);
+            return p;
         } catch (Exception e) {
             LOGGER.info("addProject:" + e.getMessage());
             throw new Exception("addProject" + e.getMessage());
