@@ -43,13 +43,23 @@ public class SystemManagerController {
 
     @ApiOperation("教师获取需要审批的积分申报")
     @GetMapping("/getIntegralLogBySql")
-    public Page<IntegralLogInfo> getIntegralLogBySql(Pageable pageable) {
+    public Page<IntegralLogInfo> getIntegralLogBySql(Pageable pageable, String type) {
         try {
             SocialUsers s = getUser();
             List<String> statusList = s.getStatusList();
-            List<String> projectCategoryList = s.getProjectCategoryList();
+            List<String> projectCategoryList = new ArrayList<>();
             String rank = s.getRank();
             String colloge = s.getCollegeAli();
+            if (type.equals("C") && rank.equals("3")) {
+                projectCategoryList.add("PENDING_AUDIT_BEFORE");
+            } else {
+                projectCategoryList = s.getProjectCategoryList();
+                for (String projectCategory : projectCategoryList) {
+                    if (projectCategory.equals("PENDING_AUDIT_BEFORE")) {
+                        projectCategoryList.remove(projectCategory);
+                    }
+                }
+            }
             return integralLogService.getIntegralLogBySql(statusList, projectCategoryList, rank, colloge, pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
@@ -75,7 +85,7 @@ public class SystemManagerController {
     }
 
     @ApiOperation("获取系统添加项目")
-    @GetMapping("getSystemProjectByCategoryNodeId")
+    @GetMapping("/getSystemProjectByCategoryNodeId")
     public ConfirmationBasisInfo getSystemProjectByCategoryNodeId(long categoryNodeId) {
         try {
             return confirmationBasisService.getSystemProjectByCategoryNodeId(categoryNodeId);

@@ -412,6 +412,21 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         }
     }
 
+    @Override
+    public IntegralLogInfo changeAllIntegralLogStatus(IntegralLogInfo integralLogInfo) {
+        try {
+            IntegralLog integralLog = new IntegralLog();
+            UpicBeanUtils.copyProperties(integralLogInfo, integralLog);
+            integralLog = integralLogRepository.saveAndFlush(integralLog);
+            UpicBeanUtils.copyProperties(integralLog, integralLogInfo);
+            return integralLogInfo;
+        } catch (Exception e) {
+            LOGGER.info("changeAllIntegralLogStatus:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     static public <E> List<Object> toObject(List<E> list) {
         List<Object> objlist = new ArrayList<Object>();
         for (Object e : list) {
@@ -426,6 +441,8 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         for (String status : statusList) {
             if (status.equals(IntegralLogStatusEnum.SAVE.name())) {
                 statusEnums.add(IntegralLogStatusEnum.SAVE);
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE.name())) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE);
             } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT.name())) {
                 statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT);
             } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN.name())) {
