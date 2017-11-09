@@ -9,15 +9,18 @@ import java.util.Map;
 public enum IntegralLogStatusEnum {
     SAVE("保存", 1),
     PENDING_AUDIT_BEFORE("待初审", 2),
-    PENDING_AUDIT("待学院审", 3),
-    PENDING_AUDIT_AGAIN("待部门审", 4),
-    PENDING_AUDIT_FINAL("待团委审", 5),
-    HAVEPASSED("审核成功", 6),
-    FAILURE_TO_PASS_THE_AUDIT("审核失败", 7),
+    PENDING_AUDIT_BEFORE_FAIL("待初审失败", 3),
+    PENDING_AUDIT("待学院审", 4),
+    PENDING_AUDIT_FAIL("待学院审失败", 5),
+    PENDING_AUDIT_AGAIN("待部门审", 6),
+    PENDING_AUDIT_AGAIN_FAIL("待部门审失败", 7),
+    PENDING_AUDIT_FINAL("待团委审", 8),
+    PENDING_AUDIT_FINAL_FAIL("待团委审失败", 9),
+    HAVEPASSED("审核成功", 10),
 
-    ALREADY_SIGN_UP("已报名", 8),
-    SIGNED_IN("已签到", 9),
-    COMPLETED("已完成", 10);
+    ALREADY_SIGN_UP("已报名", 11),
+    SIGNED_IN("已签到", 12),
+    COMPLETED("已完成", 13);
 
     private String content;
 

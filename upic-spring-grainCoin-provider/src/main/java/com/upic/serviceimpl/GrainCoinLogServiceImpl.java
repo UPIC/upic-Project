@@ -60,9 +60,15 @@ public class GrainCoinLogServiceImpl implements GrainCoinLogService {
     @Override
     public List<Object> exportGrainCoinLog(GrainCoinLogCondition condition) {
         List<GrainCoinLog> grainCoinLogs = new ArrayList<>();
+        List<GrainCoinLogInfo> grainCoinLogInfoList = new ArrayList<>();
         try {
             grainCoinLogs = grainCoinLogRepository.findAll(new GrainCoinLogSpec(condition));
-            return toObject(grainCoinLogs);
+            for (GrainCoinLog grainCoinLog : grainCoinLogs) {
+                GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
+                UpicBeanUtils.copyProperties(grainCoinLog, grainCoinLogInfo);
+                grainCoinLogInfoList.add(grainCoinLogInfo);
+            }
+            return toObject(grainCoinLogInfoList);
         } catch (Exception e) {
             LOGGER.info("exportGrainCoinLog:批量查看素拓记录失败。错误信息：" + e.getMessage());
             return null;

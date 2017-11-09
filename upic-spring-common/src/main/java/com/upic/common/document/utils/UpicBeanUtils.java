@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * 只针对标准实体类
- * 
+ *
  * @author dtz
  *
  */
@@ -19,7 +19,7 @@ public class UpicBeanUtils {
 
 	public static final String DEFAULT_METHOD_NAME = "set";
 
-	
+
 	public static Map<String, Method> getMethodToMap(Class<?> clazz) {
 		return getMethodToMap(clazz,DEFAULT_METHOD_NAME);
 	}
@@ -53,7 +53,7 @@ public class UpicBeanUtils {
 	protected static Field[] getAllFields(Class<?>c) {
 		return c.getDeclaredFields();
 	}
-	
+
 	/**
 	 * 获取所有参数
 	 * @param c
@@ -72,7 +72,7 @@ public class UpicBeanUtils {
 	}
 	/**
 	 * 分解方法获取属性
-	 * 
+	 *
 	 * @param methodName
 	 * @param startMethodName
 	 * @return

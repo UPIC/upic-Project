@@ -22,6 +22,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/11.
  */
@@ -96,6 +99,24 @@ public class CheckStatusServiceImpl implements CheckStatusService {
             checkStatusRepository.delete(checkStatusId);
         } catch (Exception e) {
             LOGGER.info("deleteCheckStatus。错误信息：" + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<CheckStatusInfo> getByType(int i) {
+        List<CheckStatus> checkStatusList;
+        try {
+            checkStatusList = checkStatusRepository.getByType(i);
+            List<CheckStatusInfo> checkStatusInfoList = new ArrayList<CheckStatusInfo>();
+            return QueryResultConverter.convert(checkStatusList, new AbstractDomain2InfoConverter<CheckStatus, CheckStatusInfo>() {
+                @Override
+                protected void doConvert(CheckStatus domain, CheckStatusInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getByType。错误信息：" + e.getMessage());
+            return null;
         }
     }
 }
