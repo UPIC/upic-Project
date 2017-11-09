@@ -1,71 +1,143 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
 
-    <!-- Bootstrap -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/css/teacher-refer.css">
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/teacher-refer.js"></script>
-    <script type="text/javascript">
-        var phoneWidth = parseInt(window.screen.width);
-        var phoneScale = phoneWidth / 375;
-        var ua = navigator.userAgent;
-        if (/Android (\d+\.\d+)/.test(ua)) {
-            var version = parseFloat(RegExp.$1);
-            if (version > 2.3) {
-                document
-                    .write('<meta name="viewport" content="width=375, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
-            } else {
-                document
-                    .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
-            }
-        } else {
-            document
-                .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
-        }
+  <!-- Bootstrap -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/teacher-refer.css">
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/teacher-refer.js"></script>
+  <script type="text/javascript">
+   var phoneWidth = parseInt(window.screen.width);
+   var phoneScale = phoneWidth / 375;
+   var ua = navigator.userAgent;
+   if (/Android (\d+\.\d+)/.test(ua)) {
+     var version = parseFloat(RegExp.$1);
+     if (version > 2.3) {
+       document
+       .write('<meta name="viewport" content="width=375, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+     } else {
+       document
+       .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
+     }
+   } else {
+     document
+     .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
+   }
 
-    </script>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <a href="teacher-main.html">
-                <div class="de-left"><img src="assets/i/b-1.png" alt=""></div>
-            </a>
-            <span>活动查询</span>
-        </div>
-    </nav>
+ </script>
+ <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <a href="teacher-main.html"><div class="de-left"><img src="assets/i/b-1.png" alt=""></div></a>
+    <span>活动查询</span>
+  </div>
+</nav>
+<div id="getAll">
+ <div class="act-div top">
+   <div class="tab-left">
+    <img src="assets/i/b-3.jpg" alt="">
+  </div>
+  <div class="tab-right">
+   <div class="tab-title">
+    <div class="right-name">
+     社会实践
+   </div>
+   <div class="right-apply">
+    <span class="big">报名中</span>
+    <span class="small">30</span><span>/60</span>
+  </div>
 
-    <div id="getAll">
-        <div class='act-div top'>
-            <div class="tab-left">
-                <img src="assets/i/b-3.jpg" alt="">
-            </div>
-            <div class="tab-right">
-                <div class="tab-title">
-                    <div class="right-name">
-                        社会实践
-                    </div>
-                    <div class="right-apply">
-                        <span class="big">报名中</span>
-                        <span class="small">30</span><span>/60</span>
-                    </div>
+</div>
+<div class="tab-text">
+  <span>活动时间：2017.1.1-2017.2.2</span><br>
+  <span>报名截止时间：2017.1.3</span><br>
+  <span>预获学分：1</span>
+</div>
+<a href="teacher-detail.html"><div class="tab-search">
+  查看详情 >
+</div>
+</a>
+</div>
+</div>
+<div class="act-div">
+ <div class="tab-left">
+  <img src="assets/i/b-3.jpg" alt="">
+</div>
+<div class="tab-right">
+ <div class="tab-title">
+  <div class="right-name">
+   社会实践
+ </div>
+ <div class="right-apply">
+  <span class="big">报名中</span>
+  <span class="small">30</span><span>/60</span>
+</div>
 
-                </div>
-                <div class="tab-text">
-                    <span>活动时间：2017.1.1-2017.2.2</span><br>
-                    <span>报名截止时间：2017.1.3</span><br>
-                    <span>预获学分：1</span>
-                </div>
-                <a href="teacher-detail.html">
-                    <div class="tab-search">
-                        查看详情 >
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+</div>
+<div class="tab-text">
+  <span>活动时间：2017.1.1-2017.2.2</span><br>
+  <span>报名截止时间：2017.1.3</span><br>
+  <span>预获学分：1</span>
+</div>
+<a href="teacher-detail.html"><div class="tab-search">
+  查看详情 >
+</div>
+</a>
+</div>
+</div>
+<div class="act-div">
+ <div class="tab-left">
+  <img src="assets/i/b-3.jpg" alt="">
+</div>
+<div class="tab-right">
+ <div class="tab-title">
+  <div class="right-name">
+   校园文化节
+ </div>
+ <div class="right-apply">
+  <span class="big">进行中</span><span>60人</span>
+</div>
+
+</div>
+<div class="tab-text">
+  <span>活动时间：2017.1.1-2017.2.2</span><br>
+  <span>报名截止时间：2017.1.3</span><br>
+  <span>预获学分：1</span>
+</div>
+<a href="teacher-detail2.html"><div class="tab-search">
+  查看详情 >
+</div>
+</a>
+</div>
+</div>
+<div class="act-div">
+ <div class="tab-left">
+  <img src="assets/i/b-3.jpg" alt="">
+</div>
+<div class="tab-right">
+ <div class="tab-title">
+  <div class="right-name">
+   校园文化节
+ </div>
+ <div class="right-apply">
+  <span class="big">已结束</span><span>60人</span>
+</div>
+
+</div>
+<div class="tab-text">
+  <span>活动时间：2017.1.1-2017.2.2</span><br>
+  <span>报名截止时间：2017.1.3</span><br>
+  <span>预获学分：1</span>
+</div>
+<a href="teacher-detail.html"><div class="tab-search">
+  查看详情 >
+</div>
+</a>
+</div>
+</div>
+</div>

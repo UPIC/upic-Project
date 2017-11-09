@@ -27,7 +27,7 @@ public class GrainCoinLog extends BaseEntity {
 
     private String userNum; //用户编号
 
-    private IntegralLogId integralLogId;
+    private String projectNum;
 
     private long prizeId; //消费奖品
 

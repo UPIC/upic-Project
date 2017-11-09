@@ -3,7 +3,7 @@
  * 查看人数
  * @Date:   2017-09-19 15:13:27
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-11-09 14:25:08
+ * @Last Modified time: 2017-11-09 14:57:37
  */
  function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -52,33 +52,17 @@ error: function () {
 function addHtmls(result, method) {
     var htmls = "";
     var htmlss = "";
-    var shidao=0;
-    var quexi=0;
+
     if (method == "getNum") {
         for (var i = 0; i < result.length; i++) {
-            var status = "未签到";
-            if (result[i].status === "SIGNED_IN" || result[i].status === "COMPLETED") {
-                status = "已签到";
-                shidao++;
-            }
-
-            var property = "";
-            if (status === "已签到") {
-                property = "disabled='false'"
-            }
-            ;
+            var status = "已报名";
             htmls += "<tr><td>" + (i + 1) + "</td>";
             htmls += "<td>" + result[i].integralLogId.studentNum + "</td>";
             htmls += "<td>" + result[i].student + "</td>";
             htmls += "<td>" + status + "</td>";
-            htmls += "<td><input type='checkbox' id='inlineCheckbox2' value='option2' " + property + " ></td></tr>";
         }
 
         htmlss+="<div class='top-left'>总人数:"+result.length;
-        htmlss+="</div>";
-        htmlss+="<div class='top-right'>";
-        htmlss+="<span>实到:"+shidao+"</span>";
-        htmlss+="<span>缺席:"+(result.length-shidao)+"</span>";
         htmlss+="</div>";
 
         $("#getNum2").html(htmlss);

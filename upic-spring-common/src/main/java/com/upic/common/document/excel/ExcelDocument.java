@@ -189,10 +189,8 @@ public class ExcelDocument {
 	/**
 	 * 添加字段
 	 * 
-	 * @param firstRowFields
 	 * @param param
 	 * @param c
-	 * @param list
 	 * @throws IllegalAccessException
 	 * @throws Exception
 	 */
