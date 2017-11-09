@@ -441,24 +441,30 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         for (String status : statusList) {
             if (status.equals(IntegralLogStatusEnum.SAVE.name())) {
                 statusEnums.add(IntegralLogStatusEnum.SAVE);
-            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE.name())) {
-                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE);
             } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT.name())) {
                 statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT);
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE.name())) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE);
             } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN.name())) {
                 statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
             } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_FINAL.name())) {
                 statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_FINAL);
             } else if (status.equals(IntegralLogStatusEnum.HAVEPASSED.name())) {
                 statusEnums.add(IntegralLogStatusEnum.HAVEPASSED);
-            } else if (status.equals(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT.name())) {
-                statusEnums.add(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT);
             } else if (status.equals(IntegralLogStatusEnum.ALREADY_SIGN_UP.name())) {
                 statusEnums.add(IntegralLogStatusEnum.ALREADY_SIGN_UP);
             } else if (status.equals(IntegralLogStatusEnum.SIGNED_IN.name())) {
                 statusEnums.add(IntegralLogStatusEnum.SIGNED_IN);
             } else if (status.equals(IntegralLogStatusEnum.COMPLETED.name())) {
                 statusEnums.add(IntegralLogStatusEnum.COMPLETED);
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_FINAL_FAIL.name())) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_FINAL_FAIL);
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL.name())) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL);
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_FAIL.name())) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_FAIL);
+            } else if (status.equals(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL.name())) {
+                statusEnums.add(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL);
             }
         }
         return statusEnums;

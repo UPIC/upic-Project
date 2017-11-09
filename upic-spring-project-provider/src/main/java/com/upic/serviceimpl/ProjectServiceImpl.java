@@ -435,8 +435,6 @@ public class ProjectServiceImpl implements ProjectService {
                     statusEnums.add(ImplementationProcessEnum.CHECKING_FINAL);
                 } else if (status.equals(ImplementationProcessEnum.CHECKED.name())) {
                     statusEnums.add(ImplementationProcessEnum.CHECKED);
-                } else if (status.equals(ImplementationProcessEnum.NOT_PASS.name())) {
-                    statusEnums.add(ImplementationProcessEnum.NOT_PASS);
                 }
             }
         }

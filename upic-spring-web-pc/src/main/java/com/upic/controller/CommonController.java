@@ -77,6 +77,9 @@ public class CommonController {
     @Autowired
     private AdviceService adviceService;
 
+    @Autowired
+    private CheckStatusService checkStatusService;
+
     /**
      * 根据ID获取项目类别
      *
@@ -161,19 +164,10 @@ public class CommonController {
     public List<String> getAllProjectImplementationProcess() {
         try {
             List<String> implementationProcessList = new ArrayList<String>();
-            implementationProcessList.add(ImplementationProcessEnum.SAVED.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.IN_AUDIT.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.IN_AUDIT_AGAIN.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.IN_AUDIT_FINAL.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.AUDITED.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.ENROLLMENT.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.HAVE_IN_HAND.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.COMPLETED.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.CHECKING.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.CHECKING_AGAIN.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.CHECKING_FINAL.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.CHECKED.getContent());
-            implementationProcessList.add(ImplementationProcessEnum.NOT_PASS.getContent());
+            List<CheckStatusInfo> checkStatusInfoList = checkStatusService.getByType(2);
+            for (CheckStatusInfo checkStatusInfo : checkStatusInfoList) {
+                implementationProcessList.add(checkStatusInfo.getName());
+            }
             return implementationProcessList;
         } catch (Exception e) {
             LOGGER.info("getAllProjectImplementationProcess:" + e.getMessage());
@@ -759,7 +753,7 @@ public class CommonController {
             for (String projectNum : projectNumLists) {
                 ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
                 if (!status.equals("PASS")) {
-                    projectInfo.setImplementationProcess(ImplementationProcessEnum.NOT_PASS);
+                    projectInfo.setImplementationProcess(failProjectStatus(projectInfo.getImplementationProcess()));
                     AdviceInfo adviceInfo = new AdviceInfo();
                     adviceInfo.setAdvice(failReason);
                     adviceInfo.setCreatTime(new Date());
@@ -791,7 +785,7 @@ public class CommonController {
                 IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(studentNums.get(i), projectNums.get(i)));
                 if (integralLogInfo != null) {
                     if (!status.equals("PASS")) {
-                        integralLogInfo.setStatus(IntegralLogStatusEnum.FAILURE_TO_PASS_THE_AUDIT);
+                        integralLogInfo.setStatus(failIntegralLogStatus(integralLogInfo.getStatus()));
                     } else {
                         integralLogInfo.setStatus(changeIntegralLogStatus(integralLogInfo.getStatus()));
                     }
@@ -929,12 +923,15 @@ public class CommonController {
      * @return
      */
     @ApiOperation("积分导出")
-    @GetMapping("exportGrainCoinLog")
-    public void exportGrainCoinLog(HttpServletResponse response, GrainCoinLogCondition condition, List<String> baseModel) {
+    @GetMapping("/exportGrainCoinLog")
+    public void exportGrainCoinLog(HttpServletResponse response, GrainCoinLogCondition condition, String baseModel) {
         try {
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            String[] desc = new String[]{};
+            String[] array = parseArray.toArray(desc);
             List<Object> byProjectNum = grainCoinLogService.exportGrainCoinLog(condition);
-            Workbook wk = ExcelDocument.download((String[]) baseModel.toArray(), IntegralLogInfo.class, byProjectNum);
-            downLoadExcel(response, wk, "integralLog");
+            Workbook wk = ExcelDocument.download(array, GrainCoinLogInfo.class, byProjectNum);
+            downLoadExcel(response, wk, "兑换记录.xls");
         } catch (Exception e) {
             LOGGER.info("exportGrainCoinLog:" + e.getMessage());
             try {
@@ -1158,13 +1155,12 @@ public class CommonController {
     @GetMapping("/exportProjectByGuidanceNum")
     public void exportProjectByGuidanceNum(HttpServletResponse response, String guidanceNum, String baseModel) {
         try {
-        	
-        	List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
-        	String[] desc = new String[]{};
-        	String[] array = parseArray.toArray(desc);
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            String[] desc = new String[]{};
+            String[] array = parseArray.toArray(desc);
             List<Object> byProjectNum = projectService.exportProjectByGuidanceNum(getUser().getUserId());
             Workbook wk = ExcelDocument.download(array, ProjectInfo.class, byProjectNum);
-            downLoadExcel(response, wk, "project");
+            downLoadExcel(response, wk, "项目.xls");
         } catch (Exception e) {
             LOGGER.info("exportProjectByGuidanceNum:" + e.getMessage());
             try {
@@ -1305,6 +1301,22 @@ public class CommonController {
         }
     }
 
+    private ImplementationProcessEnum failProjectStatus(ImplementationProcessEnum implementationProcessEnum) {
+        if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT) {
+            return ImplementationProcessEnum.IN_AUDIT_FAIL;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT_AGAIN) {
+            return ImplementationProcessEnum.IN_AUDIT_AGAIN_FAIL;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT_FINAL) {
+            return ImplementationProcessEnum.IN_AUDIT_FINAL_FAIL;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING) {
+            return ImplementationProcessEnum.CHECKING_FAIL;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING_AGAIN) {
+            return ImplementationProcessEnum.CHECKING_AGAIN_FAIL;
+        } else {
+            return ImplementationProcessEnum.CHECKING_FINAL_FAIL;
+        }
+    }
+
     private IntegralLogStatusEnum changeIntegralLogStatus(IntegralLogStatusEnum status) {
         if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE) {
             return IntegralLogStatusEnum.PENDING_AUDIT;
@@ -1314,6 +1326,18 @@ public class CommonController {
             return IntegralLogStatusEnum.PENDING_AUDIT_FINAL;
         } else {
             return IntegralLogStatusEnum.HAVEPASSED;
+        }
+    }
+
+    private IntegralLogStatusEnum failIntegralLogStatus(IntegralLogStatusEnum status) {
+        if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_AGAIN) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL;
+        } else {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FINAL_FAIL;
         }
     }
 }

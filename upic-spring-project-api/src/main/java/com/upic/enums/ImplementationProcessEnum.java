@@ -9,17 +9,22 @@ import java.util.Map;
 public enum ImplementationProcessEnum {
     SAVED("已保存", 1),
     IN_AUDIT("待初审", 2),
-    IN_AUDIT_AGAIN("待复审", 3),
-    IN_AUDIT_FINAL("待终审", 4),
-    AUDITED("已审核", 5),
-    ENROLLMENT("报名中", 6),
-    HAVE_IN_HAND("进行中", 7),
-    COMPLETED("已完成", 8),
-    CHECKING("待初验", 9),
-    CHECKING_AGAIN("待复验", 10),
-    CHECKING_FINAL("待终验", 11),
-    CHECKED("已验收", 12),
-    NOT_PASS("未通过", 13);
+    IN_AUDIT_FAIL("待初审失败", 3),
+    IN_AUDIT_AGAIN("待复审", 4),
+    IN_AUDIT_AGAIN_FAIL("待复审失败", 5),
+    IN_AUDIT_FINAL("待终审", 6),
+    IN_AUDIT_FINAL_FAIL("待终审失败", 7),
+    AUDITED("已审核", 8),
+    ENROLLMENT("报名中", 9),
+    HAVE_IN_HAND("进行中", 10),
+    COMPLETED("已完成", 11),
+    CHECKING("待初验", 12),
+    CHECKING_FAIL("待初验失败", 13),
+    CHECKING_AGAIN("待复验", 14),
+    CHECKING_AGAIN_FAIL("待复验失败", 15),
+    CHECKING_FINAL("待终验", 16),
+    CHECKING_FINAL_FAIL("待终验失败", 17),
+    CHECKED("已验收", 18);
 
     private String content;
 

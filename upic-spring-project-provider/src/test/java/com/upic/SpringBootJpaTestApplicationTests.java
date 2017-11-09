@@ -62,7 +62,6 @@ public class SpringBootJpaTestApplicationTests {
             } else if (i < 30) {
                 p.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT);
             } else if (i < 40) {
-                p.setImplementationProcess(ImplementationProcessEnum.NOT_PASS);
             } else if (i < 50) {
                 p.setImplementationProcess(ImplementationProcessEnum.SAVED);
             }

@@ -10,7 +10,7 @@ var searchKeyWordUrl = "/common/myProjectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getPeopleByProjectNumUrl = "";
 var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
-var exportExcelUrl="/common/exportProjectByGuidanceNum";
+var exportExcelUrl = "/common/exportProjectByGuidanceNum";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -23,10 +23,10 @@ $(function () {
     commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
     registSelect("projectCategory");
     registSelect("ProjectStatus");
-    
-    $("#exportBtn").click(function(){
-    	var baseModels=["projectNum","declareUnit","projectName","guidanceMan","guidanceNum","projectCategory","integral","startTime","endTime","maximum"];
-    	var str=JSON.stringify(baseModels);
+
+    $("#exportBtn").click(function () {
+        var baseModels = ["projectNum", "declareUnit", "projectName", "guidanceMan", "guidanceNum", "projectCategory", "integral", "startTime", "endTime", "maximum"];
+        var str = JSON.stringify(baseModels);
 //    	requestData.baseModel=str;
 //    	 $.ajax({
 //    	        type: "GET",
@@ -44,10 +44,10 @@ $(function () {
 //    	        error: function () {
 //    	        }
 //    	    });
-    	 var form = $("<form></form>").attr("action", exportExcelUrl).attr("method", "GET");
-         form.append($("<input></input>").attr("type", "hidden").attr("name", "baseModel").attr("value", str));
-         form.appendTo('body').submit().remove();
-         form.submit();
+        var form = $("<form></form>").attr("action", exportExcelUrl).attr("method", "GET");
+        form.append($("<input></input>").attr("type", "hidden").attr("name", "baseModel").attr("value", str));
+        form.appendTo('body').submit().remove();
+        form.submit();
     })
 })
 
@@ -85,52 +85,67 @@ function addHtmls(datas, pageNum) {
                 status = "已保存";
                 break;
             case ("IN_AUDIT"):
-                status = "待初审"
+                status = "待初审";
                 break;
             case ("IN_AUDIT_AGAIN"):
-                status = "待复审"
+                status = "待复审";
                 break;
             case ("IN_AUDIT_FINAL"):
-                status = "待终审"
+                status = "待终审";
                 break;
             case ("AUDITED"):
-                status = "已审核"
+                status = "已审核";
                 break;
             case ("ENROLLMENT"):
-                status = "报名中"
+                status = "报名中";
                 break;
             case ("HAVE_IN_HAND"):
-                status = "进行中"
+                status = "进行中";
                 break;
             case ("COMPLETED"):
-                status = "已完成"
+                status = "已完成";
                 break;
             case ("CHECKING"):
-                status = "待初验"
+                status = "待初验";
                 break;
             case ("CHECKING_AGAIN"):
-                status = "待复验"
+                status = "待复验";
                 break;
             case ("CHECKING_FINAL"):
-                status = "待终验"
+                status = "待终验";
                 break;
             case ("CHECKED"):
-                status = "已验收"
+                status = "已验收";
                 break;
-            case ("NOT_PASS"):
-                status = "未通过"
+            case ("IN_AUDIT_FAIL"):
+                status = "待初审失败";
+                break;
+            case ("IN_AUDIT_AGAIN_FAIL"):
+                status = "待复审失败";
+                break;
+            case ("IN_AUDIT_FINAL_FAIL"):
+                status = "待终审失败";
+                break;
+            case ("CHECKING_FAIL"):
+                status = "待初验失败";
+                break;
+            case ("CHECKING_AGAIN_FAIL"):
+                status = "待复验失败";
+                break;
+            case ("CHECKING_FINAL_FAIL"):
+                status = "待终验失败";
                 break;
             default:
         }
-        if (data[i].implementationProcess === "SAVED" || data[i].implementationProcess === "NOT_PASS") {
+        if (data[i].implementationProcess === "SAVED" || data[i].implementationProcess === "IN_AUDIT" || data[i].implementationProcess === "IN_AUDIT_AGAIN" || data[i].implementationProcess === "IN_AUDIT_FINAL" || data[i].implementationProcess === "IN_AUDIT_FAIL" || data[i].implementationProcess === "IN_AUDIT_AGAIN_FAIL" || data[i].implementationProcess === "IN_AUDIT_FINAL_FAIL" || data[i].implementationProcess === "CHECKING_FAIL" || data[i].implementationProcess === "CHECKING_AGAIN_FAIL" || data[i].implementationProcess === "CHECKING_FINAL_FAIL") {
             htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].projectNum + "'/></td>";
             htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
             htmls += "<td>" + data[i].projectNum + "</td>";
             htmls += "<td>" + data[i].projectCategory + "</td>";
             htmls += "<td>" + data[i].projectName + "</td>";
             htmls += "<td>" + data[i].integral + "</td>";
-            htmls += "<td>" + "10/" + data[i].maximum + "</td>";
-            htmls += "<td>" + "1000/" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</td>";
+            htmls += "<td id='num" + data[i].projectNum + "'>" + "10/" + data[i].maximum + "</td>";
+            htmls += "<td id='gzl" + data[i].projectNum + "'>" + "1000/" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</td>";
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
@@ -143,61 +158,79 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + data[i].projectCategory + "</td>";
             htmls += "<td>" + data[i].projectName + "</td>";
             htmls += "<td>" + data[i].integral + "</td>";
-            htmls += "<td>" + "10/" + data[i].maximum + "</td>";
-            htmls += "<td>" + "1000/" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</td>";
+            htmls += "<td id='num" + data[i].projectNum + "'>" + "10/" + data[i].maximum + "</td>";
+            htmls += "<td id='gzl" + data[i].projectNum + "'>" + "1000/" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</td>";
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + getProjectByProjectNum + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
-            htmls += " </tr>";
+            htmls += "<div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + getProjectByProjectNum + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
+            htmls += "</tr>";
         }
     }
 
     $("#data").html(htmls);
-    page(datas, dataUrl, datas.size, datas.number, requestData);
 
+
+
+    page(datas, dataUrl, datas.size, datas.number, requestData);
 }
+
 function getProjectInfo(data, sendData) {
     var status = "";
-    switch (data.implementationProcess) {
+    switch (data[i].implementationProcess) {
         case ("SAVED"):
             status = "已保存";
             break;
         case ("IN_AUDIT"):
-            status = "待初审"
+            status = "待初审";
             break;
         case ("IN_AUDIT_AGAIN"):
-            status = "待复审"
+            status = "待复审";
             break;
         case ("IN_AUDIT_FINAL"):
-            status = "待终审"
+            status = "待终审";
             break;
         case ("AUDITED"):
-            status = "已审核"
+            status = "已审核";
             break;
         case ("ENROLLMENT"):
-            status = "报名中"
+            status = "报名中";
             break;
         case ("HAVE_IN_HAND"):
-            status = "进行中"
+            status = "进行中";
             break;
         case ("COMPLETED"):
-            status = "已完成"
+            status = "已完成";
             break;
         case ("CHECKING"):
-            status = "待初验"
+            status = "待初验";
             break;
         case ("CHECKING_AGAIN"):
-            status = "待复验"
+            status = "待复验";
             break;
         case ("CHECKING_FINAL"):
-            status = "待终验"
+            status = "待终验";
             break;
         case ("CHECKED"):
-            status = "已验收"
+            status = "已验收";
             break;
-        case ("NOT_PASS"):
-            status = "未通过"
+        case ("IN_AUDIT_FAIL"):
+            status = "待初审失败";
+            break;
+        case ("IN_AUDIT_AGAIN_FAIL"):
+            status = "待复审失败";
+            break;
+        case ("IN_AUDIT_FINAL_FAIL"):
+            status = "待终审失败";
+            break;
+        case ("CHECKING_FAIL"):
+            status = "待初验失败";
+            break;
+        case ("CHECKING_AGAIN_FAIL"):
+            status = "待复验失败";
+            break;
+        case ("CHECKING_FINAL_FAIL"):
+            status = "待终验失败";
             break;
         default:
     }

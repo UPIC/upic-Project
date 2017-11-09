@@ -7,6 +7,8 @@ import com.upic.dto.RoleInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/7.
  */
@@ -44,4 +46,12 @@ public interface CheckStatusService {
      * 删除角色
      */
     void deleteCheckStatus(long checkStatusId);
+
+    /**
+     * 根据Type查找状态列表
+     *
+     * @param i
+     * @return
+     */
+    List<CheckStatusInfo> getByType(int i);
 }
