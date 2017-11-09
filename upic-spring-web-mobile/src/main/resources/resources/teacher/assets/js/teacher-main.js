@@ -3,7 +3,7 @@
  * 教师端主页
  * @Date:   2017-09-19 10:16:05
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-09-19 10:24:59
+ * @Last Modified time: 2017-11-09 10:23:06
  */
 
 /**
@@ -14,6 +14,6 @@ $.ajax({
     url: "/common/getUserInfo",// 路径
     success: function (result) {// 返回数据根据结果进行相应的处理
         $("#tname").html(result.username);
-        $("#tpic").html("<img src='" + result.pic + "' alt=''>")
+        $("#tpic").html("<img src='" + result.pic + "'>");
     }
 });

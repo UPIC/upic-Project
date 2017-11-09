@@ -20,28 +20,28 @@ public class GrainCoinLogInfo extends BaseInfo {
 
     private String userNum; //用户编号
 
-    private IntegralLogIdInfo integralLogIdInfo;
-
     private long prizeId;
 
     private String projectName;
 
     private String prizeName;
 
+    private String projectNum;
+
     public GrainCoinLogInfo() {
     }
 
-    public GrainCoinLogInfo(String event, double score, GrainCoinLogTypeEnum type, GrainCoinLogStatusEnum status, String username, String userNum, IntegralLogIdInfo integralLogIdInfo, long prizeId, String projectName, String prizeName) {
+    public GrainCoinLogInfo(String event, double score, GrainCoinLogTypeEnum type, GrainCoinLogStatusEnum status, String username, String userNum, long prizeId, String projectName, String prizeName, String projectNum) {
         this.event = event;
         this.score = score;
         this.type = type;
         this.status = status;
         this.username = username;
         this.userNum = userNum;
-        this.integralLogIdInfo = integralLogIdInfo;
         this.prizeId = prizeId;
         this.projectName = projectName;
         this.prizeName = prizeName;
+        this.projectNum = projectNum;
     }
 
     public String getEvent() {
@@ -92,14 +92,6 @@ public class GrainCoinLogInfo extends BaseInfo {
         this.userNum = userNum;
     }
 
-    public IntegralLogIdInfo getIntegralLogIdInfo() {
-        return integralLogIdInfo;
-    }
-
-    public void setIntegralLogIdInfo(IntegralLogIdInfo integralLogIdInfo) {
-        this.integralLogIdInfo = integralLogIdInfo;
-    }
-
     public long getPrizeId() {
         return prizeId;
     }
@@ -124,6 +116,14 @@ public class GrainCoinLogInfo extends BaseInfo {
         this.prizeName = prizeName;
     }
 
+    public String getProjectNum() {
+        return projectNum;
+    }
+
+    public void setProjectNum(String projectNum) {
+        this.projectNum = projectNum;
+    }
+
     @Override
     public String toString() {
         return "GrainCoinLogInfo{" +
@@ -133,10 +133,10 @@ public class GrainCoinLogInfo extends BaseInfo {
                 ", status=" + status +
                 ", username='" + username + '\'' +
                 ", userNum='" + userNum + '\'' +
-                ", integralLogIdInfo=" + integralLogIdInfo +
                 ", prizeId=" + prizeId +
                 ", projectName='" + projectName + '\'' +
                 ", prizeName='" + prizeName + '\'' +
+                ", projectNum='" + projectNum + '\'' +
                 '}';
     }
 }

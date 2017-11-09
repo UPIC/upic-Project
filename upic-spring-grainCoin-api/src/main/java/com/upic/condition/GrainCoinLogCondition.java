@@ -24,11 +24,13 @@ public class GrainCoinLogCondition extends BaseCondition {
 
     private String prizeName;
 
+    private String projectNum;
+
     public GrainCoinLogCondition() {
         super();
     }
 
-    public GrainCoinLogCondition(String event, Double score, GrainCoinLogTypeEnum type, GrainCoinLogStatusEnum status, String username, String userNum, String projectName, String prizeName) {
+    public GrainCoinLogCondition(String event, Double score, GrainCoinLogTypeEnum type, GrainCoinLogStatusEnum status, String username, String userNum, String projectName, String prizeName, String projectNum) {
         this.event = event;
         this.score = score;
         this.type = type;
@@ -37,6 +39,7 @@ public class GrainCoinLogCondition extends BaseCondition {
         this.userNum = userNum;
         this.projectName = projectName;
         this.prizeName = prizeName;
+        this.projectNum = projectNum;
     }
 
     public String getEvent() {
@@ -101,5 +104,13 @@ public class GrainCoinLogCondition extends BaseCondition {
 
     public void setPrizeName(String prizeName) {
         this.prizeName = prizeName;
+    }
+
+    public String getProjectNum() {
+        return projectNum;
+    }
+
+    public void setProjectNum(String projectNum) {
+        this.projectNum = projectNum;
     }
 }

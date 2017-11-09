@@ -342,13 +342,35 @@ public class CommonController {
     public Page<ProjectInfo> getProject(@PageableDefault(size = 10) Pageable pageable, ProjectCondition p)
             throws Exception {
         try {
-            System.out.println("!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$" + p.getGuidanceNum());
             Page<ProjectInfo> projectInfoPage = projectService.searchProject(p, pageable);
-            System.out.println(projectInfoPage.getContent().toString());
             return projectInfoPage;
         } catch (Exception e) {
             LOGGER.info("getProject:" + e.getMessage());
             return null;
+        }
+    }
+
+    /**
+     * 项目导出
+     *
+     * @return
+     */
+    @ApiOperation("项目导出")
+    @GetMapping("exportProject")
+    public void exportProject(HttpServletResponse response, ProjectCondition condition, String baseModel) {
+        try {
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            String[] desc = new String[]{};
+            String[] array = parseArray.toArray(desc);
+            List<Object> byProjectNum = projectService.listProject(condition);
+            Workbook wk = ExcelDocument.download(array, ProjectInfo.class, byProjectNum);
+            downLoadExcel(response, wk, "项目维护.xls");
+        } catch (Exception e) {
+            LOGGER.info("exportProject:" + e.getMessage());
+            try {
+                response.getWriter().println("下载失败！");
+            } catch (IOException e1) {
+            }
         }
     }
 
@@ -838,6 +860,30 @@ public class CommonController {
     }
 
     /**
+     * 用户导出
+     *
+     * @return
+     */
+    @ApiOperation("用户导出")
+    @GetMapping("/exportUser")
+    public void exportUser(HttpServletResponse response, UserCondition condition, String baseModel) {
+        try {
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            String[] desc = new String[]{};
+            String[] array = parseArray.toArray(desc);
+            List<Object> byProjectNum = userService.listUser(condition);
+            Workbook wk = ExcelDocument.download(array, UserInfo.class, byProjectNum);
+            downLoadExcel(response, wk, "积分汇总.xls");
+        } catch (Exception e) {
+            LOGGER.info("exportUser:" + e.getMessage());
+            try {
+                response.getWriter().println("下载失败！");
+            } catch (IOException e1) {
+            }
+        }
+    }
+
+    /**
      * 教师查询目前汇总工作量
      *
      * @param teacherNum
@@ -1135,9 +1181,10 @@ public class CommonController {
      * @return
      */
     @GetMapping("/getProjectByGuidanceNum")
-    public Page<ProjectInfo> getProjectByGuidanceNum(@PageableDefault(size = 10) Pageable pageable) {
+    public Page<ProjectInfo> getProjectByGuidanceNum(@PageableDefault(size = 10) Pageable pageable, ProjectCondition projectCondition) {
         try {
-            Page<ProjectInfo> projectInfoPage = projectService.getProjectByGuidanceNum(getUser().getUserId(), pageable);
+            projectCondition.setGuidanceNum(getUser().getUserId());
+            Page<ProjectInfo> projectInfoPage = projectService.searchProject(projectCondition, pageable);
             System.out.println(projectInfoPage.toString());
             return projectInfoPage;
         } catch (Exception e) {
@@ -1153,14 +1200,16 @@ public class CommonController {
      */
     @ApiOperation("我的项目导出")
     @GetMapping("/exportProjectByGuidanceNum")
-    public void exportProjectByGuidanceNum(HttpServletResponse response, String guidanceNum, String baseModel) {
+    public void exportProjectByGuidanceNum(HttpServletResponse response, ProjectCondition projectCondition, String baseModel) {
         try {
+            projectCondition.setGuidanceNum(getUser().getUserId());
+
             List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
             String[] desc = new String[]{};
             String[] array = parseArray.toArray(desc);
-            List<Object> byProjectNum = projectService.exportProjectByGuidanceNum(getUser().getUserId());
+            List<Object> byProjectNum = projectService.listProject(projectCondition);
             Workbook wk = ExcelDocument.download(array, ProjectInfo.class, byProjectNum);
-            downLoadExcel(response, wk, "项目.xls");
+            downLoadExcel(response, wk, "我的项目.xls");
         } catch (Exception e) {
             LOGGER.info("exportProjectByGuidanceNum:" + e.getMessage());
             try {

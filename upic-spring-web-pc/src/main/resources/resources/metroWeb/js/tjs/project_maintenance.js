@@ -1,4 +1,5 @@
 var dataUrl = "/common/getProject";
+var exportExcelUrl = "/common/exportProject";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectInfo = "/common/getProjectInfo";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
@@ -11,14 +12,22 @@ var pageNum = 0;
 var requestData = {};
 
 $(function () {
-    pageSize = $("#select-small").children('option:selected').text()
+    pageSize = $("#select-small").children('option:selected').text();
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
-    // commonAjax(getProjectStatusUrl,null,"addProjectStatus","GET");
-    commonAjax(getProjectCollegeUrl,null,"addProjectCollege","GET");
-    registSelect("getProjectType")
-    registSelect("getProjectStatus")
-    registSelect("getProjectCollege")
+    commonAjax(getProjectCollegeUrl, null, "addProjectCollege", "GET");
+    registSelect("getProjectType");
+    registSelect("getProjectStatus");
+    registSelect("getProjectCollege");
+
+    $("#exportBtn").click(function () {
+        var baseModels = ["projectNum", "declareUnit", "projectName", "guidanceMan", "guidanceNum", "projectCategory", "integral", "startTime", "endTime", "maximum"];
+        var str = JSON.stringify(baseModels);
+        var form = $("<form></form>").attr("action", exportExcelUrl).attr("method", "GET");
+        form.append($("<input></input>").attr("type", "hidden").attr("name", "baseModel").attr("value", str));
+        form.appendTo('body').submit().remove();
+        form.submit();
+    })
 })
 
 function addProjectType(res) {
@@ -59,29 +68,62 @@ function addHtmls(datas, pageNum) {
     var htmls = "";
     for (var i = 0; i < data.length; i++) {
         var statuss = "";
-        if (data[i].implementationProcess === "SAVED") {
-            statuss = "已保存"
-        }
-        if (data[i].implementationProcess === "IN_AUDIT") {
-            statuss = "审核中"
-        }
-        if (data[i].implementationProcess === "AUDITED") {
-            statuss = "已审核"
-        }
-        if (data[i].implementationProcess === "NOT_PASS") {
-            statuss = "未通过"
-        }
-        if (data[i].implementationProcess === "ENROLLMENT") {
-            statuss = "报名中"
-        }
-        if (data[i].implementationProcess === "HAVE_IN_HAND") {
-            statuss = "进行中"
-        }
-        if (data[i].implementationProcess === "COMPLETED") {
-            statuss = "已完成"
-        }
-        if (data[i].implementationProcess === "CHECKED") {
-            statuss = "已验收"
+        switch (data[i].implementationProcess) {
+            case ("SAVED"):
+                status = "已保存";
+                break;
+            case ("IN_AUDIT"):
+                status = "待初审";
+                break;
+            case ("IN_AUDIT_AGAIN"):
+                status = "待复审";
+                break;
+            case ("IN_AUDIT_FINAL"):
+                status = "待终审";
+                break;
+            case ("AUDITED"):
+                status = "已审核";
+                break;
+            case ("ENROLLMENT"):
+                status = "报名中";
+                break;
+            case ("HAVE_IN_HAND"):
+                status = "进行中";
+                break;
+            case ("COMPLETED"):
+                status = "已完成";
+                break;
+            case ("CHECKING"):
+                status = "待初验";
+                break;
+            case ("CHECKING_AGAIN"):
+                status = "待复验";
+                break;
+            case ("CHECKING_FINAL"):
+                status = "待终验";
+                break;
+            case ("CHECKED"):
+                status = "已验收";
+                break;
+            case ("IN_AUDIT_FAIL"):
+                status = "待初审失败";
+                break;
+            case ("IN_AUDIT_AGAIN_FAIL"):
+                status = "待复审失败";
+                break;
+            case ("IN_AUDIT_FINAL_FAIL"):
+                status = "待终审失败";
+                break;
+            case ("CHECKING_FAIL"):
+                status = "待初验失败";
+                break;
+            case ("CHECKING_AGAIN_FAIL"):
+                status = "待复验失败";
+                break;
+            case ("CHECKING_FINAL_FAIL"):
+                status = "待终验失败";
+                break;
+            default:
         }
 
         htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].projectNum + "'/></td>";
@@ -105,38 +147,63 @@ function addHtmls(datas, pageNum) {
 function getProjectInfo(data) {
     var htmlss = "";
     var statuss = "";
-    if (data[i].implementationProcess === "SAVED") {
-        statuss = "已保存"
+    switch (data.implementationProcess) {
+        case ("SAVED"):
+            status = "已保存";
+            break;
+        case ("IN_AUDIT"):
+            status = "待初审";
+            break;
+        case ("IN_AUDIT_AGAIN"):
+            status = "待复审";
+            break;
+        case ("IN_AUDIT_FINAL"):
+            status = "待终审";
+            break;
+        case ("AUDITED"):
+            status = "已审核";
+            break;
+        case ("ENROLLMENT"):
+            status = "报名中";
+            break;
+        case ("HAVE_IN_HAND"):
+            status = "进行中";
+            break;
+        case ("COMPLETED"):
+            status = "已完成";
+            break;
+        case ("CHECKING"):
+            status = "待初验";
+            break;
+        case ("CHECKING_AGAIN"):
+            status = "待复验";
+            break;
+        case ("CHECKING_FINAL"):
+            status = "待终验";
+            break;
+        case ("CHECKED"):
+            status = "已验收";
+            break;
+        case ("IN_AUDIT_FAIL"):
+            status = "待初审失败";
+            break;
+        case ("IN_AUDIT_AGAIN_FAIL"):
+            status = "待复审失败";
+            break;
+        case ("IN_AUDIT_FINAL_FAIL"):
+            status = "待终审失败";
+            break;
+        case ("CHECKING_FAIL"):
+            status = "待初验失败";
+            break;
+        case ("CHECKING_AGAIN_FAIL"):
+            status = "待复验失败";
+            break;
+        case ("CHECKING_FINAL_FAIL"):
+            status = "待终验失败";
+            break;
+        default:
     }
-    ;
-    if (data.implementationProcess === "IN_AUDIT") {
-        statuss = "审核中"
-    }
-    ;
-    if (data.implementationProcess === "AUDITED") {
-        statuss = "已审核"
-    }
-    ;
-    if (data.implementationProcess === "NOT_PASS") {
-        statuss = "未通过"
-    }
-    ;
-    if (data.implementationProcess === "ENROLLMENT") {
-        statuss = "报名中"
-    }
-    ;
-    if (data.implementationProcess === "HAVE_IN_HAND") {
-        statuss = "进行中"
-    }
-    ;
-    if (data.implementationProcess === "COMPLETED") {
-        statuss = "已完成"
-    }
-    ;
-    if (data.implementationProcess === "CHECKED") {
-        statuss = "已验收"
-    }
-    ;
 
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>编号</div>";
@@ -209,53 +276,3 @@ function getProjectTypeUrl(res, id) {
     $("#id").html(htmls);
 
 }
-/****************导出****************************/
-document.getElementById("exportBtn").onclick = function(){
-            var table = document.getElementById("sample_1").innerHTML;//获取table模板
-            exporExcel("导出Excel表格",table);
-        }
-        /**
-         * @params: FileName:导出Excel的文件名称，excel:需要导出的table
-         * 如果没有table列表，只有json数据的话，将json数据拼接成table字符串模板即可
-         * **/
-         function exporExcel(FileName,excel){
-            var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
-            excelFile += '<meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
-            excelFile += '<meta http-equiv="content-type" content="application/vnd.ms-excel';
-            excelFile += '; charset=UTF-8">';
-            excelFile += "<head>";
-            excelFile += "<!--[if gte mso 9]>";
-            excelFile += "<xml>";
-            excelFile += "<x:ExcelWorkbook>";
-            excelFile += "<x:ExcelWorksheets>";
-            excelFile += "<x:ExcelWorksheet>";
-            excelFile += "<x:Name>";
-            excelFile += "{worksheet}";
-            excelFile += "</x:Name>";
-            excelFile += "<x:WorksheetOptions>";
-            excelFile += "<x:DisplayGridlines/>";
-            excelFile += "</x:WorksheetOptions>";
-            excelFile += "</x:ExcelWorksheet>";
-            excelFile += "</x:ExcelWorksheets>";
-            excelFile += "</x:ExcelWorkbook>";
-            excelFile += "</xml>";
-            excelFile += "<![endif]-->";
-            excelFile += "</head>";
-            excelFile += "<body>";
-            excelFile += excel;
-            excelFile += "</body>";
-            excelFile += "</html>";
-
-
-            var uri = 'data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(excelFile);
-
-            var link = document.createElement("a");
-            link.href = uri;
-
-            link.style = "visibility:hidden";
-                link.download = FileName ;  //格式默认为.xls
-
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
