@@ -19,7 +19,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +27,8 @@ import com.upic.common.document.utils.UpicBeanUtils;
 public class ExcelDocument {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(ExcelDocument.class);
 
-	
-	private static final String DEFAULT_TYPE="xlsx";
+	private static final String DEFAULT_TYPE = "xlsx";
+
 	/**
 	 * excel解析
 	 * 
@@ -64,17 +63,17 @@ public class ExcelDocument {
 
 			doForeach(aSheet, firstRowFields, lastRow, baseModel, c, list);
 		} catch (Exception e) {
-			LOGGER.error("upload"+e.getMessage());
+			LOGGER.error("upload" + e.getMessage());
 			list.clear();
 			list.add(0, e.getMessage());
 		}
 		return list;
 	}
 
-    public static Workbook download(String[] baseModel, Class<?> c, List<Object> data) {
-    	return download(baseModel,  c,  data, DEFAULT_TYPE) ;
-    }
-	
+	public static Workbook download(String[] baseModel, Class<?> c, List<Object> data) {
+		return download(baseModel, c, data, DEFAULT_TYPE);
+	}
+
 	/**
 	 * excel封装下载
 	 * 
@@ -82,14 +81,14 @@ public class ExcelDocument {
 	 * @param c
 	 * @param data
 	 */
-	public static Workbook download(String[] baseModel, Class<?> c, List<Object> data,String type) {
-		Workbook wb = type=="xls"?new HSSFWorkbook():new XSSFWorkbook();
+	public static Workbook download(String[] baseModel, Class<?> c, List<Object> data, String type) {
+		Workbook wb = type == "xls" ? new HSSFWorkbook() : new XSSFWorkbook();
 		try {
 			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Sheet sheet = wb.createSheet(c.getSimpleName() + sdf.format(new Date()));
 			Row row = sheet.createRow((int) 0);// 表头
 			Cell cell;
-			//可设置style
+			// 可设置style
 			for (int i = 0; i < baseModel.length; i++) {
 				cell = row.createCell((short) i);
 				cell.setCellValue(baseModel[i]);
@@ -106,8 +105,8 @@ public class ExcelDocument {
 				}
 			}
 		} catch (Exception e) {
-			LOGGER.error("download:"+e.getMessage());
-			wb =null;
+			LOGGER.error("download:" + e.getMessage());
+			wb = null;
 		}
 		return wb;
 	}
@@ -197,17 +196,14 @@ public class ExcelDocument {
 	 * @throws IllegalAccessException
 	 * @throws Exception
 	 */
-	private static void addData(String[] firstRowFields, String param, Class<?> c, List<Object> list) throws Exception {
-		Object newInstance = c.newInstance();
-		Map<String, Method> methodToMap = UpicBeanUtils.getMethodToMap(newInstance.getClass());
-		Arrays.stream(firstRowFields).parallel().filter(a -> methodToMap.get(a) != null).forEach(x -> {
-			try {
-				methodToMap.get(x).invoke(newInstance, param);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-		list.add(newInstance);
+	private static void addData(String firstRowField, String param, Object c) throws Exception {
+		Map<String, Method> methodToMap = UpicBeanUtils.getMethodToMap(c.getClass());
+		try {
+			methodToMap.get(firstRowField).invoke(c, param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -225,7 +221,8 @@ public class ExcelDocument {
 			List<Object> list) throws Exception {
 
 		// 循环取出每行 然后 循环每一列
-		for (int i = 1; i <= lastRow; i++) {
+		for (int i = 1; i < lastRow; i++) {
+			Object o = c.newInstance();
 			Row row = aSheet.getRow(i); // 得到 第 n 行
 			int lastCell = row.getLastCellNum(); // 得到 n行的总列数
 			if (lastCell != baseModel.length) { // 不是 6 的就有问题
@@ -238,27 +235,29 @@ public class ExcelDocument {
 								"第【" + (row.getRowNum() + 1) + "】行【" + (j + 1) + "】列," + firstRowFields[j] + "为空!");
 					} else {
 						String param = getCellValue(cells); // 解析当前列的值
-						addData(firstRowFields, param, c, list);
+						addData(firstRowFields[j], param, o);
 					}
 				}
 			}
+			list.add(o);
 		}
 	}
-	
+
 	/**
 	 * 类型转换
+	 * 
 	 * @param invoke
 	 * @param row
 	 * @param j
 	 */
-	private static void doJugeType(Object invoke ,Row row,int j) {
+	private static void doJugeType(Object invoke, Row row, int j) {
 		if (null != invoke) {
 			if (invoke instanceof Date) {// 时间字段
 				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				row.createCell(j).setCellValue(sdf.format(invoke));
 			} // 数字
 			else if (invoke instanceof Integer || invoke instanceof Double || invoke instanceof Float) {
-				row.createCell(j).setCellValue(Double.parseDouble(invoke+"") );
+				row.createCell(j).setCellValue(Double.parseDouble(invoke + ""));
 			} else {
 				row.createCell(j).setCellValue(String.valueOf(invoke));
 			}

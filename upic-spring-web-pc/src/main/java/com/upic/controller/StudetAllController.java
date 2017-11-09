@@ -1,9 +1,11 @@
 package com.upic.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.condition.*;
 import com.upic.dto.*;
+import com.upic.dto.excel.IntegralLogInfoExcel;
 import com.upic.enums.GrainCoinLogStatusEnum;
 import com.upic.enums.GrainCoinLogTypeEnum;
 import com.upic.enums.IntegralLogStatusEnum;
@@ -40,6 +42,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
@@ -374,17 +377,29 @@ public class StudetAllController {
      * @return
      */
     @ApiOperation("积分导入")
-    @GetMapping("loadIntegralLogInfo")
-    public List<Object> loadIntegralLogInfo(@RequestParam("file") CommonsMultipartFile file, List<String> baseModel) {
+    @PostMapping("/loadIntegralLogInfo")
+//    public List<Object> loadIntegralLogInfo( @RequestParam("inputFile")CommonsMultipartFile inputFile, String baseModel) {
+    public List<Object> loadIntegralLogInfo( HttpServletRequest request, String baseModel) {
         List<Object> list = null;
         try {
-            InputStream inputStream = file.getInputStream();
+        	  // 转型为MultipartHttpRequest：   
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;   
+            // 获得文件：   
+            MultipartFile inputFile = multipartRequest.getFile("inputFile");   
+            // 获得文件名：   
+            String filename = inputFile.getOriginalFilename();   
+            // 获得输入流：   
+//            InputStream input = file.getInputStream();   
+        	String [] baseModels=new String[] {};
+        	List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+        	baseModels=parseArray.toArray(baseModels);
+            InputStream inputStream = inputFile.getInputStream();
             if (inputStream == null) {
                 throw new Exception("文件为空");
             }
-            list = ExcelDocument.upload(inputStream, (String[]) baseModel.toArray(), IntegralLogInfo.class,
-                    file.getName());
-            integralLogService.saveAll(list);
+            list = ExcelDocument.upload(inputStream, baseModels, IntegralLogInfoExcel.class,
+            		filename);
+//            integralLogService.saveAll(list);
         } catch (Exception e) {
             LOGGER.info("loadIntegralLogInfo:" + e.getMessage());
             return null;
