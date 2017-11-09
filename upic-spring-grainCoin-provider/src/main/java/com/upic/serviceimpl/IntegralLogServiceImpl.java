@@ -427,6 +427,22 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         return null;
     }
 
+    @Override
+    public void addAll(List<IntegralLogInfo> integralLogInfoList) {
+        try {
+            List<IntegralLog> integralLogList = new ArrayList<>();
+            for (IntegralLogInfo integralLogInfo : integralLogInfoList) {
+                IntegralLog integralLog = new IntegralLog();
+                UpicBeanUtils.copyProperties(integralLogInfo, integralLog);
+                integralLogList.add(integralLog);
+            }
+            integralLogRepository.save(integralLogList);
+        } catch (Exception e) {
+            LOGGER.info("changeAllIntegralLogStatus:" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     static public <E> List<Object> toObject(List<E> list) {
         List<Object> objlist = new ArrayList<Object>();
         for (Object e : list) {

@@ -46,34 +46,44 @@ function addHtmls(datas, pageNum) {
     for (var i = 0; i < data.length; i++) {
         var statusC = "";
         var aUrl = "";
-        if (data[i].status === "PENDING_AUDIT") {
-            statusC = "待审核";
-            aUrl = "#mymodal1";
+        if (data[i].status === "SAVE") {
+            statusC = "保存";
+        } else if (data[i].status === "PENDING_AUDIT_BEFORE") {
+            statusC = "待初审";
+        } else if (data[i].status === "PENDING_AUDIT_BEFORE_FAIL") {
+            statusC = "待初审失败";
+        } else if (data[i].status === "PENDING_AUDIT") {
+            statusC = "待学院审";
+        } else if (data[i].status === "PENDING_AUDIT_FAIL") {
+            statusC = "待学院审失败";
+        } else if (data[i].status === "PENDING_AUDIT_AGAIN") {
+            statusC = "待部门审";
+        } else if (data[i].status === "PENDING_AUDIT_AGAIN_FAIL") {
+            statusC = "待部门审失败";
+        } else if (data[i].status === "PENDING_AUDIT_FINAL") {
+            statusC = "待团委审";
+        } else if (data[i].status === "PENDING_AUDIT_FINAL_FAIL") {
+            statusC = "待团委审失败";
         } else if (data[i].status === "HAVEPASSED") {
             statusC = "审核成功";
-            aUrl = "#mymodal1";
-        } else if (data[i].status === "FAILURE_TO_PASS_THE_AUDIT") {
-            statusC = "审核失败";
-            aUrl = "#mymodal2";
         } else if (data[i].status === "ALREADY_SIGN_UP") {
             statusC = "已报名";
-            aUrl = "#mymodal1";
         } else if (data[i].status === "SIGNED_IN") {
             statusC = "已签到";
-            aUrl = "#mymodal1";
         } else if (data[i].status === "COMPLETED") {
-            aUrl = "#mymodal1";
             statusC = "已完成";
         }
 
-        htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].integralLogId.projectNum + "'/></td>";
+        htmls += "<tr>";
+        // htmls += "<td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].integralLogId.projectNum + "'/></td>";
         htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
-        htmls += "<td>" + data[i].integralLogId.projectNum + "</td>";
+        htmls += "<td class='center_td'>" + statusC + "</td>";
+        // htmls += "<td>" + data[i].integralLogId.projectNum + "</td>";
+        htmls += "<td>" + getDate(data[i].creatTime, "yyyy-MM-dd") + "</td>";
         htmls += "<td>" + splitJson(data[i].event) + "</td>";
         htmls += "<td>" + data[i].projectName + "</td>";
         htmls += "<td>" + data[i].integral + "</td>";
-        htmls += "<td>" + getDate(data[i].creatTime, "yyyy-MM-dd") + "</td>";
-        htmls += "<td class='center_td'>" + statusC + "</td>";
+
         htmls += "<td class='center_td'>";
         htmls += "<div class='message_div' onclick=commonAjax('" + getIntegralLogByIntegralLogId + "','projectNum=" + data[i].integralLogId.projectNum + "','getProjectInfo','GET')><a href='" + aUrl + "' data-toggle='modal'>查看详情</a></div></td>";
         htmls += "</tr>";
@@ -85,12 +95,26 @@ function addHtmls(datas, pageNum) {
 function getProjectInfo(result) {
     var htmlss = "";
     var statusC = "";
-    if (result.status === "PENDING_AUDIT") {
-        statusC = "待审核";
+    if (result.status === "SAVE") {
+        statusC = "保存";
+    } else if (result.status === "PENDING_AUDIT_BEFORE") {
+        statusC = "待初审";
+    } else if (result.status === "PENDING_AUDIT_BEFORE_FAIL") {
+        statusC = "待初审失败";
+    } else if (result.status === "PENDING_AUDIT") {
+        statusC = "待学院审";
+    } else if (result.status === "PENDING_AUDIT_FAIL") {
+        statusC = "待学院审失败";
+    } else if (result.status === "PENDING_AUDIT_AGAIN") {
+        statusC = "待部门审";
+    } else if (result.status === "PENDING_AUDIT_AGAIN_FAIL") {
+        statusC = "待部门审失败";
+    } else if (result.status === "PENDING_AUDIT_FINAL") {
+        statusC = "待团委审";
+    } else if (result.status === "PENDING_AUDIT_FINAL_FAIL") {
+        statusC = "待团委审失败";
     } else if (result.status === "HAVEPASSED") {
         statusC = "审核成功";
-    } else if (result.status === "FAILURE_TO_PASS_THE_AUDIT") {
-        statusC = "审核失败";
     } else if (result.status === "ALREADY_SIGN_UP") {
         statusC = "已报名";
     } else if (result.status === "SIGNED_IN") {
