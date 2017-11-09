@@ -12,6 +12,7 @@ var uploading = false;
 // 项目类别
 var projectCategory = "";
 var projectName = "";
+var projectNum = "";
 var allData = "";
 var fatherId="";
 var selectRadioIdName="";
@@ -112,6 +113,7 @@ function createProject(data) {
 		var value=$(this).find("option:selected").val();
 		if(value!="none"){
 		projectName=$(this).find("option:selected").text();
+		projectNum=$(this).find("option:selected").text();
 		}
   });
 }
@@ -132,6 +134,8 @@ function addProjectType(res) {
 function addHtmls(data) {
 	var htmls = "";
 	for (var i = 0; i < data.length; i++) {
+		allData[i].projectCategory=projectCategory;
+		data[i].projectName=projectName;
 		htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='"
 				+ data[i].projectNum + "'/></td>";
 		htmls += "<td class='center_td'>" + data.length + "</td>";

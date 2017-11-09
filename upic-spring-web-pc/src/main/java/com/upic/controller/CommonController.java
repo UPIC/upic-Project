@@ -342,7 +342,6 @@ public class CommonController {
     public Page<ProjectInfo> getProject(@PageableDefault(size = 10) Pageable pageable, ProjectCondition p)
             throws Exception {
         try {
-            System.out.println("!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$!@#$" + p.getGuidanceNum());
             Page<ProjectInfo> projectInfoPage = projectService.searchProject(p, pageable);
             System.out.println(projectInfoPage.getContent().toString());
             return projectInfoPage;

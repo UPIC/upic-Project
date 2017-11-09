@@ -134,7 +134,6 @@ function getProjectInfo(result) {
 
         $("#getProjectInfo1").html(htmlss);
     }
-}
 
 function splitJson(json) {
     var projectCategorys = new Array();
