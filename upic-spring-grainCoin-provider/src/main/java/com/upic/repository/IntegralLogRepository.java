@@ -35,7 +35,7 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and integralLog.type = 'VOLUNTARY_APPLICATION'")
     Page<IntegralLog> getIntegralLogByMySelf(String studentNum, Pageable pageable);
 
-    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and (integralLog.status = 'COMPLETED' or integralLog.status = 'HAVEPASSED')")
+    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1")
     Page<IntegralLog> getAllIntegralLogByStudentNum(String studentNum, Pageable pageable);
 
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and integralLog.type = 'VOLUNTARY_APPLICATION' and integralLog.status <> 'HAVEPASSED'")

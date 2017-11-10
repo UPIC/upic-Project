@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,65 +11,60 @@
     <link rel="stylesheet" type="text/css" href="assets/css/teacher-main.css">
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <
-    <script src="assets/js/teacher-main.js"></script>
-    <script type="text/javascript">
-        var phoneWidth = parseInt(window.screen.width);
-        var phoneScale = phoneWidth / 375;
-        var ua = navigator.userAgent;
-        if (/Android (\d+\.\d+)/.test(ua)) {
-            var version = parseFloat(RegExp.$1);
-            if (version > 2.3) {
-                document
-                    .write('<meta name="viewport" content="width=375, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
-            } else {
-                document
-                    .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
-            }
-        } else {
-            document
-                .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
-        }
+  <script type="text/javascript">
+   var phoneWidth = parseInt(window.screen.width);
+   var phoneScale = phoneWidth / 375;
+   var ua = navigator.userAgent;
+   if (/Android (\d+\.\d+)/.test(ua)) {
+       var version = parseFloat(RegExp.$1);
+       if (version > 2.3) {
+           document
+                   .write('<meta name="viewport" content="width=375, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+       } else {
+           document
+                   .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
+       }
+   } else {
+       document
+               .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
+   }
 
-    </script>
-    <div class="container-fluid">
-        <div class="main-title">
-            宁波大红鹰学院素质拓展
-        </div>
-        <div class="main-your your-top" id="tname">
-            <!--  xxx老师 -->
-        </div>
-        <div class="main-your">
-            您好！
-        </div>
-        <div class="num-totle" id="tpic">
-            <img src="assets/i/d-1.png" alt="">
-        </div>
-    </div>
-    <div class="main-list">
-        <ul>
-            <li><a href="#"><img src="assets/i/a-1.png" alt="">
-                <div>扫一扫</div>
-            </a></li>
-            <li><a href="teacher-refer.html"><img src="assets/i/a-3.png" alt="">
-                <div>活动查询</div>
-            </a></li>
-        </ul>
-    </div>
-    <div class="main-line"></div>
-    <div class="main-tool">
-        <ul>
-            <li class="row">
-                <div class="col-xs-6"><img src="assets/i/a-5.png" alt=""><span>认定标准表</span></div>
-                <div class="col-xs-6 left"><img src="assets/i/a-6.png" alt=""></div>
-            </li>
-            <li class="row">
-                <div class="col-xs-6"><img src="assets/i/a-8.png" alt=""><span>工具箱</span></div>
-                <div class="col-xs-6 left"><img src="assets/i/a-6.png" alt=""></div>
-            </li>
-            <li class="row">
-                <div class="col-xs-6"><img src="assets/i/a-7.png" alt=""><span>站内信</span></div>
-                <div class="col-xs-6 left"><img src="assets/i/a-6.png" alt=""></div>
-            </li>
-        </ul>
-    </div>
+   </script>
+   <script src="assets/js/teacher-main.js"></script>
+   <div class="container-fluid">
+     <div class="main-title">
+       宁波大红鹰学院素质拓展
+     </div>
+     <div class="main-your your-top" id="tname">
+       xxx
+     </div>
+     <div class="main-your">
+       老师您好！
+     </div>
+     <div class="num-totle" ic="tpic">
+        <img src="assets/i/d-1.png" alt="">
+     </div>
+   </div>
+   <div class="main-list">
+     <ul>
+         <li><a href="#"><img src="assets/i/a-1.png" alt=""><div>扫一扫</div></a></li>
+         <li><a href="teacher-refer.html"><img src="assets/i/a-3.png" alt=""><div>活动查询</div></a></li>
+     </ul>
+   </div>
+   <div class="main-line"> </div>
+   <div class="main-tool">
+     <ul>
+         <li class="row">
+         <div class="col-xs-6"><img src="assets/i/a-5.png" alt=""><span>认定标准表</span></div>
+         <div class="col-xs-6 left"><img src="assets/i/a-6.png" alt=""></div>
+         </li>
+          <li class="row">
+         <div class="col-xs-6"><img src="assets/i/a-8.png" alt=""><span>工具箱</span></div>
+         <div class="col-xs-6 left"><img src="assets/i/a-6.png" alt=""></div>
+         </li>
+          <li class="row">
+         <div class="col-xs-6"><img src="assets/i/a-7.png" alt=""><span>站内信</span></div>
+         <div class="col-xs-6 left"><img src="assets/i/a-6.png" alt=""></div>
+         </li>
+     </ul>
+   </div>

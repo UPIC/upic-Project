@@ -3,7 +3,7 @@
  * 活动查询
  * @Date:   2017-09-19 10:26:52
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-09-23 09:48:45
+ * @Last Modified time: 2017-11-09 11:28:38
  */
 
 var page = 1;
@@ -14,7 +14,7 @@ var types = "GET";
 
 
 $(function () {
-    ajaxs("guidanceNum=101045", "getAll", getAllurl)
+    ajaxs("", "getAll", getAllurl)
     /**
      * 获取创建的活动详情
      *
@@ -151,7 +151,7 @@ function getPeopleNum(projectNum,numId) {
         success: function (data) {
             var num = Number(data);
             if (num === 'NaN') {
-                $("#nowNum").html("获取失败，请重新刷新页面！");
+                $("#"+numId).html("获取失败，请重新刷新页面！");
                 return;
             }
             $("#"+numId).html(num);
@@ -245,3 +245,18 @@ function subMyStr(str) {
     }
     return str;
 }
+
+    /** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('size=10&page='+page, "getAll", getAllurl);
+
+                        }
+                    });

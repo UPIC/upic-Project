@@ -2,12 +2,14 @@ var dataUrl = "/stu/loadIntegralLogInfo";
 var searchKeyWordUrl = "";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getConfirmationBasicByC = "/common/getConfirmationBasisByCategoryNodeId";
+var addData="/systemManager/changeIntegralLogInfoExcel"
 var saveUrl = "";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
 var requestData = {};
 var uploading = false;
+
 
 // 项目类别
 var projectCategory = "";
@@ -237,6 +239,31 @@ function ajaxs(datas, method, urls) {
 		success : function(result) {// 返回数据根据结果进行相应的处理
 			var str = JSON.stringify(result);
 			eval('(' + method + '(' + str + '))');
+		},
+		complete : function(XMLHttpRequest, textStatus) {
+		},
+		error : function() {
+		}
+	});
+}
+
+function submitData(){
+	var str=JSON.stringify(allData);
+	$.ajax({
+		type : "POST", // 提交方式
+		url : addData,// 路径
+		data : {
+			string:str
+		},
+		beforeSend : function(XMLHttpRequest) {
+		},
+		success : function(result) {// 返回数据根据结果进行相应的处理
+			if(result==="SUCCESS"){
+				alert("上传成功");
+				//刷新页面
+			}else{
+				alert("服务器异常，请重试！");
+			}
 		},
 		complete : function(XMLHttpRequest, textStatus) {
 		},

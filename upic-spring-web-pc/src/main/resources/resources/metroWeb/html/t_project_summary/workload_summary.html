@@ -279,7 +279,7 @@
         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
         $("#sample_1_length").find('label').after('<div class="selectlist"><select name="getDepartment" id="getDepartment" style="width: 100%;" class="color-wh"><option value="4" class="yellow">所属部门筛选...</option><option value="4">部门筛选</option><option value="5">部门筛选</option><option value="6">部门筛选</option></select></div>');
         $(".selectlist").after('<div class="selectlist selectlist_second"><select name="getYear" id="getYear" style="width: 100%;" class="color-wh"><option value="4" class="yellow">年度筛选...</option><option value="5">2016-2017</option><option value="6">年度筛选</option></select></div>');
-        $(".selectlist_second").after('<button class="btn btn-small btn-success"><i class="icon-cloud"></i>导出</button>');
+        $(".selectlist_second").after('<button class="btn btn-small btn-success" id="exportBtn"><i class="icon-cloud"></i>导出</button>');
         /*
          $(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
@@ -291,6 +291,5 @@
 <script src="../../js/tjs/pagejs.js"></script>
 <script src="../../js/tjs/workload_summary.js"></script>
 </body>
-
 
 </html>

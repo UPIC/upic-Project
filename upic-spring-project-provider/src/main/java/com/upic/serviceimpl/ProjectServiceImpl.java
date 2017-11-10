@@ -269,7 +269,13 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             List<Object> objectList = new ArrayList<>();
             List<Project> projectList = projectRepository.findAll(new ProjectSpec(condition));
-            objectList = toObject(projectList);
+            List<ProjectInfo> projectInfoList = new ArrayList<>();
+            for (Project project : projectList) {
+                ProjectInfo projectInfo = new ProjectInfo();
+                UpicBeanUtils.copyProperties(project, projectInfo);
+                projectInfoList.add(projectInfo);
+            }
+            objectList = toObject(projectInfoList);
             return objectList;
         } catch (Exception e) {
             LOGGER.info("listProject：" + e.getMessage());

@@ -127,7 +127,16 @@ public class UserServiceImpl implements UserService {
     public List<Object> listUser(UserCondition condition) {
         try {
             List<Object> objectList = new ArrayList<>();
-            objectList = toObject(userRepository.findAll(new UserSpec(condition)));
+            List<User> userList = userRepository.findAll(new UserSpec(condition));
+            List<UserInfo> userInfoList = new ArrayList<>();
+
+            for (User user : userList) {
+                UserInfo userInfo = new UserInfo();
+                UpicBeanUtils.copyProperties(user, userInfo);
+                userInfoList.add(userInfo);
+            }
+
+            objectList = toObject(userInfoList);
             return objectList;
         } catch (Exception e) {
             LOGGER.info("listUser：" + e.getMessage());

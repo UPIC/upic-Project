@@ -21,7 +21,7 @@ $(function () {
     getData(pageNum, dataUrl);
 
     $("#exportBtn").click(function () {
-        var baseModels = ["prizeName", "username", "userNum", "score", "creatTime"];
+        var baseModels = ["prizeName", "username", "userNum", "score"];
         var str = JSON.stringify(baseModels);
         var form = $("<form></form>").attr("action", exportExcelUrl).attr("method", "GET");
         form.append($("<input></input>").attr("type", "hidden").attr("name", "baseModel").attr("value", str));

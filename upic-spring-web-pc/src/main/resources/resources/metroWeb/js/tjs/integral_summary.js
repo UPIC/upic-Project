@@ -1,4 +1,5 @@
 var dataUrl = "/common/getAllUser";
+var exportExcelUrl = "/common/exportUser";
 var searchKeyWordUrl = "/common/userSearchBar";
 var getIntegeralUrl = "/stu/getIntegeralByUserNum";
 var getGrainCoinUrl = "/stu/getGrainCoinByUserNum";
@@ -22,6 +23,15 @@ $(function () {
     registSelect("getProjectclazz");
     // registSelect("getIntegeral");
     getData(pageNum, dataUrl);
+
+    $("#exportBtn").click(function () {
+        var baseModels = ["college", "clazz", "userNum", "username", "earnedPoints", "earningPoints"];
+        var str = JSON.stringify(baseModels);
+        var form = $("<form></form>").attr("action", exportExcelUrl).attr("method", "GET");
+        form.append($("<input></input>").attr("type", "hidden").attr("name", "baseModel").attr("value", str));
+        form.appendTo('body').submit().remove();
+        form.submit();
+    })
 })
 
 function addProjectclazz(res) {

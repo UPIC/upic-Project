@@ -164,4 +164,6 @@ public interface IntegralLogService {
     Page<IntegralLogInfo> getIntegralLogBySql(List<String> statusList, List<String> projectCategoryList, String rank, String colloge, Pageable pageable);
 
     IntegralLogInfo changeAllIntegralLogStatus(IntegralLogInfo integralLogInfo);
+
+    void addAll(List<IntegralLogInfo> integralLogInfoList);
 }

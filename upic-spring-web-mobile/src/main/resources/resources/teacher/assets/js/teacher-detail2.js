@@ -3,7 +3,7 @@
  * 详情页面2
  * @Date:   2017-09-19 15:12:33
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-09-23 09:59:43
+ * @Last Modified time: 2017-11-09 15:20:35
  */
 
 /**
@@ -75,17 +75,20 @@ function addHtmls(data) {
     htmls += "<li><div class='list-name'>项目类别：</div><div class='list-det'>" + data.projectCategory + "</div></li>";
     htmls += "<li><div class='list-name'>活动状态：</div><div class='list-det red'>" + status + "</div></li>";
     htmls += "<li><div class='list-name'>预获学分：</div><div class='list-det'>" + data.integral + "</div></li>";
-    htmls += "<li><div class='list-name'>活动时间：</div><div class='list-det'>" + getDate(data.startTime, "MM-dd hh:mm") + "~" + getDate(data.endTime, "MM-dd hh:mm") + "</div></li>";
+    htmls += "<li><div class='list-name'>活动时间：</div><div class='list-det' id='time'>" + getDate(data.startTime, "MM-dd hh:mm") + "-" + getDate(data.endTime, "MM-dd hh:mm") + "</div></li>";
     htmls += "<li><div class='list-name'>报名时间：</div><div class='list-det'>" + getDate(data.signUpStartTime, "MM-dd hh:mm") + "-" + getDate(data.signUpEndTime, "MM-dd hh:mm") + "</div></li>";
     htmls += "<li class='li-other'><div class='list-line'>项目详情</div><div class='li-text'>" + data.content + "</div></li>";
 
     $("#content").html(htmls);
 
     var htmlss = "";
+    var time=$("#time").text();
     htmlss += "<a href='teacher-num.html?projectNum=" + data.projectNum + "'>";
     htmlss += "<li class='one'>查看人数</li>";
     htmlss += "</a>";
+    htmlss += "<a href='teacher-er.html?time="+time+"&projectNum=" + data.projectNum + "'>";
     htmlss += "<li class='two'>点击显示二维码</li>";
+    htmlss += "</a>";
 
     $("#watchNum").html(htmlss);
 }

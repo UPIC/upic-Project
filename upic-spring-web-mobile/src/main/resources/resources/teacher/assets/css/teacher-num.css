@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2017-09-13 15:58:17
 * @Last Modified by:   Marte
-* @Last Modified time: 2017-09-13 16:18:33
+* @Last Modified time: 2017-09-14 12:32:34
 */
 .navbar-fixed-top{
     text-align: center;
@@ -17,8 +17,25 @@
 .navbar-fixed-top .de-left{
   float: left;
 }
-.table{
+.num-top{
+    width: 100%;
+    height: 50px;
+    background-color:#f0f0f0;
     margin-top:50px;
+    line-height:50px;
+    font-size:16px;
+}
+.num-top .top-left{
+    float: left;
+    margin-left:10px
+}
+.num-top .top-right{
+    float: right;
+}
+.top-right span{
+    padding-right: 15px;
+}
+.table{
     text-align: center;
 }
 thead{
