@@ -8,7 +8,10 @@ import com.upic.service.AdviceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by zhubuqing on 2017/11/7.
@@ -30,6 +33,20 @@ public class AdviceServiceImpl implements AdviceService {
             return adviceInfo;
         } catch (Exception e) {
             LOGGER.info("addAdvice：" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public AdviceInfo getAdviceByProjectId(long projectId) {
+        try {
+            Sort sort = new Sort(Sort.Direction.ASC, "creatTime");
+            Advice advice = adviceRepository.getByProjectId(projectId, sort);
+            AdviceInfo adviceInfo = new AdviceInfo();
+            UpicBeanUtils.copyProperties(advice, adviceInfo);
+            return adviceInfo;
+        } catch (Exception e) {
+            LOGGER.info("getAdviceByProjectNum：" + e.getMessage());
             return null;
         }
     }

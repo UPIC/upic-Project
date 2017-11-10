@@ -2,15 +2,17 @@
  * @Author: Marte
  * @Date:   2017-10-09 19:01:21
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-10-20 09:20:00
+ * @Last Modified time: 2017-11-06 10:23:46
  */
 var dataUrl = "/common/getProjectByGuidanceNum";
 var getProjectByProjectNum = "/common/getProjectInfo";
 var searchKeyWordUrl = "/common/myProjectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
-var getPeopleByProjectNumUrl = "";
+var getPeopleByProjectNumUrl = "/common/getSignUpNumberByProjectNum";
 var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
 var exportExcelUrl = "/common/exportProjectByGuidanceNum";
+var saveUrl = "/common/updateMyProject";
+var changeProjectStatusUrl = "/common/changeProjectStatusUrl";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -22,7 +24,7 @@ $(function () {
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
     registSelect("projectCategory");
-    registSelect("ProjectStatus");
+    registSelect("implementationProcess");
 
     $("#exportBtn").click(function () {
         var baseModels = ["projectNum", "declareUnit", "projectName", "guidanceMan", "guidanceNum", "projectCategory", "integral", "startTime", "endTime", "maximum"];
@@ -53,7 +55,7 @@ function addProjectStatus(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i] + "</option>";
     }
-    $("#ProjectStatus").html(htmls);
+    $("#implementationProcess").html(htmls);
 
 }
 
@@ -127,13 +129,13 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + data[i].projectCategory + "</td>";
             htmls += "<td>" + data[i].projectName + "</td>";
             htmls += "<td>" + data[i].integral + "</td>";
-            htmls += "<td id='num" + data[i].projectNum + "'>" + "10/" + data[i].maximum + "</td>";
-            htmls += "<td id='gzl" + data[i].projectNum + "'>" + "1000/" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</td>";
+            htmls += "<td id='peopleNum" + data[i].projectNum + "'>" + "10/" + data[i].maximum + "</td>";
+            htmls += "<td id='workSummary" + data[i].projectNum + "'>" + "1000/" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</td>";
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += "<div class='message_div'><a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + getProjectByProjectNum + "','projectNum=" + data[i].projectNum + "','updateProjectInfo','GET')>编辑</span></a><span class='space'>|</span><a>提交</a></div></td>";
-            htmls += "</tr>";
+            htmls += " <div class='message_div'><a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo2','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>编辑</span></a><span class='space'>|</span><a><span onclick=commonAjax('" + changeProjectStatusUrl + "','projectNum=" + data[i].projectNum + "','subOne','GET')>提交</span></a></div></td>";
+            htmls += " </tr>";
         } else {
             htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].projectNum + "'/></td>";
             htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
@@ -141,26 +143,36 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + data[i].projectCategory + "</td>";
             htmls += "<td>" + data[i].projectName + "</td>";
             htmls += "<td>" + data[i].integral + "</td>";
-            htmls += "<td id='num" + data[i].projectNum + "'>" + "10/" + data[i].maximum + "</td>";
-            htmls += "<td id='gzl" + data[i].projectNum + "'>" + "1000/" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</td>";
+            htmls += "<td id='peopleNum" + data[i].projectNum + "'>" + "10/" + data[i].maximum + "</td>";
+            htmls += "<td id='workSummary" + data[i].projectNum + "'>" + "1000/" + (parseFloat(data[i].integral) * parseInt(data[i].maximum)) + "</td>";
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += "<div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + getProjectByProjectNum + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
-            htmls += "</tr>";
+            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
+            htmls += " </tr>";
         }
+
+        var myData = {
+            integral: data[i].integral,
+            maximum: data[i].maximum,
+            projectNum: data[i].projectNum
+        }
+
+        commonAjax(getPeopleByProjectNumUrl, "projectNum=" + data[i].projectNum, "getPeopleByProjectNum", "GET", myData);
     }
 
     $("#data").html(htmls);
-
-
-
     page(datas, dataUrl, datas.size, datas.number, requestData);
+}
+
+function getPeopleByProjectNum(data, myData) {
+    $("#peopleNum" + myData.projectNum).html(data + "/" + myData.maximum);
+    $("#workSummary" + myData.projectNum).html((parseInt(data) * parseFloat(myData.integral)) + "/" + (parseInt(myData.maximum) * parseFloat(myData.integral)));
 }
 
 function getProjectInfo(data, sendData) {
     var status = "";
-    switch (data[i].implementationProcess) {
+    switch (data.implementationProcess) {
         case ("SAVED"):
             status = "已保存";
             break;
@@ -273,6 +285,157 @@ function getProjectInfo(data, sendData) {
     $("#getProjectInfo").html(htmls);
 }
 
+function getProjectInfo2(datas, sendData) {
+    var data = datas.content[0];
+    var status = "";
+    switch (data.implementationProcess) {
+        case ("SAVED"):
+            status = "已保存";
+            break;
+        case ("IN_AUDIT"):
+            status = "待初审";
+            break;
+        case ("IN_AUDIT_AGAIN"):
+            status = "待复审";
+            break;
+        case ("IN_AUDIT_FINAL"):
+            status = "待终审";
+            break;
+        case ("AUDITED"):
+            status = "已审核";
+            break;
+        case ("ENROLLMENT"):
+            status = "报名中";
+            break;
+        case ("HAVE_IN_HAND"):
+            status = "进行中";
+            break;
+        case ("COMPLETED"):
+            status = "已完成";
+            break;
+        case ("CHECKING"):
+            status = "待初验";
+            break;
+        case ("CHECKING_AGAIN"):
+            status = "待复验";
+            break;
+        case ("CHECKING_FINAL"):
+            status = "待终验";
+            break;
+        case ("CHECKED"):
+            status = "已验收";
+            break;
+        case ("IN_AUDIT_FAIL"):
+            status = "待初审失败";
+            break;
+        case ("IN_AUDIT_AGAIN_FAIL"):
+            status = "待复审失败";
+            break;
+        case ("IN_AUDIT_FINAL_FAIL"):
+            status = "待终审失败";
+            break;
+        case ("CHECKING_FAIL"):
+            status = "待初验失败";
+            break;
+        case ("CHECKING_AGAIN_FAIL"):
+            status = "待复验失败";
+            break;
+        case ("CHECKING_FINAL_FAIL"):
+            status = "待终验失败";
+            break;
+        default:
+    }
+    var htmls = "";
+    htmls += "<div class='modal-header'>";
+    htmls += "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
+    htmls += "<h4>详情</h4>";
+    htmls += "</div>";
+    htmls += "<div class='modal-body'>";
+    htmls += "<div class='row-fluid'>";
+    htmls += "<div class='block-fluid'>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>编号</div>";
+    htmls += "<div class='span3'>" + sendData + "</div>";
+    htmls += "<div class='span3'>代码</div>";
+    htmls += "<div class='span3' id='projectNum'>" + data.projectNum + "</div>";
+    htmls += "</div>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>项目申请日期</div>";
+    htmls += "<div class='span3' id='startTime'>" + getDate(data.startTime, "yyyy/MM/dd hh:mm") + "</div>";
+    htmls += "<div class='span3'>状态</div>";
+    htmls += "<div class='span3' id='status'>" + status + "</div>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>项目类别</div>";
+    htmls += "<div class='span3'>";
+
+    // htmls += data.projectCategory;
+    htmls += "<select class='input-large m-wrap' tabindex='1' id='getProjectType'>";
+    htmls += "</select>";
+    htmls += "</div>";
+    htmls += "<div class='span3'>申报单位</div>";
+    htmls += "<div class='span3'><input type='text' id='college' value='" + data.declareUnit + "'></div>";
+    htmls += "</div>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>项目名称</div>";
+    htmls += "<div class='span3'><input type='text' id='projectName' value='" + data.projectName + "'></div>";
+    htmls += "<div class='span3'>负责人</div>";
+    htmls += "<div class='span3'><input type='text' id='guidanceMan' value='" + data.guidanceMan + "'></div>";
+    htmls += "</div>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>工作量</div>";
+    htmls += "<div class='span3'><input readonly type='text' id='gzl' value='" + (parseFloat(data.integral) * parseInt(data.maximum)) + "'></div>";
+    htmls += "<div class='span3'>积分</div>";
+    htmls += "<div class='span3'><input type='text' id='integral' value='" + data.integral + "'></div>";
+    htmls += "</div>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>开始时间</div>";
+    htmls += "<div class='span3'><div class='input-append date' id='datetimepicker1' data-date='2017/09/14' data-date-format='dd-mm-yyyy'>";
+    htmls += "<input class='span2 nowdate' id='startTime' size='16' type='text' value='" + getDate(data.startTime, "yyyy-MM-dd hh:mm") + "' style='width:100px !important;' />";
+    htmls += "<span class='add-on'><i class='icon-th'></i></span>";
+    htmls += "</div></div>";
+    htmls += "<div class='span3'>结束时间</div>";
+    htmls += "<div class='span3'><div class='input-append date' id='datetimepicker1' data-date='2017/09/14' data-date-format='dd-mm-yyyy'>";
+    htmls += "<input class='span2 nowdate' size='16' id='endTime' type='text' value='" + getDate(data.endTime, "yyyy-MM-dd hh:mm") + "' style='width:100px !important;' />";
+    htmls += "<span class='add-on'><i class='icon-th'></i></span>";
+    htmls += "</div></div>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>总人数</div>";
+    htmls += "<div class='span3'><input type='text' id='maximum' value='" + data.maximum + "'></div>";
+    htmls += "</div>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>项目内容</div>";
+    htmls += "<div class='span9'>";
+    htmls += "<textarea id='content' name=''>" + data.content + "</textarea></div>";
+    htmls += "</div>";
+    htmls += "<div class='row-form clearfix'>";
+    htmls += "<div class='span3'>评价标准与形式</div>";
+    htmls += "<div class='span9'><textarea id='checkAssessmentCriteraAndForm' name=''>" + data.checkAssessmentCriteraAndForm + "</textarea></div>";
+    htmls += "</div>";
+    if (data.implementationProcess === "IN_AUDIT_FAIL" || data.implementationProcess === "IN_AUDIT_AGAIN_FAIL" || data.implementationProcess === "IN_AUDIT_FINAL_FAIL" || data.implementationProcess === "CHECKING_FAIL" || data.implementationProcess === "CHECKING_AGAIN_FAIL" || data.implementationProcess === "CHECKING_FINAL_FAIL") {
+        htmls += "<div class='row-form clearfix'>";
+        htmls += "<div class='span3'>审核记录</div>";
+        htmls += "<div class='span3' id='checkLog" + data.id + "'></div>";
+        htmls += "</div>";
+        htmls += "<div class='row-form clearfix'>";
+        htmls += "<div class='span3'>原因</div>";
+        htmls += "<div class='span9' id='checkReason" + data.id + "'></div>";
+        htmls += "</div>";
+
+        commonAjax()
+    }
+    htmls += "</div>";
+    htmls += "<div class='dr'><span></span></div>";
+    htmls += "</div>";
+    htmls += "</div>";
+    htmls += "<div class='modal-footer'>";
+    htmls += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true' onclick=save()>保存</button>";
+    htmls += "<button class='btn' data-dismiss='modal' aria-hidden='true'>关闭</button>";
+    htmls += "</div>";
+    $("#mymodal2").html(htmls);
+
+    commonAjax(getProjectTypeUrl, '', 'getProjectType', 'GET', data.projectCategory);
+}
+
 function getPeopleInfo(data) {
     var res = data.content;
     var htmlss = "";
@@ -283,6 +446,100 @@ function getPeopleInfo(data) {
     $("#getPeopleInfo").html(htmlss);
 }
 
-function updateProjectInfo(data, sendData) {
+function getProjectType(res, projectCategory) {
+    var htmls = "";
+    var data = res.content;
+    htmls += "<option value='category" + 1 + "'>" + projectCategory + "</option>";
+    for (var i = 0; i < data.length; i++) {
+        htmls += "<option value='category" + (i + 1) + "'>" + data[i].categoryName + "</option>";
+    }
+    $("#getProjectType").html(htmls);
 
+}
+
+function save() {
+    var Data = {};
+    Data.projectNum = $("#projectNum").text();
+    Data.startTime = $("#startTime").text();
+    Data.projectCategory = $("#getProjectType option:selected").text();
+    Data.declareUnit = $("#college").val();
+    Data.projectName = $("#projectName").val();
+    Data.guidanceMan = $("#guidanceMan").val();
+    Data.integral = $("#integral").val();
+    Data.startTime = $("#startTime").val();
+    Data.endTime = $("#endTime").val();
+    Data.maximum = $("#maximum").val();
+    Data.content = $("#content").attr("name");
+    Data.checkAssessmentCriteraAndForm = $("#checkAssessmentCriteraAndForm").attr("name");
+
+    commonAjax(saveUrl, Data, "subOne", "GET");
+}
+
+function subOne(data) {
+    if (data === "SUCCESS") {
+        alert("保存成功");
+        getData(0, dataUrl);
+    }
+}
+
+function changeEnglishChinese(value) {
+    var changeValue = "";
+    switch (value) {
+        case ("已保存"):
+            changeValue = "SAVED";
+            break;
+        case ("待初审"):
+            changeValue = "IN_AUDIT";
+            break;
+        case ("待复审"):
+            changeValue = "IN_AUDIT_AGAIN";
+            break;
+        case ("待终审"):
+            changeValue = "IN_AUDIT_FINAL";
+            break;
+        case ("已审核"):
+            changeValue = "AUDITED";
+            break;
+        case ("报名中"):
+            changeValue = "ENROLLMENT";
+            break;
+        case ("进行中"):
+            changeValue = "HAVE_IN_HAND";
+            break;
+        case ("已完成"):
+            changeValue = "COMPLETED";
+            break;
+        case ("待初验"):
+            changeValue = "CHECKING";
+            break;
+        case ("待复验"):
+            changeValue = "CHECKING_AGAIN";
+            break;
+        case ("待终验"):
+            changeValue = "CHECKING_FINAL";
+            break;
+        case ("已验收"):
+            changeValue = "CHECKED";
+            break;
+        case ("待初审失败"):
+            changeValue = "IN_AUDIT_FAIL";
+            break;
+        case ("待复审失败"):
+            changeValue = "IN_AUDIT_AGAIN_FAIL";
+            break;
+        case ("待终审失败"):
+            changeValue = "IN_AUDIT_FINAL_FAIL";
+            break;
+        case ("待初验失败"):
+            changeValue = "CHECKING_FAIL";
+            break;
+        case ("待复验失败"):
+            changeValue = "CHECKING_AGAIN_FAIL";
+            break;
+        case ("待终验失败"):
+            changeValue = "CHECKING_FINAL_FAIL";
+            break;
+        default:
+    }
+    return changeValue;
 }

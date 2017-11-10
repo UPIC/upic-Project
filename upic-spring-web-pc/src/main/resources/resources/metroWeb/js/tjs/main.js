@@ -5,8 +5,6 @@
  * @Last Modified time: 2017-10-12 14:29:19
  */
 $(function () {
-
-
     $.ajax({
         type: "GET",
         url: "/common/getUserInfo",
@@ -30,8 +28,6 @@ $(function () {
                 "学号 </div> <div class = 'span3' > "
                 + result.userNum + " </div> </div> ";
             $("#getinfo").html(htmls);
-
-
         }
     });
 
@@ -56,34 +52,30 @@ $(function () {
         });
     }
 
-
     function addHtmls(result) {
         var htmls = "";
         var total = 0;
         htmls += "<table class='table table-bordered'>";
-        htmls += "    <thead>";
-        htmls += "      <tr>";
-        htmls += "        <th>类别</th>";
-        htmls += "        <th>积分</th>";
-        htmls += "      </tr>";
-        htmls += "    </thead>";
-        htmls += "    <tbody>";
+        htmls += "<thead>";
+        htmls += "<tr>";
+        htmls += "<th>类别</th>";
+        htmls += "<th>积分</th>";
+        htmls += "</tr>";
+        htmls += "</thead>";
+        htmls += "<tbody>";
         for (var i = 0; i < result.length; i++) {
-            htmls += "      <tr>";
-            htmls += "        <td>result.projectCategory</td>";
-            htmls += "        <td>" + result.integral + "</td>";
-            htmls += "      </tr>";
+            htmls += "<tr>";
+            htmls += "<td>" + result.projectCategory + "</td>";
+            htmls += "<td>" + result.integral + "</td>";
+            htmls += "</tr>";
             total = total + result.integral;//总计
         }
-        ;
-        htmls += "      <tr>";
-        htmls += "        <td colspan='4' style='text-align:right;padding-right: 20px;'>总计:<span>" + total + "</span></td>";
-        htmls += "      </tr>";
-        htmls += "    </tbody> ";
-        htmls += "  </table>";
+
+        htmls += "<tr>";
+        htmls += "<td colspan='4' style='text-align:right;padding-right: 20px;'>总计:<span>" + total + "</span></td>";
+        htmls += "</tr>";
+        htmls += "</tbody> ";
+        htmls += "</table>";
         $("#getinfo").append(htmls);
-
-
     }
-
 })

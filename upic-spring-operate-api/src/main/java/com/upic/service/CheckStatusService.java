@@ -53,5 +53,5 @@ public interface CheckStatusService {
      * @param i
      * @return
      */
-    List<CheckStatusInfo> getByType(int i);
+    List<CheckStatusInfo> getByType(String i);
 }
