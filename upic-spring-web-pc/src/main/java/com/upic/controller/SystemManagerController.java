@@ -3,6 +3,7 @@ package com.upic.controller;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSONArray;
+import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
 import com.upic.service.ConfirmationBasisService;
@@ -95,11 +96,17 @@ public class SystemManagerController {
         }
     }
 
+    /**
+     * 根据上传人给予状态
+     * @param string
+     * @return
+     */
     @PostMapping("/changeIntegralLogInfoExcel")
-    public String changeIntegralLogInfoExcel(String string) {
+    public String changeIntegralLogInfoExcel(String string,String type) {
         try {
             List<IntegralLogInfoExcel> integralLogInfoExcelList = JSONArray.parseArray(string, IntegralLogInfoExcel.class);
-            List<IntegralLogInfo> integralLogInfoList = new ArrayList<>();
+            List<IntegralLogInfo> integralLogInfoList = new ArrayList<IntegralLogInfo>();
+            ChineseCharToEn cte = new ChineseCharToEn();
             for (IntegralLogInfoExcel integralLogInfoExcel : integralLogInfoExcelList) {
                 IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
                 integralLogIdInfo.setStudentNum(integralLogInfoExcel.getStudentNum());
@@ -110,7 +117,7 @@ public class SystemManagerController {
                 integralLogInfo.setEvent(integralLogInfoExcel.getEvent());
                 integralLogInfo.setIntegral(integralLogInfoExcel.getIntegral());
                 integralLogInfo.setType(integralLogInfoExcel.getType());
-                integralLogInfo.setStatus(integralLogInfoExcel.getStatus());
+                integralLogInfo.setStatus(integralLogInfoExcel.getStatus());//这个什么意思
                 integralLogInfo.setStudent(integralLogInfoExcel.getStudent());
                 integralLogInfo.setClazz(integralLogInfoExcel.getClazz());
                 integralLogInfo.setCollege(integralLogInfoExcel.getCollege());
@@ -125,7 +132,8 @@ public class SystemManagerController {
                 integralLogInfo.setAddTime(integralLogInfoExcel.getAddTime());
                 integralLogInfo.setProjectName(integralLogInfoExcel.getProjectName());
                 integralLogInfo.setProjectCategory(integralLogInfoExcel.getProjectCategory());
-                integralLogInfo.setCollegeOtherName(integralLogInfoExcel.getCollegeOtherName());
+                integralLogInfo.setCollegeOtherName( cte.getAllFirstLetter(integralLogInfoExcel.getCollege()).toUpperCase());
+                integralLogInfoList.add(integralLogInfo);
             }
             integralLogService.addAll(integralLogInfoList);
             return "SUCCESS";

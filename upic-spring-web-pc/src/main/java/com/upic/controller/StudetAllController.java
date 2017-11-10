@@ -273,7 +273,7 @@ public class StudetAllController {
             if (integralLogInfo.getField1().equals("radioselect1")) {
                 integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + integralLogInfo.getField2());
             } else {
-                integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + cte.getAllFirstLetter(integralLogInfo.getProjectName()));
+                integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + cte.getAllFirstLetter(integralLogInfo.getProjectName()).toUpperCase());
             }
 
             integralLogInfo.setClazz(userInfo.getClazz());
