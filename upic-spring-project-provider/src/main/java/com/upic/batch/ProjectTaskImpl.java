@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.upic.common.utils.redis.UpicRedisComponent;
 import com.upic.condition.ProjectCondition;
+import com.upic.enums.ImplementationProcessEnum;
 import com.upic.po.Project;
 import com.upic.repository.ProjectRepository;
 import com.upic.repository.spec.ProjectSpec;
@@ -41,7 +42,49 @@ public class ProjectTaskImpl implements ProjectTask {
 		doProjectSinEnd();
 		//上架
 		doProjectSinStart();
+		//项目结束的标记为结束
+		doProjectEnd();
 	}
+	
+	/**
+	 * 处理项目结束的标记为结束
+	 */
+	private void doProjectEnd() {
+		PageRequest page=new PageRequest(0, 100);
+		ProjectCondition p=new ProjectCondition();
+		p.setEndTimeTo(getOneDayBefore(new Date(),-7));
+		p.setEndTime(new Date());
+		Page<Project> pageBean = projectRepository.findAll(new ProjectSpec(p), page);
+		for(int i=0;i<pageBean.getTotalPages();i++) {
+			List<Project> content=null;
+			if(i==0) {
+				content = pageBean.getContent();
+			}else {
+				page=new PageRequest(i, 100);
+				content = projectRepository.findAll(new ProjectSpec(p), page).getContent();
+			}
+			doProjectSeEnd(content);
+		}
+	}
+	/**
+	 * 标记为项目结束
+	 * @param content
+	 */
+	private void doProjectSeEnd(List<Project> content) {
+		content.parallelStream().forEach(x->{
+			if(x.getImplementationProcess().getNum()==ImplementationProcessEnum.HAVE_IN_HAND.getNum()) {
+				if(x.getUnit().equals("2")) {
+					x.setImplementationProcess(ImplementationProcessEnum.CHECKING_AGAIN);
+				}else if(x.getUnit().equals("3")) {
+					x.setImplementationProcess(ImplementationProcessEnum.CHECKING);
+				}else {
+					return;
+				}
+				projectRepository.saveAndFlush(x);
+			}
+		});
+	}
+
 	/**
 	 * 上架
 	 */
@@ -75,7 +118,7 @@ public class ProjectTaskImpl implements ProjectTask {
 	private void doProjectSinEnd() {
 		PageRequest page=new PageRequest(0, 100);
 		ProjectCondition p=new ProjectCondition();
-		p.setSignUpEndTime(getOneDayBefore(new Date(),-1));
+		p.setSignUpEndTime(getOneDayBefore(new Date(),-7));
 		p.setSignUpEndTime(new Date());
 		//查询是否报名的
 		Page<Project> pageBean = projectRepository.findAll(new ProjectSpec(p), page);

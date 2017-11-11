@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by zhubuqing on 2017/9/13.
  */
 public enum RankEnum {
-    SCHOOL("学校", 1), COLLEGE("学院", 2), MAJOR("专业", 3), CLAZZ("班级", 4);
+    SCHOOL("学校", 1),APARTMENT("部门",2), COLLEGE("学院", 3), MAJOR("专业", 4), CLAZZ("班级", 5);
     private String content;
 
     private int num;

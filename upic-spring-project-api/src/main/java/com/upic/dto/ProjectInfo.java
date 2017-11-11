@@ -49,7 +49,7 @@ public class ProjectInfo extends BaseInfo {
 
     private RankEnum rankEnum; //等级
 
-    private String unit; //单位
+    private String unit; //单位等级
 
     private int onOff; //二维码开关
 

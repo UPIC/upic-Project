@@ -1,5 +1,8 @@
 package com.upic.condition;
 
+import java.util.List;
+import java.util.Map;
+
 import com.upic.common.base.condition.BaseCondition;
 import com.upic.enums.GrainCoinLogStatusEnum;
 import com.upic.enums.GrainCoinLogTypeEnum;
@@ -25,7 +28,8 @@ public class GrainCoinLogCondition extends BaseCondition {
     private String prizeName;
 
     private String projectNum;
-
+    
+    private List<Map<String,Object>> orList;
     public GrainCoinLogCondition() {
         super();
     }
@@ -113,4 +117,12 @@ public class GrainCoinLogCondition extends BaseCondition {
     public void setProjectNum(String projectNum) {
         this.projectNum = projectNum;
     }
+    
+    public List<Map<String, Object>> getOrList() {
+		return orList;
+	}
+
+	public void setOrList(List<Map<String, Object>> orList) {
+		this.orList = orList;
+	}
 }

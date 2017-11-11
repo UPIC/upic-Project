@@ -22,5 +22,6 @@ public class GrainCoinLogSpec extends CommonSimpleSpecification<GrainCoinLog, Gr
         addEqualsCondition(queryWraper, "status");
         addLikeCondition(queryWraper, "username");
         addEqualsCondition(queryWraper, "userNum");
+        addOrCondition(queryWraper, "orList");
     }
 }

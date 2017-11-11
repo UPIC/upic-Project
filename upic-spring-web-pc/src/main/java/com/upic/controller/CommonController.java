@@ -568,8 +568,7 @@ public class CommonController {
             p.setImplementationProcess(ImplementationProcessEnum.SAVED);
             p.setGuidanceNum(getUser().getUserId());
             p.setProjectAddWay(ProjectAddWayEnum.MANUAL_ADDITION);
-            p.setUnit(getUser().getCollege());
-
+            p.setUnit(getUser().getRank());
             p = projectService.addProject(p);
             return p;
         } catch (Exception e) {

@@ -1,7 +1,10 @@
 package com.upic.common.support.spec;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -17,7 +20,7 @@ import org.joda.time.DateTime;
  *
  * <pre>
  * 
- * @author DTZ 
+ * @author DTZ
  */
 public abstract class AbstractConditionBuilder<T> {
 
@@ -54,11 +57,13 @@ public abstract class AbstractConditionBuilder<T> {
 		if (minValue != null || maxValue != null) {
 			Path<? extends Comparable> fieldPath = getPath(queryWraper.getRoot(), column);
 			if (minValue != null && maxValue != null) {
-				queryWraper.addPredicate(queryWraper.getCb().between(fieldPath, minValue, processMaxValueOnDate(maxValue)));
+				queryWraper.addPredicate(
+						queryWraper.getCb().between(fieldPath, minValue, processMaxValueOnDate(maxValue)));
 			} else if (minValue != null) {
 				queryWraper.addPredicate(queryWraper.getCb().greaterThanOrEqualTo(fieldPath, minValue));
 			} else if (maxValue != null) {
-				queryWraper.addPredicate(queryWraper.getCb().lessThanOrEqualTo(fieldPath, processMaxValueOnDate(maxValue)));
+				queryWraper.addPredicate(
+						queryWraper.getCb().lessThanOrEqualTo(fieldPath, processMaxValueOnDate(maxValue)));
 			}
 		}
 	}
@@ -221,6 +226,23 @@ public abstract class AbstractConditionBuilder<T> {
 			Path<?> fieldPath = getPath(queryWraper.getRoot(), column);
 			queryWraper.addPredicate(queryWraper.getCb().notEqual(fieldPath, value));
 		}
+	}
+
+	/**
+	 * 添加or语句
+	 * @param queryWraper
+	 * @param field
+	 * @param value
+	 */
+	protected void addOrCondition(QueryWraper<T> queryWraper, String field, List<Map<String, Object>> value) {
+		value.parallelStream().forEach(x -> {
+			List<Predicate> pList = new ArrayList<Predicate>();
+			x.keySet().parallelStream().forEach(key -> {
+				Path<?> fieldPath = getPath(queryWraper.getRoot(), key);
+				pList.add(queryWraper.getCb().equal(fieldPath, x.get(key)));
+			});
+			queryWraper.addPredicate(queryWraper.getCb().or(pList.toArray(new Predicate[] {})));
+		});
 	}
 
 	/**

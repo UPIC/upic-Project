@@ -1,8 +1,13 @@
 package com.upic.common.support.spec;
 
 import java.lang.reflect.InvocationTargetException;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import javax.persistence.criteria.Predicate;
 import org.apache.commons.beanutils.PropertyUtils;
+
 
 /**
  * <pre>
@@ -297,6 +302,17 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 				(Comparable)getValue(getCondition(), field));
 	}
 
+	/**
+	 * or语句的拼接
+	 * @author dtz
+	 * 2017-11-11
+	 */
+	protected void addOrCondition(QueryWraper<T> queryWraper, String field) {
+		List<Map<String,Object>> value = (List<Map<String, Object>>) getValue(getCondition(),field);
+		if(value!=null) {
+			addOrCondition(queryWraper, field,value);
+		}
+	}
 	private Object getValue(C condition, String field) {
 		try {
 			return PropertyUtils.getProperty(condition, field);
@@ -306,6 +322,8 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 		return null;
 	}
 
+	
+	
 	/**
 	 * @return the condition
 	 */
