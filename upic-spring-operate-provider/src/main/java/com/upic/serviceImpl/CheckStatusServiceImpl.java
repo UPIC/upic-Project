@@ -103,8 +103,8 @@ public class CheckStatusServiceImpl implements CheckStatusService {
     }
 
     @Override
-    public List<CheckStatusInfo> getByType(int i) {
-        List<CheckStatus> checkStatusList;
+    public List<CheckStatusInfo> getByType(String i) {
+        List<CheckStatus> checkStatusList = new ArrayList<>();
         try {
             checkStatusList = checkStatusRepository.getByType(i);
             List<CheckStatusInfo> checkStatusInfoList = new ArrayList<CheckStatusInfo>();

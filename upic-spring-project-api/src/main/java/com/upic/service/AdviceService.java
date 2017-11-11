@@ -7,4 +7,6 @@ import com.upic.dto.AdviceInfo;
  */
 public interface AdviceService {
     AdviceInfo addAdvice(AdviceInfo adviceInfo);
+
+    AdviceInfo getAdviceByProjectId(long projectId);
 }
