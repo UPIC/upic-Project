@@ -5,10 +5,10 @@
  * @Last Modified time: 2017-11-06 10:23:46
  */
 var dataUrl = "/common/getProjectByGuidanceNum";
-var getProjectByProjectNum = "/common/getProjectInfo";
 var searchKeyWordUrl = "/common/myProjectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getPeopleByProjectNumUrl = "/common/getSignUpNumberByProjectNum";
+var getSignUpPeopleByProjectNumUrl = "/common/getSignUpPeopleByProjectNum";
 var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
 var exportExcelUrl = "/common/exportProjectByGuidanceNum";
 var saveUrl = "/common/updateMyProject";
@@ -148,7 +148,7 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','" + data[i].projectNum + "','getProjectInfo','GET')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getPeopleByProjectNumUrl + "','" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
+            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getSignUpPeopleByProjectNumUrl + "','projectNum=" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
             htmls += " </tr>";
         }
 
@@ -168,9 +168,12 @@ function addHtmls(datas, pageNum) {
 function getPeopleByProjectNum(data, myData) {
     $("#peopleNum" + myData.projectNum).html(data + "/" + myData.maximum);
     $("#workSummary" + myData.projectNum).html((parseInt(data) * parseFloat(myData.integral)) + "/" + (parseInt(myData.maximum) * parseFloat(myData.integral)));
+    $("#detailPeopleNum" + myData.projectNum).html(data + "/" + myData.maximum);
+    $("#detailWorkSummary" + myData.projectNum).html((parseInt(data) * parseFloat(myData.integral)) + "/" + (parseInt(myData.maximum) * parseFloat(myData.integral)));
 }
 
-function getProjectInfo(data, sendData) {
+function getProjectInfo(datas, sendData) {
+    var data = datas.content[0];
     var status = "";
     switch (data.implementationProcess) {
         case ("SAVED"):
@@ -230,26 +233,24 @@ function getProjectInfo(data, sendData) {
         default:
     }
     var htmls = "";
+    htmls += "<div class='modal-header'>";
+    htmls += "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
+    htmls += "<h4>详情</h4>";
+    htmls += "</div>";
+    htmls += "<div class='modal-body'>";
+    htmls += "<div class='row-fluid'>";
+    htmls += "<div class='block-fluid'>";
     htmls += "<div class='row-form clearfix'>";
-    htmls += "<div class='span3'>编号</div>";
+    htmls += "<div class='span3'>编号</div>"
     htmls += "<div class='span3'>" + sendData + "</div>";
     htmls += "<div class='span3'>代码</div>";
     htmls += "<div class='span3'>" + data.projectNum + "</div>";
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>项目申请日期</div>";
-    htmls += "<div class='span3'>" + getDate(data.startTime, "yyyy/MM/dd hh:mm") + "</div>";
-    htmls += "<div class='span3'>状态</div>";
-    htmls += "<div class='span3'>" + status + "</div>";
-    htmls += "<div class='row-form clearfix'>";
-    htmls += "<div class='span3'>项目类别</div>";
-    htmls += "<div class='span3'>";
-
-    htmls += data.projectCategory;
-    htmls += "</div>";
-    htmls += "<div class='span3'>所属学院</div>";
-    htmls += "<div class='span3'>" + data.college + "</div>";
-    htmls += "</div>";
+    htmls += "<div class='span3'>" + getDate(data.creatTime, "yyyy/MM/dd hh:mm") + "</div>";
+    htmls += "<div class='span3'>状态</div><div class='span3'>" + status + "</div></div>";
+    htmls += "<div class='row-form clearfix'><div class='span3'>项目类别</div><div class='span3'>" + data.projectCategory + "</div><div class='span3'>申报单位</div><div class='span3'>" + data.declareUnit + "</div></div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>项目名称</div>";
     htmls += "<div class='span3'>" + data.projectName + "</div>";
@@ -258,31 +259,34 @@ function getProjectInfo(data, sendData) {
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>工作量</div>";
-    htmls += "<div class='span3'>" + (parseFloat(data.integral) * parseInt(data.maximum)) + "</div>";
+    htmls += "<div class='span3' id='detailWorkSummary" + data.projectNum + "'></div>"; //" + (parseFloat(data.integral) * parseInt(data.maximum)) + "
     htmls += "<div class='span3'>积分</div>";
     htmls += "<div class='span3'>" + data.integral + "</div>";
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>开始时间</div>";
-    htmls += "<div class='span3'>" + getDate(data.startTime, "yyyy/MM/dd hh:mm") + "</div>";
+    htmls += "<div class='span3'>" + getDate(data.startTime, "yyyy-MM-dd hh:mm") + "</div>";
     htmls += "<div class='span3'>结束时间</div>";
-    htmls += "<div class='span3'>" + getDate(data.endTime, "yyyy/MM/dd hh:mm") + "</div>";
+    htmls += "<div class='span3'>" + getDate(data.endTime, "yyyy-MM-dd hh:mm") + "</div>";
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>参与人数</div>";
-    htmls += "<div class='span3'>20/" + data.maximum + "</div>";
-    htmls += "</div>";
-    htmls += "<div class='row-form clearfix'>";
-    htmls += "<div class='span3'>项目内容</div>";
-    htmls += "<div class='span9'>";
-    htmls += data.content;
-    htmls += "</div>";
-
+    htmls += "<div class='span3' id='detailPeopleNum" + data.projectNum + "'></div>"; //" + data.maximum + "
+    htmls += "</div><div class='row-form clearfix'><div class='span3'>项目内容</div><div class='span9'>" + data.content + "</div></div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>评价标准与形式</div>";
-    htmls += "<div class='span9'></div>";
-    htmls += "</div>";
-    $("#getProjectInfo").html(htmls);
+    htmls += "<div class='span9'>" + data.checkAssessmentCriteraAndForm + "</div></div>";
+    htmls += "</div><div class='dr'><span></span></div></div></div><div class='modal-footer'>";
+    htmls += "<button class='btn' data-dismiss='modal' aria-hidden='true'>关闭</button></div>";
+    $("#mymodal3").html(htmls);
+
+    var myData = {
+        integral: data.integral,
+        maximum: data.maximum,
+        projectNum: data.projectNum
+    }
+
+    commonAjax(getPeopleByProjectNumUrl, "projectNum=" + data.projectNum, "getPeopleByProjectNum", "GET", myData);
 }
 
 function getProjectInfo2(datas, sendData) {
@@ -361,7 +365,7 @@ function getProjectInfo2(datas, sendData) {
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>项目申请日期</div>";
-    htmls += "<div class='span3' id='startTime'>" + getDate(data.startTime, "yyyy/MM/dd hh:mm") + "</div>";
+    htmls += "<div class='span3' id='creatTime' name='" + data.creatTime + "'>" + getDate(data.creatTime, "yyyy/MM/dd hh:mm") + "</div>";
     htmls += "<div class='span3'>状态</div>";
     htmls += "<div class='span3' id='status'>" + status + "</div>";
     htmls += "<div class='row-form clearfix'>";
@@ -390,12 +394,12 @@ function getProjectInfo2(datas, sendData) {
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>开始时间</div>";
     htmls += "<div class='span3'><div class='input-append date' id='datetimepicker1' data-date='2017/09/14' data-date-format='dd-mm-yyyy'>";
-    htmls += "<input class='span2 nowdate' id='startTime' size='16' type='text' value='" + getDate(data.startTime, "yyyy-MM-dd hh:mm") + "' style='width:100px !important;' />";
+    htmls += "<input class='span2 nowdate' id='startTime' name='" + data.startTime + "' size='16' type='text' value='" + getDate(data.startTime, "yyyy-MM-dd hh:mm") + "' style='width:100px !important;' />";
     htmls += "<span class='add-on'><i class='icon-th'></i></span>";
     htmls += "</div></div>";
     htmls += "<div class='span3'>结束时间</div>";
     htmls += "<div class='span3'><div class='input-append date' id='datetimepicker1' data-date='2017/09/14' data-date-format='dd-mm-yyyy'>";
-    htmls += "<input class='span2 nowdate' size='16' id='endTime' type='text' value='" + getDate(data.endTime, "yyyy-MM-dd hh:mm") + "' style='width:100px !important;' />";
+    htmls += "<input class='span2 nowdate' size='16' id='endTime' name='" + data.endTime + "' type='text' value='" + getDate(data.endTime, "yyyy-MM-dd hh:mm") + "' style='width:100px !important;' />";
     htmls += "<span class='add-on'><i class='icon-th'></i></span>";
     htmls += "</div></div>";
     htmls += "<div class='row-form clearfix'>";
@@ -405,11 +409,11 @@ function getProjectInfo2(datas, sendData) {
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>项目内容</div>";
     htmls += "<div class='span9'>";
-    htmls += "<textarea id='content' name=''>" + data.content + "</textarea></div>";
+    htmls += "<textarea id='content'>" + data.content + "</textarea></div>";
     htmls += "</div>";
     htmls += "<div class='row-form clearfix'>";
     htmls += "<div class='span3'>评价标准与形式</div>";
-    htmls += "<div class='span9'><textarea id='checkAssessmentCriteraAndForm' name=''>" + data.checkAssessmentCriteraAndForm + "</textarea></div>";
+    htmls += "<div class='span9'><textarea id='checkAssessmentCriteraAndForm'>" + data.checkAssessmentCriteraAndForm + "</textarea></div>";
     htmls += "</div>";
     if (data.implementationProcess === "IN_AUDIT_FAIL" || data.implementationProcess === "IN_AUDIT_AGAIN_FAIL" || data.implementationProcess === "IN_AUDIT_FINAL_FAIL" || data.implementationProcess === "CHECKING_FAIL" || data.implementationProcess === "CHECKING_AGAIN_FAIL" || data.implementationProcess === "CHECKING_FINAL_FAIL") {
         htmls += "<div class='row-form clearfix'>";
@@ -421,6 +425,7 @@ function getProjectInfo2(datas, sendData) {
         htmls += "<div class='span9' id='checkReason" + data.id + "'></div>";
         htmls += "</div>";
 
+        // 获取审核记录与原因
         commonAjax()
     }
     htmls += "</div>";
@@ -437,11 +442,10 @@ function getProjectInfo2(datas, sendData) {
 }
 
 function getPeopleInfo(data) {
-    var res = data.content;
     var htmlss = "";
-    htmlss += "<tr> <th>编号</th> <th>所属学院</th> <th>班级</th> <th>学号</th> <th>姓名</th> </tr>";
+    htmlss += "<tr> <th>编号</th> <th>所属学院</th> <th>班级</th> <th>学号</th> <th>姓名</th> <th>状态</th> </tr>";
     for (var i = 0; i < data.length; i++) {
-        htmlss += "<tr><td>" + (i + 1) + "</td><td>" + data[i].college + "</td><td>" + data[i].clazz + "</td><td>" + data[i].studentNum + "</td><td>" + data[i].studentName + "</td></tr>";
+        htmlss += "<tr><td>" + (i + 1) + "</td><td>" + data[i].college + "</td><td>" + data[i].clazz + "</td><td>" + data[i].userNum + "</td><td>" + data[i].username + "</td><td>" + data[i].field1 + "</td></tr>";
     }
     $("#getPeopleInfo").html(htmlss);
 }
@@ -458,21 +462,27 @@ function getProjectType(res, projectCategory) {
 }
 
 function save() {
-    var Data = {};
-    Data.projectNum = $("#projectNum").text();
-    Data.startTime = $("#startTime").text();
-    Data.projectCategory = $("#getProjectType option:selected").text();
-    Data.declareUnit = $("#college").val();
-    Data.projectName = $("#projectName").val();
-    Data.guidanceMan = $("#guidanceMan").val();
-    Data.integral = $("#integral").val();
-    Data.startTime = $("#startTime").val();
-    Data.endTime = $("#endTime").val();
-    Data.maximum = $("#maximum").val();
-    Data.content = $("#content").attr("name");
-    Data.checkAssessmentCriteraAndForm = $("#checkAssessmentCriteraAndForm").attr("name");
+    var projectInfo = {};
+    projectInfo.projectNum = $("#projectNum").text();
+    projectInfo.creatTime = $("#creatTime").attr("name");
+    projectInfo.projectCategory = $("#getProjectType option:selected").text();
+    projectInfo.declareUnit = $("#college").val();
+    projectInfo.projectName = $("#projectName").val();
+    projectInfo.guidanceMan = $("#guidanceMan").val();
+    projectInfo.integral = $("#integral").val();
+    projectInfo.startTime = $("#startTime").attr("name");
+    projectInfo.endTime = $("#endTime").attr("name");
+    projectInfo.maximum = $("#maximum").val();
+    projectInfo.content = $("#content").val();
+    projectInfo.checkAssessmentCriteraAndForm = $("#checkAssessmentCriteraAndForm").val();
 
-    commonAjax(saveUrl, Data, "subOne", "GET");
+    var str = JSON.stringify(projectInfo);
+
+    var obj = new Object();
+
+    obj.projectInfo = str;
+
+    commonAjax(saveUrl, obj, "subOne", "POST");
 }
 
 function subOne(data) {

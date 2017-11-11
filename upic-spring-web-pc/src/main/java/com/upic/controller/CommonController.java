@@ -438,14 +438,45 @@ public class CommonController {
      */
     @GetMapping("/getSignUpNumberByProjectNum")
     @ApiOperation("根据项目编号查询项目人数")
-    public int getSignUpNumberByProjectNum(@ApiParam("项目编号") String projectNum) throws Exception {
+    public int getSignUpNumberByProjectNum(@ApiParam("项目编号") String projectNum) {
         try {
             int a = integralLogService.getSignUpNumberByProjectNum(projectNum);
-            System.out.println(a + "*****************************************************************************************************************************");
             return a;
         } catch (Exception e) {
             LOGGER.info("getSignUpNumberByProjectNum:" + e.getMessage());
-            throw new Exception(e.getMessage());
+            return 0;
+        }
+    }
+
+    /**
+     * 根据项目编号查询项目人员*
+     *
+     * @param projectNum
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getSignUpPeopleByProjectNum")
+    @ApiOperation("根据项目编号查询项目人员")
+    public List<UserInfo> getSignUpPeopleByProjectNum(@ApiParam("项目编号") String projectNum) {
+        try {
+            List<IntegralLogInfo> integralLogInfoList = integralLogService.getByProjectNum(projectNum);
+            List<String> studentNumList = new ArrayList<>();
+            List<String> statusList = new ArrayList<>();
+            for (IntegralLogInfo integralLogInfo : integralLogInfoList) {
+                studentNumList.add(integralLogInfo.getIntegralLogId().getStudentNum());
+                statusList.add(integralLogInfo.getStatus().getContent());
+            }
+            List<UserInfo> userInfoList = new ArrayList<>();
+            for (int i = 0; i < studentNumList.size(); i++) {
+                UserInfo userInfo = new UserInfo();
+                userInfo = userService.getUserByUserNum(studentNumList.get(i));
+                userInfo.setField1(statusList.get(i));
+                userInfoList.add(userInfo);
+            }
+            return userInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getSignUpPeopleByProjectNum:" + e.getMessage());
+            return null;
         }
     }
 
@@ -483,9 +514,6 @@ public class CommonController {
                                                     IntegralLogCondition c) throws Exception {
         try {
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(c, pageable);
-            System.out.println("******************************************************************************");
-            System.out.println(integralLogInfoPage.getContent().toString());
-            System.out.println("******************************************************************************");
             return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getIntegralLogPage:" + e.getMessage());
@@ -749,23 +777,25 @@ public class CommonController {
      */
     @PostMapping("/updateMyProject")
     @ApiOperation("更新项目")
-    public ProjectInfo updateMyProject(ProjectInfo projectInfo) {
+    public String updateMyProject(String projectInfo) {
         try {
-            ProjectInfo p = projectService.getProjectByNum(projectInfo.getProjectNum());
+            ProjectInfo pr = JSON.parseObject(projectInfo, ProjectInfo.class);
+            ProjectInfo p = projectService.getProjectByNum(pr.getProjectNum());
 
-            p.setStartTime(projectInfo.getStartTime());
-            p.setProjectCategory(projectInfo.getProjectCategory());
-            p.setDeclareUnit(projectInfo.getDeclareUnit());
-            p.setProjectName(projectInfo.getProjectName());
-            p.setGuidanceMan(projectInfo.getGuidanceMan());
-            p.setIntegral(projectInfo.getIntegral());
-            p.setStartTime(projectInfo.getStartTime());
-            p.setEndTime(projectInfo.getEndTime());
-            p.setMaximum(projectInfo.getMaximum());
-            p.setContent(projectInfo.getContent());
-            p.setCheckAssessmentCriteraAndForm(projectInfo.getCheckAssessmentCriteraAndForm());
+            p.setStartTime(pr.getStartTime());
+            p.setProjectCategory(pr.getProjectCategory());
+            p.setDeclareUnit(pr.getDeclareUnit());
+            p.setProjectName(pr.getProjectName());
+            p.setGuidanceMan(pr.getGuidanceMan());
+            p.setIntegral(pr.getIntegral());
+            p.setStartTime(pr.getStartTime());
+            p.setEndTime(pr.getEndTime());
+            p.setMaximum(pr.getMaximum());
+            p.setContent(pr.getContent());
+            p.setCheckAssessmentCriteraAndForm(pr.getCheckAssessmentCriteraAndForm());
+            projectService.updateProject(p);
 
-            return projectService.updateProject(projectInfo);
+            return "SUCCESS";
         } catch (Exception e) {
             LOGGER.info("updateProject:" + e.getMessage());
             return null;
