@@ -150,6 +150,9 @@ function registSelect(id) {
     $("#" + id).change(function () {
         var name = $(this).attr("name");
         var value = $(this).children('option:selected').text();
+        if (name === "implementationProcess") {
+            value = changeEnglishChinese(value);
+        }
         eval('(' + "requestData." + name + "=\"" + value + '\")');
         getData(0, dataUrl);
     });

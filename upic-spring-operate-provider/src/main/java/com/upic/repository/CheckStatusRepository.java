@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface CheckStatusRepository extends JpaRepository<CheckStatus, Long>, JpaSpecificationExecutor<CheckStatus> {
 
-    List<CheckStatus> getByType(int i);
+    List<CheckStatus> getByType(String i);
 }

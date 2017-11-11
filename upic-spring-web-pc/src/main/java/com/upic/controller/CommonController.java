@@ -164,7 +164,7 @@ public class CommonController {
     public List<String> getAllProjectImplementationProcess() {
         try {
             List<String> implementationProcessList = new ArrayList<String>();
-            List<CheckStatusInfo> checkStatusInfoList = checkStatusService.getByType(2);
+            List<CheckStatusInfo> checkStatusInfoList = checkStatusService.getByType("2");
             for (CheckStatusInfo checkStatusInfo : checkStatusInfoList) {
                 implementationProcessList.add(checkStatusInfo.getName());
             }
@@ -748,13 +748,54 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/updateProject")
+    @PostMapping("/updateMyProject")
     @ApiOperation("更新项目")
-    public ProjectInfo updateProject(ProjectInfo projectInfo) {
+    public ProjectInfo updateMyProject(ProjectInfo projectInfo) {
         try {
+            ProjectInfo p = projectService.getProjectByNum(projectInfo.getProjectNum());
+
+            p.setStartTime(projectInfo.getStartTime());
+            p.setProjectCategory(projectInfo.getProjectCategory());
+            p.setDeclareUnit(projectInfo.getDeclareUnit());
+            p.setProjectName(projectInfo.getProjectName());
+            p.setGuidanceMan(projectInfo.getGuidanceMan());
+            p.setIntegral(projectInfo.getIntegral());
+            p.setStartTime(projectInfo.getStartTime());
+            p.setEndTime(projectInfo.getEndTime());
+            p.setMaximum(projectInfo.getMaximum());
+            p.setContent(projectInfo.getContent());
+            p.setCheckAssessmentCriteraAndForm(projectInfo.getCheckAssessmentCriteraAndForm());
+
             return projectService.updateProject(projectInfo);
         } catch (Exception e) {
             LOGGER.info("updateProject:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/changeProjectStatusUrl")
+    public String changeProjectStatusUrl(String projectNum) {
+        try {
+            ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
+
+            if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED || projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_FAIL) {
+                projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT);
+            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_AGAIN_FAIL) {
+                projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_AGAIN);
+            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_FINAL_FAIL) {
+                projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_FINAL);
+            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_FAIL) {
+                projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING);
+            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_AGAIN_FAIL) {
+                projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING_AGAIN);
+            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_FINAL_FAIL) {
+                projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING_FINAL);
+            }
+
+            projectService.updateProject(projectInfo);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("changeProjectStatusUrl:" + e.getMessage());
             return null;
         }
     }

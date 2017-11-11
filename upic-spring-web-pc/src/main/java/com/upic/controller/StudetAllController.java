@@ -372,7 +372,6 @@ public class StudetAllController {
     /**
      * 积分导入
      *
-     * @param file
      * @param baseModel
      * @return
      */

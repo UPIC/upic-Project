@@ -6,10 +6,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
-import com.upic.service.ConfirmationBasisService;
-import com.upic.service.IntegralLogService;
-import com.upic.service.ProjectService;
-import com.upic.service.UserService;
+import com.upic.enums.IntegralLogStatusEnum;
+import com.upic.service.*;
 //import com.upic.utils.UserUtils;
 import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
@@ -41,6 +39,9 @@ public class SystemManagerController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AdviceService adviceService;
 
     @ApiOperation("教师获取需要审批的积分申报")
     @GetMapping("/getIntegralLogBySql")
@@ -98,11 +99,12 @@ public class SystemManagerController {
 
     /**
      * 根据上传人给予状态
+     *
      * @param string
      * @return
      */
     @PostMapping("/changeIntegralLogInfoExcel")
-    public String changeIntegralLogInfoExcel(String string,String type) {
+    public String changeIntegralLogInfoExcel(String string, String type) {
         try {
             List<IntegralLogInfoExcel> integralLogInfoExcelList = JSONArray.parseArray(string, IntegralLogInfoExcel.class);
             List<IntegralLogInfo> integralLogInfoList = new ArrayList<IntegralLogInfo>();
@@ -110,14 +112,27 @@ public class SystemManagerController {
             for (IntegralLogInfoExcel integralLogInfoExcel : integralLogInfoExcelList) {
                 IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
                 integralLogIdInfo.setStudentNum(integralLogInfoExcel.getStudentNum());
-                integralLogIdInfo.setProjectNum(integralLogInfoExcel.getProjectNum());
+
+                if (type.equals("radioselect1")) {
+                    integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + integralLogInfoExcel.getProjectNum());
+                } else if (type.equals("radioselect2")) {
+                    integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + cte.getAllFirstLetter(integralLogInfoExcel.getProjectName()).toUpperCase());
+                } else {
+                    integralLogIdInfo.setProjectNum(integralLogInfoExcel.getProjectNum());
+                }
 
                 IntegralLogInfo integralLogInfo = new IntegralLogInfo();
                 integralLogInfo.setIntegralLogId(integralLogIdInfo);
                 integralLogInfo.setEvent(integralLogInfoExcel.getEvent());
                 integralLogInfo.setIntegral(integralLogInfoExcel.getIntegral());
                 integralLogInfo.setType(integralLogInfoExcel.getType());
-                integralLogInfo.setStatus(integralLogInfoExcel.getStatus());//这个什么意思
+                if (getUser().getRank().equals("1")) {
+                    integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_FINAL);//这个什么意思
+                } else if (getUser().getRank().equals("2")) {
+                    integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
+                } else {
+                    integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE);
+                }
                 integralLogInfo.setStudent(integralLogInfoExcel.getStudent());
                 integralLogInfo.setClazz(integralLogInfoExcel.getClazz());
                 integralLogInfo.setCollege(integralLogInfoExcel.getCollege());
@@ -132,13 +147,23 @@ public class SystemManagerController {
                 integralLogInfo.setAddTime(integralLogInfoExcel.getAddTime());
                 integralLogInfo.setProjectName(integralLogInfoExcel.getProjectName());
                 integralLogInfo.setProjectCategory(integralLogInfoExcel.getProjectCategory());
-                integralLogInfo.setCollegeOtherName( cte.getAllFirstLetter(integralLogInfoExcel.getCollege()).toUpperCase());
+                integralLogInfo.setCollegeOtherName(cte.getAllFirstLetter(integralLogInfoExcel.getCollege()).toUpperCase());
                 integralLogInfoList.add(integralLogInfo);
             }
             integralLogService.addAll(integralLogInfoList);
             return "SUCCESS";
         } catch (Exception e) {
             LOGGER.info("changeIntegralLogInfoExcel:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("getAdviceByProjectNum")
+    public AdviceInfo getAdviceByProjectNum(long projectId) {
+        try {
+            return adviceService.getAdviceByProjectId(projectId);
+        } catch (Exception e) {
+            LOGGER.info("getAdviceByProjectNum:" + e.getMessage());
             return null;
         }
     }
