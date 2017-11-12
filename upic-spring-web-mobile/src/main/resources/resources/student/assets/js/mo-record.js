@@ -3,7 +3,7 @@
  * 兑换记录
  * @Date:   2017-09-20 12:16:07
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-09-20 22:04:53
+ * @Last Modified time: 2017-11-10 13:57:57
  */
 var page = 1;
 var pageCount = -1;
@@ -58,3 +58,17 @@ function addHtmls(result, method) {
         $("#" + method).append(htmls);
     }
 }
+
+/** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('type=PAYMENT&size=10&page='+page,"home", getGraincoinLogPage);
+                        }
+                    });

@@ -34,7 +34,7 @@
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
-			<a href="st-main.html">
+			<a href="st-detail4.html">
 				<div class="de-left">
 					<img src="assets/i/b-1.png" alt="">
 				</div>
@@ -42,29 +42,21 @@
 		</div>
 	</nav>
 	<div class="re-nav top">
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active aa"><a href="#home"
-				aria-controls="home" role="tab" data-toggle="tab" id="declaration">申报表</a></li>
-			<li role="presentation"><a href="#profile"
-				aria-controls="profile" role="tab" data-toggle="tab" class="bb"
-				id="Havetodeclare">已申报</a></li>
-		</ul>
-
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="home">
 				<div class="de-list">
-					<ul>
+					<ul id="content">
 						<li>
 							<div class="list-left">项目名称：</div>
 							<div class="list-right">
-								<input id="projectName" type="text" name="">
+								<input id="projectName" type="text" name="" value="项目名称项目名称项目名称">
 							</div>
 						</li>
 						<li>
 							<div class="list-left">项目类别：</div>
 							<div class="list-right">
-								<input type="text" name="" id="sui">
+								<input type="text" name="" id="sui" value="111>222>333">
 								<div id="div1" class="div1 qq">
 									<ul class="clearfix" id="one">
 										<li>111</li>
@@ -78,12 +70,11 @@
 						</li>
 						<li>
 							<div class="list-left">所属学院：</div>
-							<div class="list-right agray" id="college">信息工程学院</div> <input
-							id="integral" type="hidden" />
+							<div class="list-right agray" id="college">信息工程学院</div>
 						</li>
 						<li class="list-other">
 							<div>项目详情:</div> <textarea id="content" class="form-control"
-								rows="3"></textarea>
+								rows="3">项目详情项目详情项目详情项目详情</textarea>
 						</li>
 						<li class="list-other">
 							<div class="de-text">上传佐证:</div> <img src="assets/i/b-2.png"
@@ -94,102 +85,10 @@
 
 				<nav class="navbar navbar-default navbar-fixed-bottom">
 					<a href="javascript:;" id="submit">
-						<div class="container nav-bot">确认提交</div>
+						<div class="container nav-bot" onclick="sub()">确认提交</div>
 					</a>
 				</nav>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="profile">
-				<div class="re-nav next">
-					<ul class="nav nav-tabs small" role="tablist">
-						<li role="presentation" class="active aa">
-						<a href="#aa" aria-controls="aa" role="tab" data-toggle="tab" class="cc"
-							id="inreview">审核中</a></li>
-						<li role="presentation">
-						<a href="#bb" aria-controls="profile"
-							role="tab" data-toggle="tab" class="dd" id="success">审核成功</a></li>
-						<li role="presentation"><a href="#cc" aria-controls="profile"
-							role="tab" data-toggle="tab" class="ee" id="defeated">审核失败</a></li>
-					</ul>
-					<div class="tab-content" id="getPro">
-						<div role="tabpanel" class="tab-pane active" id="aa">
-							<div class="act-div">
-								<div class="tab-left">
-									<img src="assets/i/b-3.jpg" alt="">
-								</div>
-								<div class="tab-right">
-									<div class="tab-title">
-										<div class="right-name">社会实践</div>
-									</div>
-									<div class="tab-text">
-										<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
-										<span>信息工程学院</span>
-									</div>
-									<a href="st-check.html">
-										<div class="tab-search">查看详情 ></div>
-									</a>
-								</div>
-							</div>
 
-							<div class="act-div">
-								<div class="tab-left">
-									<img src="assets/i/b-3.jpg" alt="">
-								</div>
-								<div class="tab-right">
-									<div class="tab-title">
-										<div class="right-name">社会实践</div>
-									</div>
-									<div class="tab-text">
-										<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
-										<span>信息工程学院</span>
-									</div>
-									<a href="st-check.html">
-										<div class="tab-search">查看详情 ></div>
-									</a>
-								</div>
-							</div>
-						</div>
-
-						<div role="tabpanel" class="tab-pane" id="bb">
-							<div class="act-div">
-								<div class="tab-left">
-									<img src="assets/i/b-3.jpg" alt="">
-								</div>
-								<div class="tab-right">
-									<div class="tab-title">
-										<div class="right-name">社会实践</div>
-									</div>
-									<div class="tab-text">
-										<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
-										<span>信息工程学院</span>
-									</div>
-									<a href="st-check.html">
-										<div class="tab-search">查看详情 ></div>
-									</a>
-								</div>
-							</div>
-						</div>
-
-						<div role="tabpanel" class="tab-pane" id="cc">
-							<div class="act-div">
-								<div class="tab-left">
-									<img src="assets/i/b-3.jpg" alt="">
-								</div>
-								<div class="tab-right">
-									<div class="tab-title">
-										<div class="right-name">社会实践</div>
-									</div>
-									<div class="tab-text">
-										<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
-										<span>信息工程学院</span>
-									</div>
-									<a href="st-detail4.html">
-										<div class="tab-search">查看详情 ></div>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>

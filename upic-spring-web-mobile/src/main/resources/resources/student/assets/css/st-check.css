@@ -2,14 +2,19 @@
 * @Author: Marte
 * @Date:   2017-09-12 09:55:47
 * @Last Modified by:   Marte
-* @Last Modified time: 2017-09-13 11:26:29
+* @Last Modified time: 2017-10-27 13:53:24
 */
+.clearfix:after{visibility:hidden;display:block;font-size:0;content: " ";clear:both;height:0;}
+.clearfix{*zoom:1;}
 .navbar-fixed-top{
     text-align: center;
     font-size: 22px;
     background-color:  #24C3E0;
     line-height: 50px;
     color:#fff;
+}
+a{
+    text-decoration: none;
 }
 .navbar-fixed-top span{
     margin-left: -15px;
@@ -26,14 +31,13 @@
 }
 .dt-list li{
     width: 100%;
-    height: 49px;
     list-style: none;
     line-height: 49px;
     border-bottom: 1px solid #ccc;
 }
-.li-other{
+/* .li-other{
     height: 120px !important;
-}
+} */
 .list-name{
     float: left;
     width: 30%;
@@ -43,9 +47,13 @@
 .list-det{
     float: right;
     width: 70%;
+    line-height:22px;
     font-size: 16px;
     color: #999999;
-    padding-right: 10px;
+    padding: 5px 10px !important;
+}
+.det-cen{
+    padding-top:15px !important;
 }
 .list-line{
     font-size: 18px;
@@ -53,7 +61,6 @@
 }
 .li-other .li-text{
     width: 90%;
-    height: 100px;
     font-size: 14px;
     line-height: 22px !important;
     margin-left: 10px;
@@ -62,7 +69,7 @@
 .li-other img{
     width: 100px;
     height: 60px;
-    margin-left:10px;
+    margin:10px;
 
 }
 .nav-bot{
@@ -73,4 +80,25 @@
    font-size:22px;
    color:#FF0000;
    background-color:#fff;
+   text-decoration:none;
+}
+.container1{
+    background: #24C3E0;
+    color: #fff;
+    width:70%;
+    margin:20px auto;
+    text-decoration:none;
+    border-radius: 5px;
+}
+a:link{
+text-decoration:none;
+}
+a:visited{
+text-decoration:none;
+}
+a:hover{
+text-decoration:none;
+}
+a:active{
+text-decoration:none;
 }

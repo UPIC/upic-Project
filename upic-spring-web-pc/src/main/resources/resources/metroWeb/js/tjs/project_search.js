@@ -1,6 +1,5 @@
 var dataUrl = "/common/getProject";
 var searchKeyWordUrl = "/common/projectSearchBar";
-var getProjectByProjectNumUrl = "";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getCollegeUrl = "";
 var getNowNumUrl = "";
