@@ -187,3 +187,24 @@ function commonAjax(url, requestData, methodName, requestType, sendData) {
         }
     });
 }
+
+/**
+ * 拼装导出请求表单
+ * @param requestData
+ * @returns {{key: Array, value: Array}}
+ */
+function appendForm(requestData) {
+    var keys = [];
+    var values = [];
+    for (var data in requestData) {
+        if (requestData.hasOwnProperty(data)) {
+            keys.push(data);
+            values.push(requestData[data]);
+        }
+    }
+    var formKeyValue = {
+        key: keys,
+        value: values
+    }
+    return formKeyValue;
+}

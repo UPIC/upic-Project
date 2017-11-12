@@ -16,6 +16,19 @@ $(function () {
     registSelect("getProjectType");
     registSelect("getCollege");
     getData(pageNum, dataUrl);
+
+    $("#exportBtn").click(function () {
+        var baseModels = ["projectNum", "declareUnit", "projectName", "guidanceMan", "guidanceNum", "projectCategory", "integral", "startTime", "endTime", "maximum"];
+        var str = JSON.stringify(baseModels);
+        var form = $("<form></form>").attr("action", exportExcelUrl).attr("method", "GET");
+        form.append($("<input></input>").attr("type", "hidden").attr("name", "baseModel").attr("value", str));
+        var formKeyValue = appendForm(requestData);
+        for (var i = 0; i < formKeyValue.key.length; i++) {
+            form.append($("<input></input>").attr("type", "hidden").attr("name", formKeyValue.key[i]).attr("value", formKeyValue.value[i]));
+        }
+        form.appendTo('body').submit().remove();
+        form.submit();
+    })
 })
 
 function addProjectType(res) {
