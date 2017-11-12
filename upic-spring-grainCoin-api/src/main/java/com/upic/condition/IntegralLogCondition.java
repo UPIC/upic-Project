@@ -5,6 +5,8 @@ import com.upic.enums.IntegralLogTypeEnum;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhubuqing on 2017/9/6.
@@ -48,6 +50,7 @@ public class IntegralLogCondition implements Serializable {
 
     private String collegeOtherName;
 
+    private List<Map<String,Object>> orList;
     public IntegralLogCondition() {
     }
 
@@ -224,4 +227,14 @@ public class IntegralLogCondition implements Serializable {
     public void setCollegeOtherName(String collegeOtherName) {
         this.collegeOtherName = collegeOtherName;
     }
+
+	public List<Map<String, Object>> getOrList() {
+		return orList;
+	}
+
+	public void setOrList(List<Map<String, Object>> orList) {
+		this.orList = orList;
+	}
+    
+    
 }

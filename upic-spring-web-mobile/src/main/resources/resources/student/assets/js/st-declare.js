@@ -3,7 +3,7 @@
  * 积分申报
  * @Date:   2017-09-20 12:22:12
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-09-21 14:23:12
+ * @Last Modified time: 2017-11-10 14:51:57
  */
 
 
@@ -90,7 +90,22 @@ $(function () {
      */
     $(".bb").click(function () {//和点击审核中是一样的
         juge($(this));
-        ajaxs("status=PENDING_AUDIT&type=VOLUNTARY_APPLICATION", "inreview", getIntegralLogPage)
+        ajaxs("status=PENDING_AUDIT&type=VOLUNTARY_APPLICATION", "inreview", getIntegralLogPage);
+
+        /** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('status=PENDING_AUDIT&type=VOLUNTARY_APPLICATION&size=10&page='+page, "inreview", getIntegralLogPage);
+
+                        }
+                    });
     })
 
     /*
@@ -100,6 +115,20 @@ $(function () {
         juge($(this));
         ajaxs("status=PENDING_AUDIT&type=VOLUNTARY_APPLICATION", "inreview", getIntegralLogPage)
 
+        /** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('status=PENDING_AUDIT&type=VOLUNTARY_APPLICATION&size=10&page='+page, "inreview", getIntegralLogPage);
+
+                        }
+                    });
     })
 
     /*
@@ -109,7 +138,20 @@ $(function () {
     $(".dd").click(function () {
         juge($(this));
         ajaxs("status=HAVEPASSED&type=VOLUNTARY_APPLICATION", "success", getIntegralLogPage)
+/** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('status=HAVEPASSED&type=VOLUNTARY_APPLICATION&size=10&page='+page,"success", getIntegralLogPage);
 
+                        }
+                    });
     })
 
     /*
@@ -118,7 +160,20 @@ $(function () {
     $(".ee").click(function () {
         juge($(this));
         ajaxs("status=FAILURE_TO_PASS_THE_AUDIT&type=VOLUNTARY_APPLICATION", "defeated", getIntegralLogPage)
+/** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('status=FAILURE_TO_PASS_THE_AUDIT&type=VOLUNTARY_APPLICATION&size=10&page='+page,"defeated", getIntegralLogPage);
 
+                        }
+                    });
     })
 })
 
@@ -159,11 +214,13 @@ function ajaxs(datas, method, urls) {
 
 function addHtmls(result, method) {
     var htmls = "";
+    var url="st-check.html";
     for (var i = 0; i < result.length; i++) {
+        if (result.status="FAILURE_TO_PASS_THE_AUDIT") {url="st-detail4.html"};
         htmls += "<div class='act-div'><div class='tab-left'><img src='" + result[i].integralLogPic + "'></div>";
         htmls += "<div class='tab-right'><div class='tab-title'><div class='right-name'>" + subMyStr(result[i].projectName) + "</div></div>";
         htmls += "<div class='tab-text'><span>" + result[i].event + "</span></div>";
-        htmls += "<a href='st-check.html?projectNum=" + result[i].integralLogId.projectNum + "'><div class='tab-search'>" + "查看详情" + " ></div></a></div></div>";
+        htmls += "<a href='"+url+"?projectNum=" + result[i].integralLogId.projectNum + "'><div class='tab-search'>" + "查看详情" + " ></div></a></div></div>";
     }
     if (method === "inreview") {
         $("#aa").html(htmls);

@@ -1,4 +1,4 @@
-/**
+./**
  * 素拓币商城
  * @authors Marte (iqianduan@126.com)
  * @date    2017-09-18 13:53:25
@@ -18,15 +18,18 @@ $(function () {
      */
     ajaxs("", "getPic", getPicUrl)
     /*
-     *获取当前用户积分
+     *h获取当前用户积分
      */
-    $.ajax({
+    function getCoin(){
+        $.ajax({
         type: "GET", // 提交方式
         url: getCoinUrl,// 路径
         success: function (result) {// 返回数据根据结果进行相应的处理
             $("#getCoin").html("当前素拓币：" + result);
         }
     });
+    }
+
     /**
      *获取所有商品
      */
@@ -87,7 +90,7 @@ function addHtmls(result, method) {
             htmls += "</div>";
             htmls += " <a href='st-main.html'>";
             htmls += "<div class='modal-footer'>";
-            htmls += "<button type='button' class='btn btn-default' data-dismiss='modal'>确定</button>";
+            htmls += "<button type='button' class='btn btn-default' data-dismiss='modal' onclick='duihuan(" + result[i].id + ")'>确定</button>";
             htmls += "</div>";
             htmls += " </a>";
             htmls += "</div>";
@@ -128,3 +131,32 @@ function subMyStr(str) {
     }
     return str;
 }
+
+function duihuan(prizeId){
+    $.ajax({
+        type: types, // 提交方式
+        url: '/stu/getExchangePrize',// 路径
+        data: {
+            id:prizeId
+        },
+        success: function (result) {// 返回数据根据结果进行相应的处理
+            alert("已兑换");
+            getCoin();
+        }
+    });
+}
+
+/** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('status=SHELVES&size=10&page='+page, "getAll", getAllurl);
+
+                        }
+                    });

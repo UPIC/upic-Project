@@ -1,5 +1,8 @@
 package com.upic.common.utils.redis;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,4 +92,33 @@ public class UpicRedisComponent {
 		return stringRedisTemplate.opsForHash().putIfAbsent(key,hashKey,value);
 	}
 	
+	public boolean deletByKey(String key) {
+		try {
+			stringRedisTemplate.delete(key);
+		}catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	public boolean deletByKey(Collection<String> keys) {
+		try {
+			stringRedisTemplate.delete(keys);
+		}catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	public Set<Object> keys(String key){
+		return  stringRedisTemplate.opsForHash().keys(key);
+	}
+	
+	public boolean deletByHashKey(String key,String hashKey) {
+		try {
+			stringRedisTemplate.opsForHash().delete(key, hashKey);
+		}catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 }

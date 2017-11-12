@@ -15,18 +15,60 @@ $(function () {
      */
     $(".aa").click(function () {
         juge($(this));
-        ajaxs("", "home", getProjectWithoutSignUp)
+        ajaxs("", "home", getProjectWithoutSignUp);
+        /** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('size=10&page='+page, "home", getProjectWithoutSignUp);
+
+                        }
+                    });
 
     })
     $(".bb").click(function () {
         juge($(this));
-        ajaxs("", "profile", getPerson)
+        ajaxs("", "profile", getPerson);
+        /** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('size=10&page='+page,"profile", getPerson);
+
+                        }
+                    });
 
     })
 
     $(".cc").click(function () {
         juge($(this));
-        ajaxs("", "messages", getPerson)
+        ajaxs("", "messages", getPerson);
+        /** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('size=10&page='+page, "messages", getPerson);
+
+                        }
+                    });
 
     })
 })
@@ -95,7 +137,7 @@ function addHtmls(result, method) {
                 htmls += "已完成";
             }
             htmls += "</span></div>";
-            htmls += "<a href='st-detail.html?projectNum=" + result[i].integralLogId.projectNum + "'><div class='tab-search'>查看详情 ></div> </a></div></div>";
+            htmls += "<a href='st-detail2.html?projectNum=" + result[i].integralLogId.projectNum + "'><div class='tab-search'>查看详情 ></div> </a></div></div>";
         }
     }
     if (page == 1) {

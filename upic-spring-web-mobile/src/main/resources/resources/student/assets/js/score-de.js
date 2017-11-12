@@ -3,7 +3,7 @@
  * 积分明细
  * @Date:   2017-09-20 12:18:20
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-09-20 17:26:51
+ * @Last Modified time: 2017-11-10 10:37:31
  */
 
 /**
@@ -46,7 +46,7 @@ $(function () {
      获取积分明细
      */
 
-    ajaxs("", "home", getIntegralLogPageUrl)
+    ajaxs("size=20", "home", getIntegralLogPageUrl)
 
 })
 
@@ -170,3 +170,17 @@ function subMyStr(str) {
     }
     return str;
 }
+ /** 滚动条* */
+    var totalheight = 0;// 定义一个总的高度变量
+    $(window)
+            .scroll(
+                    function() {
+                        totalheight = parseFloat($(window).height())
+                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+                        {
+                           page++;
+                           ajaxs('size=10&page='+page,"home", getIntegralLogPageUrl);
+
+                        }
+                    });

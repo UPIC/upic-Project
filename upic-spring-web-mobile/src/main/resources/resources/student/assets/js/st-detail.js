@@ -3,15 +3,15 @@
  * 活动详情
  * @Date:   2017-09-20 12:24:27
  * @Last Modified by:   Marte
- * @Last Modified time: 2017-09-20 14:58:39
+ * @Last Modified time: 2017-11-10 13:11:31
  */
 
-var isFull = false;
-var isApply = false;
-var txtDis = "";
-var maxNum = 0;
-var nowNum = -1;
-$(function () {
+ var isFull = false;
+ var isApply = false;
+ var txtDis = "";
+ var maxNum = 0;
+ var nowNum = -1;
+ $(function () {
     var projectNum = getQueryString("projectNum");
     if (projectNum == null) {
         return;
@@ -19,7 +19,7 @@ $(function () {
     getProjectTime(projectNum);
 })
 
-function getQueryString(name) {
+ function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
     if (r != null)
@@ -49,18 +49,19 @@ function getProjectTime(projectNum) {
 function addHtmls(data) {
     maxNum = data.maximum;
     var htmls = "";
+    var htmlss = "";
     htmls += "<ul><li><div class='list-name'>项目名称：</div>";
     htmls += "<div class='list-det'>" + data.projectName + "</div></li>";
     htmls += "<li><div class='list-name'>项目类别：</div>";
     htmls += "<div class='list-det'>" + data.projectCategory
-        + "</div></li><li>";
+    + "</div></li><li>";
     htmls += "<div class='list-name'>活动状态：</div>";
     htmls += "<div class='list-det red' id='statusNum'>未报名</div></li>";
     htmls += "<li><div class='list-name'>预获学分：</div>";
     htmls += "<div class='list-det'>" + data.integral + "</div></li>";
     htmls += "<li><div class='list-name'>人数：</div>";
     htmls += "<div class='list-det' id='nowNum'>" + getPeopleNum(data.projectNum) + "/" + data.maximum
-        + "</div></li>";
+    + "</div></li>";
     htmls += "<li><div class='list-name'>活动时间：</div>";
     htmls += "<div class='list-det'>" + getDate(data.startTime, "MM-dd hh:mm") + "~" + getDate(data.startTime, "MM-dd hh:mm") + "</div></li>";
     htmls += "<li><div class='list-name'>报名时间：</div>";
@@ -68,7 +69,14 @@ function addHtmls(data) {
     htmls += "<li class='li-other'><div class='list-line'>项目详情：</div>";
     htmls += "<div class='li-text'>" + data.content + "</div></li></ul>";
 
-    $("#content").html(htmls)
+    htmlss+="<a href='#' onClick='apply("+data.projectNum+")'>";
+    htmlss+="<div class='container nav-bot' id='txtD'>";
+    htmlss+="确认报名";
+    htmlss+="</div>";
+    htmlss+="</a>";
+
+    $("#content").html(htmls);
+    $("#quedingbaoming").html(htmlss);
 
 }
 function getDate(date, rule) {
@@ -81,7 +89,7 @@ function getDate(date, rule) {
  *
  * @returns
  */
-function jugeApply(projectNUm) {
+ function jugeApply(projectNUm) {
     $.ajax({
         url: '/stu/isSignUpByIntegralLogId',
         type: 'GET', // GET
@@ -117,7 +125,7 @@ function jugeApply(projectNUm) {
  * @param projectNUm
  * @returns
  */
-function getPeopleNum(projectNUm) {
+ function getPeopleNum(projectNUm) {
     $.ajax({
         url: '/common/getSignUpNumberByProjectNum',
         type: 'GET', // GET
@@ -127,15 +135,15 @@ function getPeopleNum(projectNUm) {
 
         },
 // dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
-        beforeSend: function (xhr) {
-        },
-        success: function (data) {
-            var num = Number(data);
-            if (num === 'NaN') {
-                $("#nowNum").html("获取失败，请重新刷新页面！");
-            }
-            $("#nowNum").html(num + "/" + maxNum);
-            nowNum = num;
+beforeSend: function (xhr) {
+},
+success: function (data) {
+    var num = Number(data);
+    if (num === 'NaN') {
+        $("#nowNum").html("获取失败，请重新刷新页面！");
+    }
+    $("#nowNum").html(num + "/" + maxNum);
+    nowNum = num;
             // 查询是否报名
             jugeApply(projectNUm);
             // 满人了
@@ -158,7 +166,7 @@ function getPeopleNum(projectNUm) {
  * 报名
  * @returns
  */
-function apply() {
+ function apply(projectNUm) {
     if (nowNum == -1) {
         return;
     }
@@ -166,8 +174,17 @@ function apply() {
         return;
     }
     if (isApply) {
-        return;
-    }
+       $.ajax({
+        url: '/common/',
+        type: 'GET', // GET
+        data: {
+            projectNum: projectNUm,
+        },
+        success: function (data) {
+           alert("已发送报名请求")
+        }
+    })
+   }
 }
 
 Date.prototype.pattern = function (fmt) {
@@ -197,12 +214,12 @@ Date.prototype.pattern = function (fmt) {
     }
     if (/(E+)/.test(fmt)) {
         fmt = fmt
-            .replace(
-                RegExp.$1,
-                ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f"
-                        : "/u5468")
-                    : "")
-                + week[this.getDay() + ""]);
+        .replace(
+            RegExp.$1,
+            ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f"
+                : "/u5468")
+            : "")
+            + week[this.getDay() + ""]);
     }
     for (var k in o) {
         if (new RegExp("(" + k + ")").test(fmt)) {

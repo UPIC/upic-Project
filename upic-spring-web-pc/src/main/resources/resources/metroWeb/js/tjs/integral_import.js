@@ -253,7 +253,8 @@ function submitData(){
 		type : "POST", // 提交方式
 		url : addData,// 路径
 		data : {
-			string:str
+			string:str,
+			type:selectRadioIdName
 		},
 		beforeSend : function(XMLHttpRequest) {
 		},
