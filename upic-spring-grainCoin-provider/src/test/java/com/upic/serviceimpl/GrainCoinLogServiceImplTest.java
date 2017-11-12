@@ -1,6 +1,8 @@
 package com.upic.serviceimpl;
 
 import com.upic.SpringBootJpaTestApplication;
+import com.upic.common.base.enums.JugeType;
+import com.upic.common.base.enums.JygeTypeEnum;
 import com.upic.condition.GrainCoinLogCondition;
 import com.upic.condition.IntegralLogCondition;
 import com.upic.dto.GrainCoinLogInfo;
@@ -43,13 +45,14 @@ public class GrainCoinLogServiceImplTest {
     	IntegralLogCondition g=new IntegralLogCondition();
     	List<Map<String, Object>> orList =new ArrayList<Map<String, Object>>();
     	Map<String, Object> map1=new IdentityHashMap<String, Object>();
-    	map1.put(new String("clazz"), "14微社交");
-    	map1.put(new String("clazz"), "14微社交1");
-    	Map<String, Object> map2=new IdentityHashMap<String, Object>();
-    	map2.put(new String("projectName"), "新苗");
-    	map2.put(new String("projectName"), "社会实践活动010");
+    	
+    	map1.put(new String("clazz"), new JugeType(JygeTypeEnum.LIKE, "14"));
+    	map1.put(new String("clazz"), new JugeType(JygeTypeEnum.EQUAL, "15微社交1"));
+//    	Map<String, Object> map2=new IdentityHashMap<String, Object>();
+//    	map2.put(new String("projectName"), "新苗");
+//    	map2.put(new String("projectName"), "社会实践活动010");
     	orList.add(map1);
-    	orList.add(map2);
+//    	orList.add(map2);
     	g.setOrList(orList);
     	Page<IntegralLogInfo> searchIntegralLog = integralLogService.searchIntegralLog(g, new PageRequest(0, 20));
     	searchIntegralLog.getContent().forEach(System.out::println);
@@ -58,5 +61,5 @@ public class GrainCoinLogServiceImplTest {
     @Test
     public void exchangePrize() throws Exception {
     }
-
+    
 }

@@ -15,6 +15,9 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
+import com.upic.common.base.enums.JugeType;
+import com.upic.common.base.enums.JygeTypeEnum;
+
 /**
  * <pre>
  *
@@ -230,6 +233,7 @@ public abstract class AbstractConditionBuilder<T> {
 
 	/**
 	 * 添加or语句
+	 * 
 	 * @param queryWraper
 	 * @param field
 	 * @param value
@@ -238,8 +242,8 @@ public abstract class AbstractConditionBuilder<T> {
 		value.parallelStream().forEach(x -> {
 			List<Predicate> pList = new ArrayList<Predicate>();
 			x.keySet().parallelStream().forEach(key -> {
-				Path<?> fieldPath = getPath(queryWraper.getRoot(), key);
-				pList.add(queryWraper.getCb().equal(fieldPath, x.get(key)));
+//				Path<?> fieldPath = getPath(queryWraper.getRoot(), key);
+				pList.add(juegeType((JugeType)x.get(key), queryWraper, key));
 			});
 			queryWraper.addPredicate(queryWraper.getCb().or(pList.toArray(new Predicate[] {})));
 		});
@@ -298,4 +302,19 @@ public abstract class AbstractConditionBuilder<T> {
 		return addCondition;
 	}
 
+	protected Predicate juegeType(JugeType jugeType,QueryWraper<T> queryWraper,String key) {
+		Path<String> fieldPath = getPath(queryWraper.getRoot(), key);
+		Predicate predicate =null;
+		switch (jugeType.getType()) {
+		case EQUAL:
+			predicate = queryWraper.getCb().equal(fieldPath, (String)jugeType.getData());
+			break;
+		case LIKE:
+			predicate=queryWraper.getCb().like(fieldPath, "%"+(String)jugeType.getData()+"%");
+			break;
+		default:
+			break;
+		}
+		return predicate;
+	}
 }
