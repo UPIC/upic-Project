@@ -3,6 +3,7 @@ package com.upic.serviceimpl;
 import com.upic.common.beans.utils.UpicBeanUtils;
 import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
+import com.upic.common.utils.redis.UpicRedisComponent;
 import com.upic.condition.AdviceCondition;
 import com.upic.condition.ProjectCondition;
 import com.upic.dto.AdviceInfo;
@@ -29,11 +30,14 @@ import com.upic.service.ProjectService;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Encoder;
+import sun.security.provider.MD5;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -457,5 +461,33 @@ public class ProjectServiceImpl implements ProjectService {
         Map<String, JobParameter> param = new HashMap<>();
         param.put("startTime", new JobParameter(new Date()));
         jobLauncher.run(job, new JobParameters(param));
+    }
+
+    /**
+     * 二维码生成
+     *
+     * @param projectNum
+     * @return
+     */
+    @Override
+    public String qrCodeGenerate(String projectNum, long freshTime) {
+        try {
+            // 随机生成AccessToken
+            String token = projectNum + (new Date().getTime()) + "QR";
+
+            // MD5加密
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            BASE64Encoder base64Encoder = new BASE64Encoder();
+            String accessToken = base64Encoder.encode(messageDigest.digest(token.getBytes("utf-8")));
+
+            // 存Redis
+            UpicRedisComponent upicRedisComponent = new UpicRedisComponent();
+            upicRedisComponent.set("QR" + projectNum, accessToken, freshTime);
+
+            return accessToken;
+        } catch (Exception e) {
+            LOGGER.info("qrCodeGenerate。错误信息：" + e.getMessage());
+            return null;
+        }
     }
 }

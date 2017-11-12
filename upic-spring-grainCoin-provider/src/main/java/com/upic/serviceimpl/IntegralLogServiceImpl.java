@@ -443,6 +443,35 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         }
     }
 
+    /**
+     * 二维码消费
+     *
+     * @param integralLogInfo
+     * @param accessToken
+     * @return
+     */
+    @Override
+    public String qrCodeConsumption(IntegralLogInfo integralLogInfo, String accessToken) {
+        try {
+            // 获取redis中的accessToken
+            UpicRedisComponent upicRedisComponent = new UpicRedisComponent();
+            String rightAccessToken = upicRedisComponent.get("QR" + integralLogInfo.getIntegralLogId().getProjectNum());
+
+            // 判断accessToken是否正确
+            if (rightAccessToken != null && accessToken != null && accessToken.equals(rightAccessToken)) { // 正确，返回 SUCCESS
+                IntegralLog integralLog = new IntegralLog();
+                UpicBeanUtils.copyProperties(integralLogInfo, integralLog);
+                integralLogRepository.save(integralLog);
+                return "SUCCESS";
+            } else { // 错误，返回 TIME_OUT
+                return "TIME_OUT";
+            }
+        } catch (Exception e) {
+            LOGGER.info("qrCodeConsumption:" + e.getMessage());
+            return null;
+        }
+    }
+
     static public <E> List<Object> toObject(List<E> list) {
         List<Object> objlist = new ArrayList<Object>();
         for (Object e : list) {

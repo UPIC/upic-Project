@@ -166,4 +166,13 @@ public interface IntegralLogService {
     IntegralLogInfo changeAllIntegralLogStatus(IntegralLogInfo integralLogInfo);
 
     void addAll(List<IntegralLogInfo> integralLogInfoList);
+
+    /**
+     * 二维码消费
+     *
+     * @param integralLogInfo
+     * @param accessToken
+     * @return
+     */
+    String qrCodeConsumption(IntegralLogInfo integralLogInfo, String accessToken);
 }
