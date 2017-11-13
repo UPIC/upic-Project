@@ -110,7 +110,6 @@ function getProjectInfoA(result) {
     htmlss += "<button class='btn btn-default' data-dismiss='modal' aria-hidden='true'>关闭</button>";
     htmlss += "</div>"
     $("#mymodal1").html(htmlss);
-
 }
 
 function apply(pN) {//报名按钮
@@ -124,7 +123,6 @@ function apply(pN) {//报名按钮
             alert("已报名")
         }
     });
-
 }
 
 
