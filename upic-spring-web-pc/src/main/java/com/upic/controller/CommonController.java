@@ -41,8 +41,8 @@ import java.util.Map;
 public class CommonController {
     protected static final Logger LOGGER = LoggerFactory.getLogger(CommonController.class);
 
-    @Autowired
-    private MailService mailService;
+//    @Autowired
+//    private MailService mailService;
 
     @Autowired
     private ProjectCategoryService projectCategoryService;
@@ -400,16 +400,16 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/getMail")
-    @ApiOperation("根据条件获取站内信")
-    public Page<MailInfo> getMail(@PageableDefault(size = 10) Pageable pageable, MailCondition m) throws Exception {
-        try {
-            return mailService.searchMail(m, pageable);
-        } catch (Exception e) {
-            LOGGER.info("getMail:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
+//    @GetMapping("/getMail")
+//    @ApiOperation("根据条件获取站内信")
+//    public Page<MailInfo> getMail(@PageableDefault(size = 10) Pageable pageable, MailCondition m) throws Exception {
+//        try {
+//            return mailService.searchMail(m, pageable);
+//        } catch (Exception e) {
+//            LOGGER.info("getMail:" + e.getMessage());
+//            throw new Exception(e.getMessage());
+//        }
+//    }
 
     /**
      * 根据id获取相应的站内信*
@@ -418,16 +418,16 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/getMailInfo")
-    @ApiOperation("根据ID获取相应的站内信")
-    public MailInfo getMailInfo(@ApiParam("站内信ID") Long id) throws Exception {
-        try {
-            return mailService.getMailById(id);
-        } catch (Exception e) {
-            LOGGER.info("getMailInfo:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
+//    @GetMapping("/getMailInfo")
+//    @ApiOperation("根据ID获取相应的站内信")
+//    public MailInfo getMailInfo(@ApiParam("站内信ID") Long id) throws Exception {
+//        try {
+//            return mailService.getMailById(id);
+//        } catch (Exception e) {
+//            LOGGER.info("getMailInfo:" + e.getMessage());
+//            throw new Exception(e.getMessage());
+//        }
+//    }
 
     /**
      * 根据项目编号查询项目人数*
@@ -548,16 +548,16 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/getMyMail")
-    @ApiOperation("用户查看站内信（可能没用）")
-    public Page<MailInfo> getMyMail(@PageableDefault(size = 10) Pageable pageable, UserInfo userInfo) throws Exception {
-        try {
-            return mailService.getMyMail(userInfo.getCollege(), userInfo.getMajor(), userInfo.getClazz(), userInfo.getUserNum(), pageable);
-        } catch (Exception e) {
-            LOGGER.info("getMyMail:" + e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
+//    @GetMapping("/getMyMail")
+//    @ApiOperation("用户查看站内信（可能没用）")
+//    public Page<MailInfo> getMyMail(@PageableDefault(size = 10) Pageable pageable, UserInfo userInfo) throws Exception {
+//        try {
+//            return mailService.getMyMail(userInfo.getCollege(), userInfo.getMajor(), userInfo.getClazz(), userInfo.getUserNum(), pageable);
+//        } catch (Exception e) {
+//            LOGGER.info("getMyMail:" + e.getMessage());
+//            throw new Exception(e.getMessage());
+//        }
+//    }
 
     /****************************************************************************************************/
 
