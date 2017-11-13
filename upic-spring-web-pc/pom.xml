@@ -82,11 +82,6 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>com.upic</groupId>
-			<artifactId>student-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.7.0</version>
@@ -149,11 +144,11 @@
 			<version>${student-user-api.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.upic.mail.api</groupId>
-			<artifactId>upic-spring-mail-api</artifactId>
-			<version>${student-mail-api.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.upic.mail.api</groupId> -->
+<!-- 			<artifactId>upic-spring-mail-api</artifactId> -->
+<!-- 			<version>${student-mail-api.version}</version> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>com.upic.project.api</groupId>
@@ -206,7 +201,7 @@
 			<artifactId>upic-security-config</artifactId>
 			<version>${upic-security-config.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
+		<!-- <dependency> -->
 		<!-- <groupId>com.upic.oauth2.weixin</groupId> -->
 		<!-- <artifactId>oauth2-weixin</artifactId> -->
 		<!-- <version>${oauth2-weixin.version}</version> -->
@@ -218,6 +213,22 @@
 			<version>1.2.39</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/resources/lib/commons-collections-3.2.2.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+			<groupId>neusoft-cas</groupId>
+			<artifactId>neusoft-cas</artifactId>
+			<version>1.1.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/resources/lib/neusoft-cas-1.1.1.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 

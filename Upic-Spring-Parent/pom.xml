@@ -2,14 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>com.upic</groupId>
 	<artifactId>upic-spring-parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>upic-spring-parent</name>
-	<url>http://maven.apache.org</url>
+	<!-- <url>http://maven.apache.org</url> -->
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -105,11 +104,44 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	<modules>
+<!-- 		<module>Upic-Spring-Parent</module> -->
+		<!-- <module>student-api</module> -->
+		<!-- <module>student-provider-demo</module> -->
+		<module>../upic-spring-common</module>
+		<module>../upic-spring-grainCoin-api</module>
+		
+		<module>../upic-spring-operate-api</module>
+		<module>../upic-spring-project-api</module>
+		<module>../upic-spring-systemManager-api</module>
+		<module>../upic-spring-user-api</module>
+		<module>../upic-spring-secruity-config</module>
+		<module>../upic-spring-oauth2-weishao</module>
+		<module>../upic-spring-ouath2-weixin</module>
 
 
+		<module>../upic-spring-grainCoin-provider</module>
+		
+		<module>../upic-spring-operate-provider</module>
+		<module>../upic-spring-project-provider</module>
+		<module>../upic-spring-systemManager-provider</module>
+		<module>../upic-spring-user-provider</module>
+
+
+		<module>../upic-spring-web-mobile</module>
+		<module>../upic-spring-web-pc</module>
+		
+		<!-- <module>../upic-spring-mail-api</module> -->
+<!-- 		<module>../upic-spring-mail-provider</module> -->
+	</modules>
 </project>
