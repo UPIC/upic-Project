@@ -6,10 +6,9 @@
 	<groupId>com.upic.common</groupId>
 	<artifactId>upic-spring-common</artifactId>
 	<version>${student-common.version}</version>
-	<packaging>jar</packaging>
+	<!-- <packaging>jar</packaging> -->
 
 	<name>upic-spring-common</name>
-	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>com.upic</groupId>
@@ -92,15 +91,23 @@
 			<version>3.15</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>exec</classifier>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

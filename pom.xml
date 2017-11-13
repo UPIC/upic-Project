@@ -1,68 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.upic</groupId>
-    <artifactId>com.upic</artifactId>
-    <version>1.0-SNAPSHOT</version>
+	<groupId>com.upic</groupId>
+	<artifactId>com.upic</artifactId>
+	<version>1.0-SNAPSHOT</version>
+<!-- 	<packaging>jar</packaging> -->
+	
+	<modules>
+<!-- 		<module>Upic-Spring-Parent</module> -->
+		<!-- <module>student-api</module> -->
+		<!-- <module>student-provider-demo</module> -->
+		<module>upic-spring-common</module>
+		<module>upic-spring-secruity-config</module>
+		<module>upic-spring-oauth2-weishao</module>
+		<module>upic-spring-ouath2-weixin</module>
+		<module>upic-spring-grainCoin-api</module>
+		<module>upic-spring-mail-api</module>
+		<module>upic-spring-operate-api</module>
+		<module>upic-spring-project-api</module>
+		<module>upic-spring-systemManager-api</module>
+		<module>upic-spring-user-api</module>
+		
+		
+		<module>upic-spring-grainCoin-provider</module>
+		<module>upic-spring-mail-provider</module>
+		<module>upic-spring-operate-provider</module>
+		<module>upic-spring-project-provider</module>
+		<module>upic-spring-systemManager-provider</module>
+		<module>upic-spring-user-provider</module>
 
-    <modules>
-        <module>Upic-Spring-Parent</module>
-        <module>student-api</module>
-        <module>student-provider-demo</module>
-        <module>upic-spring-common</module>
-        <module>upic-spring-grainCoin-provider</module>
-        <module>upic-spring-mail-provider</module>
-        <module>upic-spring-operate-provider</module>
-        <module>upic-spring-project-provider</module>
-        <module>upic-spring-systemManager-provider</module>
-        <module>upic-spring-user-provider</module>
-        <module>upic-spring-grainCoin-api</module>
-        <module>upic-spring-mail-api</module>
-        <module>upic-spring-operate-api</module>
-        <module>upic-spring-project-api</module>
-        <module>upic-spring-systemManager-api</module>
-        <module>upic-spring-user-api</module>
 
-        <module>upic-spring-web-mobile</module>
-        <module>upic-spring-web-pc</module>
-    </modules>
-    <dependencies>
-        <dependency>
-            <groupId>com.upic.grainCoin.api</groupId>
-            <artifactId>upic-spring-grainCoin-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.upic.mail.api</groupId>
-            <artifactId>upic-spring-mail-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.upic.project.api</groupId>
-            <artifactId>upic-spring-project-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-             <groupId>com.upic.systemManager.api</groupId>
-    		<artifactId>upic-spring-systemManager-api</artifactId>
-    		<version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.upic.user.api</groupId>
-            <artifactId>upic-spring-user-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.upic.operate.provider</groupId>
-            <artifactId>upic-spring-operate-provider</artifactId>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
+		<module>upic-spring-web-mobile</module>
+		<module>upic-spring-web-pc</module>
+	</modules>
+<!-- 	<dependencies> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.upic.grainCoin.api</groupId> -->
+<!-- 			<artifactId>upic-spring-grainCoin-api</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.upic.mail.api</groupId> -->
+<!-- 			<artifactId>upic-spring-mail-api</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.upic.project.api</groupId> -->
+<!-- 			<artifactId>upic-spring-project-api</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.upic.systemManager.api</groupId> -->
+<!-- 			<artifactId>upic-spring-systemManager-api</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.upic.user.api</groupId> -->
+<!-- 			<artifactId>upic-spring-user-api</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.upic.operate.provider</groupId> -->
+<!-- 			<artifactId>upic-spring-operate-provider</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
+<!-- 	</dependencies> -->
+	<properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

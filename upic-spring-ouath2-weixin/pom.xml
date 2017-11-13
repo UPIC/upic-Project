@@ -8,7 +8,7 @@
 	<version>${oauth2-weixin.version}</version>
 	<packaging>jar</packaging>
 
-	<name>demo</name>
+	<name>oauth2-weixin</name>
 	<description>Demo project for Spring Boot</description>
 
 	  <parent>
@@ -104,6 +104,13 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2.2</version>
         </dependency>
+        <dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/resources/lib/commons-collections-3.2.2.jar</systemPath>
+		</dependency>
     </dependencies>
 
 	<build>
@@ -111,9 +118,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>exec</classifier>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
