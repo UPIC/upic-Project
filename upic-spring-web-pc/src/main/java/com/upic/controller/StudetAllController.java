@@ -378,26 +378,26 @@ public class StudetAllController {
     @ApiOperation("积分导入")
     @PostMapping("/loadIntegralLogInfo")
 //    public List<Object> loadIntegralLogInfo( @RequestParam("inputFile")CommonsMultipartFile inputFile, String baseModel) {
-    public List<Object> loadIntegralLogInfo( HttpServletRequest request, String baseModel) {
+    public List<Object> loadIntegralLogInfo(HttpServletRequest request, String baseModel) {
         List<Object> list = null;
         try {
-        	  // 转型为MultipartHttpRequest：   
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;   
+            // 转型为MultipartHttpRequest：
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             // 获得文件：   
-            MultipartFile inputFile = multipartRequest.getFile("inputFile");   
+            MultipartFile inputFile = multipartRequest.getFile("inputFile");
             // 获得文件名：   
-            String filename = inputFile.getOriginalFilename();   
+            String filename = inputFile.getOriginalFilename();
             // 获得输入流：   
 //            InputStream input = file.getInputStream();   
-        	String [] baseModels=new String[] {};
-        	List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
-        	baseModels=parseArray.toArray(baseModels);
+            String[] baseModels = new String[]{};
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            baseModels = parseArray.toArray(baseModels);
             InputStream inputStream = inputFile.getInputStream();
             if (inputStream == null) {
                 throw new Exception("文件为空");
             }
             list = ExcelDocument.upload(inputStream, baseModels, IntegralLogInfoExcel.class,
-            		filename);
+                    filename);
 //            integralLogService.saveAll(list);
         } catch (Exception e) {
             LOGGER.info("loadIntegralLogInfo:" + e.getMessage());
@@ -524,6 +524,34 @@ public class StudetAllController {
      * 导入导出
      *****************************************/
 
+    @GetMapping("/signUp")
+    @ApiOperation("报名")
+    public String signUp(String projectNum) {
+        try {
+            IntegralLogInfo integralLogInfo = new IntegralLogInfo();
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            integralLogIdInfo.setProjectNum(projectNum);
+            integralLogIdInfo.setStudentNum(getUser().getUserId());
+            integralLogInfo.setIntegralLogId(integralLogIdInfo);
+            integralLogInfo.setType(IntegralLogTypeEnum.SIGN_IN);
+            ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
+            if (projectInfo == null) {
+                return null;
+            }
+            integralLogInfo.setIntegral(projectInfo.getIntegral());
+            if (projectInfo.getUnit() == "2" || projectInfo.getUnit() == "1") {
+                integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
+            } else if (projectInfo.getUnit() == "3") {
+                integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
+            }
+            integralLogService.signUp(integralLogInfo);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("signUp:" + e.getMessage());
+            return null;
+        }
+    }
+
     private void downLoadExcel(HttpServletResponse response, Workbook wk, String fileName) throws Exception {
         OutputStream outputStream = null;
         try {
@@ -539,5 +567,9 @@ public class StudetAllController {
                 outputStream.close();
             }
         }
+    }
+
+    private SocialUsers getUser() {
+        return UserUtils.getUser();
     }
 }

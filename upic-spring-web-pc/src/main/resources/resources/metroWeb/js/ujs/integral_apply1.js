@@ -106,23 +106,14 @@ function getProjectInfoA(result) {
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='modal-footer'>";
-    htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true' onclick=apply(" + result.projectNum + ")>报名</button>";
+    htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true' onclick=commonAjax('"+baomingUrl+"','projectNum=" + result.projectNum + "','apply','GET')>报名</button>";
     htmlss += "<button class='btn btn-default' data-dismiss='modal' aria-hidden='true'>关闭</button>";
     htmlss += "</div>"
     $("#mymodal1").html(htmlss);
 }
 
-function apply(pN) {//报名按钮
-    $.ajax({
-        type: 'GET',
-        url: baomingUrl,
-        data: {
-            projectNum: pN
-        },
-        success: function (result) {
-            alert("已报名")
-        }
-    });
+function apply(data) {//报名按钮
+
 }
 
 
