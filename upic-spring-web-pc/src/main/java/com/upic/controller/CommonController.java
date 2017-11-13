@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -655,7 +656,9 @@ public class CommonController {
     @ApiOperation("查询我未报名、并且在报名期间内的活动（学生移动端全部活动查询）")
     public Page<ProjectInfo> getProjectWithoutSignUp(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
-            Page<ProjectInfo> projectWithoutSignUp = projectService.getProjectWithoutSignUp(new Date(), pageable);
+        	ProjectCondition p=new ProjectCondition();
+        	p.setImplementationProcess(ImplementationProcessEnum.ENROLLMENT);
+            Page<ProjectInfo> projectWithoutSignUp = projectService.searchProject(p, pageable);
             return projectWithoutSignUp;
         } catch (Exception exception) {
             LOGGER.info("getProjectWithoutSignUp:" + exception.getMessage());
@@ -1459,4 +1462,10 @@ public class CommonController {
             return IntegralLogStatusEnum.PENDING_AUDIT_FINAL_FAIL;
         }
     }
+    public  Date getOneDayBefore(Date dateEnd,int dates){
+	    Calendar date = Calendar.getInstance();
+	    date.setTime(dateEnd);
+	    date.set(Calendar.DATE, date.get(Calendar.DATE) + dates);
+	    return date.getTime();
+	}
 }

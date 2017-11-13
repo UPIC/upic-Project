@@ -9,7 +9,7 @@
 
     <dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>
 
-    <import resource="consumer-mail.xml"></import>
+<!--     <import resource="consumer-mail.xml"></import> -->
     <import resource="consumer-grainCoin.xml"></import>
     <import resource="consumer-project.xml"></import>
     <import resource="consumer-systemManager.xml"></import>

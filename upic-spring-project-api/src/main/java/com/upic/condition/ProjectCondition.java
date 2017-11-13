@@ -7,6 +7,8 @@ import com.upic.enums.ProjectTypeEnum;
 import com.upic.enums.RankEnum;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhubuqing on 2017/9/6.
@@ -72,6 +74,7 @@ public class ProjectCondition extends BaseCondition {
 
     private String projectImplementationProcess;
 
+    private List<Map<String,Object>> orList;
     public ProjectCondition() {
         super();
     }
@@ -356,4 +359,13 @@ public class ProjectCondition extends BaseCondition {
     public void setProjectImplementationProcess(String projectImplementationProcess) {
         this.projectImplementationProcess = projectImplementationProcess;
     }
+
+	public List<Map<String, Object>> getOrList() {
+		return orList;
+	}
+
+	public void setOrList(List<Map<String, Object>> orList) {
+		this.orList = orList;
+	}
+    
 }
