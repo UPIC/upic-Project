@@ -207,6 +207,11 @@ public class StudetAllController {
                 grainCoinLogInfo.setScore(-prizeInfo.getScore());
                 grainCoinLogInfo.setType(GrainCoinLogTypeEnum.PAYMENT);
                 grainCoinLogInfo.setStatus(GrainCoinLogStatusEnum.HAVEDONE);
+                SocialUsers socialUsers = getUser();
+                grainCoinLogInfo.setUsername(socialUsers.getUserNum());
+                grainCoinLogInfo.setUserNum(socialUsers.getUserId());
+                grainCoinLogInfo.setPrizeName(prizeInfo.getPrizeName());
+                grainCoinLogService.saveGrainCoinLog(grainCoinLogInfo);
                 return "SUCCESS";
             }
         } catch (Exception e) {
@@ -524,6 +529,12 @@ public class StudetAllController {
      * 导入导出
      *****************************************/
 
+    /**
+     * 报名
+     *
+     * @param projectNum
+     * @return
+     */
     @GetMapping("/signUp")
     @ApiOperation("报名")
     public String signUp(String projectNum) {
@@ -531,7 +542,8 @@ public class StudetAllController {
             IntegralLogInfo integralLogInfo = new IntegralLogInfo();
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum(projectNum);
-            integralLogIdInfo.setStudentNum(getUser().getUserId());
+            SocialUsers socialUsers = getUser();
+            integralLogIdInfo.setStudentNum(socialUsers.getUserId());
             integralLogInfo.setIntegralLogId(integralLogIdInfo);
             integralLogInfo.setType(IntegralLogTypeEnum.SIGN_IN);
             ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
@@ -539,11 +551,18 @@ public class StudetAllController {
                 return null;
             }
             integralLogInfo.setIntegral(projectInfo.getIntegral());
-            if (projectInfo.getUnit() == "2" || projectInfo.getUnit() == "1") {
+            if (projectInfo.getUnit().equals("2") || projectInfo.getUnit().equals("1")) {
                 integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
-            } else if (projectInfo.getUnit() == "3") {
+            } else if (projectInfo.getUnit().equals("3")) {
                 integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
             }
+            integralLogInfo.setStudent(socialUsers.getUserNum());
+            integralLogInfo.setClazz(socialUsers.getClazz());
+            integralLogInfo.setCollege(socialUsers.getCollege());
+            integralLogInfo.setCreatTime(new Date());
+            integralLogInfo.setProjectName(projectNum);
+            integralLogInfo.setProjectCategory(projectInfo.getProjectCategory());
+            integralLogInfo.setCollegeOtherName(projectInfo.getCollegeOtherName());
             integralLogService.signUp(integralLogInfo);
             return "SUCCESS";
         } catch (Exception e) {

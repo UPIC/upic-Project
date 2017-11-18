@@ -9,6 +9,10 @@ var pageNum = 0;
 var requestData = {};
 
 $(function () {
+    $("#main-content").css({
+        minHeight: $(window).height() - 100 + "px"
+    });
+
     pageSize = $("#select-small").children('option:selected').text()
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
@@ -34,7 +38,7 @@ function addStatus(res) {
     htmls += "<option value='4' class='yellow'>状态筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i].status + "</option>";
+        htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
     $("#getStatus").html(htmls);
 }
@@ -80,19 +84,21 @@ function addHtmls(datas, pageNum) {
         htmls += "<td class='center_td'>" + statusC + "</td>";
         // htmls += "<td>" + data[i].integralLogId.projectNum + "</td>";
         htmls += "<td>" + getDate(data[i].creatTime, "yyyy-MM-dd") + "</td>";
-        htmls += "<td>" + splitJson(data[i].event) + "</td>";
+        htmls += "<td>" + data[i].projectCategory + "</td>";
         htmls += "<td>" + data[i].projectName + "</td>";
         htmls += "<td>" + data[i].integral + "</td>";
 
         htmls += "<td class='center_td'>";
-        htmls += "<div class='message_div' onclick=commonAjax('" + getIntegralLogByIntegralLogId + "','projectNum=" + data[i].integralLogId.projectNum + "','getProjectInfo','GET')><a href='" + aUrl + "' data-toggle='modal'>查看详情</a></div></td>";
+        htmls += "<a href='#mymodal2' data-toggle='modal'>";
+        htmls += "<div class='message_div' onclick=commonAjax('" + getIntegralLogByIntegralLogId + "','projectNum=" + data[i].integralLogId.projectNum + "','getProjectInfo','GET','" + i + 1 + "')>查看详情</div>";
+        htmls += "</a>";
         htmls += "</tr>";
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
 }
 
-function getProjectInfo(result) {
+function getProjectInfo(result, j) {
     var htmlss = "";
     var statusC = "";
     if (result.status === "SAVE") {
@@ -122,10 +128,17 @@ function getProjectInfo(result) {
     } else if (result.status === "COMPLETED") {
         statusC = "已完成";
     }
-    if (result.status === "FAILURE_TO_PASS_THE_AUDIT") {//审核失败
+    htmlss += "<div class='modal-header'>";
+    htmlss += "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
+    htmlss += "<h4 id='mymodallabel1'>详情</h4>";
+    htmlss += "</div>";
+    htmlss += "<div class='modal-body'>";
+    htmlss += "<div class='row-fluid'>";
+    htmlss += "<div class='block-fluid'>";
+    if (result.status === "SAVE" || result.status === "PENDING_AUDIT_BEFORE_FAIL" || result.status === "PENDING_AUDIT_FAIL" || result.status === "PENDING_AUDIT_AGAIN_FAIL" || result.status === "PENDING_AUDIT_FINAL_FAIL") {//审核失败
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>编号</div>";
-        htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + i) + "</div>";
+        htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
         htmlss += "<div class='span3'>代码</div>";
         htmlss += "<div class='span3'>" + result.integralLogId.projectNum + "</div>";
         htmlss += "</div><div class='row-form clearfix'>";
@@ -135,7 +148,7 @@ function getProjectInfo(result) {
         htmlss += "<div class='span3'>" + statusC + "</div>";
         htmlss += "</div> <div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目类别</div>";
-        htmlss += "<div class='span3'>" + splitJson(result.event) + "</div>";
+        htmlss += "<div class='span3'>" + result.projectCategory + "</div>";
         htmlss += "<div class='span3'>所属学院</div>";
         htmlss += "<div class='span3'>" + result.college + "</div>";
         htmlss += "</div> <div class='row-form clearfix'>";
@@ -143,7 +156,7 @@ function getProjectInfo(result) {
         htmlss += "<div class='span3'>" + result.projectName + "</div>";
         htmlss += "</div> <div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目内容</div>";
-        htmlss += "<div class='span9'>" + result.content + "</div>";
+        htmlss += "<div class='span9'>" + result.event + "</div>";
         htmlss += "</div>";
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>作证材料</div>";
@@ -153,11 +166,19 @@ function getProjectInfo(result) {
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>审核失败原因</div>";
         htmlss += "<div class='span9'>" + result.field1 + "</div></div>";
-        $("#getProjectInfo1").html(htmlss);
+        htmlss += "</div>";
+        htmlss += "<div class='dr'><span></span></div>";
+        htmlss += "</div>";
+        htmlss += "</div>";
+        htmlss += "<div class='modal-footer'>";
+        htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true'>提交</button>";
+        htmlss += "<button class='btn btn-default' data-dismiss='modal' aria-hidden='true'>取消</button>";
+        htmlss += "</div>";
+        $("#mymodal2").html(htmlss);
     } else {
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>编号</div>";
-        htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</div>";
+        htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
         htmlss += "<div class='span3'>代码</div>";
         htmlss += "<div class='span3'>" + result.integralLogId.projectNum + "</div>";
         htmlss += "</div><div class='row-form clearfix'>";
@@ -167,7 +188,7 @@ function getProjectInfo(result) {
         htmlss += "<div class='span3'>" + statusC + "</div>";
         htmlss += "</div> <div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目类别</div>";
-        htmlss += "<div class='span3'>" + splitJson(result.event) + "</div>";
+        htmlss += "<div class='span3'>" + result.projectCategory + "</div>";
         htmlss += "<div class='span3'>所属学院</div>";
         htmlss += "<div class='span3'>" + result.college + "</div>";
         htmlss += "</div> <div class='row-form clearfix'>";
@@ -175,19 +196,14 @@ function getProjectInfo(result) {
         htmlss += "<div class='span3'>" + result.projectName + "</div>";
         htmlss += "</div> <div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目内容</div>";
-        htmlss += "<div class='span9'>" + result.content + "</div>";
+        htmlss += "<div class='span9'>" + result.event + "</div>";
         htmlss += "</div>";
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>作证材料</div>";
         htmlss += "<div class='span9'>";
         htmlss += "<a class='tooltip1' href='../../img/example.jpg'><img src='../../img/example.jpg'></a>";
         htmlss += "</div> </div>";
-        $("#getProjectInfo").html(htmlss);
+        htmlss += "</div><div class='dr'><span></span></div></div></div>";
+        $("#mymodal2").html(htmlss);
     }
-}
-
-function splitJson(json) {
-    var projectCategorys = new Array();
-    projectCategorys = json.split("/");
-    return projectCategorys[0];
 }

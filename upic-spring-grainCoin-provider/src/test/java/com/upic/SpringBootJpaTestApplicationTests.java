@@ -241,7 +241,7 @@ public class SpringBootJpaTestApplicationTests {
                     // redisComponent.increment("1001"));
                     IntegralLogInfo i1 = new IntegralLogInfo();
                     i1.setIntegralLogId(new IntegralLogIdInfo(Thread.currentThread().getName(), "1001"));
-                    IntegralLogInfo signUp = integralLogService.signUp(i1, 25);
+                    IntegralLogInfo signUp = integralLogService.signUp(i1);
                     if (signUp == null) {
                         System.out.println(Thread.currentThread().getName() + "：" + "第" + j + "次抢票失败");
                     } else {
