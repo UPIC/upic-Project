@@ -10,23 +10,20 @@ var getGrainCoinUrl = "/stu/getGrainCoin";
 var getGraincoinLogPage = "/common/getGraincoinLogPage";
 var getPrize = "/common/getPrize";
 var getHistoryPrize = "/common/getHistoryPrize";
+var getExchangePrizeUrl = "/stu/getExchangePrize";
+
+var myGrainCoin = 0;
 
 $(function () {
     /**
      * 获取素拓币
      */
-    $.ajax({
-        type: "GET", // 提交方式
-        url: getGrainCoinUrl,// 路径
-        success: function (result) {// 返回数据根据结果进行相应的处理
-            $("#grainCoin").html(result);
-        }
-    });
+    getGrainCoin();
 
     /**
      * 获取兑换记录
      */
-    ajaxs("type=PAYMENT", "duiHuanJiLu", getGraincoinLogPage);
+    ajaxs("type=PAYMENT&&myType=single", "duiHuanJiLu", getGraincoinLogPage);
 
     /**
      * 获取兑换物品
@@ -38,6 +35,17 @@ $(function () {
      */
     ajaxs("", "liShiWuPin", getHistoryPrize);
 })
+
+function getGrainCoin() {
+    $.ajax({
+        type: "GET", // 提交方式
+        url: getGrainCoinUrl,// 路径
+        success: function (result) {// 返回数据根据结果进行相应的处理
+            myGrainCoin = result;
+            $("#grainCoin").html(result);
+        }
+    });
+}
 
 var types = "GET";
 
@@ -74,7 +82,7 @@ function addHtmls(result, method) {
             htmls += "<h4>" + result[i].prizeName + "</h4>";
             htmls += "<p>所需积分：<span>" + result[i].score + "</span></p>";
             htmls += "<div class='button_exchange'>";
-            htmls += "<button class='btn btn-warning' type='button'>兑换物品</button>";
+            htmls += "<button class='btn btn-warning' type='button' onclick=getExchangePrize(" + result[i].id + ',' + result[i].score + ")>兑换物品</button>";
             htmls += "</div>";
             htmls += "</div></li>";
         }
@@ -85,11 +93,35 @@ function addHtmls(result, method) {
             htmls += "<img src='../../img/example.jpg' class='img-thumbnail'>";
             htmls += "<h4>" + result[i].prizeName + "</h4>";
             htmls += "<p>花费积分：<span>" + result[i].score + "</span></p>";
-            // htmls += "<div class='button_exchange'>";
-            // htmls += "<button class='btn btn-warning' type='button'>兑换物品</button>";
-            // htmls += "</div>";
             htmls += "</div></li>";
         }
     }
     $("#" + method).html(htmls);
+}
+
+function getExchangePrize(prizeId, score) {
+    if (myGrainCoin < score) {
+        alert("兑换失败，素拓币不足！");
+    } else {
+        $.ajax({
+            type: types, // 提交方式
+            url: getExchangePrizeUrl,// 路径
+
+            beforeSend: function (XMLHttpRequest) {
+            },
+            success: function (result) {// 返回数据根据结果进行相应的处理
+                if (result === "SUCCESS") {
+                    alert("兑换成功！");
+
+                    getGrainCoin();
+                } else {
+                    alert("兑换失败！");
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            error: function () {
+            }
+        });
+    }
 }

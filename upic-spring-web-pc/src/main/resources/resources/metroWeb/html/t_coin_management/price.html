@@ -137,7 +137,7 @@
                     <th width="5%" class="center_td">编号</th>
                     <th width="15%">名称</th>
                     <th width="20%">简介</th>
-                    <th width="15%" class="center_td">图片</th>
+                    <th width="15%" class="center_td">状态</th>
                     <th width="10%">所需积分</th>
                     <th width="10%">上传时间</th>
                     <th width="10%" class="center_td">操作</th>
@@ -307,7 +307,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" >保存</button>
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">保存</button>
             <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
         </div>
     </div>
@@ -375,21 +375,21 @@
 <script src="../../js/dynamic-table.js"></script>
 <script>
 
-function p(s) {
-    return s < 10 ? '0' + s: s;
+    function p(s) {
+        return s < 10 ? '0' + s : s;
 
-}
+    }
 
-var myDate = new Date();
-//获取当前年
-var year=myDate.getFullYear();
-//获取当前月
-var month=myDate.getMonth()+1;
-//获取当前日
-var date=myDate.getDate();
+    var myDate = new Date();
+    //获取当前年
+    var year = myDate.getFullYear();
+    //获取当前月
+    var month = myDate.getMonth() + 1;
+    //获取当前日
+    var date = myDate.getDate();
 
-var now=year+'-'+p(month)+"-"+p(date);
-$("#getN").html(now);
+    var now = year + '-' + p(month) + "-" + p(date);
+    $("#getN").html(now);
 
     $(function () {
         $(".dataTables_filter").find('input').attr('placeholder', '空格分隔 编号、项目名称、负责人').css('width', '250px');

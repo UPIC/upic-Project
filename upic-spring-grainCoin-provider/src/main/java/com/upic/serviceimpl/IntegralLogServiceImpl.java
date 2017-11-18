@@ -124,7 +124,7 @@ public class IntegralLogServiceImpl implements IntegralLogService {
     }
 
     @Override
-    public IntegralLogInfo signUp(IntegralLogInfo integralLogInfo, int allNum) {
+    public IntegralLogInfo signUp(IntegralLogInfo integralLogInfo) {
         String projectKey = integralLogInfo.getIntegralLogId().getProjectNum();
         try {
             Long increment = redisComponent.increment(projectKey);

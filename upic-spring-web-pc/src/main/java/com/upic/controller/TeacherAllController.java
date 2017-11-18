@@ -2,7 +2,6 @@ package com.upic.controller;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.upic.condition.ProjectCondition;
 import com.upic.dto.IntegralLogInfo;
 import com.upic.dto.ProjectInfo;
 import com.upic.service.IntegralLogService;
@@ -36,12 +35,12 @@ public class TeacherAllController {
      * @throws Exception
      */
     @GetMapping("/getProjectByProjectNum")
-    public ProjectInfo getProjectByProjectNum(String projectNum) throws Exception {
+    public ProjectInfo getProjectByProjectNum(String projectNum) {
         try {
             return projectService.getProjectByNum(projectNum);
         } catch (Exception e) {
             LOGGER.info("getProjectByProjectNum:" + e.getMessage());
-            throw new Exception("getProjectByProjectNum:" + e.getMessage());
+            return null;
         }
     }
 

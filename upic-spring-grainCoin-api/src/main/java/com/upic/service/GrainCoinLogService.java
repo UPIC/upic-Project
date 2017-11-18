@@ -34,9 +34,8 @@ public interface GrainCoinLogService {
     /**
      * 奖品兑换
      *
-     * @param prizeId
      * @param grainCoinLogInfo
      * @return
      */
-//    GrainCoinLogInfo exchangePrize(long prizeId, GrainCoinLogInfo grainCoinLogInfo);
+    GrainCoinLogInfo saveGrainCoinLog(GrainCoinLogInfo grainCoinLogInfo);
 }
