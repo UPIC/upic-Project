@@ -457,6 +457,7 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Override
     @Scheduled(cron = "0 0 0 * *")
+//    @Scheduled(cron = "0/10 * * * * *")
     public void task() throws Exception {
         Map<String, JobParameter> param = new HashMap<>();
         param.put("startTime", new JobParameter(new Date()));

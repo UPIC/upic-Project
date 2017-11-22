@@ -4,11 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 @SpringBootApplication
 @EnableJpaRepositories
+@EnableScheduling
 @ImportResource("classpath:provider.xml")
 public class SpringBootJpaTestApplication {
 	private static final Log log = LogFactory.getLog(SpringBootJpaTestApplication.class);
