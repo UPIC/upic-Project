@@ -6,10 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.condition.*;
 import com.upic.dto.*;
-import com.upic.enums.AdviceStatusOperationEnum;
-import com.upic.enums.ImplementationProcessEnum;
-import com.upic.enums.IntegralLogStatusEnum;
-import com.upic.enums.ProjectAddWayEnum;
+import com.upic.enums.*;
 import com.upic.service.*;
 import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
@@ -386,7 +383,8 @@ public class CommonController {
     @ApiOperation("根据条件查询奖品")
     public Page<PrizeInfo> getPrize(@PageableDefault(size = 10) Pageable pageable, PrizeCondition p) throws Exception {
         try {
-            return prizeService.searchPrizes(p, pageable);
+            Page<PrizeInfo> prizeInfoPage = prizeService.searchPrizes(p, pageable);
+            return prizeInfoPage;
         } catch (Exception e) {
             LOGGER.info("getPrize:" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -523,6 +521,25 @@ public class CommonController {
     }
 
     /**
+     * 根据用户编号获取积分明细*
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getIntegralLogPageByUserNum")
+    @ApiOperation("根据用户编号获取积分明细")
+    public Page<IntegralLogInfo> getIntegralLogPageByUserNum(@PageableDefault(size = 10) Pageable pageable, String studentNum) throws Exception {
+        try {
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogByMySelf(studentNum, pageable);
+            return integralLogInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getIntegralLogPage:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
      * 获取素拓币明细*
      *
      * @param pageable
@@ -532,8 +549,11 @@ public class CommonController {
      */
     @GetMapping("/getGraincoinLogPage")
     @ApiOperation("获取素拓币明细")
-    public Page<GrainCoinLogInfo> getGraincoinLogPage(@PageableDefault(size = 10) Pageable pageable, GrainCoinLogCondition grainCoinLogCondition) throws Exception {
+    public Page<GrainCoinLogInfo> getGraincoinLogPage(@PageableDefault(size = 10) Pageable pageable, GrainCoinLogCondition grainCoinLogCondition, String myType) throws Exception {
         try {
+            if (myType != null && myType.equals("single")) {
+                grainCoinLogCondition.setUserNum(getUser().getUserId());
+            }
             return grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageable);
         } catch (Exception e) {
             LOGGER.info("getGraincoinLogPage:" + e.getMessage());
@@ -1008,12 +1028,45 @@ public class CommonController {
      */
     @GetMapping("/updatePrize")
     @ApiOperation("更新奖品")
-    public PrizeInfo updatePrize(PrizeInfo prizeInfo) throws Exception {
+    public PrizeInfo updatePrize(PrizeInfo prizeInfo) {
         try {
             return prizeService.updatePrize(prizeInfo);
         } catch (Exception e) {
             LOGGER.info("updatePrize:" + e.getMessage());
-            throw new Exception("updatePrize" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 更新奖品状态
+     *
+     * @param status
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/changePrizeStatus")
+    @ApiOperation("更新奖品")
+    public String changePrizeStatus(String status, long prizeId) {
+        try {
+            PrizeInfo prizeInfo = prizeService.getPrizeById(prizeId);
+            if (prizeInfo == null) {
+                return null;
+            } else {
+                if (status != null && status.equals("上架")) {
+                    prizeInfo.setStatus(PrizeStatusEnum.SHELVES);
+                    prizeService.updatePrize(prizeInfo);
+                    return "SUCCESS";
+                }
+                if (status != null && status.equals("下架")) {
+                    prizeInfo.setStatus(PrizeStatusEnum.ALREADY_LAID);
+                    prizeService.updatePrize(prizeInfo);
+                    return "SUCCESS";
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            LOGGER.info("updatePrize:" + e.getMessage());
+            return null;
         }
     }
 

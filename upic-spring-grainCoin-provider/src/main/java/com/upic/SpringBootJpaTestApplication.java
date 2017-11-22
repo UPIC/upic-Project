@@ -1,11 +1,11 @@
 package com.upic;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 @SpringBootApplication
 @EnableJpaRepositories

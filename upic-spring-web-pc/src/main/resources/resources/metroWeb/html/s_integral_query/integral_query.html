@@ -2,77 +2,74 @@
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 <head>
- <meta charset="utf-8" />
- <title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
- <meta content="width=device-width, initial-scale=1.0" name="viewport" />
- <meta content="" name="description" />
- <meta content="Mosaddek" name="author" />
- <link href="../../css/bootstrap.min.css" rel="stylesheet" />
- <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
- <link href="../../css/bootstrap-fileupload.css" rel="stylesheet" />
- <link href="../../css/font-awesome.css" rel="stylesheet" />
- <link href="../../css/style.css" rel="stylesheet" />
- <link href="../../css/style-responsive.css" rel="stylesheet" />
- <link href="../../css/style-default.css" rel="stylesheet" id="style_color" />
- <link href="../../css/jquery.fancybox.css" rel="stylesheet" />
- <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css" />
- <link rel="stylesheet" type="text/css" href="../../css/my_project.css" />
- <script src="../../js/bootstrap.min.js"></script>
- <script>
-   $(document).ready(function(){
-      $("#main-content").css({
-        minHeight: $(window).height()-100+"px"});
-  })
-</script>
-<style>
- #tooltip{
-  position:absolute;
-  z-index:9999999999999999999999;
-}
-#tooltip img{
-  width:500px;
-  height:350px;
-}
+    <meta charset="utf-8"/>
+    <title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="Mosaddek" name="author"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap-fileupload.css" rel="stylesheet"/>
+    <link href="../../css/font-awesome.css" rel="stylesheet"/>
+    <link href="../../css/style.css" rel="stylesheet"/>
+    <link href="../../css/style-responsive.css" rel="stylesheet"/>
+    <link href="../../css/style-default.css" rel="stylesheet" id="style_color"/>
+    <link href="../../css/jquery.fancybox.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/my_project.css"/>
+    <script src="../../js/bootstrap.min.js"></script>
+    <!--<script>-->
+    <!--$(function () {-->
+    <!---->
+    <!--})-->
+    <!--</script>-->
+    <style>
+        #tooltip {
+            position: absolute;
+            z-index: 9999999999999999999999;
+        }
 
-</style>
+        #tooltip img {
+            width: 500px;
+            height: 350px;
+        }
+
+    </style>
 </head>
-
 
 <body class="fixed-top">
 
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="page-title">
+                积分申报进度
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">首页</a>
+                    <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    积分查询
+                    <span class="divider">/</span>
+                </li>
+                <li class="active">
+                    积分申报进度
+                </li>
+            </ul>
 
-    <div class="container-fluid">
-
-      <div class="row-fluid">
-       <div class="span12">
-           <h3 class="page-title">
-             积分申报进度
-         </h3>
-         <ul class="breadcrumb">
-           <li>
-               <a href="#">首页</a>
-               <span class="divider">/</span>
-           </li>
-           <li class="active">
-               积分查询
-               <span class="divider">/</span>
-           </li>
-           <li class="active">
-               积分申报进度
-           </li>
-       </ul>
-
-   </div>
-</div>
-
-
-<div class="widget gray">
-    <div class="widget-title">
-        <h4><i class="icon-reorder"></i>积分申报进度</h4>
+        </div>
     </div>
-    <div class="widget-body">
-        <table class="table table-striped table-bordered" id="sample_1">
-            <thead>
+
+
+    <div class="widget gray">
+        <div class="widget-title">
+            <h4><i class="icon-reorder"></i>积分申报进度</h4>
+        </div>
+        <div class="widget-body">
+            <table class="table table-striped table-bordered" id="sample_1">
+                <thead>
                 <tr>
 
                     <th width="5%" class="center_td">编号</th>
@@ -83,76 +80,101 @@
                     <th width="15%">积分</th>
                     <th width="10%">详情</th>
                 </tr>
-            </thead>
-            <tbody id="data">
+                </thead>
+                <tbody id="data">
                 <tr>
 
                     <td class="center_td">02</td>
-                    <td class="center_td"><button class="btn btn-mini btn-primary">审核中</button></td>
+                    <td class="center_td">
+                        <button class="btn btn-mini btn-primary">审核中</button>
+                    </td>
                     <td>2017/10/27</td>
                     <td>校级学生干部加分</td>
                     <td>信息工程学院</td>
                     <td>2.0</td>
                     <td>
-                        <a href="#mymodal1" data-toggle="modal"><div class="message_div">查看详情</div></a></td>
-                    </tr>
-                    <tr>
+                        <a href="#mymodal1" data-toggle="modal">
+                            <div class="message_div">查看详情</div>
+                        </a></td>
+                </tr>
+                <tr>
 
-                        <td class="center_td">02</td>
-                        <td class="center_td"><button class="btn btn-mini btn-primary">审核中</button></td>
-                        <td>2017/10/27</td>
-                        <td>社团招募</td>
-                        <td>信息工程学院</td>
-                        <td>2.0</td>
-                        <td><a href="#mymodal1" data-toggle="modal"><div class="message_div">查看详情</div></a></td>
-                    </tr>
-                    <tr>
+                    <td class="center_td">02</td>
+                    <td class="center_td">
+                        <button class="btn btn-mini btn-primary">审核中</button>
+                    </td>
+                    <td>2017/10/27</td>
+                    <td>社团招募</td>
+                    <td>信息工程学院</td>
+                    <td>2.0</td>
+                    <td><a href="#mymodal1" data-toggle="modal">
+                        <div class="message_div">查看详情</div>
+                    </a></td>
+                </tr>
+                <tr>
 
-                        <td class="center_td">03</td>
-                        <td class="center_td"><button class="btn btn-mini btn-danger">审核失败</button></td>
-                        <td>2017/10/27</td>
-                        <td>校级学生干部加分</td>
-                        <td>信息工程学院</td>
-                        <td>2.0</td>
-                        <td><a href="#mymodal2" data-toggle="modal"><div class="message_div">查看详情</div></a></td>
-                    </tr>
-                    <tr>
+                    <td class="center_td">03</td>
+                    <td class="center_td">
+                        <button class="btn btn-mini btn-danger">审核失败</button>
+                    </td>
+                    <td>2017/10/27</td>
+                    <td>校级学生干部加分</td>
+                    <td>信息工程学院</td>
+                    <td>2.0</td>
+                    <td><a href="#mymodal2" data-toggle="modal">
+                        <div class="message_div">查看详情</div>
+                    </a></td>
+                </tr>
+                <tr>
 
-                        <td class="center_td">03</td>
-                        <td class="center_td"><button class="btn btn-mini btn-danger">审核失败</button></td>
-                        <td>2017/10/27</td>
-                        <td>社团加分</td>
-                        <td>信息工程学院</td>
-                        <td>2.0</td>
-                        <td><a href="#mymodal2" data-toggle="modal"><div class="message_div">查看详情</div></a></td>
-                    </tr>
-                    <tr>
+                    <td class="center_td">03</td>
+                    <td class="center_td">
+                        <button class="btn btn-mini btn-danger">审核失败</button>
+                    </td>
+                    <td>2017/10/27</td>
+                    <td>社团加分</td>
+                    <td>信息工程学院</td>
+                    <td>2.0</td>
+                    <td><a href="#mymodal2" data-toggle="modal">
+                        <div class="message_div">查看详情</div>
+                    </a></td>
+                </tr>
+                <tr>
 
-                        <td class="center_td">03</td>
-                        <td class="center_td"><button class="btn btn-mini btn-danger">审核失败</button></td>
-                        <td>2017/10/27</td>
-                        <td>社团加分</td>
-                        <td>信息工程学院</td>
-                        <td>2.0</td>
-                        <td><a href="#mymodal2" data-toggle="modal"><div class="message_div">查看详情</div></a></td>
-                    </tr>
-                    <tr>
+                    <td class="center_td">03</td>
+                    <td class="center_td">
+                        <button class="btn btn-mini btn-danger">审核失败</button>
+                    </td>
+                    <td>2017/10/27</td>
+                    <td>社团加分</td>
+                    <td>信息工程学院</td>
+                    <td>2.0</td>
+                    <td><a href="#mymodal2" data-toggle="modal">
+                        <div class="message_div">查看详情</div>
+                    </a></td>
+                </tr>
+                <tr>
 
-                        <td class="center_td">03</td>
-                        <td class="center_td"><button class="btn btn-mini btn-danger">审核失败</button></td>
-                        <td>2017/10/27</td>
-                        <td>社团加分</td>
-                        <td>信息工程学院</td>
-                        <td>2.0</td>
-                        <td><a href="#mymodal2" data-toggle="modal"><div class="message_div">查看详情</div></a></td>
-                    </tr>
+                    <td class="center_td">03</td>
+                    <td class="center_td">
+                        <button class="btn btn-mini btn-danger">审核失败</button>
+                    </td>
+                    <td>2017/10/27</td>
+                    <td>社团加分</td>
+                    <td>信息工程学院</td>
+                    <td>2.0</td>
+                    <td><a href="#mymodal2" data-toggle="modal">
+                        <div class="message_div">查看详情</div>
+                    </a></td>
+                </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
 
-    <div id="mymodal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
+    <div id="mymodal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+         aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 id="mymodallabel1">详情</h4>
@@ -182,18 +204,20 @@
                     </div>
                     <div class="row-form clearfix">
                         <div class="span3">项目级别</div>
-                        <div class="span9"><div class="controls">
-                            <select class="input-medium m-wrap" tabindex="1">
-                                <option value="category 1">市级</option>
-                                <option value="category 2">校级</option>
-                                <option value="category 3">院级</option>
-                            </select>
-                            <select class="input-medium m-wrap" tabindex="2">
-                                <option value="category 1">一等奖</option>
-                                <option value="category 2">二等奖</option>
-                                <option value="category 3">三等奖</option>
-                            </select>
-                        </div></div>
+                        <div class="span9">
+                            <div class="controls">
+                                <select class="input-medium m-wrap" tabindex="1">
+                                    <option value="category 1">市级</option>
+                                    <option value="category 2">校级</option>
+                                    <option value="category 3">院级</option>
+                                </select>
+                                <select class="input-medium m-wrap" tabindex="2">
+                                    <option value="category 1">一等奖</option>
+                                    <option value="category 2">二等奖</option>
+                                    <option value="category 3">三等奖</option>
+                                </select>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -203,11 +227,13 @@
                     </div>
                     <div class="row-form clearfix">
                         <div class="span3">详情</div>
-                        <div class="span9"><textarea name="" style="width:90%">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</textarea></div>
+                        <div class="span9"><textarea name="" style="width:90%">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</textarea>
+                        </div>
                     </div>
                     <div class="row-form clearfix">
                         <div class="span3">作证材料</div>
-                        <div class="span9"><a class="tooltip1" href="../../img/example.jpg"><img src="../../img/example.jpg" ></a>
+                        <div class="span9"><a class="tooltip1" href="../../img/example.jpg"><img
+                                src="../../img/example.jpg"></a>
                             <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
                         </div>
                     </div>
@@ -226,54 +252,53 @@
     </div>
 
 
-    <div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1" aria-hidden="true">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h4>详情</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row-fluid">
-                                        <div class="block-fluid" id="getProjectInfo">
-                                            <div class="row-form clearfix">
-                                                <div class="span3">项目名称</div>
-                                                <div class="span9">项目名称项目名称项目名称</div>
-                                            </div>
-                                            <div class="row-form clearfix">
-                                                <div class="span3">项目类别</div>
-                                                <div class="span9">讲座论坛</div>
-                                            </div>
-                                            <div class="row-form clearfix">
-                                                <div class="span3">项目级别</div>
-                                                <div class="span9">
-                                                    <div class="span6">市级</div>
-                                                    <div class="span6">二等奖</div>
-                                                </div>
-
-
-                                            </div>
-                                            <div class="row-form clearfix">
-                                                <div class="span3">项目积分</div>
-                                                <div class="span9">2.0</div>
-                                            </div>
-                                            <div class="row-form clearfix">
-                                                <div class="span3">详情</div>
-                                                <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
-                                            </div>
-                                            <div class="row-form clearfix">
-                                                <div class="span3">作证材料</div>
-                                                <div class="span9"><a class="tooltip1" href="../../img/example.jpg"><img src="../../img/example.jpg" ></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="dr"><span></span></div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定</button>
-                                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
-                                </div>
-                            </div>
-
+    <div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4>详情</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="block-fluid" id="getProjectInfo">
+                    <div class="row-form clearfix">
+                        <div class="span3">项目名称</div>
+                        <div class="span9">项目名称项目名称项目名称</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目类别</div>
+                        <div class="span9">讲座论坛</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目级别</div>
+                        <div class="span9">
+                            <div class="span6">市级</div>
+                            <div class="span6">二等奖</div>
+                        </div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">项目积分</div>
+                        <div class="span9">2.0</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">详情</div>
+                        <div class="span9">校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分校级学生干部加分</div>
+                    </div>
+                    <div class="row-form clearfix">
+                        <div class="span3">作证材料</div>
+                        <div class="span9"><a class="tooltip1" href="../../img/example.jpg"><img
+                                src="../../img/example.jpg"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="dr"><span></span></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定</button>
+            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</button>
+        </div>
+    </div>
 
 
 </div>
@@ -284,32 +309,29 @@
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/jquery.blockui.js"></script>
 
-   <!--[if lt ie 9]>
-   <script src="http://www.js-css.cn/js/excanvas.js"></script>
-   <script src="http://www.js-css.cn/js/respond.js"></script>
-   <![endif]-->
-   <script type="text/javascript" src="../../js/jquery.uniform.min.js"></script>
-   <script type="text/javascript" src="../../js/jquery.datatables.js"></script>
-   <script type="text/javascript" src="../../js/dt_bootstrap.js"></script>
-   <script src="../../js/jquery.scrollto.min.js"></script>
+<!--[if lt ie 9]>
+<script src="http://www.js-css.cn/js/excanvas.js"></script>
+<script src="http://www.js-css.cn/js/respond.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../js/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.datatables.js"></script>
+<script type="text/javascript" src="../../js/dt_bootstrap.js"></script>
+<script src="../../js/jquery.scrollto.min.js"></script>
 
 
+<script src="../../js/common-scripts.js"></script>
 
-   <script src="../../js/common-scripts.js"></script>
 
-
-   <script src="../../js/dynamic-table.js"></script>
-   <script>
-       $(function(){
-        $(".dataTables_filter").find('input').attr('placeholder','空格分隔 编号、项目名称、负责人').css('width', '250px');;
+<script src="../../js/dynamic-table.js"></script>
+<script>
+    $(function () {
+        $(".dataTables_filter").find('input').attr('placeholder', '空格分隔 编号、项目名称、负责人').css('width', '250px');
         var $checkall = $("input[name='checkall']");
         var $btn = $(".btn-success");
-        $btn.click(function(){
-            if($checkall.is(":checked"))
-            {
-               alert("确定选择审核的全部内容吗");
-           }
-       });
+        $btn.click(function () {
+            if ($checkall.is(":checked"))
+                alert("确定选择审核的全部内容吗");
+        });
         $("#sample_1_length").find('label').after('<div class="selectlist"><select name="projectCategory" id="projectCategory" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
         $("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
         $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
@@ -323,34 +345,32 @@
 
         var x = 10;
         var y = -300;
-        $(".tooltip1").mouseover(function(e) {
+        $(".tooltip1").mouseover(function (e) {
             this.mytitle = this.title;
             this.title = "";
-            var imgtitle = this.mytitle? "<br>"+this.mytitle:"";
-        //创建div元素
-        var tooltip = "<div id='tooltip'><img src='"+this.href+"' alt='产品预览图'/>"+imgtitle+"</div>";
-        $("body").append(tooltip);
-        $("#tooltip").css({
-            "top": (e.pageY+y)+"px",
-            "left": (e.pageX+x)+"px"
-        }).show("fast");
-    }).mouseout(function() {
-        this.title = this.mytitle;
-        $("#tooltip").remove();
-    }).mousemove(function(e) {
-        $("#tooltip").css({
-            "top": (e.pageY+y)+"px",
-            "left": (e.pageX+x)+"px"
+            var imgtitle = this.mytitle ? "<br>" + this.mytitle : "";
+            //创建div元素
+            var tooltip = "<div id='tooltip'><img src='" + this.href + "' alt='产品预览图'/>" + imgtitle + "</div>";
+            $("body").append(tooltip);
+            $("#tooltip").css({
+                "top": (e.pageY + y) + "px",
+                "left": (e.pageX + x) + "px"
+            }).show("fast");
+        }).mouseout(function () {
+            this.title = this.mytitle;
+            $("#tooltip").remove();
+        }).mousemove(function (e) {
+            $("#tooltip").css({
+                "top": (e.pageY + y) + "px",
+                "left": (e.pageX + x) + "px"
+            });
         });
-    });
 
-})
+    })
 </script>
 <script src="../../js/ujs/pagejs.js"></script>
 <script src="../../js/ujs/integral_query.js"></script>
 </body>
-
-
 
 
 </html>
