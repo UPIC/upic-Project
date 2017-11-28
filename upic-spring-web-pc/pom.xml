@@ -6,7 +6,7 @@
 	<groupId>com.upic.web.pc</groupId>
 	<artifactId>web-pc</artifactId>
 	<version>${upic-web-pc.version}</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>web-pc</name>
 
