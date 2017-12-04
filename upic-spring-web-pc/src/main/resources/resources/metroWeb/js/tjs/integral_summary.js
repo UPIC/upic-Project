@@ -147,7 +147,6 @@ function getIntegeralAjax(userNum, id) {
         error: function () {
         }
     });
-
 }
 
 function getGrainCoinAjax(userNum, id) {
@@ -169,5 +168,4 @@ function getGrainCoinAjax(userNum, id) {
         error: function () {
         }
     });
-
 }

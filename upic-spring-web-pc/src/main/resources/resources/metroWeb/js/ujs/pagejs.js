@@ -1,7 +1,6 @@
 //ajax获取页面内容
 function getData(pageNum, dataUrl, pageSize) {
-    requestData.size = parseInt($("#select-small").children('option:selected')
-        .text());
+    requestData.size = parseInt($("#select-small").children('option:selected').text());
     requestData.page = pageNum;
     $.ajax({
         type: "GET",
@@ -55,7 +54,8 @@ function loadPage(dataUrl, totalPages, pageSize, pageNum) {
                 htmls += "<li><a href='javasist:;' onClick='getData(" + (i - 1)
                     + ",\"" + dataUrl + "\"," + pageSize + ")'>" + i
                     + "</a></li>";
-            } else if (i > (totalPages - 2)) {getData(pageNum, data2Url);
+            } else if (i > (totalPages - 2)) {
+                getData(pageNum, data2Url);
                 htmls += "<li><a href='javasist:;' onClick='getData(" + (i - 1)
                     + ",\"" + dataUrl + "\"," + pageSize + ")'>" + i
                     + "</a></li>";

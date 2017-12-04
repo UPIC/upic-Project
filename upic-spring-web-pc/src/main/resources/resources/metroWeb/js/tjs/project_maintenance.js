@@ -1,7 +1,7 @@
 var dataUrl = "/common/getProject";
 var exportExcelUrl = "/common/exportProject";
 var searchKeyWordUrl = "/common/projectSearchBar";
-var getProjectInfo = "/common/getProjectInfo";
+var getProjectInfoUrl = "/common/getProjectInfo";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getProjectStatusUrl = "";
 var getProjectCollegeUrl = "/common/getCollege";
@@ -55,6 +55,7 @@ function addProjectCollege(res) {
     }
     $("#getProjectCollege").html(htmls);
 }
+
 function addProjectStatus(res) {
     var data = res.content;
     var htmls = "";
@@ -71,7 +72,7 @@ function addHtmls(datas, pageNum) {
     var data = datas.content;
     var htmls = "";
     for (var i = 0; i < data.length; i++) {
-        var statuss = "";
+        var status = "";
         switch (data[i].implementationProcess) {
             case ("SAVED"):
                 status = "已保存";
@@ -140,15 +141,15 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].maximum + "</td>";
         htmls += "<td>" + data[i].guidanceMan + "</td>";
         // htmls+="<td>"+getDate(data[i].startTime,"yyyy/MM/dd hh:mm")+"</td>";
-        htmls += "<td class='center_td'>" + statuss + "</td>";
+        htmls += "<td class='center_td'>" + status + "</td>";
         htmls += "<td class='center_td'><a href='#mymodal1'";
-        htmls += "data-toggle='modal'><div class='message_div' onclick=commonAjax('" + getProjectInfo + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET')>查看详情</div></a></td></tr>";
+        htmls += "data-toggle='modal'><div class='message_div' onclick=commonAjax('" + getProjectInfoUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (i + 1) + "')>查看详情</div></a></td></tr>";
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
 }
 
-function getProjectInfo(data) {
+function getProjectInfo(data, j) {
     var htmlss = "";
     var statuss = "";
     switch (data.implementationProcess) {
@@ -211,7 +212,7 @@ function getProjectInfo(data) {
 
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>编号</div>";
-    htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</div>";
+    htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
     htmlss += "<div class='span3'>代码</div>";
     htmlss += "<div class='span3'>" + data.projectNum + "</div>";
     htmlss += "</div>";
@@ -267,9 +268,8 @@ function getProjectInfo(data) {
     htmlss += "</div>";
 
     $("#getProjectInfo").html(htmlss);
-    page(datas, dataUrl, datas.size, datas.number);
+    // page(datas, dataUrl, datas.size, datas.number);
 }
-
 
 function getProjectTypeUrl(res, id) {
     var htmls = "";
@@ -278,5 +278,4 @@ function getProjectTypeUrl(res, id) {
         htmls += "<option value='category " + (i + 1) + "'>" + data.category + "</option>";
     }
     $("#id").html(htmls);
-
 }

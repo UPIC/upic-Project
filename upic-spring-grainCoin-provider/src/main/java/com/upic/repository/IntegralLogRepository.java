@@ -5,6 +5,7 @@ import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import com.upic.po.IntegralLog;
 import com.upic.po.IntegralLogId;
+import com.upic.repository.Spec.IntegralLogSpec;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -55,4 +56,7 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
 
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1")
     Page<IntegralLog> getIntegralLogWithOutPass(IntegralLogStatusEnum status, Pageable pageable);
+
+    @Query(value = "SELECT integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1")
+    Page<IntegralLog> findByUserNum(String userNum, Pageable pageable);
 }

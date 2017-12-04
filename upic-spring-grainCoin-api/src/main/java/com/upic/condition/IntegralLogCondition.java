@@ -50,11 +50,16 @@ public class IntegralLogCondition implements Serializable {
 
     private String collegeOtherName;
 
-    private List<Map<String,Object>> orList;
+    private List<Map<String, Object>> orList;
+
+    private String studentNum;
+
+    private String projectNum;
+
     public IntegralLogCondition() {
     }
 
-    public IntegralLogCondition(String event, Double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, Date creatTime, Date creatTimeTo, String field1, String field2, String field3, String field4, String field5, Date addTime, Date addTimeTo, String projectName, String projectCategory, String collegeOtherName) {
+    public IntegralLogCondition(String event, Double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, Date creatTime, Date creatTimeTo, String field1, String field2, String field3, String field4, String field5, Date addTime, Date addTimeTo, String projectName, String projectCategory, String collegeOtherName, List<Map<String, Object>> orList, String studentNum, String projectNum) {
         this.event = event;
         this.integral = integral;
         this.type = type;
@@ -74,6 +79,9 @@ public class IntegralLogCondition implements Serializable {
         this.projectName = projectName;
         this.projectCategory = projectCategory;
         this.collegeOtherName = collegeOtherName;
+        this.orList = orList;
+        this.studentNum = studentNum;
+        this.projectNum = projectNum;
     }
 
     public String getEvent() {
@@ -228,13 +236,27 @@ public class IntegralLogCondition implements Serializable {
         this.collegeOtherName = collegeOtherName;
     }
 
-	public List<Map<String, Object>> getOrList() {
-		return orList;
-	}
+    public List<Map<String, Object>> getOrList() {
+        return orList;
+    }
 
-	public void setOrList(List<Map<String, Object>> orList) {
-		this.orList = orList;
-	}
-    
-    
+    public void setOrList(List<Map<String, Object>> orList) {
+        this.orList = orList;
+    }
+
+    public String getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(String studentNum) {
+        this.studentNum = studentNum;
+    }
+
+    public String getProjectNum() {
+        return projectNum;
+    }
+
+    public void setProjectNum(String projectNum) {
+        this.projectNum = projectNum;
+    }
 }

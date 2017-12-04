@@ -324,10 +324,29 @@ public class StudetAllController {
             throws Exception {
         try {
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService
-                    .getAllIntegralLogByStudentNum(UserUtils.getUser().getUserId(), pageable);
+                    .getIntegralLogByStudentNum(UserUtils.getUser().getUserId(), pageable);
             return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getAllIntegralLogByStudentNum:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 学生查看自身的积分日志（加Condition）
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/searchIntegralLog")
+    public Page<IntegralLogInfo> searchIntegralLog(@PageableDefault(size = 10) Pageable pageable, IntegralLogCondition integralLogCondition) {
+        try {
+            integralLogCondition.setStudentNum(UserUtils.getUser().getUserId());
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(integralLogCondition, pageable);
+            return integralLogInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("searchIntegralLog:" + e.getMessage());
             return null;
         }
     }

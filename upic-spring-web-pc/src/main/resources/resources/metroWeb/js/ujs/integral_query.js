@@ -18,7 +18,7 @@ $(function () {
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getStatusUrl, null, "addStatus", "GET");
     registSelect("projectCategory");
-    registSelect("getStatus");
+    registSelect("college");
 })
 
 function addProjectType(res) {
@@ -35,12 +35,18 @@ function addProjectType(res) {
 function addStatus(res) {
     var data = res.content;
     var htmls = "";
+    var htmlss = "";
     htmls += "<option value='4' class='yellow'>状态筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
-    $("#getStatus").html(htmls);
+    $("#college").html(htmls);
+
+    for (var i = 0; i < data.length; i++) {
+        htmlss += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
+    }
+    $("selectCollege").append(htmlss);
 }
 
 function addHtmls(datas, pageNum) {
@@ -89,7 +95,11 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].integral + "</td>";
 
         htmls += "<td class='center_td'>";
-        htmls += "<a href='#mymodal2' data-toggle='modal'>";
+        if (data[i].status === "SAVE" || data[i].status === "PENDING_AUDIT_BEFORE_FAIL" || data[i].status === "PENDING_AUDIT_FAIL" || data[i].status === "PENDING_AUDIT_AGAIN_FAIL" || data[i].status === "PENDING_AUDIT_FINAL_FAIL") {//审核失败
+            htmls += "<a href='#mymodal2' data-toggle='modal'>";
+        } else {
+            htmls += "<a href='#mymodal1' data-toggle='modal'>";
+        }
         htmls += "<div class='message_div' onclick=commonAjax('" + getIntegralLogByIntegralLogId + "','projectNum=" + data[i].integralLogId.projectNum + "','getProjectInfo','GET','" + i + 1 + "')>查看详情</div>";
         htmls += "</a>";
         htmls += "</tr>";
@@ -135,6 +145,7 @@ function getProjectInfo(result, j) {
     htmlss += "<div class='modal-body'>";
     htmlss += "<div class='row-fluid'>";
     htmlss += "<div class='block-fluid'>";
+
     if (result.status === "SAVE" || result.status === "PENDING_AUDIT_BEFORE_FAIL" || result.status === "PENDING_AUDIT_FAIL" || result.status === "PENDING_AUDIT_AGAIN_FAIL" || result.status === "PENDING_AUDIT_FINAL_FAIL") {//审核失败
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>编号</div>";
@@ -146,17 +157,21 @@ function getProjectInfo(result, j) {
         htmlss += "<div class='span3'>" + getDate(result.creatTime, "yyyy-MM-dd") + "</div>";
         htmlss += "<div class='span3'>状态</div>";
         htmlss += "<div class='span3'>" + statusC + "</div>";
-        htmlss += "</div> <div class='row-form clearfix'>";
+        htmlss += "</div><div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目类别</div>";
         htmlss += "<div class='span3'>" + result.projectCategory + "</div>";
         htmlss += "<div class='span3'>所属学院</div>";
-        htmlss += "<div class='span3'>" + result.college + "</div>";
+        // htmlss += "<div class='span3'><input type='text' name='' value='" + result.college + "' disabled='disabled'></div>";
+        htmlss += "<div class='span3'><div class='controls'>";
+        htmlss += "<select class='input-medium m-wrap' tabindex='1' id='selectCollege'>";
+        htmlss += "<option value='4' class='yellow'>" + result.college + "</option>";
+        htmlss += "</select></div></div>";
         htmlss += "</div> <div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目名称</div>";
-        htmlss += "<div class='span3'>" + result.projectName + "</div>";
+        htmlss += "<div class='span3'><input type='text' name='' value='" + result.projectName + "' disabled='disabled'></div>";
         htmlss += "</div> <div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目内容</div>";
-        htmlss += "<div class='span9'>" + result.event + "</div>";
+        htmlss += "<div class='span9'><input type='text' name='' value='" + result.event + "' disabled='disabled'></div>";
         htmlss += "</div>";
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>作证材料</div>";
@@ -171,7 +186,7 @@ function getProjectInfo(result, j) {
         htmlss += "</div>";
         htmlss += "</div>";
         htmlss += "<div class='modal-footer'>";
-        htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true'>提交</button>";
+        htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true' onclick=commonAjax('/common/updateIntegralLog','projectNum=" + result.integralLogId.projectNum + "','changeMyIntegralLogStatus','GET')>提交</button>";
         htmlss += "<button class='btn btn-default' data-dismiss='modal' aria-hidden='true'>取消</button>";
         htmlss += "</div>";
         $("#mymodal2").html(htmlss);
@@ -203,7 +218,15 @@ function getProjectInfo(result, j) {
         htmlss += "<div class='span9'>";
         htmlss += "<a class='tooltip1' href='../../img/example.jpg'><img src='../../img/example.jpg'></a>";
         htmlss += "</div> </div>";
-        htmlss += "</div><div class='dr'><span></span></div></div></div>";
-        $("#mymodal2").html(htmlss);
+        htmlss += "</div><div class='dr'><span></span></div></div></div><div class='modal-footer'>";
+        htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true'>确定</button>";
+        htmlss += "<button class='btn btn-default' data-dismiss='modal' aria-hidden='true'>取消</button>";
+        htmlss += "</div>";
+        $("#mymodal1").html(htmlss);
+    }
+
+    function changeMyIntegralLogStatus(str) {
+        alert("提交成功");
+        getData(pageNum, dataUrl);
     }
 }

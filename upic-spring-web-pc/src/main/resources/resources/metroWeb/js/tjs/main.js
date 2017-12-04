@@ -15,19 +15,31 @@ $(function () {
         type: "GET",
         url: "/common/getUserInfo",
         success: function (result) {
-            var coin = "";
-
             if (result.type === "TEACHER") {
                 $("#getUsername").text(result.username + " 老师，你好！");
+                $("#getIntegralLogDetails").style.visibility = "hidden";
+                $("#getGrainCoinDetails").style.visibility = "hidden";
             } else {
                 $("#getUsername").text(result.username + " 同学，你好！");
             }
 
-            coin = "当前素拓分为： <a href='#mymodal1' data-toggle='modal'> <span onclick=getIntegralLogDetails()>" + result.earnedPoints + "</span></a>";
-
-            $("#getCoin").html(coin);
-
             results = result;
+        }
+    });
+
+    $.ajax({
+        type: "GET",
+        url: "/stu/getIntegeral",
+        success: function (result) {
+            $("#putIntegralLogInIt").html(result);
+        }
+    });
+
+    $.ajax({
+        type: "GET",
+        url: "/stu/getGrainCoin",
+        success: function (result) {
+            $("#suTuoBi").html("当前素拓币为：" + result);
         }
     });
 })

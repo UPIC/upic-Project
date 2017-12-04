@@ -1,5 +1,4 @@
-var getAllIntegralLogByStudentNum = "/stu/getAllIntegralLogByStudentNum";
-var getProjectCategoryUrl = "/common/getAllProjectCategory";
+var dataUrl = "/stu/getAllIntegralLogByStudentNum";
 var getIntegralLogByIntegralLogId = "/common/getIntegralLogByIntegralLogId";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getStatusUrl = "/common/getCollege";
@@ -10,12 +9,12 @@ var pageNum = 0;
 var requestData = {};
 
 $(function () {
-    pageSize = $("#select-small").children('option:selected').text()
+    pageSize = $("#select-small").children('option:selected').text();
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getStatusUrl, null, "addStatus", "GET");
     registSelect("projectCategory");
-    registSelect("getStatus");
+    registSelect("college");
 })
 
 function addProjectType(res) {
@@ -35,9 +34,9 @@ function addStatus(res) {
     htmls += "<option value='4' class='yellow'>学院筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i].status + "</option>";
+        htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
-    $("#getStatus").html(htmls);
+    $("#college").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {
@@ -47,15 +46,36 @@ function addHtmls(datas, pageNum) {
     for (var i = 0; i < data.length; i++) {
         var color = "";
         var statusC = "";
-        if (data[i].status === "PENDING_AUDIT") {
+        if (data[i].status === "SAVE") {
             color = "danger";
-            statusC = "待审核";
+            statusC = "保存";
+        } else if (data[i].status === "PENDING_AUDIT_BEFORE") {
+            color = "danger";
+            statusC = "待初审";
+        } else if (data[i].status === "PENDING_AUDIT_BEFORE_FAIL") {
+            color = "danger";
+            statusC = "待初审失败";
+        } else if (data[i].status === "PENDING_AUDIT") {
+            color = "danger";
+            statusC = "待学院审";
+        } else if (data[i].status === "PENDING_AUDIT_FAIL") {
+            color = "danger";
+            statusC = "待学院审失败";
+        } else if (data[i].status === "PENDING_AUDIT_AGAIN") {
+            color = "danger";
+            statusC = "待部门审";
+        } else if (data[i].status === "PENDING_AUDIT_AGAIN_FAIL") {
+            color = "danger";
+            statusC = "待部门审失败";
+        } else if (data[i].status === "PENDING_AUDIT_FINAL") {
+            color = "danger";
+            statusC = "待团委审";
+        } else if (data[i].status === "PENDING_AUDIT_FINAL_FAIL") {
+            color = "danger";
+            statusC = "待团委审失败";
         } else if (data[i].status === "HAVEPASSED") {
             color = "success";
-            statusC = "已通过";
-        } else if (data[i].status === "FAILURE_TO_PASS_THE_AUDIT") {
-            color = "danger";
-            statusC = "未通过";
+            statusC = "审核成功";
         } else if (data[i].status === "ALREADY_SIGN_UP") {
             color = "danger";
             statusC = "已报名";
@@ -74,21 +94,37 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].college + "</td>";
         htmls += "<td>" + data[i].integral + "</td>";
         htmls += "<td>";
-        htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=commonAjax('" + getIntegralLogByIntegralLogId + "','projectNum=" + data[i].integralLogId.projectNum + "','getProjectInfo','GET')>查看详情</div></a></td>";
+        htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=commonAjax('" + getIntegralLogByIntegralLogId + "','projectNum=" + data[i].integralLogId.projectNum + "','getProjectInfo','GET','" + (i + 1) + "')>查看详情</div></a></td>";
         htmls += "</tr>";
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
 }
 
-function getProjectInfo(result) {
+function getProjectInfo(result, j) {
     var statusC = "";
-    if (result.status === "PENDING_AUDIT") {
-        statusC = "待审核";
+    var htmlss = "";
+
+    if (result.status === "SAVE") {
+        statusC = "保存";
+    } else if (result.status === "PENDING_AUDIT_BEFORE") {
+        statusC = "待初审";
+    } else if (result.status === "PENDING_AUDIT_BEFORE_FAIL") {
+        statusC = "待初审失败";
+    } else if (result.status === "PENDING_AUDIT") {
+        statusC = "待学院审";
+    } else if (result.status === "PENDING_AUDIT_FAIL") {
+        statusC = "待学院审失败";
+    } else if (result.status === "PENDING_AUDIT_AGAIN") {
+        statusC = "待部门审";
+    } else if (result.status === "PENDING_AUDIT_AGAIN_FAIL") {
+        statusC = "待部门审失败";
+    } else if (result.status === "PENDING_AUDIT_FINAL") {
+        statusC = "待团委审";
+    } else if (result.status === "PENDING_AUDIT_FINAL_FAIL") {
+        statusC = "待团委审失败";
     } else if (result.status === "HAVEPASSED") {
-        statusC = "已通过";
-    } else if (result.status === "FAILURE_TO_PASS_THE_AUDIT") {
-        statusC = "未通过";
+        statusC = "审核成功";
     } else if (result.status === "ALREADY_SIGN_UP") {
         statusC = "已报名";
     } else if (result.status === "SIGNED_IN") {
@@ -105,7 +141,7 @@ function getProjectInfo(result) {
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目申请日期</div>";
-    htmlss += "<div class='span3'>" + result.creatTime + "</div>";
+    htmlss += "<div class='span3'>" + getDate(result.creatTime, "yyyy-MM-dd hh:mm") + "</div>";
     htmlss += "<div class='span3'>状态</div>";
     htmlss += "<div class='span3'>" + statusC + "</div>";
     htmlss += "</div>";
