@@ -165,6 +165,23 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         }
     }
 
+    @Override
+    public Page<IntegralLogInfo> getIntegralLogByStudentNum(String userNum, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.findByUserNum(userNum, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                @Override
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("searchIntegralLog:" + e.getMessage());
+        }
+        return null;
+    }
+
     public Page<IntegralLogInfo> getUserListByProjectNum(String projectNum, Pageable pageable) {
         Page<IntegralLog> integralLogPage = null;
         try {

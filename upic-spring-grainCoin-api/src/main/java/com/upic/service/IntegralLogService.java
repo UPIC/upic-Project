@@ -174,4 +174,6 @@ public interface IntegralLogService {
      * @return
      */
     String qrCodeConsumption(IntegralLogInfo integralLogInfo, String accessToken);
+
+    Page<IntegralLogInfo> getIntegralLogByStudentNum(String userId, Pageable pageable);
 }

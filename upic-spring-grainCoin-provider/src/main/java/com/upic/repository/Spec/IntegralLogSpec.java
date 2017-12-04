@@ -29,6 +29,7 @@ public class IntegralLogSpec extends CommonSimpleSpecification<IntegralLog, Inte
         addEqualsCondition(queryWraper, "collegeOtherName");
         addBetweenCondition(queryWraper, "addTime");
         addOrCondition(queryWraper, "orList");
+        addEqualsCondition(queryWraper, "integralLogId");
     }
     
     protected void addEqualsConditionToColumnSpec(QueryWraper<IntegralLog> queryWraper, String column, Object value) {
