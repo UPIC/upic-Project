@@ -1,5 +1,7 @@
 package com.upic.repository.Spec;
 
+import javax.persistence.criteria.Path;
+
 import com.upic.common.support.spec.CommonSimpleSpecification;
 import com.upic.common.support.spec.QueryWraper;
 import com.upic.condition.IntegralLogCondition;
@@ -28,4 +30,11 @@ public class IntegralLogSpec extends CommonSimpleSpecification<IntegralLog, Inte
         addBetweenCondition(queryWraper, "addTime");
         addOrCondition(queryWraper, "orList");
     }
+    
+    protected void addEqualsConditionToColumnSpec(QueryWraper<IntegralLog> queryWraper, String column, Object value) {
+		if (needAddCondition(value)) {
+			Path<?> fieldPath = getPath(queryWraper.getRoot(), column);
+			queryWraper.addPredicate(queryWraper.getCb().equal(fieldPath, value));
+		}
+	}
 }
