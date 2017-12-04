@@ -210,9 +210,6 @@ public class CommonController {
         try {
         	c.setIntegralLogId(new IntegralLogIdInfo(UserUtils.getUser().getUserId(), null));
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(c, pageable);
-            System.out.println("******************************************************************************");
-            System.out.println(integralLogInfoPage.getContent().toString());
-            System.out.println("******************************************************************************");
             return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getProjectInfo:" + e.getMessage());
