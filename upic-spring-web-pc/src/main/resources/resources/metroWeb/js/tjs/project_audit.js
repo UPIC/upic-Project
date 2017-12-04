@@ -76,11 +76,11 @@ function addHtmls(datas, pageNum) {
 function getProjectInfo(data, j) {
     var htmlss = "";
     var statuss = "";
-    if (data[i].implementationProcess === "IN_AUDIT") {
+    if (data.implementationProcess === "IN_AUDIT") {
         statuss = "待初审";
-    } else if (data[i].implementationProcess === "IN_AUDIT_AGAIN") {
+    } else if (data.implementationProcess === "IN_AUDIT_AGAIN") {
         statuss = "待复审";
-    } else if (data[i].implementationProcess === "IN_AUDIT_FINAL") {
+    } else if (data.implementationProcess === "IN_AUDIT_FINAL") {
         statuss = "待终审";
     }
 

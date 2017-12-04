@@ -17,8 +17,8 @@ $(function () {
         success: function (result) {
             if (result.type === "TEACHER") {
                 $("#getUsername").text(result.username + " 老师，你好！");
-                $("#getIntegralLogDetails").style.visibility = "hidden";
-                $("#getGrainCoinDetails").style.visibility = "hidden";
+                $("#getIntegralLogDetails").css("display", "none");
+                $("#getGrainCoinDetails").hide();
             } else {
                 $("#getUsername").text(result.username + " 同学，你好！");
             }
