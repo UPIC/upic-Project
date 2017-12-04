@@ -1,5 +1,6 @@
 package com.upic.condition;
 
+import com.upic.dto.IntegralLogIdInfo;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 
@@ -52,211 +53,181 @@ public class IntegralLogCondition implements Serializable {
 
     private List<Map<String, Object>> orList;
 
-    private String studentNum;
-
-    private String projectNum;
+//    private String studentNum;
+//
+//    private String projectNum;
+    
+    private IntegralLogIdInfo integralLogId;
 
     public IntegralLogCondition() {
     }
 
-    public IntegralLogCondition(String event, Double integral, IntegralLogTypeEnum type, IntegralLogStatusEnum status, String student, String clazz, String college, Date creatTime, Date creatTimeTo, String field1, String field2, String field3, String field4, String field5, Date addTime, Date addTimeTo, String projectName, String projectCategory, String collegeOtherName, List<Map<String, Object>> orList, String studentNum, String projectNum) {
-        this.event = event;
-        this.integral = integral;
-        this.type = type;
-        this.status = status;
-        this.student = student;
-        this.clazz = clazz;
-        this.college = college;
-        this.creatTime = creatTime;
-        this.creatTimeTo = creatTimeTo;
-        this.field1 = field1;
-        this.field2 = field2;
-        this.field3 = field3;
-        this.field4 = field4;
-        this.field5 = field5;
-        this.addTime = addTime;
-        this.addTimeTo = addTimeTo;
-        this.projectName = projectName;
-        this.projectCategory = projectCategory;
-        this.collegeOtherName = collegeOtherName;
-        this.orList = orList;
-        this.studentNum = studentNum;
-        this.projectNum = projectNum;
-    }
+	public String getEvent() {
+		return event;
+	}
 
-    public String getEvent() {
-        return event;
-    }
+	public void setEvent(String event) {
+		this.event = event;
+	}
 
-    public void setEvent(String event) {
-        this.event = event;
-    }
+	public Double getIntegral() {
+		return integral;
+	}
 
-    public Double getIntegral() {
-        return integral;
-    }
+	public void setIntegral(Double integral) {
+		this.integral = integral;
+	}
 
-    public void setIntegral(Double integral) {
-        this.integral = integral;
-    }
+	public IntegralLogTypeEnum getType() {
+		return type;
+	}
 
-    public IntegralLogTypeEnum getType() {
-        return type;
-    }
+	public void setType(IntegralLogTypeEnum type) {
+		this.type = type;
+	}
 
-    public void setType(IntegralLogTypeEnum type) {
-        this.type = type;
-    }
+	public IntegralLogStatusEnum getStatus() {
+		return status;
+	}
 
-    public IntegralLogStatusEnum getStatus() {
-        return status;
-    }
+	public void setStatus(IntegralLogStatusEnum status) {
+		this.status = status;
+	}
 
-    public void setStatus(IntegralLogStatusEnum status) {
-        this.status = status;
-    }
+	public String getStudent() {
+		return student;
+	}
 
-    public String getStudent() {
-        return student;
-    }
+	public void setStudent(String student) {
+		this.student = student;
+	}
 
-    public void setStudent(String student) {
-        this.student = student;
-    }
+	public String getClazz() {
+		return clazz;
+	}
 
-    public String getClazz() {
-        return clazz;
-    }
+	public void setClazz(String clazz) {
+		this.clazz = clazz;
+	}
 
-    public void setClazz(String clazz) {
-        this.clazz = clazz;
-    }
+	public String getCollege() {
+		return college;
+	}
 
-    public String getCollege() {
-        return college;
-    }
+	public void setCollege(String college) {
+		this.college = college;
+	}
 
-    public void setCollege(String college) {
-        this.college = college;
-    }
+	public Date getCreatTime() {
+		return creatTime;
+	}
 
-    public Date getCreatTime() {
-        return creatTime;
-    }
+	public void setCreatTime(Date creatTime) {
+		this.creatTime = creatTime;
+	}
 
-    public void setCreatTime(Date creatTime) {
-        this.creatTime = creatTime;
-    }
+	public Date getCreatTimeTo() {
+		return creatTimeTo;
+	}
 
-    public Date getCreatTimeTo() {
-        return creatTimeTo;
-    }
+	public void setCreatTimeTo(Date creatTimeTo) {
+		this.creatTimeTo = creatTimeTo;
+	}
 
-    public void setCreatTimeTo(Date creatTimeTo) {
-        this.creatTimeTo = creatTimeTo;
-    }
+	public String getField1() {
+		return field1;
+	}
 
-    public String getField1() {
-        return field1;
-    }
+	public void setField1(String field1) {
+		this.field1 = field1;
+	}
 
-    public void setField1(String field1) {
-        this.field1 = field1;
-    }
+	public String getField2() {
+		return field2;
+	}
 
-    public String getField2() {
-        return field2;
-    }
+	public void setField2(String field2) {
+		this.field2 = field2;
+	}
 
-    public void setField2(String field2) {
-        this.field2 = field2;
-    }
+	public String getField3() {
+		return field3;
+	}
 
-    public String getField3() {
-        return field3;
-    }
+	public void setField3(String field3) {
+		this.field3 = field3;
+	}
 
-    public void setField3(String field3) {
-        this.field3 = field3;
-    }
+	public String getField4() {
+		return field4;
+	}
 
-    public String getField4() {
-        return field4;
-    }
+	public void setField4(String field4) {
+		this.field4 = field4;
+	}
 
-    public void setField4(String field4) {
-        this.field4 = field4;
-    }
+	public String getField5() {
+		return field5;
+	}
 
-    public String getField5() {
-        return field5;
-    }
+	public void setField5(String field5) {
+		this.field5 = field5;
+	}
 
-    public void setField5(String field5) {
-        this.field5 = field5;
-    }
+	public Date getAddTime() {
+		return addTime;
+	}
 
-    public Date getAddTime() {
-        return addTime;
-    }
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
+	}
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
+	public Date getAddTimeTo() {
+		return addTimeTo;
+	}
 
-    public Date getAddTimeTo() {
-        return addTimeTo;
-    }
+	public void setAddTimeTo(Date addTimeTo) {
+		this.addTimeTo = addTimeTo;
+	}
 
-    public void setAddTimeTo(Date addTimeTo) {
-        this.addTimeTo = addTimeTo;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public String getProjectName() {
-        return projectName;
-    }
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
+	public String getProjectCategory() {
+		return projectCategory;
+	}
 
-    public String getProjectCategory() {
-        return projectCategory;
-    }
+	public void setProjectCategory(String projectCategory) {
+		this.projectCategory = projectCategory;
+	}
 
-    public void setProjectCategory(String projectCategory) {
-        this.projectCategory = projectCategory;
-    }
+	public String getCollegeOtherName() {
+		return collegeOtherName;
+	}
 
-    public String getCollegeOtherName() {
-        return collegeOtherName;
-    }
+	public void setCollegeOtherName(String collegeOtherName) {
+		this.collegeOtherName = collegeOtherName;
+	}
 
-    public void setCollegeOtherName(String collegeOtherName) {
-        this.collegeOtherName = collegeOtherName;
-    }
+	public List<Map<String, Object>> getOrList() {
+		return orList;
+	}
 
-    public List<Map<String, Object>> getOrList() {
-        return orList;
-    }
+	public void setOrList(List<Map<String, Object>> orList) {
+		this.orList = orList;
+	}
 
-    public void setOrList(List<Map<String, Object>> orList) {
-        this.orList = orList;
-    }
+	public IntegralLogIdInfo getIntegralLogId() {
+		return integralLogId;
+	}
 
-    public String getStudentNum() {
-        return studentNum;
-    }
+	public void setIntegralLogId(IntegralLogIdInfo integralLogId) {
+		this.integralLogId = integralLogId;
+	}
 
-    public void setStudentNum(String studentNum) {
-        this.studentNum = studentNum;
-    }
-
-    public String getProjectNum() {
-        return projectNum;
-    }
-
-    public void setProjectNum(String projectNum) {
-        this.projectNum = projectNum;
-    }
 }

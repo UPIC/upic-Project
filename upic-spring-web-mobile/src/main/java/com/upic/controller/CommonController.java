@@ -208,7 +208,7 @@ public class CommonController {
     public Page<IntegralLogInfo> getIntegralLogPage(@PageableDefault(size = 10) Pageable pageable,
                                                     IntegralLogCondition c) throws Exception {
         try {
-        	c.setStudentNum(UserUtils.getUser().getUserId());
+        	c.setIntegralLogId(new IntegralLogIdInfo(UserUtils.getUser().getUserId(), null));
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(c, pageable);
             System.out.println("******************************************************************************");
             System.out.println(integralLogInfoPage.getContent().toString());
