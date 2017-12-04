@@ -49,8 +49,7 @@ public class StudetAllController {
     @GetMapping("/getIntegeral")
     public double getIntegeral() throws Exception {
         try {
-//            return integralLogService.watchIntegral(UserUtils.getUser().getUserId());
-            return integralLogService.watchIntegral("1522110240");
+            return integralLogService.watchIntegral(UserUtils.getUser().getUserId());
         } catch (Exception e) {
             LOGGER.info("getIntegeral :" + e.getMessage());
             throw new Exception(e.getMessage());
@@ -66,8 +65,7 @@ public class StudetAllController {
     @GetMapping("/getGrainCoin")
     public double getGrainCoin() throws Exception {
         try {
-//            return grainCoinLogService.watchGrainCoin(UserUtils.getUser().getUserId());
-            return grainCoinLogService.watchGrainCoin("1522110240");
+            return grainCoinLogService.watchGrainCoin(UserUtils.getUser().getUserId());
         } catch (Exception e) {
             LOGGER.info("getGrainCoin:" + e.getMessage());
             throw new Exception(e.getMessage());
