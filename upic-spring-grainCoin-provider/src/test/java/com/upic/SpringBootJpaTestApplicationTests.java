@@ -316,7 +316,6 @@ public class SpringBootJpaTestApplicationTests {
         for (GrainCoinLogInfo grainCoinLogInfo : grainCoinLogInfoPage.getContent()) {
             System.out.println(grainCoinLogInfo);
         }
-
     }
 
     @Test
@@ -336,5 +335,14 @@ public class SpringBootJpaTestApplicationTests {
 
 //        Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogBySql(statusList, projectCategoryList, pageRequest);
 //        integralLogInfoPage.getContent().forEach(t -> System.out.println(t.toString()));
+    }
+
+    @Test
+    public void testGetIntegralLogByStudentNum() {
+        PageRequest pageRequest = new PageRequest();
+        Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogByStudentNum("1522110238", pageRequest);
+        for (IntegralLogInfo integralLogInfo : integralLogInfoPage.getContent()) {
+            System.out.println(integralLogInfo);
+        }
     }
 }

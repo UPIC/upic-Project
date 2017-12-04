@@ -20,7 +20,6 @@
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/tjs/main.js"></script>
 
-
     <style>
         body {
             background-image: url('../../img/page.jpg');
@@ -57,7 +56,6 @@
 <script src="../../js/tjs/main.js"></script>
 <body>
 <div class="body">
-
     <div class="aa">
         <div class="big">
             宁波大红鹰学院
@@ -70,13 +68,13 @@
         <ul>
             <li>
                 <img src="../../img/m3.png" alt="">
-                <span id="getusernsme">xxx 同学，你好！</span>
+                <span id="getUsername">xxx 同学，你好！</span>
             </li>
-            <li>
-                <img src="../../img/m2.png" alt="" id="getcoin">
-                <span>当前素拓分为： <a href="#mymodal1" data-toggle="modal"> <span>4.5 ></span></a>
+            <li id="getIntegralLogDetails">
+                <img src="../../img/m2.png" alt="">
+                <span id="getCoin">当前素拓分为：<a href="#mymodal1" data-toggle="modal"><span id='putIntegralLogInIt'
+                                                                                        onclick=getIntegralLogDetails()>4.5 ></span></a>
            </span>
-
                 <div id="mymodal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
                      aria-hidden="true">
                     <div class="modal-header">
@@ -85,8 +83,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row-fluid">
-                            <div class="block-fluid" id="getinfo">
-
+                            <div class="block-fluid" id="getInfo">
                                 <div class="row-form clearfix">
                                     <div class="span3">所属学院</div>
                                     <div class="span3" id="college"></div>
@@ -95,34 +92,31 @@
                                 </div>
                                 <div class="row-form clearfix">
                                     <div class="span3">姓名</div>
-                                    <div class="span3" id="name"></div>
+                                    <div class="span3" id="username"></div>
                                     <div class="span3">学号</div>
-                                    <div class="span3" id="userid"></div>
+                                    <div class="span3" id="userNum"></div>
                                 </div>
-
 
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
                                         <th>类别</th>
                                         <th>积分</th>
-
                                     </tr>
                                     </thead>
                                     <tbody id="main">
-                                    <span>
-                      <tr>
-                        <td>创业实践积分</td>
-                        <td>0.2</td>
-                      </tr>
-                      </span>
-                                    <tr>
-                                        <td colspan="4" style="text-align:right;padding-right: 20px;">总计:<span
-                                                id="total"></span></td>
-                                    </tr>
+                                        <span>
+                                            <tr>
+                                                <td>创业实践积分</td>
+                                                <td>0.2</td>
+                                            </tr>
+                                        </span>
+                                        <tr>
+                                            <td colspan="4" style="text-align:right;padding-right: 20px;">总计:<span
+                                                    id="total"></span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
-
                             </div>
                             <div class="dr"><span></span></div>
                         </div>
@@ -131,17 +125,14 @@
                         <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">关闭</button>
                     </div>
                 </div>
-
-
             </li>
-            <li>
+
+            <li id="getGrainCoinDetails">
                 <img src="../../img/m1.png" alt="">
-                <span>当前素拓币为：10000</span>
+                <span id="suTuoBi">当前素拓币为：10000</span>
             </li>
         </ul>
     </div>
-
-
     <div class="clear">
 
     </div>

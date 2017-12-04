@@ -737,7 +737,7 @@ public class CommonController {
      */
     @GetMapping("/updateIntegralLogStatus")
     @ApiOperation("修改积分状态")
-    public String updateIntegralLogStatus(@ApiParam("学生编号）") List<String> studentNumList, @ApiParam("项目编号") List<String> projectNumList, @ApiParam("积分状态") IntegralLogStatusEnum status) throws Exception {
+    public String updateIntegralLogStatus(@ApiParam("学生编号）") List<String> studentNumList, @ApiParam("项目编号") List<String> projectNumList, @ApiParam("积分状态") IntegralLogStatusEnum status) {
         try {
             List<IntegralLogIdInfo> integralLogIdInfoList = new ArrayList<IntegralLogIdInfo>();
             for (int i = 0; i < studentNumList.size(); i++) {
@@ -747,8 +747,29 @@ public class CommonController {
             return integralLogService.updateIntegralLogStatus(integralLogIdInfoList, status);
         } catch (Exception e) {
             LOGGER.info("updateIntegralLogStatus:" + e.getMessage());
-            throw new Exception("updateIntegralLogStatus" + e.getMessage());
         }
+        return null;
+    }
+
+    /**
+     * 修改积分状态
+     *
+     * @return
+     */
+    @GetMapping("/updateIntegralLog")
+    @ApiOperation("修改积分状态")
+    public IntegralLogInfo updateIntegralLog(String projectNum) {
+        try {
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserId(), projectNum));
+            if (integralLogInfo != null) {
+                integralLogInfo.setStatus(failIntegralLogStatus(integralLogInfo.getStatus()));
+                integralLogInfo = integralLogService.changeAllIntegralLogStatus(integralLogInfo);
+                return integralLogInfo;
+            }
+        } catch (Exception e) {
+            LOGGER.info("updateIntegralLog:" + e.getMessage());
+        }
+        return null;
     }
 
     /**
@@ -889,9 +910,17 @@ public class CommonController {
         return null;
     }
 
+    /**
+     * 积分审核
+     *
+     * @param projectNumList
+     * @param studentNumList
+     * @param status
+     * @param failReason
+     * @return
+     */
     @PostMapping("/changeAllIntegralLogStatus")
     @ApiOperation("审核，通过、不通过")
-
     public String changeAllIntegralLogStatus(String projectNumList, String studentNumList, String status, String failReason) {
         try {
             List<String> projectNums = JSONArray.parseArray(projectNumList, String.class);
@@ -1460,6 +1489,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * 修改通过项目状态
+     *
+     * @param implementationProcessEnum
+     * @return
+     */
     private ImplementationProcessEnum changeProjectStatus(ImplementationProcessEnum implementationProcessEnum) {
         if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT) {
             return ImplementationProcessEnum.IN_AUDIT_AGAIN;
@@ -1476,6 +1511,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * 修改未通过项目状态
+     *
+     * @param implementationProcessEnum
+     * @return
+     */
     private ImplementationProcessEnum failProjectStatus(ImplementationProcessEnum implementationProcessEnum) {
         if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT) {
             return ImplementationProcessEnum.IN_AUDIT_FAIL;
@@ -1487,11 +1528,29 @@ public class CommonController {
             return ImplementationProcessEnum.CHECKING_FAIL;
         } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING_AGAIN) {
             return ImplementationProcessEnum.CHECKING_AGAIN_FAIL;
-        } else {
+        } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING_FINAL) {
             return ImplementationProcessEnum.CHECKING_FINAL_FAIL;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT_FAIL) {
+            return ImplementationProcessEnum.IN_AUDIT;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT_AGAIN_FAIL) {
+            return ImplementationProcessEnum.IN_AUDIT_AGAIN;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT_FINAL_FAIL) {
+            return ImplementationProcessEnum.IN_AUDIT_FINAL;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING_FAIL) {
+            return ImplementationProcessEnum.CHECKING;
+        } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING_AGAIN_FAIL) {
+            return ImplementationProcessEnum.CHECKING_AGAIN;
+        } else {
+            return ImplementationProcessEnum.CHECKING_FINAL;
         }
     }
 
+    /**
+     * 修改通过积分状态
+     *
+     * @param status
+     * @return
+     */
     private IntegralLogStatusEnum changeIntegralLogStatus(IntegralLogStatusEnum status) {
         if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE) {
             return IntegralLogStatusEnum.PENDING_AUDIT;
@@ -1504,6 +1563,12 @@ public class CommonController {
         }
     }
 
+    /**
+     * 修改未通过积分状态
+     *
+     * @param status
+     * @return
+     */
     private IntegralLogStatusEnum failIntegralLogStatus(IntegralLogStatusEnum status) {
         if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE) {
             return IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL;
@@ -1511,8 +1576,16 @@ public class CommonController {
             return IntegralLogStatusEnum.PENDING_AUDIT_FAIL;
         } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_AGAIN) {
             return IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL;
-        } else {
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_FINAL) {
             return IntegralLogStatusEnum.PENDING_AUDIT_FINAL_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_BEFORE;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_AGAIN;
+        } else {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FINAL;
         }
     }
     public  Date getOneDayBefore(Date dateEnd,int dates){
