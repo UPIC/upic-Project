@@ -8,8 +8,8 @@ import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.enums.*;
 import com.upic.service.*;
-import com.upic.social.user.SocialUsers;
-import com.upic.utils.UserUtils;
+//import com.upic.social.user.SocialUsers;
+//import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -25,11 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by zhubuqing on 2017/9/18.
@@ -145,7 +141,8 @@ public class CommonController {
     @ApiOperation("获取所有项目类别")
     public Page<ProjectCategoryInfo> getAllProjectCategory(@PageableDefault(size = 20) Pageable pageable, ProjectCategoryCondition p) {
         try {
-            return projectCategoryService.searchProjectCategory(p, pageable);
+            Page<ProjectCategoryInfo> projectCategoryInfoPage = projectCategoryService.searchProjectCategory(p, pageable);
+            return projectCategoryInfoPage;
         } catch (Exception e) {
             LOGGER.info("getAllProjectCategory:" + e.getMessage());
             return null;
@@ -552,7 +549,8 @@ public class CommonController {
     public Page<GrainCoinLogInfo> getGraincoinLogPage(@PageableDefault(size = 10) Pageable pageable, GrainCoinLogCondition grainCoinLogCondition, String myType) throws Exception {
         try {
             if (myType != null && myType.equals("single")) {
-                grainCoinLogCondition.setUserNum(getUser().getUserId());
+                grainCoinLogCondition.setUserNum(getUser().getUserNum());
+//                grainCoinLogCondition.setUserNum(getUser().getUserId());
             }
             return grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageable);
         } catch (Exception e) {
@@ -613,11 +611,14 @@ public class CommonController {
     public ProjectInfo addProject(String projectInfo) throws Exception {
         try {
             ProjectInfo p = JSON.parseObject(projectInfo, ProjectInfo.class);
-            p.setProjectNum("SQ" + getUser().getUserId() + new Date().getTime());
+            p.setProjectNum("SQ" + getUser().getUserNum() + new Date().getTime());
+//            p.setProjectNum("SQ" + getUser().getUserId() + new Date().getTime());
             p.setImplementationProcess(ImplementationProcessEnum.SAVED);
-            p.setGuidanceNum(getUser().getUserId());
+            p.setGuidanceNum(getUser().getUserNum());
+//            p.setGuidanceNum(getUser().getUserId());
             p.setProjectAddWay(ProjectAddWayEnum.MANUAL_ADDITION);
-            p.setUnit(getUser().getRank());
+            p.setUnit("3");
+//            p.setUnit(getUser().getRank());
             p = projectService.addProject(p);
             return p;
         } catch (Exception e) {
@@ -676,8 +677,8 @@ public class CommonController {
     @ApiOperation("查询我未报名、并且在报名期间内的活动（学生移动端全部活动查询）")
     public Page<ProjectInfo> getProjectWithoutSignUp(@PageableDefault(size = 10) Pageable pageable) throws Exception {
         try {
-        	ProjectCondition p=new ProjectCondition();
-        	p.setImplementationProcess(ImplementationProcessEnum.ENROLLMENT);
+            ProjectCondition p = new ProjectCondition();
+            p.setImplementationProcess(ImplementationProcessEnum.ENROLLMENT);
             Page<ProjectInfo> projectWithoutSignUp = projectService.searchProject(p, pageable);
             return projectWithoutSignUp;
         } catch (Exception exception) {
@@ -699,7 +700,8 @@ public class CommonController {
         try {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum(projectNum);
-            integralLogIdInfo.setStudentNum(getUser().getUserId());
+            integralLogIdInfo.setStudentNum(getUser().getUserNum());
+//            integralLogIdInfo.setStudentNum(getUser().getUserId());
             return integralLogService.getByIntegralLogId(integralLogIdInfo);
         } catch (Exception e) {
             LOGGER.info("getProjectWithoutSignUp:" + e.getMessage());
@@ -760,7 +762,8 @@ public class CommonController {
     @ApiOperation("修改积分状态")
     public IntegralLogInfo updateIntegralLog(String projectNum) {
         try {
-            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserId(), projectNum));
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserNum(), projectNum));
+//            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserId(), projectNum));
             if (integralLogInfo != null) {
                 integralLogInfo.setStatus(failIntegralLogStatus(integralLogInfo.getStatus()));
                 integralLogInfo = integralLogService.changeAllIntegralLogStatus(integralLogInfo);
@@ -784,7 +787,8 @@ public class CommonController {
     @ApiOperation("我的项目搜索条")
     public Page<ProjectInfo> myProjectSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("关键词") String keyword) throws Exception {
         try {
-            return projectService.projectSearchBar(getUser().getUserId(), keyword, pageable);
+            return projectService.projectSearchBar(getUser().getUserNum(), keyword, pageable);
+//            return projectService.projectSearchBar(getUser().getUserId(), keyword, pageable);
         } catch (Exception e) {
             LOGGER.info("myProjectSearchBar:" + e.getMessage());
             throw new Exception("myProjectSearchBar" + e.getMessage());
@@ -800,7 +804,8 @@ public class CommonController {
     @GetMapping("exportProjectSearchBar")
     public void exportProjectSearchBar(HttpServletResponse response, String keyword, List<String> baseModel) {
         try {
-            List<Object> byProjectNum = projectService.exportProjectSearchBar(getUser().getUserId(), keyword);
+            List<Object> byProjectNum = projectService.exportProjectSearchBar(getUser().getUserNum(), keyword);
+//            List<Object> byProjectNum = projectService.exportProjectSearchBar(getUser().getUserId(), keyword);
             Workbook wk = ExcelDocument.download((String[]) baseModel.toArray(), ProjectInfo.class, byProjectNum);
             downLoadExcel(response, wk, "project");
         } catch (Exception e) {
@@ -893,8 +898,10 @@ public class CommonController {
                     AdviceInfo adviceInfo = new AdviceInfo();
                     adviceInfo.setAdvice(failReason);
                     adviceInfo.setCreatTime(new Date());
-                    adviceInfo.setOperator(getUser().getUserNum());
-                    adviceInfo.setOperatorNum(getUser().getUserId());
+                    adviceInfo.setOperator(getUser().getUsername());
+//                    adviceInfo.setOperator(getUser().getUserNum());
+                    adviceInfo.setOperatorNum(getUser().getUserNum());
+//                    adviceInfo.setOperatorNum(getUser().getUserId());
                     adviceInfo.setStatusOperation(AdviceStatusOperationEnum.NOT_PASS);
                     adviceInfo.setProjectId(projectInfo.getId());
                     adviceService.addAdvice(adviceInfo);
@@ -1208,7 +1215,8 @@ public class CommonController {
     public IntegralLogInfo getIntegralLogByIntegralLogId(String projectNum) throws Exception {
         try {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
-            integralLogIdInfo.setStudentNum(getUser().getUserId());
+            integralLogIdInfo.setStudentNum(getUser().getUserNum());
+//            integralLogIdInfo.setStudentNum(getUser().getUserId());
             integralLogIdInfo.setProjectNum(projectNum);
             return integralLogService.getByIntegralLogId(integralLogIdInfo);
         } catch (Exception e) {
@@ -1338,7 +1346,8 @@ public class CommonController {
     @GetMapping("/getProjectByGuidanceNum")
     public Page<ProjectInfo> getProjectByGuidanceNum(@PageableDefault(size = 10) Pageable pageable, ProjectCondition projectCondition) {
         try {
-            projectCondition.setGuidanceNum(getUser().getUserId());
+            projectCondition.setGuidanceNum(getUser().getUserNum());
+//            projectCondition.setGuidanceNum(getUser().getUserId());
             Page<ProjectInfo> projectInfoPage = projectService.searchProject(projectCondition, pageable);
             System.out.println(projectInfoPage.toString());
             return projectInfoPage;
@@ -1357,7 +1366,8 @@ public class CommonController {
     @GetMapping("/exportProjectByGuidanceNum")
     public void exportProjectByGuidanceNum(HttpServletResponse response, ProjectCondition projectCondition, String baseModel) {
         try {
-            projectCondition.setGuidanceNum(getUser().getUserId());
+            projectCondition.setGuidanceNum(getUser().getUserNum());
+//            projectCondition.setGuidanceNum(getUser().getUserId());
 
             List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
             String[] desc = new String[]{};
@@ -1412,6 +1422,13 @@ public class CommonController {
         }
     }
 
+    /**
+     * 获取所有班级
+     *
+     * @param clazzCondition
+     * @param pageable
+     * @return
+     */
     @GetMapping("/getClazz")
     @ApiOperation("获取班级")
     public Page<ClazzInfo> getClazz(ClazzCondition clazzCondition, @PageableDefault(size = 10) Pageable pageable) {
@@ -1434,11 +1451,17 @@ public class CommonController {
     public List<String> getProjectStatus() {
         try {
             Map map = ImplementationProcessEnum.toMap();
+
             List<String> projectStatusList = new ArrayList<>();
-            for (int i = 0; i < map.size(); i++) {
-                projectStatusList.add((String) map.get(i));
+
+            Set entries = map.entrySet();
+            Iterator iterator = entries.iterator();
+            while (iterator.hasNext()) {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                projectStatusList.add(String.valueOf(entry.getValue()));
             }
-            return getProjectStatus();
+
+            return projectStatusList;
         } catch (Exception e) {
             LOGGER.info("getProjectStatus:" + e.getMessage());
             return null;
@@ -1464,12 +1487,17 @@ public class CommonController {
      */
     @GetMapping("/getUserInfo")
     public UserInfo getUserInfo() {
-        UserInfo userInfo = userService.getUserByUserNum(getUser().getUserId());
+        UserInfo userInfo = userService.getUserByUserNum(getUser().getUserNum());
+//        UserInfo userInfo = userService.getUserByUserNum(getUser().getUserId());
         return userInfo;
     }
 
-    private SocialUsers getUser() {
-        return UserUtils.getUser();
+//    private SocialUsers getUser() {
+//        return UserUtils.getUser();
+//    }
+
+    private UserInfo getUser() {
+        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
     }
 
     private void downLoadExcel(HttpServletResponse response, Workbook wk, String fileName) throws Exception {
@@ -1588,10 +1616,11 @@ public class CommonController {
             return IntegralLogStatusEnum.PENDING_AUDIT_FINAL;
         }
     }
-    public  Date getOneDayBefore(Date dateEnd,int dates){
-	    Calendar date = Calendar.getInstance();
-	    date.setTime(dateEnd);
-	    date.set(Calendar.DATE, date.get(Calendar.DATE) + dates);
-	    return date.getTime();
-	}
+
+    public Date getOneDayBefore(Date dateEnd, int dates) {
+        Calendar date = Calendar.getInstance();
+        date.setTime(dateEnd);
+        date.set(Calendar.DATE, date.get(Calendar.DATE) + dates);
+        return date.getTime();
+    }
 }

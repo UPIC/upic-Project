@@ -159,4 +159,21 @@ public class ResourceServiceImpl implements ResourceService {
             return null;
         }
     }
+
+    @Override
+    public List<ResourceInfo> getAll() {
+        List<Resource> resourceList = new ArrayList<>();
+        try {
+            resourceList = resourceRepository.findAll();
+            return QueryResultConverter.convert(resourceList, new AbstractDomain2InfoConverter<Resource, ResourceInfo>() {
+                @Override
+                protected void doConvert(Resource domain, ResourceInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getAll：" + e.getMessage());
+        }
+        return null;
+    }
 }

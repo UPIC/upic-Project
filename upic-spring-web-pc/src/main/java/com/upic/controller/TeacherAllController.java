@@ -4,10 +4,13 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.upic.dto.IntegralLogInfo;
 import com.upic.dto.ProjectInfo;
+import com.upic.dto.UserInfo;
+import com.upic.enums.UserStatusEnum;
+import com.upic.enums.UserTypeEnum;
 import com.upic.service.IntegralLogService;
 import com.upic.service.ProjectService;
-import com.upic.social.user.SocialUsers;
-import com.upic.utils.UserUtils;
+//import com.upic.social.user.SocialUsers;
+//import com.upic.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,7 +65,7 @@ public class TeacherAllController {
         }
     }
 
-    private SocialUsers getUser() {
-        return UserUtils.getUser();
+    private UserInfo getUser() {
+        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
     }
 }

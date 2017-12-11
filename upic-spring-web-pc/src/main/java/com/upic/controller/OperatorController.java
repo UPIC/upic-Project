@@ -8,11 +8,11 @@ import com.upic.condition.ResourceCondition;
 import com.upic.condition.RoleCondition;
 import com.upic.dto.*;
 import com.upic.enums.OperatorStatusEnum;
+import com.upic.enums.UserStatusEnum;
+import com.upic.enums.UserTypeEnum;
 import com.upic.service.*;
 //import com.upic.social.user.SocialUsers;
 //import com.upic.utils.UserUtils;
-import com.upic.social.user.SocialUsers;
-import com.upic.utils.UserUtils;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -352,21 +352,21 @@ public class OperatorController {
     @ApiOperation("获取自己的菜单列表")
     public List<ResourceInfo> getResourceBySelf() {
         try {
-            List<ResourceInfo> resourceList = getUser().getResourceList();
+//            List<ResourceInfo> resourceList = getUser().getResourceList();
+            List<ResourceInfo> resourceList = resourceService.getAll();
             return resourceList;
         } catch (Exception e) {
             LOGGER.info("getResourceBySelf:" + e.getMessage());
             return null;
         }
     }
-//
-////    @GetMapping
-////    @ApiOperation("删除菜单")
-//
-    private SocialUsers getUser() {
-//        String userNum = "1522110240";
-        SocialUsers user= UserUtils.getUser();
-//        UserInfo userInfo = userService.getUserByUserNum(userNum);
-        return user;
+
+//    private SocialUsers getUser() {
+//        SocialUsers user= UserUtils.getUser();
+//        return user;
+//    }
+
+    private UserInfo getUser() {
+        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
     }
 }
