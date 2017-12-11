@@ -2,7 +2,7 @@ var dataUrl = "/common/getProject";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getCollegeUrl = "";
-var getNowNumUrl = "";
+var getNowNumUrl = "/common/getSignUpNumberByProjectNum";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -16,6 +16,7 @@ $(function () {
     registSelect("getCollege");
     getData(pageNum, dataUrl);
 
+    //模拟form导出
     $("#exportBtn").click(function () {
         var baseModels = ["projectNum", "declareUnit", "projectName", "guidanceMan", "guidanceNum", "projectCategory", "integral", "startTime", "endTime", "maximum"];
         var str = JSON.stringify(baseModels);
