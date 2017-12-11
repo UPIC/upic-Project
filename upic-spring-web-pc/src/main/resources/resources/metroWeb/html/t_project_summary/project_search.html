@@ -279,7 +279,7 @@
    <script src="../../js/dynamic-table.js"></script>
    <script>
      $(function(){
-        $(".dataTables_filter").find('input').attr('placeholder','空格分隔 项目代码、项目名称、负责人').css('width', '250px');;
+        $(".dataTables_filter").find('input').attr('placeholder','空格分隔 项目代码、项目名称、负责人').css('width', '250px');
         var $checkall = $("input[name='checkall']");
         var $btn = $(".btn-success");
         $btn.click(function(){
@@ -299,8 +299,8 @@
         $("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
         $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
-        $("#sample_1_length").find('label').after('<div class="selectlist"><select name="getProjectType" id="getProjectType" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
-        $(".selectlist").after('<div class="selectlist selectlist_second"><select name="getCollege" id="getCollege" style="width: 100%;" class="color-wh"><option value="4" class="yellow">所属学院筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+        $("#sample_1_length").find('label').after('<div class="selectlist"><select name="projectCategory" id="projectCategory" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
+        $(".selectlist").after('<div class="selectlist selectlist_second"><select name="college" id="college" style="width: 100%;" class="color-wh"><option value="4" class="yellow">所属学院筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
         $(".selectlist_second").after('<button class="btn btn-small btn-success" id="exportBtn"><i class="icon-cloud"></i>导出</button>');
 
         /*$(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/

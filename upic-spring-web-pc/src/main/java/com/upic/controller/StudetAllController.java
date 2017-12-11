@@ -6,13 +6,10 @@ import com.upic.common.document.excel.ExcelDocument;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
-import com.upic.enums.GrainCoinLogStatusEnum;
-import com.upic.enums.GrainCoinLogTypeEnum;
-import com.upic.enums.IntegralLogStatusEnum;
-import com.upic.enums.IntegralLogTypeEnum;
+import com.upic.enums.*;
 import com.upic.service.*;
-import com.upic.social.user.SocialUsers;
-import com.upic.utils.UserUtils;
+//import com.upic.social.user.SocialUsers;
+//import com.upic.utils.UserUtils;
 
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -86,7 +83,8 @@ public class StudetAllController {
             // if(user==null){
             // throw new Exception("获取用户失败");
             // }
-            return integralLogService.watchIntegral(UserUtils.getUser().getUserId());
+            return integralLogService.watchIntegral(getUser().getUserNum());
+//            return integralLogService.watchIntegral(UserUtils.getUser().getUserId());
         } catch (Exception e) {
             LOGGER.info("getIntegeral :" + e.getMessage());
             return null;
@@ -138,7 +136,8 @@ public class StudetAllController {
             // if(user==null){
             // throw new Exception("获取用户失败");
             // }
-            return grainCoinLogService.watchGrainCoin(UserUtils.getUser().getUserId());
+            return grainCoinLogService.watchGrainCoin(getUser().getUserNum());
+//            return grainCoinLogService.watchGrainCoin(UserUtils.getUser().getUserId());
         } catch (Exception e) {
             LOGGER.info("getGrainCoin:" + e.getMessage());
             return null;
@@ -201,14 +200,16 @@ public class StudetAllController {
             PrizeInfo prizeInfo = prizeService.getPrizeById(prizeId);
             if (prizeInfo != null) {
                 GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
-                grainCoinLogInfo.setEvent(UserUtils.getUser().getUserId() + "兑换" + prizeInfo.getPrizeName());
+                grainCoinLogInfo.setEvent(getUser().getUserNum() + "兑换" + prizeInfo.getPrizeName());
+//                grainCoinLogInfo.setEvent(UserUtils.getUser().getUserId() + "兑换" + prizeInfo.getPrizeName());
                 grainCoinLogInfo.setPrizeId(prizeId);
                 grainCoinLogInfo.setScore(-prizeInfo.getScore());
                 grainCoinLogInfo.setType(GrainCoinLogTypeEnum.PAYMENT);
                 grainCoinLogInfo.setStatus(GrainCoinLogStatusEnum.HAVEDONE);
-                SocialUsers socialUsers = getUser();
+                UserInfo socialUsers = getUser();
+//                SocialUsers socialUsers = getUser();
                 grainCoinLogInfo.setUsername(socialUsers.getUserNum());
-                grainCoinLogInfo.setUserNum(socialUsers.getUserId());
+                grainCoinLogInfo.setUserNum(socialUsers.getUserNum());
                 grainCoinLogInfo.setPrizeName(prizeInfo.getPrizeName());
                 grainCoinLogService.saveGrainCoinLog(grainCoinLogInfo);
                 return "SUCCESS";
@@ -271,8 +272,10 @@ public class StudetAllController {
             integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
             integralLogInfo.setType(IntegralLogTypeEnum.VOLUNTARY_APPLICATION);
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
-            SocialUsers userInfo = UserUtils.getUser();
-            integralLogIdInfo.setStudentNum(userInfo.getUserId());
+            UserInfo userInfo = getUser();
+//            SocialUsers userInfo = UserUtils.getUser();
+            integralLogIdInfo.setStudentNum(userInfo.getUserNum());
+//            integralLogIdInfo.setStudentNum(userInfo.getUserId());
             ChineseCharToEn cte = new ChineseCharToEn();
             if (integralLogInfo.getField1().equals("radioselect1")) {
                 integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + integralLogInfo.getField2());
@@ -304,7 +307,8 @@ public class StudetAllController {
     @GetMapping("/getIntegralLogByMySelf")
     public Page<IntegralLogInfo> getIntegralLogByMySelf(@PageableDefault(size = 10) Pageable pageable) {
         try {
-            return integralLogService.getIntegralLogByMySelf(UserUtils.getUser().getUserId(), pageable);
+            return integralLogService.getIntegralLogByMySelf(getUser().getUserNum(), pageable);
+//            return integralLogService.getIntegralLogByMySelf(UserUtils.getUser().getUserId(), pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogByMySelf:" + e.getMessage());
             return null;
@@ -322,8 +326,8 @@ public class StudetAllController {
     public Page<IntegralLogInfo> getAllIntegralLogByStudentNum(@PageableDefault(size = 10) Pageable pageable)
             throws Exception {
         try {
-            Page<IntegralLogInfo> integralLogInfoPage = integralLogService
-                    .getIntegralLogByStudentNum(UserUtils.getUser().getUserId(), pageable);
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogByStudentNum(getUser().getUserNum(), pageable);
+//            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogByStudentNum(UserUtils.getUser().getUserId(), pageable);
             return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getAllIntegralLogByStudentNum:" + e.getMessage());
@@ -341,7 +345,10 @@ public class StudetAllController {
     @GetMapping("/searchIntegralLog")
     public Page<IntegralLogInfo> searchIntegralLog(@PageableDefault(size = 10) Pageable pageable, IntegralLogCondition integralLogCondition) {
         try {
-            integralLogCondition.setStudentNum(UserUtils.getUser().getUserId());
+            IntegralLogIdInfo integralLogId = new IntegralLogIdInfo();
+            integralLogId.setStudentNum(getUser().getUserNum());
+//            integralLogId.setStudentNum(UserUtils.getUser().getUserId());
+            integralLogCondition.setIntegralLogId(integralLogId);
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(integralLogCondition, pageable);
             return integralLogInfoPage;
         } catch (Exception e) {
@@ -381,7 +388,8 @@ public class StudetAllController {
     public Page<IntegralLogInfo> getIntegralLogDeclaring(@PageableDefault(size = 10) Pageable pageable)
             throws Exception {
         try {
-            return integralLogService.getIntegralLogDeclaring(UserUtils.getUser().getUserId(), pageable);
+            return integralLogService.getIntegralLogDeclaring(getUser().getUserNum(), pageable);
+//            return integralLogService.getIntegralLogDeclaring(UserUtils.getUser().getUserId(), pageable);
         } catch (Exception e) {
             LOGGER.info("getIntegralLogDeclaring:" + e.getMessage());
             return null;
@@ -560,8 +568,14 @@ public class StudetAllController {
             IntegralLogInfo integralLogInfo = new IntegralLogInfo();
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum(projectNum);
-            SocialUsers socialUsers = getUser();
-            integralLogIdInfo.setStudentNum(socialUsers.getUserId());
+//            SocialUsers socialUsers = getUser();
+
+            UserInfo socialUsers = getUser();
+
+            integralLogIdInfo.setStudentNum(socialUsers.getUserNum());
+
+//            integralLogIdInfo.setStudentNum(socialUsers.getUserId());
+
             integralLogInfo.setIntegralLogId(integralLogIdInfo);
             integralLogInfo.setType(IntegralLogTypeEnum.SIGN_IN);
             ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
@@ -574,9 +588,14 @@ public class StudetAllController {
             } else if (projectInfo.getUnit().equals("3")) {
                 integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
             }
-            integralLogInfo.setStudent(socialUsers.getUserNum());
+//            integralLogInfo.setStudent(socialUsers.getUserNum());
+//            integralLogInfo.setClazz(socialUsers.getClazz());
+//            integralLogInfo.setCollege(socialUsers.getCollege());
+
+            integralLogInfo.setStudent(socialUsers.getUsername());
             integralLogInfo.setClazz(socialUsers.getClazz());
             integralLogInfo.setCollege(socialUsers.getCollege());
+
             integralLogInfo.setCreatTime(new Date());
             integralLogInfo.setProjectName(projectNum);
             integralLogInfo.setProjectCategory(projectInfo.getProjectCategory());
@@ -606,7 +625,11 @@ public class StudetAllController {
         }
     }
 
-    private SocialUsers getUser() {
-        return UserUtils.getUser();
+//    private SocialUsers getUser() {
+//        return UserUtils.getUser();
+//    }
+
+    private UserInfo getUser() {
+        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
     }
 }

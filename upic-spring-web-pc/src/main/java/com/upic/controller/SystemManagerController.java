@@ -7,10 +7,11 @@ import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
 import com.upic.enums.IntegralLogStatusEnum;
+import com.upic.enums.UserStatusEnum;
+import com.upic.enums.UserTypeEnum;
 import com.upic.service.*;
+//import com.upic.social.user.SocialUsers;
 //import com.upic.utils.UserUtils;
-import com.upic.social.user.SocialUsers;
-import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,15 +48,33 @@ public class SystemManagerController {
     @GetMapping("/getIntegralLogBySql")
     public Page<IntegralLogInfo> getIntegralLogBySql(Pageable pageable, String type) {
         try {
-            SocialUsers s = getUser();
-            List<String> statusList = s.getStatusList();
-            List<String> projectCategoryList = new ArrayList<>();
-            String rank = s.getRank();
-            String colloge = s.getCollegeAli();
+            UserInfo s = getUser();
+//            SocialUsers s = getUser();
+//            List<String> statusList = s.getStatusList();
+//            List<String> projectCategoryList = new ArrayList<>();
+//            String rank = s.getRank();
+//            String colloge = s.getCollegeAli();
+
+            /*************************************************************************/
+
+            List<String> statusList = new ArrayList<String>();
+            statusList.add("PENDING_AUDIT_AGAIN");
+            statusList.add("IN_AUDIT_AGAIN");
+            statusList.add("CHECKING_AGAIN");
+
+            List<String> projectCategoryList = new ArrayList<String>();
+            projectCategoryList.add("生活能力");
+            projectCategoryList.add("思想品德");
+
+            String rank = "2";
+            String colloge = s.getCollege();
+
+            /*************************************************************************/
+
             if (type != null && type.equals("C") && rank.equals("3")) {
                 projectCategoryList.add("PENDING_AUDIT_BEFORE");
             } else {
-                projectCategoryList = s.getProjectCategoryList();
+//                projectCategoryList = s.getProjectCategoryList();
                 for (String projectCategory : projectCategoryList) {
                     if (projectCategory.equals("PENDING_AUDIT_BEFORE")) {
                         projectCategoryList.remove(projectCategory);
@@ -73,11 +92,29 @@ public class SystemManagerController {
     @GetMapping("/getProjectBySql")
     public Page<ProjectInfo> getProjectBySql(String type, Pageable pageable) {
         try {
-            SocialUsers s = getUser();
-            List<String> statusList = s.getStatusList();
-            List<String> projectCategoryList = s.getProjectCategoryList();
-            String rank = s.getRank();
-            String colloge = s.getCollegeAli();
+            UserInfo s = getUser();
+//            SocialUsers s = getUser();
+//            List<String> statusList = s.getStatusList();
+//            List<String> projectCategoryList = s.getProjectCategoryList();
+//            String rank = s.getRank();
+//            String colloge = s.getCollegeAli();
+
+            /*************************************************************************/
+
+            List<String> statusList = new ArrayList<String>();
+            statusList.add("PENDING_AUDIT_AGAIN");
+            statusList.add("IN_AUDIT_AGAIN");
+            statusList.add("CHECKING_AGAIN");
+
+            List<String> projectCategoryList = new ArrayList<String>();
+            projectCategoryList.add("生活能力");
+            projectCategoryList.add("思想品德");
+
+            String rank = "2";
+            String colloge = s.getCollege();
+
+            /*************************************************************************/
+
             Page<ProjectInfo> projectInfoPage = projectService.getProjectBySql(statusList, projectCategoryList, pageable, rank, colloge, type);
             return projectInfoPage;
         } catch (Exception e) {
@@ -126,9 +163,11 @@ public class SystemManagerController {
                 integralLogInfo.setEvent(integralLogInfoExcel.getEvent());
                 integralLogInfo.setIntegral(integralLogInfoExcel.getIntegral());
                 integralLogInfo.setType(integralLogInfoExcel.getType());
-                if (getUser().getRank().equals("1")) {
+                if (getUser().getField1().equals("1")) {
+//                if (getUser().getRank().equals("1")) {
                     integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_FINAL);//这个什么意思
-                } else if (getUser().getRank().equals("2")) {
+                } else if (getUser().getField1().equals("2")) {
+//                } else if (getUser().getRank().equals("2")) {
                     integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
                 } else {
                     integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_BEFORE);
@@ -168,7 +207,13 @@ public class SystemManagerController {
         }
     }
 
-    private SocialUsers getUser() {
-        return UserUtils.getUser();
+//    private SocialUsers getUser() {
+//        return UserUtils.getUser();
+//    }
+
+    private UserInfo getUser() {
+        UserInfo userInfo = new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
+        userInfo.setField1("2");
+        return userInfo;
     }
 }
