@@ -82,4 +82,6 @@ public interface ResourceService {
      * @return
      */
     List<ResourceInfo> getResourceBySelf(Long id);
+
+    List<ResourceInfo> getAll();
 }

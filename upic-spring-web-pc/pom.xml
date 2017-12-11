@@ -196,11 +196,11 @@
 			<version>${student-operate-api.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.security.config</groupId>
-			<artifactId>upic-security-config</artifactId>
-			<version>${upic-security-config.version}</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.security.config</groupId>-->
+			<!--<artifactId>upic-security-config</artifactId>-->
+			<!--<version>${upic-security-config.version}</version>-->
+		<!--</dependency>-->
 		<!-- <dependency> -->
 		<!-- <groupId>com.upic.oauth2.weixin</groupId> -->
 		<!-- <artifactId>oauth2-weixin</artifactId> -->

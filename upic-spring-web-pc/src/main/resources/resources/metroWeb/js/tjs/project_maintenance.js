@@ -3,7 +3,7 @@ var exportExcelUrl = "/common/exportProject";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectInfoUrl = "/common/getProjectInfo";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
-var getProjectStatusUrl = "";
+var getProjectStatusUrl = "/common/getProjectStatus";
 var getProjectCollegeUrl = "/common/getCollege";
 var getProjectCollege = "";
 var pageSize = 0;
@@ -16,9 +16,10 @@ $(function () {
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getProjectCollegeUrl, null, "addProjectCollege", "GET");
-    registSelect("getProjectType");
-    registSelect("getProjectStatus");
-    registSelect("getProjectCollege");
+    commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
+    registSelect("projectCategory");
+    registSelect("implementationProcess");
+    registSelect("college");
 
     $("#exportBtn").click(function () {
         var baseModels = ["projectNum", "declareUnit", "projectName", "guidanceMan", "guidanceNum", "projectCategory", "integral", "startTime", "endTime", "maximum"];
@@ -42,7 +43,7 @@ function addProjectType(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].categoryName + "</option>";
     }
-    $("#getProjectType").html(htmls);
+    $("#projectCategory").html(htmls);
 }
 
 function addProjectCollege(res) {
@@ -53,18 +54,19 @@ function addProjectCollege(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
-    $("#getProjectCollege").html(htmls);
+    $("#college").html(htmls);
 }
 
 function addProjectStatus(res) {
-    var data = res.content;
+    var datas = res;
     var htmls = "";
     htmls += "<option value='4' class='yellow'>项目状态筛选...</option>";
 
-    for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
+    for (var i = 0; i < datas.length; i++) {
+        var data = datas[i].split("content=")[1].split("}")[0];
+        htmls += "<option value='" + (i + 4) + "'>" + data + "</option>";
     }
-    $("#getCollege").html(htmls);
+    $("#implementationProcess").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {
@@ -275,7 +277,7 @@ function getProjectTypeUrl(res, id) {
     var htmls = "";
     var data = res.content;
     for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='category " + (i + 1) + "'>" + data.category + "</option>";
+        htmls += "<option value='category " + (i + 1) + "'>" + data[i].category + "</option>";
     }
     $("#id").html(htmls);
 }
