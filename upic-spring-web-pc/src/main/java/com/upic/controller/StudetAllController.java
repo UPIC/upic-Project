@@ -341,7 +341,7 @@ public class StudetAllController {
     @GetMapping("/searchIntegralLog")
     public Page<IntegralLogInfo> searchIntegralLog(@PageableDefault(size = 10) Pageable pageable, IntegralLogCondition integralLogCondition) {
         try {
-            integralLogCondition.setStudentNum(UserUtils.getUser().getUserId());
+//            integralLogCondition.setStudentNum(UserUtils.getUser().getUserId());
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(integralLogCondition, pageable);
             return integralLogInfoPage;
         } catch (Exception e) {
