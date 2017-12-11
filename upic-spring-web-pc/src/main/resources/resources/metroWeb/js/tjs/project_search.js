@@ -133,9 +133,9 @@ function getProjectInfo(data) {
         statuss = "已验收"
     }
 
-    htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data.projectNum + "'/></td>";
-    htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
-    htmls += "<td>" + data.projectNum + "</td>";
+    htmlss += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data.projectNum + "'/></td>";
+//    htmlss += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
+    htmlss += "<td>" + data.projectNum + "</td>";
     htmlss += "<div class='span3'>代码</div>";
     htmlss += "<div class='span3'>" + data.projectNum + "</div>";
     htmlss += "</div>";
@@ -162,7 +162,7 @@ function getProjectInfo(data) {
     htmlss += "<div class='span3'><span id='" + data.projectNum + "gzl'>";
     getGZL(data.projectNum, data.projectNum + "gzl", data.integral);
     htmlss += "</span><span>/</span><span>" + (data.maximum * data.integral) + "</span></div>";
-    htmls += "</div>";
+    htmlss += "</div>";
     htmlss += "<div class='span3'>积分</div>";
     htmlss += "<div class='span3'>" + data.integral + "</div>";
     htmlss += "</div>";
@@ -184,7 +184,7 @@ function getProjectInfo(data) {
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>评价标准与形式</div>";
     htmlss += "<div class='span9'>" + data.checkAssessmentCriteraAndForm + "</div>";
-    htmls += "</div>";
+    htmlss += "</div>";
 
     $("#getProjectInfo").html(htmlss);
 }
