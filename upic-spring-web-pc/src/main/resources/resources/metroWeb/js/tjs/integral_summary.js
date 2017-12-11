@@ -18,10 +18,8 @@ $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     commonAjax(getProjectCollegeUrl, null, "addProjectCollege", "GET");
     commonAjax(getProjectclazzUrl, null, "addProjectclazz", "GET");
-    // commonAjax(getIntegeralUrl, null, "addIntegeral", "GET");
     registSelect("getProjectCollege");
     registSelect("getProjectclazz");
-    // registSelect("getIntegeral");
     getData(pageNum, dataUrl);
 
     $("#exportBtn").click(function () {
@@ -59,16 +57,6 @@ function addProjectCollege(res) {
     }
     $("#getProjectCollege").html(htmls);
 }
-// function getIntegeral(res) {
-//     var data = res.content;
-//     var htmls = "";
-//     htmls += "<option value='4' class='yellow'>积分筛选...</option>";
-//
-//     for (var i = 0; i < data.length; i++) {
-//         htmls += "<option value='" + (i + 4) + "'>" + data[i].integeral + "</option>";
-//     }
-//     $("#getIntegeral").html(htmls);
-// }
 
 function addHtmls(datas, pageNum) {
     totalPages = datas.totalElements;
