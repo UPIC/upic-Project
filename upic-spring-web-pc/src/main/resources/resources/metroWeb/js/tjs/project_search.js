@@ -16,6 +16,7 @@ $(function () {
     registSelect("college");
     getData(pageNum, dataUrl);
 
+    //模拟form导出
     $("#exportBtn").click(function () {
         var baseModels = ["projectNum", "declareUnit", "projectName", "guidanceMan", "guidanceNum", "projectCategory", "integral", "startTime", "endTime", "maximum"];
         var str = JSON.stringify(baseModels);
@@ -132,7 +133,7 @@ function getProjectInfo(data) {
     }
 
     htmlss += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data.projectNum + "'/></td>";
-    htmlss += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
+//    htmlss += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
     htmlss += "<td>" + data.projectNum + "</td>";
     htmlss += "<div class='span3'>代码</div>";
     htmlss += "<div class='span3'>" + data.projectNum + "</div>";
