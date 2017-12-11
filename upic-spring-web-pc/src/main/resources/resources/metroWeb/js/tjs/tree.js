@@ -213,9 +213,6 @@ function saveCategoryNode(id) {
             nodeContent: $("#node_content").val(),
         },
         success: function (result) {
-            // zNodes = {};
-            // commonAjax(getAllCategoryNodeUrl, requestData, "addAllCategoryNodeUrl", "GET");
-            // aAjax(getAllProjectCategoryUrl);
             alert("保存成功");
         }
     });

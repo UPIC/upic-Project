@@ -1,8 +1,8 @@
 var dataUrl = "/common/getProject";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
-var getCollegeUrl = "";
-var getNowNumUrl = "";
+var getCollegeUrl = "/common/getCollege";
+var getNowNumUrl = "/common/getSignUpNumberByProjectNum";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -12,8 +12,8 @@ $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getCollegeUrl, null, "addCollege", "GET");
-    registSelect("getProjectType");
-    registSelect("getCollege");
+    registSelect("projectCategory");
+    registSelect("college");
     getData(pageNum, dataUrl);
 
     $("#exportBtn").click(function () {
@@ -31,15 +31,14 @@ $(function () {
 })
 
 function addProjectType(res) {
-    //var data = res.content;
-    var data = res;
+    var data = res.content;
     var htmls = "";
     htmls += "<option value='4' class='yellow'>项目类别筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].categoryName + "</option>";
     }
-    $("#getProjectType").html(htmls);
+    $("#projectCategory").html(htmls);
 }
 
 function addCollege(res) {
@@ -50,7 +49,7 @@ function addCollege(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
-    $("#getCollege").html(htmls);
+    $("#college").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {
@@ -63,7 +62,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].projectNum + "</td>";
         htmls += "<td>" + data[i].projectCategory + "</td>";
         htmls += "<td>" + data[i].projectName + "</td>";
-        htmls += "<td>" + data[i].college + "</td>";
+        htmls += "<td>" + data[i].collegeOtherName + "</td>";
         htmls += "<td>" + data[i].guidanceNum + "</td>";
         htmls += "<td>" + data[i].guidanceMan + "</td>";
         htmls += "<td>" + data[i].integral + "</td>";
@@ -76,7 +75,7 @@ function addHtmls(datas, pageNum) {
         htmls += data[i].maximum;
         htmls += "</span>";
         htmls += "</td>";
-        htmls += "<td>" + data[i].creatTime + "</td>";
+        htmls += "<td>" + getDate(data[i].creatTime, "yyyy-MM-dd hh:mm") + "</td>";
         htmls += "<td class='center_td'><a href='#mymodal1'";
         htmls += "data-toggle='modal'><div class='message_div' onclick=commonAjax('" + dataUrl + "','projectNum" + data[i].projectNum + "','getProjectInfo','GET')>查看详情</div></a></td></tr>";
     }
@@ -132,9 +131,9 @@ function getProjectInfo(data) {
         statuss = "已验收"
     }
 
-    htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data.projectNum + "'/></td>";
-    htmls += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
-    htmls += "<td>" + data.projectNum + "</td>";
+    htmlss += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data.projectNum + "'/></td>";
+    htmlss += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
+    htmlss += "<td>" + data.projectNum + "</td>";
     htmlss += "<div class='span3'>代码</div>";
     htmlss += "<div class='span3'>" + data.projectNum + "</div>";
     htmlss += "</div>";
@@ -161,7 +160,7 @@ function getProjectInfo(data) {
     htmlss += "<div class='span3'><span id='" + data.projectNum + "gzl'>";
     getGZL(data.projectNum, data.projectNum + "gzl", data.integral);
     htmlss += "</span><span>/</span><span>" + (data.maximum * data.integral) + "</span></div>";
-    htmls += "</div>";
+    htmlss += "</div>";
     htmlss += "<div class='span3'>积分</div>";
     htmlss += "<div class='span3'>" + data.integral + "</div>";
     htmlss += "</div>";
@@ -183,7 +182,7 @@ function getProjectInfo(data) {
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>评价标准与形式</div>";
     htmlss += "<div class='span9'>" + data.checkAssessmentCriteraAndForm + "</div>";
-    htmls += "</div>";
+    htmlss += "</div>";
 
     $("#getProjectInfo").html(htmlss);
 }
@@ -201,54 +200,3 @@ function getGZL(pN, id, integral) {
         }
     })
 }
-
-/****************导出****************************/
-// document.getElementById("exportBtn").onclick = function(){
-//             var table = document.getElementById("sample_1").innerHTML;//获取table模板
-//             exporExcel("导出Excel表格",table);
-//         }
-        /**
-         * @params: FileName:导出Excel的文件名称，excel:需要导出的table
-         * 如果没有table列表，只有json数据的话，将json数据拼接成table字符串模板即可
-         * **/
-         // function exporExcel(FileName,excel){
-         //    var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
-         //    excelFile += '<meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
-         //    excelFile += '<meta http-equiv="content-type" content="application/vnd.ms-excel';
-         //    excelFile += '; charset=UTF-8">';
-         //    excelFile += "<head>";
-         //    excelFile += "<!--[if gte mso 9]>";
-         //    excelFile += "<xml>";
-         //    excelFile += "<x:ExcelWorkbook>";
-         //    excelFile += "<x:ExcelWorksheets>";
-         //    excelFile += "<x:ExcelWorksheet>";
-         //    excelFile += "<x:Name>";
-         //    excelFile += "{worksheet}";
-         //    excelFile += "</x:Name>";
-         //    excelFile += "<x:WorksheetOptions>";
-         //    excelFile += "<x:DisplayGridlines/>";
-         //    excelFile += "</x:WorksheetOptions>";
-         //    excelFile += "</x:ExcelWorksheet>";
-         //    excelFile += "</x:ExcelWorksheets>";
-         //    excelFile += "</x:ExcelWorkbook>";
-         //    excelFile += "</xml>";
-         //    excelFile += "<![endif]-->";
-         //    excelFile += "</head>";
-         //    excelFile += "<body>";
-         //    excelFile += excel;
-         //    excelFile += "</body>";
-         //    excelFile += "</html>";
-         //
-         //
-         //    var uri = 'data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(excelFile);
-         //
-         //    var link = document.createElement("a");
-         //    link.href = uri;
-         //
-         //    link.style = "visibility:hidden";
-         //        link.download = FileName ;  //格式默认为.xls
-         //
-         //        document.body.appendChild(link);
-         //        link.click();
-         //        document.body.removeChild(link);
-         //    }
