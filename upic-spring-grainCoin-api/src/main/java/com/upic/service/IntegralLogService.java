@@ -176,4 +176,10 @@ public interface IntegralLogService {
     String qrCodeConsumption(IntegralLogInfo integralLogInfo, String accessToken);
 
     Page<IntegralLogInfo> getIntegralLogByStudentNum(String userId, Pageable pageable);
+
+    Page<IntegralLogInfo> getInreviewIntegralLogPage(String studentNum, Pageable pageable);
+
+    Page<IntegralLogInfo> getSuccessIntegralLogPage(String studentNum, Pageable pageable);
+
+    Page<IntegralLogInfo> getDefeatedIntegralLogPage(String studentNum, Pageable pageable);
 }

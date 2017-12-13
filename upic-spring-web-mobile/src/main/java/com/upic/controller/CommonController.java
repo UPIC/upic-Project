@@ -4,6 +4,7 @@ import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.service.*;
 import com.upic.utils.UserUtils;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,9 @@ public class CommonController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ConfirmationBasisService confirmationBasisService;
+
     /**
      * 获取用户信息
      *
@@ -77,6 +81,24 @@ public class CommonController {
         } catch (Exception e) {
             LOGGER.info("getAllProjectCategory:" + e.getMessage());
             throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据项目节点ID获取固定项目
+     *
+     * @param categoryNodeId
+     * @return
+     */
+    @GetMapping("/getConfirmationBasisByCategoryNodeId")
+    @ApiOperation("根据项目节点ID获取固定项目")
+    public List<ConfirmationBasisInfo> getConfirmationBasisByCategoryNodeId(long categoryNodeId) {
+        try {
+            List<ConfirmationBasisInfo> confirmationBasisInfoList = confirmationBasisService.getByCategoryNodeId(categoryNodeId);
+            return confirmationBasisInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getConfirmationBasisByCategoryNodeId:" + e.getMessage());
+            return null;
         }
     }
 
@@ -208,8 +230,65 @@ public class CommonController {
     public Page<IntegralLogInfo> getIntegralLogPage(@PageableDefault(size = 10) Pageable pageable,
                                                     IntegralLogCondition c) throws Exception {
         try {
-        	c.setIntegralLogId(new IntegralLogIdInfo(UserUtils.getUser().getUserId(), null));
+            c.setIntegralLogId(new IntegralLogIdInfo(UserUtils.getUser().getUserId(), null));
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(c, pageable);
+            return integralLogInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getProjectInfo:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取审核中积分明细*
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getInreviewIntegralLogPage")
+    public Page<IntegralLogInfo> getInreviewIntegralLogPage(@PageableDefault(size = 10) Pageable pageable) throws Exception {
+        try {
+            String studentNum = UserUtils.getUser().getUserId();
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getInreviewIntegralLogPage(studentNum, pageable);
+            return integralLogInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getProjectInfo:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取成功积分明细*
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getSuccessIntegralLogPage")
+    public Page<IntegralLogInfo> getSuccessIntegralLogPage(@PageableDefault(size = 10) Pageable pageable) throws Exception {
+        try {
+            String studentNum = UserUtils.getUser().getUserId();
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getSuccessIntegralLogPage(studentNum, pageable);
+            return integralLogInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getProjectInfo:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取成功积分明细*
+     *
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getDefeatedIntegralLogPage")
+    public Page<IntegralLogInfo> getDefeatedIntegralLogPage(@PageableDefault(size = 10) Pageable pageable) throws Exception {
+        try {
+            String studentNum = UserUtils.getUser().getUserId();
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getDefeatedIntegralLogPage(studentNum, pageable);
             return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getProjectInfo:" + e.getMessage());
@@ -231,6 +310,25 @@ public class CommonController {
             return grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageable);
         } catch (Exception e) {
             LOGGER.info("getGraincoinLogPage:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取素拓币明细*
+     *
+     * @param pageable
+     * @param grainCoinLogCondition
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getMyGrainCoinLogPage")
+    public Page<GrainCoinLogInfo> getMyGrainCoinLogPage(@PageableDefault(size = 10) Pageable pageable, GrainCoinLogCondition grainCoinLogCondition) throws Exception {
+        try {
+            grainCoinLogCondition.setUserNum(UserUtils.getUser().getUserId());
+            return grainCoinLogService.searchPrizeByCondition(grainCoinLogCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getMyGrainCoinLogPage:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
@@ -352,15 +450,15 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getIntegralLogInfoByMySelf")
-    public IntegralLogInfo getIntegralLogInfoByMySelf(String projectNum) throws Exception {
+    public IntegralLogInfo getIntegralLogInfoByMySelf(String projectNum) {
         try {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum(projectNum);
-            integralLogIdInfo.setStudentNum("1522110240");
+            integralLogIdInfo.setStudentNum(UserUtils.getUser().getUserId());
             return integralLogService.getByIntegralLogId(integralLogIdInfo);
         } catch (Exception e) {
-            LOGGER.info("getProjectWithoutSignUp:" + e.getMessage());
-            throw new Exception("getProjectWithoutSignUp" + e.getMessage());
+            LOGGER.info("getIntegralLogInfoByMySelf:" + e.getMessage());
+            return null;
         }
     }
 }

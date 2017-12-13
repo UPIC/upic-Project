@@ -41,7 +41,6 @@ $(function () {
                     var htmls = "<input type='text' id='projectName' placeholder='请输入项目名称'";
                     htmls += "class='input-xxlarge' /> <span class='help-inline'>*</span>";
                     $("#writeProjectName").html(htmls);
-
                 }
             });
     $("#submit").click(function () {

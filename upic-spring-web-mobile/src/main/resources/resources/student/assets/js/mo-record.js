@@ -7,7 +7,7 @@
  */
 var page = 1;
 var pageCount = -1;
-var getGraincoinLogPage = "/common/getGraincoinLogPage";
+var getGraincoinLogPage = "/common/getMyGrainCoinLogPage";
 var types = "GET";
 
 $(function () {

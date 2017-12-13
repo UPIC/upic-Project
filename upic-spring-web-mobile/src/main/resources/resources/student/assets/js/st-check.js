@@ -12,15 +12,15 @@
  * 3.详情
  * 4.照片
  */
- var getIntegralLogInfoByMySelf = "/common/getIntegralLogInfoByMySelf";
+var getIntegralLogInfoByMySelf = "/common/getIntegralLogInfoByMySelf";
 
 /*
  获取上一页面传递过来的projectNum
  */
 
- var projectNum = getQueryString("projectNum");
+var projectNum = getQueryString("projectNum");
 
- function getQueryString(name) {
+function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
     if (r != null)
@@ -33,17 +33,16 @@ $(function () {
     /*
      获取活动详情
      */
-     $.ajax({
+    $.ajax({
         type: "GET", // 提交方式
         url: getIntegralLogInfoByMySelf,// 路径
         data: "projectNum=" + projectNum,
         success: function (result) {// 返回数据根据结果进行相应的处理
-
             htmls += "<li class='clearfix'><div class='list-name'>项目名称：</div>";
             htmls += "<div class='list-det det-cen'>" + result.projectName + "</div></li>";
             htmls += "<li class='clearfix'><div class='list-name'>项目类别：</div>";
             htmls += "<div class='list-det det-cen'>";
-
+            htmls += getSplitSmall(result.event);
             htmls += "</div>";
             htmls += "</li>";
             htmls += "<li class='li-other clearfix'>";
@@ -61,18 +60,23 @@ $(function () {
 
             $("#info").html(htmls);
 
-            if (result.status === "PENDING_AUDIT") {
-                $("#info2").html("审核中...");
+            if (result.status === "PENDING_AUDIT_BEFORE" || result.status === "PENDING_AUDIT" || result.status === "PENDING_AUDIT_AGAIN" || result.status === "PENDING_AUDIT_FINAL") {
+                $("#info2").html("审核中");
             }
 
             if (result.status === "HAVEPASSED") {
-                $("#info2").html("审核成功...");
+                $("#info2").html("审核成功");
             }
 
-            if (result.status === "FAILURE_TO_PASS_THE_AUDIT") {
-                $("#info2").html("审核失败...");
+            if (result.status === "PENDING_AUDIT_BEFORE_FAIL" || result.status === "PENDING_AUDIT_FAIL" || result.status === "PENDING_AUDIT_AGAIN_FAIL" || result.status === "PENDING_AUDIT_FINAL_FAIL") {
+                $("#info2").html("审核失败");
             }
         }
     })
- })
+})
 
+function getSplitSmall(event) {
+    var projectCategory = new Array();
+    projectCategory = event.split("/");
+    return projectCategory[0];
+}

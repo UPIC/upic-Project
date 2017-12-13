@@ -1,13 +1,39 @@
 /**
  * 获取积分
  */
-var page = 1;
+var page = 0;
 var pageCount = -1;
 var getProjectWithoutSignUp = "/common/getProjectWithoutSignUp";
-var getPerson = "/stu/getPageIntegral";
+var getPerson = "/stu/getMyPageIntegral";
 var types = "GET";
+
+var activitiNow = "";
+var requestUrl = "";
+var pageRequest = {};
+
+/** 滚动条* */
+var totalheight = 0;// 定义一个总的高度变量
+$(window)
+    .scroll(
+        function () {
+            totalheight = parseFloat($(window).height())
+                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+            if ($(document).height() <= (totalheight + 6)) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+            {
+                if (pageCount > page) {
+                    page++;
+                    pageRequest.page = page;
+                    ajaxs(pageRequest, activitiNow, requestUrl);
+                }
+            }
+        });
 $(function () {
-    ajaxs("", "home", getProjectWithoutSignUp)
+    pageRequest.page = 0;
+    pageRequest.size = 10;
+    requestUrl=getProjectWithoutSignUp;
+    ajaxs(pageRequest, "home", requestUrl);
+    activitiNow = "home";
+
     /**
      * 获取当前可见的活动
      *
@@ -15,61 +41,28 @@ $(function () {
      */
     $(".aa").click(function () {
         juge($(this));
-        ajaxs("", "home", getProjectWithoutSignUp);
-        /** 滚动条* */
-    var totalheight = 0;// 定义一个总的高度变量
-    $(window)
-            .scroll(
-                    function() {
-                        totalheight = parseFloat($(window).height())
-                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
-                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
-                        {
-                           page++;
-                           ajaxs('size=10&page='+page, "home", getProjectWithoutSignUp);
-
-                        }
-                    });
-
+        pageRequest.page = 0;
+        pageRequest.size = 10;
+        requestUrl=getProjectWithoutSignUp;
+        ajaxs(pageRequest, "home", requestUrl);
+        activitiNow = "home";
     })
     $(".bb").click(function () {
         juge($(this));
-        ajaxs("", "profile", getPerson);
-        /** 滚动条* */
-    var totalheight = 0;// 定义一个总的高度变量
-    $(window)
-            .scroll(
-                    function() {
-                        totalheight = parseFloat($(window).height())
-                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
-                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
-                        {
-                           page++;
-                           ajaxs('size=10&page='+page,"profile", getPerson);
-
-                        }
-                    });
-
+        pageRequest.page = 0;
+        pageRequest.size = 10;
+        requestUrl=getPerson;
+        ajaxs(pageRequest, "profile", requestUrl);
+        activitiNow = "profile";
     })
 
     $(".cc").click(function () {
         juge($(this));
-        ajaxs("", "messages", getPerson);
-        /** 滚动条* */
-    var totalheight = 0;// 定义一个总的高度变量
-    $(window)
-            .scroll(
-                    function() {
-                        totalheight = parseFloat($(window).height())
-                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
-                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
-                        {
-                           page++;
-                           ajaxs('size=10&page='+page, "messages", getPerson);
-
-                        }
-                    });
-
+        pageRequest.page = 0;
+        pageRequest.size = 10;
+        requestUrl=getPerson;
+        ajaxs(pageRequest, "messages", requestUrl);
+        activitiNow = "messages";
     })
 })
 
@@ -77,7 +70,7 @@ function juge(obj) {
     if (obj.hasClass("active")) {
         return;
     }
-    page = 1;
+    page = 0;
     pageCount = -1;
 }
 
@@ -94,7 +87,7 @@ function ajaxs(datas, method, urls) {
 // progress.inc();
         },
         success: function (result) {// 返回数据根据结果进行相应的处理
-            pageCount = result.total;
+            pageCount = result.totalPages;
             var datas = result.content;
             addHtmls(datas, method)
         },
@@ -140,7 +133,7 @@ function addHtmls(result, method) {
             htmls += "<a href='st-detail2.html?projectNum=" + result[i].integralLogId.projectNum + "'><div class='tab-search'>查看详情 ></div> </a></div></div>";
         }
     }
-    if (page == 1) {
+    if (page == 0) {
         $("#" + method).html(htmls);
     } else {
         $("#" + method).append(htmls);
@@ -232,11 +225,10 @@ Date.prototype.pattern = function (fmt) {
  */
 function jugeApply(i, projectNum) {
     $.ajax({
-        url: '/stu/isSignUpByIntegralLogId',
+        url: '/stu/isSignUpByProjectNum',
         type: 'GET', // GET
         data: {
-            projectNum: projectNum,
-            studentNum: '1522110240'
+            projectNum: projectNum
         },
         async: false,
         beforeSend: function (xhr) {

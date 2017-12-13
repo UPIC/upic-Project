@@ -182,6 +182,57 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         return null;
     }
 
+    @Override
+    public Page<IntegralLogInfo> getInreviewIntegralLogPage(String studentNum, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.getInreviewIntegralLogPage(studentNum, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                @Override
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getInreviewIntegralLogPage:" + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<IntegralLogInfo> getSuccessIntegralLogPage(String studentNum, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.getSuccessIntegralLogPage(studentNum, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                @Override
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getSuccessIntegralLogPage:" + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<IntegralLogInfo> getDefeatedIntegralLogPage(String studentNum, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.getDefeatedIntegralLogPage(studentNum, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable, new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                @Override
+                protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getDefeatedIntegralLogPage:" + e.getMessage());
+        }
+        return null;
+    }
+
     public Page<IntegralLogInfo> getUserListByProjectNum(String projectNum, Pageable pageable) {
         Page<IntegralLog> integralLogPage = null;
         try {
