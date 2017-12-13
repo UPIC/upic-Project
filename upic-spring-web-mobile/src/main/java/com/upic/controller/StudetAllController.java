@@ -1,11 +1,15 @@
 package com.upic.controller;
 
+import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
+import com.upic.enums.UserStatusEnum;
+import com.upic.enums.UserTypeEnum;
 import com.upic.service.*;
 
+import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/stu")
@@ -121,6 +127,27 @@ public class StudetAllController {
     }
 
     /**
+     * 查找积分列表*
+     *
+     * @param i
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getMyPageIntegral")
+    public Page<IntegralLogInfo> getMyPageIntegral(IntegralLogCondition i, @PageableDefault(size = 10) Pageable pageable) throws Exception {
+        try {
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            integralLogIdInfo.setStudentNum(UserUtils.getUser().getUserId());
+            i.setIntegralLogId(integralLogIdInfo);
+            return integralLogService.searchIntegralLog(i, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getMyPageIntegral:" + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
      * 是否已报名*（需要修改）
      *
      * @param studentNum
@@ -141,39 +168,68 @@ public class StudetAllController {
     }
 
     /**
-     * 积分申请提交*
+     * 是否已报名*（需要修改）
      *
-     * @param integralLogInfo
+     * @param projectNum
      * @return
+     * @throws Exception
      */
-    //@RequestParam(name = "file",required=false) MultipartFile file
-    //,  MultipartHttpServletRequest reques
-    @PostMapping("/postIntegralLog")
-    public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo) throws Exception {
+    @GetMapping("/isSignUpByProjectNum")
+    public String isSignUpByProjectNum(String projectNum) throws Exception {
         try {
-            String userNum = UserUtils.getUser().getUserId();
-
-            System.out.println(integralLogInfo.toString());
-
-            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
-            integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + (new Date()).getTime());
-            integralLogIdInfo.setStudentNum(userNum);
-
-            UserInfo userInfo = userService.getUserByUserNum(userNum);
-
-            integralLogInfo.setCollege(userInfo.getCollege());
-            integralLogInfo.setClazz(userInfo.getClazz());
-            integralLogInfo.setStudent(userInfo.getUsername());
-            integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
-            integralLogInfo.setType(IntegralLogTypeEnum.VOLUNTARY_APPLICATION);
-            integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);
-            return integralLogInfo;
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo(UserUtils.getUser().getUserId(), projectNum);
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(integralLogIdInfo);
+            return integralLogInfo == null ? "error" : "success";
         } catch (Exception e) {
-            LOGGER.info("postIntegralLog:" + e.getMessage());
+            LOGGER.info("isSignUpByProjectNum:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
-    //
+
+    /**
+     * 积分申请提交*
+     *
+     * @param integralLogInfo
+     * @return @RequestParam("file") MultipartFile file, MultipartHttpServletRequest
+     * request
+     */
+    @PostMapping("/postIntegralLog")
+    public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo) throws Exception {
+        try {
+            integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
+            integralLogInfo.setType(IntegralLogTypeEnum.VOLUNTARY_APPLICATION);
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+//            UserInfo userInfo = getUser();
+            SocialUsers userInfo = UserUtils.getUser();
+            integralLogIdInfo.setStudentNum(userInfo.getUserId());
+//            integralLogIdInfo.setStudentNum(userInfo.getUserId());
+            ChineseCharToEn cte = new ChineseCharToEn();
+            if (integralLogInfo.getField1().equals("radioselect1")) {
+                integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + integralLogInfo.getField2());
+            } else {
+                integralLogIdInfo.setProjectNum("VOLUNTARY_APPLICATION" + cte.getAllFirstLetter(integralLogInfo.getProjectName()).toUpperCase());
+            }
+
+            String projectCategory = splitMyProjectCategory(integralLogInfo.getEvent());
+            integralLogInfo.setProjectCategory(projectCategory);
+            integralLogInfo.setClazz(userInfo.getClazz());
+            integralLogInfo.setCollege(userInfo.getCollege());
+            integralLogInfo.setCreatTime(new Date());
+            integralLogInfo.setStudent(userInfo.getUserNum());
+            integralLogInfo.setIntegralLogId(integralLogIdInfo);
+            integralLogInfo.setCollegeOtherName(cte.getAllFirstLetter(userInfo.getCollege()).toUpperCase());
+            integralLogService.saveIntegralLog(integralLogInfo);
+            return integralLogInfo;
+        } catch (Exception e) {
+            LOGGER.info("postIntegralLog:" + e.getMessage());
+            return null;
+        }
+    }
+
+    private String splitMyProjectCategory(String event) {
+        String[] projectCategoryList = event.split("/");
+        return projectCategoryList[0];
+    }
 
     /**
      * 根据自身编号获取参加过的自主申报项目（可能没用）
@@ -227,5 +283,9 @@ public class StudetAllController {
             LOGGER.info("getIntegralLogDeclaring:" + e.getMessage());
             throw new Exception(e.getMessage());
         }
+    }
+
+    private UserInfo getUser() {
+        return new UserInfo("1422110108", "董腾舟", "", "信息工程学院", "计算机科学与技术", "14微社交1班", "15858323367", "1", "dong_tengzhou@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "董", UserTypeEnum.TEACHER, 0, 0);
     }
 }

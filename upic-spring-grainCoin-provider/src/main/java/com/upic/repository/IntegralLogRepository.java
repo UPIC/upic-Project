@@ -59,4 +59,13 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
 
     @Query(value = "SELECT integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1")
     Page<IntegralLog> findByUserNum(String userNum, Pageable pageable);
+
+    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and (integralLog.status = 'PENDING_AUDIT_BEFORE' or integralLog.status = 'PENDING_AUDIT' or integralLog.status = 'PENDING_AUDIT_AGAIN' or integralLog.status = 'PENDING_AUDIT_FINAL')")
+    Page<IntegralLog> getInreviewIntegralLogPage(String studentNum, Pageable pageable);
+
+    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and integralLog.status = 'HAVEPASSED'")
+    Page<IntegralLog> getSuccessIntegralLogPage(String studentNum, Pageable pageable);
+
+    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and (integralLog.status = 'PENDING_AUDIT_BEFORE_FAIL' or integralLog.status = 'PENDING_AUDIT_FAIL' or integralLog.status = 'PENDING_AUDIT_AGAIN_FAIL' or integralLog.status = 'PENDING_AUDIT_FINAL_FAIL')")
+    Page<IntegralLog> getDefeatedIntegralLogPage(String studentNum, Pageable pageable);
 }

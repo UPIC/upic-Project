@@ -1,267 +1,349 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
 
-<!-- Bootstrap -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="assets/css/st-declare.css">
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/st-declare.js"></script>
-<script type="text/javascript">
-	var phoneWidth = parseInt(window.screen.width);
-	var phoneScale = phoneWidth / 375;
-	var ua = navigator.userAgent;
-	if (/Android (\d+\.\d+)/.test(ua)) {
-		var version = parseFloat(RegExp.$1);
-		if (version > 2.3) {
-			document
-					.write('<meta name="viewport" content="width=375, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
-		} else {
-			document
-					.write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
-		}
-	} else {
-		document
-				.write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
-	}
-</script>
+    <!-- Bootstrap -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/st-declare.css">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/st-declare.js"></script>
+    <script type="text/javascript">
+        var phoneWidth = parseInt(window.screen.width);
+        var phoneScale = phoneWidth / 375;
+        var ua = navigator.userAgent;
+        if (/Android (\d+\.\d+)/.test(ua)) {
+            var version = parseFloat(RegExp.$1);
+            if (version > 2.3) {
+                document
+                    .write('<meta name="viewport" content="width=375, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+            } else {
+                document
+                    .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
+            }
+        } else {
+            document
+                .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
+        }
+    </script>
+    <style type="text/css" media="screen">
+        .radio {
+            margin-top: 0px;
+        }
+
+        .radio label {
+            margin-right: 20px;
+        }
+
+        .form-control {
+            margin-top: 8px;
+        }
+    </style>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<a href="st-main.html">
-				<div class="de-left">
-					<img src="assets/i/b-1.png" alt="">
-				</div>
-			</a> <span>积分申报</span>
-		</div>
-	</nav>
-	<div class="re-nav top">
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active aa"><a href="#home"
-				aria-controls="home" role="tab" data-toggle="tab" id="declaration">申报表</a></li>
-			<li role="presentation"><a href="#profile"
-				aria-controls="profile" role="tab" data-toggle="tab" class="bb"
-				id="Havetodeclare">已申报</a></li>
-		</ul>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <a href="st-main.html">
+            <div class="de-left">
+                <img src="assets/i/b-1.png" alt="">
+            </div>
+        </a> <span>积分申报</span>
+    </div>
+</nav>
+<div class="re-nav top">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active aa"><a href="#home"
+                                                     aria-controls="home" role="tab" data-toggle="tab" id="declaration">申报表</a>
+        </li>
+        <li role="presentation"><a href="#profile"
+                                   aria-controls="profile" role="tab" data-toggle="tab" class="bb"
+                                   id="Havetodeclare">已申报</a></li>
+    </ul>
 
-		<!-- Tab panes -->
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="home">
-				<div class="de-list">
-					<ul>
-						<li>
-							<div class="list-left">项目名称：</div>
-							<div class="list-right">
-								<input id="projectName" type="text" name="">
-							</div>
-						</li>
-						<li>
-							<div class="list-left">项目类别：</div>
-							<div class="list-right">
-								<input type="text" name="" id="sui">
-								<div id="div1" class="div1 qq">
-									<ul class="clearfix" id="one">
-										<li>111</li>
-										<li>222</li>
-										<li>333</li>
-										<li>444</li>
-									</ul>
-								</div>
-							</div>
-							<div class="clear"></div>
-						</li>
-						<li>
-							<div class="list-left">所属学院：</div>
-							<div class="list-right agray" id="college">信息工程学院</div> <input
-							id="integral" type="hidden" />
-						</li>
-						<li class="list-other">
-							<div>项目详情:</div> <textarea id="content" class="form-control"
-								rows="3"></textarea>
-						</li>
-						<li class="list-other">
-							<div class="de-text">上传佐证:</div> <img src="assets/i/b-2.png"
-							alt="">
-						</li>
-					</ul>
-				</div>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <div class="de-list">
+                <ul>
+                    <li>
+                        <div class="list-left">项目类别：</div>
+                        <div class="list-right">
+                            <select class="form-control" id="sui">
+                                <option></option>
+                            </select>
+                            <img id="projectCategorySelect" src="assets/i/close.png" alt="" width="25px" height="25px;"
+                                 style="float:right;margin-top:12px;margin-right:10px">
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                    <li>
+                        <div class="list-left">预获积分：</div>
+                        <div class="list-right agray"><input id="integral" type="text" name="" value=""
+                                                             disabled="disabled"></div>
+                        <!-- <input id="integral" type="hidden"/> -->
+                    </li>
+                    <li>
+                        <div class="list-left">项目选择：</div>
+                        <div class="list-right">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="radioselect1" value="option1"
+                                           checked>
+                                    系统选择
+                                </label>
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="radioselect2" value="option2">
+                                    手动输入
+                                </label>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                    <li>
+                        <div class="list-left">项目名称：</div>
+                        <div class="list-right" id="change">
+                            <input id="projectName" type="text" name="" style="display:none" placeholder="请输入项目名称">
+                            <select class="form-control" id="form1">
+                                <option></option>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="list-left">所属学院：</div>
+                        <div id="college" class="list-right agray"></div>
+                    </li>
+                    <li class="list-other">
+                        <div>项目详情:</div>
+                        <textarea id="content" class="form-control"
+                                  rows="3"></textarea>
+                    </li>
+                    <li class="list-other">
+                        <div class="de-text">上传佐证:</div>
+                        <img src="assets/i/b-2.png"
+                             alt="">
+                    </li>
+                </ul>
+            </div>
 
-				<nav class="navbar navbar-default navbar-fixed-bottom">
-					<a href="javascript:;" id="submit">
-						<div class="container nav-bot">确认提交</div>
-					</a>
-				</nav>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="profile">
-				<div class="re-nav next">
-					<ul class="nav nav-tabs small" role="tablist">
-						<li role="presentation" class="active aa">
-						<a href="#aa" aria-controls="aa" role="tab" data-toggle="tab" class="cc"
-							id="inreview">审核中</a></li>
-						<li role="presentation">
-						<a href="#bb" aria-controls="profile"
-							role="tab" data-toggle="tab" class="dd" id="success">审核成功</a></li>
-						<li role="presentation"><a href="#cc" aria-controls="profile"
-							role="tab" data-toggle="tab" class="ee" id="defeated">审核失败</a></li>
-					</ul>
-					<div class="tab-content" id="getPro">
-						<div role="tabpanel" class="tab-pane active" id="aa">
-							<div class="act-div">
-								<div class="tab-left">
-									<img src="assets/i/b-3.jpg" alt="">
-								</div>
-								<div class="tab-right">
-									<div class="tab-title">
-										<div class="right-name">社会实践</div>
-									</div>
-									<div class="tab-text">
-										<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
-										<span>信息工程学院</span>
-									</div>
-									<a href="st-check.html">
-										<div class="tab-search">查看详情 ></div>
-									</a>
-								</div>
-							</div>
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <a href="javascript:;" id="submit">
+                    <div class="container nav-bot">确认提交</div>
+                </a>
+            </nav>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">
+            <div class="re-nav next">
+                <ul class="nav nav-tabs small" role="tablist">
+                    <li role="presentation" class="active aa">
+                        <a href="#aa" aria-controls="aa" role="tab" data-toggle="tab" class="cc"
+                           id="inreview">审核中</a></li>
+                    <li role="presentation">
+                        <a href="#bb" aria-controls="profile"
+                           role="tab" data-toggle="tab" class="dd" id="success">审核成功</a></li>
+                    <li role="presentation"><a href="#cc" aria-controls="profile"
+                                               role="tab" data-toggle="tab" class="ee" id="defeated">审核失败</a></li>
+                </ul>
+                <div class="tab-content" id="getPro">
+                    <div role="tabpanel" class="tab-pane active" id="aa">
+                        <div class="act-div">
+                            <div class="tab-left">
+                                <img src="assets/i/b-3.jpg" alt="">
+                            </div>
+                            <div class="tab-right">
+                                <div class="tab-title">
+                                    <div class="right-name">社会实践</div>
+                                </div>
+                                <div class="tab-text">
+                                    <span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
+                                    <span>信息工程学院</span>
+                                </div>
+                                <a href="st-check.html">
+                                    <div class="tab-search">查看详情 ></div>
+                                </a>
+                            </div>
+                        </div>
 
-							<div class="act-div">
-								<div class="tab-left">
-									<img src="assets/i/b-3.jpg" alt="">
-								</div>
-								<div class="tab-right">
-									<div class="tab-title">
-										<div class="right-name">社会实践</div>
-									</div>
-									<div class="tab-text">
-										<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
-										<span>信息工程学院</span>
-									</div>
-									<a href="st-check.html">
-										<div class="tab-search">查看详情 ></div>
-									</a>
-								</div>
-							</div>
-						</div>
+                        <div class="act-div">
+                            <div class="tab-left">
+                                <img src="assets/i/b-3.jpg" alt="">
+                            </div>
+                            <div class="tab-right">
+                                <div class="tab-title">
+                                    <div class="right-name">社会实践</div>
+                                </div>
+                                <div class="tab-text">
+                                    <span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
+                                    <span>信息工程学院</span>
+                                </div>
+                                <a href="st-check.html">
+                                    <div class="tab-search">查看详情 ></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-						<div role="tabpanel" class="tab-pane" id="bb">
-							<div class="act-div">
-								<div class="tab-left">
-									<img src="assets/i/b-3.jpg" alt="">
-								</div>
-								<div class="tab-right">
-									<div class="tab-title">
-										<div class="right-name">社会实践</div>
-									</div>
-									<div class="tab-text">
-										<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
-										<span>信息工程学院</span>
-									</div>
-									<a href="st-check.html">
-										<div class="tab-search">查看详情 ></div>
-									</a>
-								</div>
-							</div>
-						</div>
+                    <div role="tabpanel" class="tab-pane" id="bb">
+                        <div class="act-div">
+                            <div class="tab-left">
+                                <img src="assets/i/b-3.jpg" alt="">
+                            </div>
+                            <div class="tab-right">
+                                <div class="tab-title">
+                                    <div class="right-name">社会实践</div>
+                                </div>
+                                <div class="tab-text">
+                                    <span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
+                                    <span>信息工程学院</span>
+                                </div>
+                                <a href="st-check.html">
+                                    <div class="tab-search">查看详情 ></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-						<div role="tabpanel" class="tab-pane" id="cc">
-							<div class="act-div">
-								<div class="tab-left">
-									<img src="assets/i/b-3.jpg" alt="">
-								</div>
-								<div class="tab-right">
-									<div class="tab-title">
-										<div class="right-name">社会实践</div>
-									</div>
-									<div class="tab-text">
-										<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
-										<span>信息工程学院</span>
-									</div>
-									<a href="st-detail4.html">
-										<div class="tab-search">查看详情 ></div>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    <div role="tabpanel" class="tab-pane" id="cc">
+                        <div class="act-div">
+                            <div class="tab-left">
+                                <img src="assets/i/b-3.jpg" alt="">
+                            </div>
+                            <div class="tab-right">
+                                <div class="tab-title">
+                                    <div class="right-name">社会实践</div>
+                                </div>
+                                <div class="tab-text">
+                                    <span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
+                                    <span>信息工程学院</span>
+                                </div>
+                                <a href="st-detail4.html">
+                                    <div class="tab-search">查看详情 ></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $(":radio").click(function () {
+            if (this.checked) {
+                if ($(this).attr("id") == "radioselect1") {
+                    myRadio = "radioselect1";
+                    $("#projectName").hide();
+                    $("#form1").show();
+                }
+                if ($(this).attr("id") == "radioselect2") {
+                    myRadio = "radioselect2";
+                    $("#form1").hide();
+                    $("#projectName").show();
+                }
+            }
+        });
 
-	<script>
-		$(function() {
-			$("#sui").click(
-					function() {
-						$("#div1").toggle();
-// 						$("#div1").show();
-						$.ajax({
-							type : "GET", // 提交方式
-							url : "/common/getAllProjectCategory",// 路径
-							success : function(result) {// 返回数据根据结果进行相应的处理
-								addHtmls(result);
-							}
-						});
+        $("#projectCategorySelect").click(function () {
+            $("#integral").val("");
+            hadCategoryName = "";
+            $.ajax({
+                type: "GET", // 提交方式
+                url: "/common/getAllProjectCategory",// 路径
+                success: function (result) {// 返回数据根据结果进行相应的处理
+                    addHtmls(result);
+                }
+            });
+        });
+    });
 
-						function addHtmls(result) {
-							var htmls = "<ul class='clearfix' id='one'>";
-							for (var i = 0; i < result.content.length; i++) {
-								var level=parseInt(result.content[i].field1)+1;
-								htmls += "<li onclick='getId("
-										+ result.content[i].id + ","
-										+ result.content[i].categoryName+","
-										+ level+")'>"
-										+ result.content[i].categoryName
-										+ "</li>";
-							}
-							htmls+="</ul>";
-							$("#div1").text("");
-							$("#div1").append(htmls);
-						}
-					});
-		})
+    var myRadio = "radioselect1";
+</script>
+<script>
+    $(function () {
+        $("#sui").change(function () {
+            getId($("#sui option:selected").attr("id"), $("#sui option:selected").text());
+        });
 
-		function getId(fatherId, categroyName, level,isLeaf) {
-			if (isLeaf === 1) {
-				var texts = $("#sui").val() + categroyName;
-				$("#sui").val(texts);
-				$(".div1").css("display", "none");
-			} else {
+        $.ajax({
+            type: "GET", // 提交方式
+            url: "/common/getAllProjectCategory",// 路径
+            success: function (result) {// 返回数据根据结果进行相应的处理
+                addHtmls(result);
+            }
+        });
+    })
 
-				var texts = $("#sui").val() + categroyName;
-				$("#sui").val(texts + "/");
-				$.ajax({
-					type : "GET", // 提交方式
-					url : "/common/getCategoryNode",// 路径
-					data : "fatherId=" + fatherId+"&level="+level,
-					success : function(result) {// 返回数据根据结果进行相应的处理
-						var htmlss = "<ul class='clearfix' id='one'>";
-						for (var i = 0; i < result.content.length; i++) {
-							var level=parseInt(result.content[i].level)+1;
-							htmlss += "<li onclick='getId("
-									+ result.content[i].id + ","
-									+ result.content[i].nodeContent + ","
-									+ level + ","
-									+ result.content[i].isLeaf + ")'>"
-									+ result.content[i].nodeContent + "</li>";
-						}
-						htmlss+="</ul>";
-						$("#div1").hide();
-						$("#div1").text("");
-						$("#div1").append(htmlss);
-						$("#div1").css("display", "block");
-						$("#div1").show();
-// 						$("#div1").toggle();
-					}
-				});
-			}
-		}
-	</script>
+    function addHtmls(result) {
+        var htmls = "<option></option>";
+        for (var i = 0; i < result.content.length; i++) {
+            var level = 1;
+            htmls += "<option id='" + result.content[i].id + "/" + level + "'>"
+                + result.content[i].categoryName
+                + "</option>";
+        }
+        $("#sui").html(htmls);
+    }
+
+    var hadCategoryName = "";
+
+    function getId(fatherId, categroyName) {
+        var fatherIdLevelIsLeaf = new Array();
+        fatherIdLevelIsLeaf = splitMyFatherId(fatherId);
+        if (fatherIdLevelIsLeaf.length == 2) {
+            fatherIdLevelIsLeaf.push(-1);
+            $.ajax({
+                type: "GET", // 提交方式
+                data: {
+                    categoryNodeId: fatherIdLevelIsLeaf[0]
+                },
+                url: "/common/getConfirmationBasisByCategoryNodeId",// 路径
+                success: function (result) {// 返回数据根据结果进行相应的处理
+                    var needAddHtml = "";
+                    for (var i = 0; i < result.length; i++) {
+                        needAddHtml += "<option value='" + result[i].projectNum + "'>"
+                            + result[i].projectName + "</option>";
+                    }
+                    $("#form1").html(needAddHtml);
+                }
+            });
+        }
+        if (fatherIdLevelIsLeaf[2] == 1) {
+//            hadCategoryName += "/" + categroyName;
+            var myCate = "<option>" + hadCategoryName + "</option>";
+            $("#sui").html(myCate);
+            $("#integral").val(categroyName);
+        } else {
+            $.ajax({
+                type: "GET", // 提交方式
+                url: "/common/getCategoryNode",// 路径
+                data: "fatherId=" + fatherIdLevelIsLeaf[0] + "&level=" + fatherIdLevelIsLeaf[1],
+                success: function (result) {// 返回数据根据结果进行相应的处理
+                    if (fatherIdLevelIsLeaf[2] === -1) {
+                        hadCategoryName += categroyName;
+                    } else {
+                        hadCategoryName += "/" + categroyName;
+                    }
+                    var htmlss = "<option>" + hadCategoryName + "</option>";
+                    for (var i = 0; i < result.content.length; i++) {
+                        var level = parseInt(result.content[i].level) + 1;
+                        htmlss += "<option id='" + result.content[i].id + "/" + level + "/" + result.content[i].isLeaf + "' level='" + result.content[i].level + "'>"
+                            + result.content[i].nodeContent + "</option>";
+                    }
+                    $("#sui").html(htmlss);
+                }
+            });
+        }
+    }
+
+    function splitMyFatherId(fatherId) {
+        return fatherId.split("/");
+    }
+</script>
 
 </body>
 </html>

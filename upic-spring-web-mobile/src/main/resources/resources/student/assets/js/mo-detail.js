@@ -16,7 +16,7 @@ var pageCount = -1;
 var types = "GET";
 var getStudentInfoUrl = "/common/getUserInfo";
 var getStudentCoinUrl = "/stu/getGrainCoin";
-var getProjectInfoUrl = "/common/getGraincoinLogPage";
+var getProjectInfoUrl = "/common/getMyGrainCoinLogPage";
 
 
 $(function () {

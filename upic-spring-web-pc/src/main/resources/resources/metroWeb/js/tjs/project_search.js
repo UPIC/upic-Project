@@ -77,8 +77,7 @@ function addHtmls(datas, pageNum) {
         htmls += "</span>";
         htmls += "</td>";
         htmls += "<td>" + getDate(data[i].creatTime, "yyyy-MM-dd hh:mm") + "</td>";
-        htmls += "<td class='center_td'><a href='#mymodal1'";
-        htmls += "data-toggle='modal'><div class='message_div' onclick=commonAjax('" + dataUrl + "','projectNum" + data[i].projectNum + "','getProjectInfo','GET')>查看详情</div></a></td></tr>";
+        htmls += "<td class='center_td'><a href='#mymodal1' data-toggle='modal'><div class='message_div' onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (i + 1) + "')>查看详情</div></a></td></tr>";
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
@@ -97,47 +96,68 @@ function getNowNum(pN, id) {
     });
 }
 
-function getProjectInfo(data) {
+function getProjectInfo(datas, j) {
+    var data = datas.content[0];
     var htmlss = "";
     var statuss = "";
-    if (data.implementationProcess === "SAVED") {
-        statuss = "已保存"
+    switch (data.implementationProcess) {
+        case ("SAVED"):
+            statuss = "已保存";
+            break;
+        case ("IN_AUDIT"):
+            statuss = "待初审";
+            break;
+        case ("IN_AUDIT_AGAIN"):
+            statuss = "待复审";
+            break;
+        case ("IN_AUDIT_FINAL"):
+            statuss = "待终审";
+            break;
+        case ("AUDITED"):
+            statuss = "已审核";
+            break;
+        case ("ENROLLMENT"):
+            statuss = "报名中";
+            break;
+        case ("HAVE_IN_HAND"):
+            statuss = "进行中";
+            break;
+        case ("COMPLETED"):
+            statuss = "已完成";
+            break;
+        case ("CHECKING"):
+            statuss = "待初验";
+            break;
+        case ("CHECKING_AGAIN"):
+            statuss = "待复验";
+            break;
+        case ("CHECKING_FINAL"):
+            statuss = "待终验";
+            break;
+        case ("CHECKED"):
+            statuss = "已验收";
+            break;
+        case ("IN_AUDIT_FAIL"):
+            statuss = "待初审失败";
+            break;
+        case ("IN_AUDIT_AGAIN_FAIL"):
+            statuss = "待复审失败";
+            break;
+        case ("IN_AUDIT_FINAL_FAIL"):
+            statuss = "待终审失败";
+            break;
+        case ("CHECKING_FAIL"):
+            statuss = "待初验失败";
+            break;
+        case ("CHECKING_AGAIN_FAIL"):
+            statuss = "待复验失败";
+            break;
+        case ("CHECKING_FINAL_FAIL"):
+            statuss = "待终验失败";
+            break;
+        default:
     }
 
-    if (data.implementationProcess === "IN_AUDIT") {
-        statuss = "审核中"
-    }
-
-    if (data.implementationProcess === "AUDITED") {
-        statuss = "已审核"
-    }
-
-    if (data.implementationProcess === "NOT_PASS") {
-        statuss = "未通过"
-    }
-
-    if (data.implementationProcess === "ENROLLMENT") {
-        statuss = "报名中"
-    }
-
-    if (data.implementationProcess === "HAVE_IN_HAND") {
-        statuss = "进行中"
-    }
-
-    if (data.implementationProcess === "COMPLETED") {
-        statuss = "已完成"
-    }
-
-    if (data.implementationProcess === "CHECKED") {
-        statuss = "已验收"
-    }
-
-    htmlss += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data.projectNum + "'/></td>";
-//    htmlss += "<td class='center_td'>" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "</td>";
-    htmlss += "<td>" + data.projectNum + "</td>";
-    htmlss += "<div class='span3'>代码</div>";
-    htmlss += "<div class='span3'>" + data.projectNum + "</div>";
-    htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目申请日期</div>";
     htmlss += "<div class='span3'>" + getDate(data.creatTime, 'yyyy-MM-dd') + "</div>";
