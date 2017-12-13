@@ -91,8 +91,8 @@ public class ProjectTaskImpl implements ProjectTask {
 	private void doProjectSinStart() {
 		PageRequest page=new PageRequest(0, 100);
 		ProjectCondition p=new ProjectCondition();
-		p.setSignUpStartTimeTo(getOneDayBefore(new Date(),1));
-		p.setSignUpStartTime(new Date());
+//		p.setSignUpStartTimeTo(getOneDayBefore(new Date(),1));
+//		p.setSignUpStartTime(new Date());
 		p.setImplementationProcess(ImplementationProcessEnum.AUDITED);
 		Page<Project> pageBean = projectRepository.findAll(new ProjectSpec(p), page);
 		for(int i=0;i<pageBean.getTotalPages();i++) {
@@ -147,7 +147,7 @@ public class ProjectTaskImpl implements ProjectTask {
 		});
 	}
 	private void doPrijectRedisUp(List<Project> content) {
-		content.parallelStream().forEach(x->{
+		content.stream().forEach(x->{
 			x.setImplementationProcess(ImplementationProcessEnum.ENROLLMENT);
 			projectRepository.saveAndFlush(x);
 			upicRedisComponent.init(x.getProjectNum());
