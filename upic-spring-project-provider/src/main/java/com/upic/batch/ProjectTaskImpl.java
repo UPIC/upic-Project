@@ -52,8 +52,8 @@ public class ProjectTaskImpl implements ProjectTask {
 	private void doProjectEnd() {
 		PageRequest page=new PageRequest(0, 100);
 		ProjectCondition p=new ProjectCondition();
-		p.setEndTimeTo(getOneDayBefore(new Date(),-7));
-		p.setEndTime(new Date());
+		p.setEndTime(getOneDayBefore(new Date(),-7));
+		p.setEndTimeTo(new Date());
 		Page<Project> pageBean = projectRepository.findAll(new ProjectSpec(p), page);
 		for(int i=0;i<pageBean.getTotalPages();i++) {
 			List<Project> content=null;
@@ -120,7 +120,7 @@ public class ProjectTaskImpl implements ProjectTask {
 		PageRequest page=new PageRequest(0, 100);
 		ProjectCondition p=new ProjectCondition();
 		p.setSignUpEndTime(getOneDayBefore(new Date(),-7));
-		p.setSignUpEndTime(new Date());
+		p.setSignUpEndTimeTo(new Date());
 		p.setImplementationProcess(ImplementationProcessEnum.ENROLLMENT);
 		//查询是否报名的
 		Page<Project> pageBean = projectRepository.findAll(new ProjectSpec(p), page);
@@ -151,6 +151,7 @@ public class ProjectTaskImpl implements ProjectTask {
 			x.setImplementationProcess(ImplementationProcessEnum.ENROLLMENT);
 			projectRepository.saveAndFlush(x);
 			upicRedisComponent.init(x.getProjectNum());
+//			upicRedisComponent.init(x.getProjectNum()+"hash");
 //			upicRedisComponent.deletByKey(x.getProjectNum()+"hash");
 		});
 	}

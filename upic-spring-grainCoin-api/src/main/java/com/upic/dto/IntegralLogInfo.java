@@ -17,6 +17,8 @@ public class IntegralLogInfo implements Serializable {
 
     private double integral; //分数
 
+    private String content;
+    
     private IntegralLogTypeEnum type; //类型
 
     private IntegralLogStatusEnum status; //状态
@@ -257,4 +259,13 @@ public class IntegralLogInfo implements Serializable {
         i1.setIntegral(i1.getIntegral() + i2.getIntegral());
         return i1;
     }
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 }

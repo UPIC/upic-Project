@@ -11,6 +11,9 @@ import com.upic.service.*;
 
 import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
+
+import io.swagger.annotations.ApiOperation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +48,60 @@ public class StudetAllController {
 
     @Autowired
     private PrizeService prizeService;
+    
+    @Autowired
+    private ProjectService projectService;
 
+    /**
+     * 报名
+     *
+     * @param projectNum
+     * @return
+     */
+    @PostMapping("/signUp")
+    @ApiOperation("报名")
+    public String signUp(String projectNum) {
+        try {
+            IntegralLogInfo integralLogInfo = new IntegralLogInfo();
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            integralLogIdInfo.setProjectNum(projectNum);
+            SocialUsers socialUsers = UserUtils.getUser();
+
+//            UserInfo socialUsers = getUser();
+
+//            integralLogIdInfo.setStudentNum(socialUsers.getUserNum());
+
+            integralLogIdInfo.setStudentNum(socialUsers.getUserId());
+
+            integralLogInfo.setIntegralLogId(integralLogIdInfo);
+            integralLogInfo.setType(IntegralLogTypeEnum.SIGN_IN);
+            ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
+            if (projectInfo == null) {
+                return null;
+            }
+            integralLogInfo.setIntegral(projectInfo.getIntegral());
+            if (projectInfo.getUnit().equals("2") || projectInfo.getUnit().equals("1")) {
+                integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
+            } else if (projectInfo.getUnit().equals("3")) {
+                integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
+            }
+
+            integralLogInfo.setStudent(socialUsers.getUsername());
+            integralLogInfo.setClazz(socialUsers.getClazz());
+            integralLogInfo.setCollege(socialUsers.getCollege());
+
+            integralLogInfo.setCreatTime(new Date());
+            integralLogInfo.setProjectName(projectNum);
+            integralLogInfo.setProjectCategory(projectInfo.getProjectCategory());
+            integralLogInfo.setCollegeOtherName(projectInfo.getCollegeOtherName());
+            integralLogService.signUp(integralLogInfo);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("signUp:" + e.getMessage());
+            return null;
+        }
+    }
+    
     /**
      * 获取当前用户的积分*
      *
@@ -158,7 +214,8 @@ public class StudetAllController {
     @GetMapping("/isSignUpByIntegralLogId")
     public String isSignUpByIntegralLogId(String studentNum, String projectNum) throws Exception {
         try {
-            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo(studentNum, projectNum);
+        	
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo(UserUtils.getUser().getUserId(), projectNum);
             IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(integralLogIdInfo);
             return integralLogInfo == null ? "error" : "success";
         } catch (Exception e) {
@@ -225,7 +282,36 @@ public class StudetAllController {
             return null;
         }
     }
+    /**
+     * 修改积分状态
+     *
+     * @return
+     */
+    @PostMapping("/updateIntegralLog")
+    public IntegralLogInfo updateIntegralLog(IntegralLogInfo i,String projectNum) {
+        try {
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserNum(), projectNum));
+//            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserId(), projectNum));
+            integralLogInfo.setProjectName(i.getProjectName());
+            integralLogInfo.setProjectCategory(i.getProjectCategory());
+            integralLogInfo.setContent(i.getContent());
+            ChineseCharToEn cte = new ChineseCharToEn();
+            if (integralLogInfo.getField1().equals("radioselect1")) {
+            	integralLogInfo.getIntegralLogId().setProjectNum("VOLUNTARY_APPLICATION" + i.getField2());
+            } else {
+            	integralLogInfo.getIntegralLogId().setProjectNum("VOLUNTARY_APPLICATION" + cte.getAllFirstLetter(i.getProjectName()).toUpperCase());
+            }
 
+            if (integralLogInfo != null) {
+                integralLogInfo.setStatus(failIntegralLogStatus(integralLogInfo.getStatus()));
+                integralLogInfo = integralLogService.changeAllIntegralLogStatus(integralLogInfo);
+                return integralLogInfo;
+            }
+        } catch (Exception e) {
+            LOGGER.info("updateIntegralLog:" + e.getMessage());
+        }
+        return null;
+    }
     private String splitMyProjectCategory(String event) {
         String[] projectCategoryList = event.split("/");
         return projectCategoryList[0];
@@ -287,5 +373,32 @@ public class StudetAllController {
 
     private UserInfo getUser() {
         return new UserInfo("1422110108", "董腾舟", "", "信息工程学院", "计算机科学与技术", "14微社交1班", "15858323367", "1", "dong_tengzhou@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "董", UserTypeEnum.TEACHER, 0, 0);
+    }
+    
+    
+    /**
+     * 修改未通过积分状态
+     *
+     * @param status
+     * @return
+     */
+    private IntegralLogStatusEnum failIntegralLogStatus(IntegralLogStatusEnum status) {
+        if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_AGAIN) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_FINAL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FINAL_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_BEFORE;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_AGAIN;
+        } else {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FINAL;
+        }
     }
 }

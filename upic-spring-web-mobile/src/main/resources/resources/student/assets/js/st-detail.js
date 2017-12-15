@@ -69,7 +69,7 @@ function addHtmls(data) {
     htmls += "<li class='li-other'><div class='list-line'>项目详情：</div>";
     htmls += "<div class='li-text'>" + data.content + "</div></li></ul>";
 
-    htmlss+="<a href='#' onClick='apply("+data.projectNum+")'>";
+    htmlss+="<a href='javascript:;' onClick=apply('"+data.projectNum+"')>";
     htmlss+="<div class='container nav-bot' id='txtD'>";
     htmlss+="确认报名";
     htmlss+="</div>";
@@ -86,7 +86,7 @@ function getDate(date, rule) {
 }
 /**
  * 判断是否报名
- *
+ * 
  * @returns
  */
  function jugeApply(projectNUm) {
@@ -95,7 +95,7 @@ function getDate(date, rule) {
         type: 'GET', // GET
         data: {
             projectNum: projectNUm,
-            studentNum: '1522110240'
+// studentNum: '1522110240'
         },
         beforeSend: function (xhr) {
         },
@@ -107,9 +107,11 @@ function getDate(date, rule) {
                 $(".navbar").addClass("nav-bot-black");
                 $(".navbar").removeClass("nav-bot");
                 $("#txtD").html(txtDis);
-                isApply = true;
+                isApply = false;
                 $("#statusNum").html("已报名");
                 return;
+            }else{
+            	isApply=true;
             }
             $("#statusNum").html("未报名");
         },
@@ -121,7 +123,7 @@ function getDate(date, rule) {
 }
 /**
  * 获取人数
- *
+ * 
  * @param projectNUm
  * @returns
  */
@@ -164,6 +166,7 @@ success: function (data) {
 }
 /**
  * 报名
+ * 
  * @returns
  */
  function apply(projectNUm) {
@@ -175,10 +178,10 @@ success: function (data) {
     }
     if (isApply) {
        $.ajax({
-        url: '/common/',
-        type: 'GET', // GET
+        url: '/stu/signUp',
+        type: 'POST', // POST
         data: {
-            projectNum: projectNUm,
+        	projectNum: projectNUm,
         },
         success: function (data) {
            alert("已发送报名请求")

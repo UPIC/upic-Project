@@ -23,7 +23,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
     @Query(value = "SELECT project FROM Project project where project.rankEnum=?1 and project.unit=?2 and project.implementationProcess ='AUDITED' or project.implementationProcess= 'HAVE_IN_HAND'")
     public Page<Project> getOnlineProject(RankEnum rankEnum, String unit, Pageable page);
 
-    @Query(value = "select project from Project project where project.signUpStartTime < ?1 and project.signUpEndTime > ?1 and project.implementationProcess <> 'NOT_PASS'")
+    @Query(value = "select project from Project project where project.signUpStartTime < ?1 and project.signUpEndTime > ?1 and project.implementationProcess = 'ENROLLMENT'")
     Page<Project> getProjectWithoutSignUp(Date now, Pageable pageable);
 
     @Query(value = "select project from Project project where project.guidanceNum = ?1 and (project.projectNum like %?2% or project.projectName like %?2% or project.guidanceMan like %?2%)")
