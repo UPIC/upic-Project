@@ -1,4 +1,4 @@
-./**
+/**
  * 素拓币商城
  * @authors Marte (iqianduan@126.com)
  * @date    2017-09-18 13:53:25

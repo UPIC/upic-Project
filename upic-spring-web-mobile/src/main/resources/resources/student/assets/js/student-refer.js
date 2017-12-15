@@ -30,7 +30,7 @@ $(window)
 $(function () {
     pageRequest.page = 0;
     pageRequest.size = 10;
-    requestUrl=getProjectWithoutSignUp;
+    requestUrl = getProjectWithoutSignUp;
     ajaxs(pageRequest, "home", requestUrl);
     activitiNow = "home";
 
@@ -43,7 +43,8 @@ $(function () {
         juge($(this));
         pageRequest.page = 0;
         pageRequest.size = 10;
-        requestUrl=getProjectWithoutSignUp;
+        pageRequest.status = "";
+        requestUrl = getProjectWithoutSignUp;
         ajaxs(pageRequest, "home", requestUrl);
         activitiNow = "home";
     })
@@ -51,7 +52,8 @@ $(function () {
         juge($(this));
         pageRequest.page = 0;
         pageRequest.size = 10;
-        requestUrl=getPerson;
+        pageRequest.status = "ALREADY_SIGN_UP";
+        requestUrl = getPerson;
         ajaxs(pageRequest, "profile", requestUrl);
         activitiNow = "profile";
     })
@@ -60,7 +62,8 @@ $(function () {
         juge($(this));
         pageRequest.page = 0;
         pageRequest.size = 10;
-        requestUrl=getPerson;
+        requestUrl = getPerson;
+        pageRequest.status = "COMPLETED";
         ajaxs(pageRequest, "messages", requestUrl);
         activitiNow = "messages";
     })
