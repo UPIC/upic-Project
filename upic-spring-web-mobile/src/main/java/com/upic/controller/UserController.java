@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.web.ProviderSignInAttempt;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SocialUser;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestAttributes;
@@ -23,7 +24,7 @@ import com.upic.dto.UserInfo;
 //import com.upic.repository.StudentRspoitory;
 import com.upic.service.UserService;
 
-@RestController
+@Controller
 public class UserController {
 	@Autowired
 	private WebRequestRedisService redisService;
