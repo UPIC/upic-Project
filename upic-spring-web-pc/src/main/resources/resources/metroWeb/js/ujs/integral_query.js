@@ -151,7 +151,7 @@ function getProjectInfo(result, j) {
         htmlss += "<div class='span3'>编号</div>";
         htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
         htmlss += "<div class='span3'>代码</div>";
-        htmlss += "<div class='span3'>" + result.integralLogId.projectNum + "</div>";
+        htmlss += "<div id='myProjectNum' class='span3'>" + result.integralLogId.projectNum + "</div>";
         htmlss += "</div><div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目申请日期</div>";
         htmlss += "<div class='span3'>" + getDate(result.creatTime, "yyyy-MM-dd") + "</div>";
@@ -168,10 +168,10 @@ function getProjectInfo(result, j) {
         htmlss += "</select></div></div>";
         htmlss += "</div> <div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目名称</div>";
-        htmlss += "<div class='span3'><input type='text' name='' value='" + result.projectName + "' disabled='disabled'></div>";
+        htmlss += "<div class='span3'><input id='newProjectName' type='text' name='' value='" + result.projectName + "' disabled='disabled'></div>";
         htmlss += "</div> <div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目内容</div>";
-        htmlss += "<div class='span9'><input type='text' name='' value='" + result.event + "' disabled='disabled'></div>";
+        htmlss += "<div class='span9'><input id='newContent' type='text' name='' value='" + result.content + "' disabled='disabled'></div>";
         htmlss += "</div>";
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>作证材料</div>";
@@ -186,7 +186,7 @@ function getProjectInfo(result, j) {
         htmlss += "</div>";
         htmlss += "</div>";
         htmlss += "<div class='modal-footer'>";
-        htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true' onclick=commonAjax('/common/updateIntegralLog','projectNum=" + result.integralLogId.projectNum + "','changeMyIntegralLogStatus','GET')>提交</button>";
+        htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true' onclick=changeMyIntegralLogStatus('/common/updateIntegralLog')>提交</button>";
         htmlss += "<button class='btn btn-default' data-dismiss='modal' aria-hidden='true'>取消</button>";
         htmlss += "</div>";
         $("#mymodal2").html(htmlss);
@@ -224,9 +224,21 @@ function getProjectInfo(result, j) {
         htmlss += "</div>";
         $("#mymodal1").html(htmlss);
     }
+}
 
-    function changeMyIntegralLogStatus(str) {
-        alert("提交成功");
-        getData(pageNum, dataUrl);
-    }
+function changeMyIntegralLogStatus(url) {
+    var Data = {};
+    Data.projectName = $("#newProjectName").val();
+    Data.content = $("#newContent").val();
+    Data.projectNum = $("#myProjectNum").html();
+    $.ajax({
+        url: url,
+        type: 'POST', // POST
+        data: Data,
+        dataType: 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
+        success: function (data) {
+            alert("提交成功");
+            getData(pageNum, dataUrl);
+        }
+    })
 }
