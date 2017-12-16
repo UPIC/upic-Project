@@ -298,6 +298,37 @@ public class StudetAllController {
     }
 
     /**
+     * 修改积分状态
+     *
+     * @return
+     */
+    @PostMapping("/updateIntegralLog")
+    public IntegralLogInfo updateIntegralLog(IntegralLogInfo i, String projectNum) {
+        try {
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserNum(), projectNum));
+//            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserId(), projectNum));
+            integralLogInfo.setProjectName(i.getProjectName());
+            integralLogInfo.setProjectCategory(i.getProjectCategory());
+            integralLogInfo.setContent(i.getContent());
+            ChineseCharToEn cte = new ChineseCharToEn();
+            if (integralLogInfo.getField1().equals("radioselect1")) {
+                integralLogInfo.getIntegralLogId().setProjectNum("VOLUNTARY_APPLICATION" + i.getField2());
+            } else {
+                integralLogInfo.getIntegralLogId().setProjectNum("VOLUNTARY_APPLICATION" + cte.getAllFirstLetter(i.getProjectName()).toUpperCase());
+            }
+
+            if (integralLogInfo != null) {
+                integralLogInfo.setStatus(failIntegralLogStatus(integralLogInfo.getStatus()));
+                integralLogInfo = integralLogService.changeAllIntegralLogStatus(integralLogInfo);
+                return integralLogInfo;
+            }
+        } catch (Exception e) {
+            LOGGER.info("updateIntegralLog:" + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      * 根据自身编号获取参加过的自主申报项目（可能没用）
      *
      * @param pageable
@@ -622,6 +653,32 @@ public class StudetAllController {
             if (outputStream != null) {
                 outputStream.close();
             }
+        }
+    }
+
+    /**
+     * 修改未通过积分状态
+     *
+     * @param status
+     * @return
+     */
+    private IntegralLogStatusEnum failIntegralLogStatus(IntegralLogStatusEnum status) {
+        if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_AGAIN) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_FINAL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FINAL_FAIL;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_BEFORE;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT;
+        } else if (status == IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL) {
+            return IntegralLogStatusEnum.PENDING_AUDIT_AGAIN;
+        } else {
+            return IntegralLogStatusEnum.PENDING_AUDIT_FINAL;
         }
     }
 
