@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.neusoft.education.tp.sso.client.filter.CASFilterRequestWrapper;
 import com.upic.common.utils.redis.WebRequestRedisService;
+import com.upic.common.utils.redis.service.IRedisService;
 import com.upic.dto.StudentInfo;
 import com.upic.dto.UserInfo;
 import com.upic.enums.UserTypeEnum;
@@ -27,8 +28,11 @@ import com.upic.service.UserService;
 
 @Controller
 public class UserController {
+//	@Autowired
+//	private WebRequestRedisService redisService;
+	
 	@Autowired
-	private WebRequestRedisService redisService;
+	private IRedisService redisService;
 
 	@Autowired
 	private ProviderSignInUtils providerSignInUtils;
@@ -64,7 +68,7 @@ public class UserController {
 			RedirectAttributes model, String sessionId) {
 		CASFilterRequestWrapper reqWrapper = new CASFilterRequestWrapper(requests);
 		String userID = reqWrapper.getRemoteUser();
-		ProviderSignInAttempt webRequestSer = (ProviderSignInAttempt) redisService.get(sessionId);
+		ProviderSignInAttempt webRequestSer = (ProviderSignInAttempt) redisService.getObj("TEST_REDIS_KEY",sessionId);
 		request.setAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, webRequestSer, RequestAttributes.SCOPE_SESSION);
 		// System.out.println(webRequestSer);
 		if (userID == null) {
@@ -83,7 +87,7 @@ public class UserController {
 		String sessionId = request.getSessionId();
 		ProviderSignInAttempt attribute = (ProviderSignInAttempt) request
 				.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
-		redisService.put(sessionId, attribute, 60 * 20);
+		redisService.put("TEST_REDIS_KEY",sessionId, attribute, 60 * 20);
 		return "forward:/cas?sessionId=" + sessionId;
 	}
 }

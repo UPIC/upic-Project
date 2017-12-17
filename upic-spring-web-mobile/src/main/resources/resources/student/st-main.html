@@ -13,6 +13,7 @@
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/bootstrap.js"></script>
 <script src="assets/js/st-main.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
 	var phoneWidth = parseInt(window.screen.width);
 	var phoneScale = phoneWidth / 375;
@@ -32,118 +33,124 @@
 	}
 </script>
 <style type="text/css" media="screen">
-	.container-fluid{
-		height: auto;
-		background:#fff;
-	}
-	.container-fluid{
-		padding:0px;
-		margin:0px;
-	}
-	#carousel img{
-		height: 250px;
-		width:100%;
-	}
-	.carousel-control{
-		line-height:250px;
-		font-size:24px;
-	}
-	#myCarousel{
-		height: 250px;
-	}
-	#myCarousel img{
-		height: 250px;
-		width:100%;
-	}
-	.carousel-control{
-		text-align:center;
-	}
-	a{
-		color: #333;
-	}
+.container-fluid {
+	height: auto;
+	background: #fff;
+}
+
+.container-fluid {
+	padding: 0px;
+	margin: 0px;
+}
+
+#carousel img {
+	height: 250px;
+	width: 100%;
+}
+
+.carousel-control {
+	line-height: 250px;
+	font-size: 24px;
+}
+
+#myCarousel {
+	height: 250px;
+}
+
+#myCarousel img {
+	height: 250px;
+	width: 100%;
+}
+
+.carousel-control {
+	text-align: center;
+}
+
+a {
+	color: #333;
+}
 </style>
-<div class="container-fluid">
-	<!-- <div class="main-title">宁波大红鹰学院素质拓展</div> -->
-	<!-- <div class="main-your your-top">您的</div>
+</head>
+<body>
+	<div class="container-fluid">
+		<!-- <div class="main-title">宁波大红鹰学院素质拓展</div> -->
+		<!-- <div class="main-your your-top">您的</div>
 	<div class="main-your">积分</div>
 	<a href="score-de.html">
 		<div class="num-totle" id="integeral">0.0</div>
 	</a> -->
-	<!-- <a href="st-money.html">
+		<!-- <a href="st-money.html">
 		<div class="main-left">
 			素拓币余额 <span id="getGrainCoin">0</span>
 		</div>
 		<div class="aa">详情 ></div>
 	</a> -->
 
-	<div id="myCarousel" class="carousel slide">
-    <!-- 轮播（Carousel）指标 -->
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <!-- 轮播（Carousel）项目 -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <img src="assets/i/b-3.jpg" alt="First slide">
-        </div>
-        <div class="item">
-            <img src="assets/i/b-3.jpg" alt="Second slide">
-        </div>
-        <div class="item">
-            <img src="assets/i/b-3.jpg" alt="Third slide">
-        </div>
-    </div>
-    <!-- 轮播（Carousel）导航 -->
-    <a class="carousel-control left" href="#myCarousel"
-        data-slide="prev">&lsaquo;
-    </a>
-    <a class="carousel-control right" href="#myCarousel"
-        data-slide="next">&rsaquo;
-    </a>
-</div>
+		<div id="myCarousel" class="carousel slide">
+			<!-- 轮播（Carousel）指标 -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+			<!-- 轮播（Carousel）项目 -->
+			<div class="carousel-inner">
+				<div class="item active">
+					<img src="assets/i/b-3.jpg" alt="First slide">
+				</div>
+				<div class="item">
+					<img src="assets/i/b-3.jpg" alt="Second slide">
+				</div>
+				<div class="item">
+					<img src="assets/i/b-3.jpg" alt="Third slide">
+				</div>
+			</div>
+			<!-- 轮播（Carousel）导航 -->
+			<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;
+			</a> <a class="carousel-control right" href="#myCarousel"
+				data-slide="next">&rsaquo; </a>
+		</div>
 
 
 
-</div>
+	</div>
 
-<div class="main-list">
-	<ul>
-		<li><a href="#"><img src="assets/i/a-1.png" alt="">
-				<div>扫一扫</div> </a></li>
-		<li><a href="st-declare.html"><img src="assets/i/a-2.png"
-				alt="">
-				<div>积分申报</div> </a></li>
-		<li><a href="st-refer.html"><img src="assets/i/a-3.png"
-				alt="">
-				<div>活动查询</div> </a></li>
-		<li><a href="st-mall.html"><img src="assets/i/a-4.png" alt="">
-				<div>素拓币兑换</div> </a></li>
-	</ul>
-</div>
-<div class="main-line"></div>
-<div class="main-tool">
-	<ul>
-	<li class="row">
-	<a href="score-de.html">
-			<div class="col-xs-6">
-				<img src="assets/i/point.png" alt="" width="28px" height="28px"><span>我的积分</span>
-			</div>
-			<div class="col-xs-6 left">
-				<img src="assets/i/a-6.png" alt="">
-			</div>
-	</a>
-		</li>
-		<li class="row">
-			<div class="col-xs-6">
-				<img src="assets/i/a-5.png" alt=""><span>认定标准表</span>
-			</div>
-			<div class="col-xs-6 left">
-				<img src="assets/i/a-6.png" alt="">
-			</div>
-		</li>
-		<!-- <li class="row">
+	<div class="main-list">
+		<ul>
+			<li><a href="#" id="scanQRCode0"><img src="assets/i/a-1.png"
+					alt="">
+					<div>扫一扫</div> </a></li>
+			<li><a href="st-declare.html"><img src="assets/i/a-2.png"
+					alt="">
+					<div>积分申报</div> </a></li>
+			<li><a href="st-refer.html"><img src="assets/i/a-3.png"
+					alt="">
+					<div>活动查询</div> </a></li>
+			<li><a href="st-mall.html"><img src="assets/i/a-4.png"
+					alt="">
+					<div>素拓币兑换</div> </a></li>
+		</ul>
+	</div>
+	<div class="main-line"></div>
+	<div class="main-tool">
+		<ul>
+			<li class="row"><a href="score-de.html">
+					<div class="col-xs-6">
+						<img src="assets/i/point.png" alt="" width="28px" height="28px"><span>我的积分</span>
+					</div>
+					<div class="col-xs-6 left">
+						<img src="assets/i/a-6.png" alt="">
+					</div>
+			</a></li>
+			<li class="row">
+				<div class="col-xs-6">
+					<img src="assets/i/a-5.png" alt=""><span>认定标准表</span>
+				</div>
+				<div class="col-xs-6 left">
+					<img src="assets/i/a-6.png" alt="">
+				</div>
+			</li>
+			<!-- <li class="row">
 			<div class="col-xs-6">
 				<img src="assets/i/a-8.png" alt=""><span>工具箱</span>
 			</div>
@@ -159,7 +166,43 @@
 				<img src="assets/i/a-6.png" alt="">
 			</div>
 		</li> -->
-	</ul>
-</div>
+		</ul>
+	</div>
+</body>
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+			type : "GET", // 提交方式
+			url : "/getJSSDKDetials",// 路径
+			data : {
+				"url" : location.href.split('#')[0]
+			}, //参数值
+			success : function(result) {// 返回数据根据结果进行相应的处理
+				ready(result);
+			}
+		});
+	})
+
+	function ready(obj) {
+		wx.config({
+			debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			appId : obj.appid, // 必填，公众号的唯一标识
+			timestamp : obj.timestamp, // 必填，生成签名的时间戳
+			nonceStr : obj.nonceStr, // 必填，生成签名的随机串
+			signature : obj.signature,// 必填，签名，见附录1
+			jsApiList : [ 'scanQRCode' ]
+		// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+
+		});
+		wx.ready(function() {
+			// 9 微信原生接口
+			// 9.1.1 扫描二维码并返回结果
+			document.querySelector('#scanQRCode0').onclick = function() {
+				wx.scanQRCode();
+			};
+		})
+	}
+</script>
+</html>
 
 
