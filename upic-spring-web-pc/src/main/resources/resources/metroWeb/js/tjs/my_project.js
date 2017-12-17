@@ -9,6 +9,7 @@ var searchKeyWordUrl = "/common/myProjectSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getPeopleByProjectNumUrl = "/common/getSignUpNumberByProjectNum";
 var getSignUpPeopleByProjectNumUrl = "/common/getSignUpPeopleByProjectNum";
+var getqrCodeUrl = "/teacher/qrCodeGenerate";
 var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
 var exportExcelUrl = "/common/exportProjectByGuidanceNum";
 var saveUrl = "/common/updateMyProject";
@@ -17,8 +18,13 @@ var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
 var requestData = {};
+var qrcode = "";
 
 $(function () {
+    qrcode = new QRCode(document.getElementById("qrcode"), {
+        width: 96,//设置宽高
+        height: 96
+    });
     pageSize = $("#select-small").children('option:selected').text()
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
@@ -152,7 +158,11 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getSignUpPeopleByProjectNumUrl + "','projectNum=" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
+            if (data[i].implementationProcess === "ENROLLMENT") {
+                htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getSignUpPeopleByProjectNumUrl + "','projectNum=" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a><span class='space'>|</span><a href='#mymodal1' data-toggle='modal'><span onclick=commonAjax('" + getqrCodeUrl + "','projectNum=" + data[i].projectNum + "&freshTime=5','getQrCode','GET')>点击查看二维码</span></a></div></td>";
+            } else {
+                htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getSignUpPeopleByProjectNumUrl + "','projectNum=" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
+            }
             htmls += " </tr>";
         }
 
@@ -556,4 +566,9 @@ function changeEnglishChinese(value) {
         default:
     }
     return changeValue;
+}
+
+function getQrCode(data) {
+    qrcode.makeCode("");
+    qrcode.makeCode(data);
 }

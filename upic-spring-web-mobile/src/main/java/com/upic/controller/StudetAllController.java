@@ -373,6 +373,19 @@ public class StudetAllController {
         }
     }
 
+    @PostMapping("/qrCodeConsumption")
+    public String qrCodeConsumption(IntegralLogInfo i, String accessToken, String projectNum) {
+        try {
+            SocialUsers socialUsers = UserUtils.getUser();
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo(socialUsers.getUserId(), projectNum);
+            i.setIntegralLogId(integralLogIdInfo);
+            return integralLogService.qrCodeConsumption(i, accessToken);
+        } catch (Exception e) {
+            LOGGER.info("qrCodeConsumption:" + e.getMessage());
+        }
+        return null;
+    }
+
     private UserInfo getUser() {
         return new UserInfo("1422110108", "董腾舟", "", "信息工程学院", "计算机科学与技术", "14微社交1班", "15858323367", "1", "dong_tengzhou@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "董", UserTypeEnum.TEACHER, 0, 0);
     }
