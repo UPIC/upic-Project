@@ -1,9 +1,10 @@
 package com.upic.serviceimpl;
 
+import com.sun.tools.javac.code.Attribute;
 import com.upic.common.beans.utils.UpicBeanUtils;
 import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
-import com.upic.common.utils.redis.UpicRedisComponent;
+import com.upic.utils.Constant;
 import com.upic.condition.AdviceCondition;
 import com.upic.condition.ProjectCondition;
 import com.upic.dto.AdviceInfo;
@@ -473,8 +474,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public String qrCodeGenerate(String projectNum, long freshTime) {
         try {
+            long nowTime = new Date().getTime();
             // 随机生成AccessToken
-            String token = projectNum + (new Date().getTime()) + "QR";
+            String token = projectNum + nowTime + "QR";
 
             // MD5加密
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
@@ -482,10 +484,11 @@ public class ProjectServiceImpl implements ProjectService {
             String accessToken = base64Encoder.encode(messageDigest.digest(token.getBytes("utf-8")));
 
             // 存Redis
-            UpicRedisComponent upicRedisComponent = new UpicRedisComponent();
-            upicRedisComponent.set("QR" + projectNum, accessToken, freshTime);
+//            UpicRedisComponent upicRedisComponent = new UpicRedisComponent();
+//            upicRedisComponent.set("QR" + projectNum, accessToken, freshTime);
+            String url = Constant.URL + "stu/qrCodeConsumption?projectNum=" + projectNum + "&nowTime=" + nowTime;
 
-            return accessToken;
+            return url;
         } catch (Exception e) {
             LOGGER.info("qrCodeGenerate。错误信息：" + e.getMessage());
             return null;

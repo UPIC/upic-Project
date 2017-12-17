@@ -65,6 +65,24 @@ public class TeacherAllController {
         }
     }
 
+    /**
+     * 二维码生成
+     *
+     * @param projectNum
+     * @param freshTime
+     * @return
+     */
+    @GetMapping("/qrCodeGenerate")
+    public String qrCodeGenerate(String projectNum, long freshTime) {
+        try {
+            String accessToken = projectService.qrCodeGenerate(projectNum, freshTime);
+            return accessToken;
+        } catch (Exception e) {
+            LOGGER.info("qrCodeGenerate:" + e.getMessage());
+        }
+        return null;
+    }
+
     private UserInfo getUser() {
         return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
     }
