@@ -20,6 +20,7 @@ import com.neusoft.education.tp.sso.client.filter.CASFilterRequestWrapper;
 import com.upic.common.utils.redis.WebRequestRedisService;
 import com.upic.dto.StudentInfo;
 import com.upic.dto.UserInfo;
+import com.upic.enums.UserTypeEnum;
 //import com.upic.po.Student;
 //import com.upic.repository.StudentRspoitory;
 import com.upic.service.UserService;
@@ -32,14 +33,13 @@ public class UserController {
 	@Autowired
 	private ProviderSignInUtils providerSignInUtils;
 
-
 	@Autowired
 	private UserService userService;
 
 	@RequestMapping("/registUser")
-	public String createUser(WebRequest request,StudentInfo info) {
+	public String createUser(WebRequest request, StudentInfo info) {
 		providerSignInUtils.doPostSignUp(info.getStuNum(), request);
-		UserInfo s=new UserInfo();
+		UserInfo s = new UserInfo();
 		s.setUserNum(info.getStuNum());
 		s.setPassword(info.getPassword());
 		userService.addUser(s);
@@ -50,35 +50,40 @@ public class UserController {
 	public StudentInfo readyRegist() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(authentication);
-		if(authentication != null) {
+		if (authentication != null) {
 			System.out.println(authentication.getPrincipal());
 		}
-		SocialUser so=(SocialUser) authentication.getPrincipal();
-		StudentInfo s=new StudentInfo();
+		SocialUser so = (SocialUser) authentication.getPrincipal();
+		StudentInfo s = new StudentInfo();
 		s.setStuNum(so.getUsername());
-		return  s;
+		return s;
 	}
 
-	@RequestMapping("/cas")
-	public String createUsers(WebRequest request,HttpServletRequest requests,HttpSession session,RedirectAttributes  model,String sessionId) {
-		CASFilterRequestWrapper reqWrapper=new CASFilterRequestWrapper(requests);
+	@RequestMapping("/casgo")
+	public String createUsers(WebRequest request, HttpServletRequest requests, HttpSession session,
+			RedirectAttributes model, String sessionId) {
+		CASFilterRequestWrapper reqWrapper = new CASFilterRequestWrapper(requests);
 		String userID = reqWrapper.getRemoteUser();
 		ProviderSignInAttempt webRequestSer = (ProviderSignInAttempt) redisService.get(sessionId);
 		request.setAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, webRequestSer, RequestAttributes.SCOPE_SESSION);
-//		System.out.println(webRequestSer);
-		if(userID==null) {
+		// System.out.println(webRequestSer);
+		if (userID == null) {
 			System.out.println("获取失败");
 		}
 		providerSignInUtils.doPostSignUp(userID, request);
 		model.addAttribute("stuId", userID);
-		return "redirect:/casget";
+		UserInfo userByUserNum = userService.getUserByUserNum(userID);
+
+		return userByUserNum.getType().equals(UserTypeEnum.STUDENT) ? "/student/st-main.html"
+				: "/teacher/teacher-main.html";
 	}
 
-	@RequestMapping("/casgo")
-	public String saveSession(WebRequest request,HttpServletRequest r,HttpSession session) {
+	@RequestMapping("/cas")
+	public String saveSession(WebRequest request, HttpServletRequest r, HttpSession session) {
 		String sessionId = request.getSessionId();
-		ProviderSignInAttempt attribute = (ProviderSignInAttempt) request.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
-		redisService.put(sessionId, attribute, 60*20);
-		return "forward:/cas?sessionId="+sessionId;
+		ProviderSignInAttempt attribute = (ProviderSignInAttempt) request
+				.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
+		redisService.put(sessionId, attribute, 60 * 20);
+		return "forward:/cas?sessionId=" + sessionId;
 	}
 }
