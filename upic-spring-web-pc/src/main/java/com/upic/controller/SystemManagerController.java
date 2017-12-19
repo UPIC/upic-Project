@@ -4,6 +4,7 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSONArray;
 import com.upic.common.beans.utils.ChineseCharToEn;
+import com.upic.condition.UserCondition;
 import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
 import com.upic.enums.IntegralLogStatusEnum;
@@ -197,12 +198,22 @@ public class SystemManagerController {
         }
     }
 
-    @GetMapping("getAdviceByProjectNum")
+    @GetMapping("/getAdviceByProjectNum")
     public AdviceInfo getAdviceByProjectNum(long projectId) {
         try {
             return adviceService.getAdviceByProjectId(projectId);
         } catch (Exception e) {
             LOGGER.info("getAdviceByProjectNum:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/getAllUser")
+    public Page<UserInfo> getAllUser(UserCondition userCondition, Pageable pageable) {
+        try {
+            return userService.searchUser(userCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getAllUser:" + e.getMessage());
             return null;
         }
     }

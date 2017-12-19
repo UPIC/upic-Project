@@ -1156,14 +1156,18 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/updateUser")
+    @PostMapping("/updateUser")
     @ApiOperation("更新用户")
-    public UserInfo updateUser(UserInfo userInfo) throws Exception {
+    public UserInfo updateUser(UserInfo userInfo) {
         try {
-            return userService.updateUser(userInfo);
+            UserInfo u = userService.getUserByUserNum(userInfo.getUserNum());
+            u.setCollege(userInfo.getCollege());
+            u.setClazz(userInfo.getClazz());
+            u.setUsername(userInfo.getUsername());
+            return userService.updateUser(u);
         } catch (Exception e) {
             LOGGER.info("updateUser:" + e.getMessage());
-            throw new Exception("updateUser" + e.getMessage());
+            return null;
         }
     }
 
@@ -1174,7 +1178,7 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/addUser")
+    @PostMapping("/addUser")
     @ApiOperation("添加用户")
     public UserInfo addUser(UserInfo userInfo) throws Exception {
         try {
