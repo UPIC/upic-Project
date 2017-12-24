@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by zhubuqing on 2017/9/11.
  */
@@ -60,5 +63,53 @@ public class OperatorRoleServiceImpl implements OperatorRoleService {
         } catch (Exception e) {
             LOGGER.info("deleteOperatorRole:管理员角色关系删除失败。错误信息：" + e.getMessage());
         }
+    }
+
+    @Override
+    public List<OperatorRoleInfo> getByJobNum(String jobNum) {
+        List<OperatorRole> operatorRoleList = new ArrayList<>();
+        try {
+            operatorRoleList = operatorRoleRepository.getByJobNum(jobNum);
+            return QueryResultConverter.convert(operatorRoleList, new AbstractDomain2InfoConverter<OperatorRole, OperatorRoleInfo>() {
+                @Override
+                protected void doConvert(OperatorRole domain, OperatorRoleInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getByJobNum。错误信息：" + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public OperatorRoleInfo getByJobNumAndRoleId(String jobNum, Long aLong) {
+        OperatorRole operatorRole = new OperatorRole();
+        try {
+            operatorRole = operatorRoleRepository.getByJobNumAndRoleId(jobNum, aLong);
+            OperatorRoleInfo operatorRoleInfo = new OperatorRoleInfo();
+            UpicBeanUtils.copyProperties(operatorRole, operatorRoleInfo);
+            return operatorRoleInfo;
+        } catch (Exception e) {
+            LOGGER.info("getByJobNumAndRoleId。错误信息：" + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public List<OperatorRoleInfo> getByRoleId(long roleId) {
+        List<OperatorRole> operatorRoleList = new ArrayList<>();
+        try {
+            operatorRoleList = operatorRoleRepository.getByRoleId(roleId);
+            return QueryResultConverter.convert(operatorRoleList, new AbstractDomain2InfoConverter<OperatorRole, OperatorRoleInfo>() {
+                @Override
+                protected void doConvert(OperatorRole domain, OperatorRoleInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getByRoleId。错误信息：" + e.getMessage());
+        }
+        return null;
     }
 }

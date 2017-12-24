@@ -108,16 +108,33 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
-	@Override
-	public RoleInfo getRoleByalins(String alinsNum) {
-		 try {
-	            Role role = roleRepository.getRoleByAliasName(alinsNum);
-	            RoleInfo roleInfo = new RoleInfo();
-	            UpicBeanUtils.copyProperties(role, roleInfo);
-	            return roleInfo;
-	        } catch (Exception e) {
-	            LOGGER.info("getRoleByalins:角色查询失败。错误信息：" + e.getMessage());
-	            return null;
-	        }
-	    }
+    @Override
+    public RoleInfo getRoleByalins(String alinsNum) {
+        try {
+            Role role = roleRepository.getRoleByAliasName(alinsNum);
+            RoleInfo roleInfo = new RoleInfo();
+            UpicBeanUtils.copyProperties(role, roleInfo);
+            return roleInfo;
+        } catch (Exception e) {
+            LOGGER.info("getRoleByalins:角色查询失败。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<RoleInfo> getAll(RoleCondition roleCondition) {
+        List<Role> roleList = new ArrayList<>();
+        try {
+            roleList = roleRepository.findAll(new RoleSpec(roleCondition));
+            return QueryResultConverter.convert(roleList, new AbstractDomain2InfoConverter<Role, RoleInfo>() {
+                @Override
+                protected void doConvert(Role domain, RoleInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getAll。错误信息：" + e.getMessage());
+        }
+        return null;
+    }
 }

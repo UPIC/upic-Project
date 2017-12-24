@@ -8,21 +8,27 @@ import com.upic.enums.RoleTypeEnum;
  * Created by zhubuqing on 2017/8/4.
  */
 public class RoleInfo extends BaseInfo {
-    private String roleName; //角色名
+    private String roleName; // 角色名
 
-    private RoleStatusEnum status; //角色状态
+    private RoleStatusEnum status; // 角色状态
 
-    private RoleTypeEnum type; //角色类型
+    private RoleTypeEnum type; // 角色类型
+
+    private String content; // 描述
+
+    private String aliasName; // 别名
 
     public RoleInfo() {
         super();
     }
 
-    public RoleInfo(String roleName, RoleStatusEnum status, RoleTypeEnum type) {
+    public RoleInfo(String roleName, RoleStatusEnum status, RoleTypeEnum type, String content, String aliasName) {
         super();
         this.roleName = roleName;
         this.status = status;
         this.type = type;
+        this.content = content;
+        this.aliasName = aliasName;
     }
 
     public String getRoleName() {
@@ -49,12 +55,30 @@ public class RoleInfo extends BaseInfo {
         this.type = type;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getAliasName() {
+        return aliasName;
+    }
+
+    public void setAliasName(String aliasName) {
+        this.aliasName = aliasName;
+    }
+
     @Override
     public String toString() {
         return "RoleInfo{" +
                 "roleName='" + roleName + '\'' +
                 ", status=" + status +
                 ", type=" + type +
+                ", content='" + content + '\'' +
+                ", aliasName='" + aliasName + '\'' +
                 '}';
     }
 }

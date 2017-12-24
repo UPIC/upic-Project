@@ -80,6 +80,8 @@ function submit() {
     data.projectCategory = $("#1").find("option:selected").text();
     data.event = getEvent();
     data.integral = parseInt($("#integral").attr('value'));
+    var formData = new FormData($("#myFileData")[0]);
+
     $.ajax({
         type: 'POST',
         url: submitUrl,

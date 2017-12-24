@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by zhubuqing on 2017/8/4.
  */
 public enum OperatorStatusEnum {
-    NORMAL_CONDITION("正常状态", 1),
+    NORMAL_CONDITION("正常", 1),
     FROZE("已冻结", 2);
 
     private String content;

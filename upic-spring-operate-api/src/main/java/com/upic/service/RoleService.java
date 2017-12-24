@@ -62,8 +62,9 @@ public interface RoleService {
     /**
      * 根据别名查找角色
      *
-     * @param userNum
      * @return
      */
     RoleInfo getRoleByalins(String alinsNum);
+
+    List<RoleInfo> getAll(RoleCondition roleCondition);
 }

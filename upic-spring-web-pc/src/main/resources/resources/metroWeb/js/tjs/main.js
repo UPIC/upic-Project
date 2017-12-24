@@ -94,19 +94,31 @@ function addHtmls(result) {
         var projectCategoryTotal = 0;
 
         for (var j = 0; j < integralLogResult.length; j++) {
-            if (integralLogResult.projectCategory === projectCategory[i].categoryName) {
-                projectCategoryTotal += integralLogResult.integral;
+            if (integralLogResult[j].projectCategory === projectCategory[i].categoryName && (integralLogResult[j].status === "HAVEPASSED" || integralLogResult[j].status === "COMPLETED")) {
+                projectCategoryTotal += integralLogResult[j].integral;
             }
         }
 
         if (i % 2 == 0) {
-            htmls += "<tr>";
-            htmls += "<td>" + projectCategory[i].categoryName + "</td>";
-            htmls += "<td>" + projectCategoryTotal + "</td>";
+            if (projectCategoryTotal < 0.5 && (projectCategory[i].categoryName === "社会实践" || projectCategory[i].categoryName === "志愿服务" || projectCategory[i].categoryName === "讲座论坛" || projectCategory[i].categoryName === "生活能力")) {
+                htmls += "<tr>";
+                htmls += "<td>" + projectCategory[i].categoryName + "</td>";
+                htmls += "<td>" + projectCategoryTotal + "<img src='../../img/warn.png' alt='' width='24px' height='24px'></td>";
+            } else {
+                htmls += "<tr>";
+                htmls += "<td>" + projectCategory[i].categoryName + "</td>";
+                htmls += "<td>" + projectCategoryTotal + "</td>";
+            }
         } else {
-            htmls += "<td>" + projectCategory[i].categoryName + "</td>";
-            htmls += "<td>" + projectCategoryTotal + "</td>";
-            htmls += "</tr>";
+            if (projectCategoryTotal < 0.5 && (projectCategory[i].categoryName === "社会实践" || projectCategory[i].categoryName === "志愿服务" || projectCategory[i].categoryName === "讲座论坛" || projectCategory[i].categoryName === "生活能力")) {
+                htmls += "<td>" + projectCategory[i].categoryName + "</td>";
+                htmls += "<td>" + projectCategoryTotal + "<img src='../../img/warn.png' alt='' width='24px' height='24px'></td>";
+                htmls += "</tr>";
+            } else {
+                htmls += "<td>" + projectCategory[i].categoryName + "</td>";
+                htmls += "<td>" + projectCategoryTotal + "</td>";
+                htmls += "</tr>";
+            }
         }
 
         total += projectCategoryTotal;
@@ -122,7 +134,10 @@ function addHtmls(result) {
     htmls += "<td colspan='4' style='text-align:right;padding-right: 20px;'>总计:<span>" + total + "</span>";
     htmls += "</td>";
     htmls += "</tr>";
-    htmls += "</tbody>";
+    htmls += "</tbody></table>";
+    htmls += "<div class='warn'>";
+    htmls += "<img src='../../img/warn.png' alt='' width='24px' height='24px'>“社会实践”、“志愿服务”、“讲座论坛”、“生活能力”课程积分至少达到0.5分";
+    htmls += "</div>";
 
     $("#getInfo").html(htmls);
 }

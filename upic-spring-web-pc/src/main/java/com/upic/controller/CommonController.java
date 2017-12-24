@@ -842,6 +842,31 @@ public class CommonController {
             p.setMaximum(pr.getMaximum());
             p.setContent(pr.getContent());
             p.setCheckAssessmentCriteraAndForm(pr.getCheckAssessmentCriteraAndForm());
+            p.setOnOff(pr.getOnOff());
+            projectService.updateProject(p);
+
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("updateProject:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 更新项目
+     *
+     * @param projectInfo
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/updateProjectOnOff")
+    @ApiOperation("更新项目")
+    public String updateProjectOnOff(String projectInfo) {
+        try {
+            ProjectInfo pr = JSON.parseObject(projectInfo, ProjectInfo.class);
+            ProjectInfo p = projectService.getProjectByNum(pr.getProjectNum());
+
+            p.setOnOff(pr.getOnOff());
             projectService.updateProject(p);
 
             return "SUCCESS";
@@ -1156,14 +1181,18 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/updateUser")
+    @PostMapping("/updateUser")
     @ApiOperation("更新用户")
-    public UserInfo updateUser(UserInfo userInfo) throws Exception {
+    public UserInfo updateUser(UserInfo userInfo) {
         try {
-            return userService.updateUser(userInfo);
+            UserInfo u = userService.getUserByUserNum(userInfo.getUserNum());
+            u.setCollege(userInfo.getCollege());
+            u.setClazz(userInfo.getClazz());
+            u.setUsername(userInfo.getUsername());
+            return userService.updateUser(u);
         } catch (Exception e) {
             LOGGER.info("updateUser:" + e.getMessage());
-            throw new Exception("updateUser" + e.getMessage());
+            return null;
         }
     }
 
@@ -1174,7 +1203,7 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/addUser")
+    @PostMapping("/addUser")
     @ApiOperation("添加用户")
     public UserInfo addUser(UserInfo userInfo) throws Exception {
         try {
@@ -1497,7 +1526,7 @@ public class CommonController {
 //    }
 
     private UserInfo getUser() {
-        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
+        return new UserInfo("1522110238", "虞高峰", "", "信息工程学院", "计算机科学与技术", "15移动1班", "", "1", "yu_gao_feng@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "高峰", UserTypeEnum.STUDENT, 0, 0);
     }
 
     private void downLoadExcel(HttpServletResponse response, Workbook wk, String fileName) throws Exception {
