@@ -1,6 +1,5 @@
 package com.upic.serviceimpl;
 
-import com.sun.tools.javac.code.Attribute;
 import com.upic.common.beans.utils.UpicBeanUtils;
 import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
