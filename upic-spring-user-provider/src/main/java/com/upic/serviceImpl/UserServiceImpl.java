@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by zhubuqing on 2017/9/9.
  */
@@ -152,4 +154,16 @@ public class UserServiceImpl implements UserService {
         }
         return objlist;
     }
+
+	@Override
+	@Transactional(rollbackOn=Exception.class)
+	public void batchAddUser(List<Object> list) {
+		List<User>users=new ArrayList<User>();
+		list.stream().parallel().forEach(x->{
+			User u=new User();
+			UpicBeanUtils.copyProperties(x, u);
+			users.add(u);
+		});
+		userRepository.save(users);
+	}
 }
