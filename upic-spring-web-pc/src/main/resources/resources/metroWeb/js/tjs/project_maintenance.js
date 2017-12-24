@@ -19,7 +19,7 @@ $(function () {
     commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
     registSelect("projectCategory");
     registSelect("implementationProcess");
-    registSelect("college");
+    registSelect("declareUnit");
 
     $("#exportBtn").click(function () {
         var baseModels = ["projectNum", "declareUnit", "projectName", "guidanceMan", "guidanceNum", "projectCategory", "integral", "startTime", "endTime", "maximum"];
@@ -142,10 +142,9 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].integral + "</td>";
         htmls += "<td>" + data[i].maximum + "</td>";
         htmls += "<td>" + data[i].guidanceMan + "</td>";
-        // htmls+="<td>"+getDate(data[i].startTime,"yyyy/MM/dd hh:mm")+"</td>";
         htmls += "<td class='center_td'>" + status + "</td>";
-        htmls += "<td class='center_td'><a href='#mymodal1'";
-        htmls += "data-toggle='modal'><div class='message_div' onclick=commonAjax('" + getProjectInfoUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (i + 1) + "')>查看详情</div></a></td></tr>";
+        htmls += "<td class='center_td'><a href='#mymodal1' data-toggle='modal'>";
+        htmls += "<div class='message_div' onclick=commonAjax('" + getProjectInfoUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (i + 1) + "')>查看详情</div></a></td></tr>";
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
@@ -153,7 +152,7 @@ function addHtmls(datas, pageNum) {
 
 function getProjectInfo(data, j) {
     var htmlss = "";
-    var statuss = "";
+    var status = "";
     switch (data.implementationProcess) {
         case ("SAVED"):
             status = "已保存";
@@ -220,45 +219,48 @@ function getProjectInfo(data, j) {
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目申请日期</div>";
-    htmlss += "<div class='span3'>" + data.creatTime + "</div>";
+    htmlss += "<div class='span3'>" + getDate(data.creatTime, "yyyy-MM-dd hh:mm") + "</div>";
     htmlss += "<div class='span3'>状态</div>";
-    htmlss += "<div class='span3'>" + statuss + "</div>";
+    htmlss += "<div class='span3'>" + status + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目类别</div>";
-    htmlss += "<div class='span3' id='" + data.projectNum + "'>";
-    htmlss += commonAjax(getProjectTypeUrl, '', 'getProjectTypeUrl', 'GET', data.projectNum);
+    htmlss += "<div class='span3'>";
+    htmlss += "<select id='" + data.projectNum + "1234'>";
+    htmlss += "<option value='category " + 0 + "'>" + data.projectCategory + "</option>";
+    htmlss += commonAjax(getProjectTypeUrl, '', 'getMyProjectTypeUrl', 'GET', data.projectNum);
+    htmlss += "</select>";
     htmlss += "</div>";
-    htmlss += "<div class='span3'>所属学院</div>";
-    htmlss += "<div class='span3'><input type='text' placeholder='" + data.college + "'></div>";
+    htmlss += "<div class='span3'>申报单位</div>";
+    htmlss += "<div class='span3'><input id='myDeclareUnit1234' type='text' myVal='" + data.declareUnit + "' placeholder='" + data.declareUnit + "'></div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目名称</div>";
-    htmlss += "<div class='span3'><input type='text' placeholder='" + data.projectName + "'></div>";
+    htmlss += "<div class='span3'><input id='myProjectName1234' type='text' myVal='" + data.projectName + "' placeholder='" + data.projectName + "'></div>";
     htmlss += "<div class='span3'>负责人</div>";
-    htmlss += "<div class='span3'><input type='text' placeholder='" + data.guidanceMan + "'></div>";
+    htmlss += "<div class='span3'><input id='myGuidance1234' type='text' myVal='" + data.guidanceMan + "' placeholder='" + data.guidanceMan + "'></div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>工作量</div>";
     htmlss += "<div class='span3'><input type='text' placeholder='" + (parseFloat(data.integral) * parseInt(data.maximum)) + "'></div>";
     htmlss += "<div class='span3'>积分</div>";
-    htmlss += "<div class='span3'><input type='text' placeholder='" + data.integral + "'></div>";
+    htmlss += "<div class='span3'><input id='myIntegral1234' type='text' myVal='" + data.integral + "' placeholder='" + data.integral + "'></div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>开始时间</div>";
     htmlss += "<div class='span3'><div class='input-append date' id='datetimepicker1' data-date='2017/09/14' data-date-format='dd-mm-yyyy'>";
-    htmlss += "<input class='span2 nowdate' size='16' type='text' value='12-02-2012' style='width:100px !important;'>";
+    htmlss += "<input id='myStartTime1234' class='span2 nowdate' size='16' type='text' value='12-02-2012' style='width:100px !important;'>";
     htmlss += "<span class='add-on'><i class='icon-th'></i></span>";
     htmlss += "</div></div>";
     htmlss += "<div class='span3'>结束时间</div>";
     htmlss += "<div class='span3'><div class='input-append date' id='datetimepicker1' data-date='2017/09/14' data-date-format='dd-mm-yyyy'>";
-    htmlss += "<input class='span2 nowdate' size='16' type='text' value='12-02-2012' style='width:100px !important;'>";
+    htmlss += "<input id='myEndTime1234' class='span2 nowdate' size='16' type='text' value='12-02-2012' style='width:100px !important;'>";
     htmlss += "<span class='add-on'><i class='icon-th'></i></span>";
     htmlss += "</div></div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>最大参与人数</div>";
-    htmlss += "<div class='span3'><input type='text' placeholder='" + data.maximum + "'></div>";
+    htmlss += "<div class='span3'><input id='myMaximum1234' type='text' myVal='" + data.maximum + "' placeholder='" + data.maximum + "'></div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目内容</div>";
@@ -270,14 +272,69 @@ function getProjectInfo(data, j) {
     htmlss += "</div>";
 
     $("#getProjectInfo").html(htmlss);
-    // page(datas, dataUrl, datas.size, datas.number);
+
+    var htmls = "";
+    htmls += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true' onclick=commonMyAjax('/common/updateMyProject','" + data.projectNum + "')>保存</button>";
+    htmls += "<button class='btn' data-dismiss='modal' aria-hidden='true'>关闭</button>";
+    $("#theUnderButton").html(htmls);
 }
 
-function getProjectTypeUrl(res, id) {
+function getMyProjectTypeUrl(res, id) {
     var htmls = "";
     var data = res.content;
     for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='category " + (i + 1) + "'>" + data[i].category + "</option>";
+        htmls += "<option value='category " + (i + 1) + "'>" + data[i].categoryName + "</option>";
     }
-    $("#id").html(htmls);
+    $("#" + id + "1234").append(htmls);
+}
+
+function commonMyAjax(url, projectNum) {
+    var projectCategory = $("#" + projectNum + "1234").find("option:selected").text();
+    var declareUnit = getNowData("myDeclareUnit1234");
+    var projectName = getNowData("myProjectName1234");
+    var guidance = getNowData("myGuidance1234");
+    var integral = getNowData("myIntegral1234");
+    var startTime = $("#myStartTime1234").val();
+    var endTime = $("#myEndTime1234").val();
+    var maximum = getNowData("myMaximum1234");
+
+    var projectInfoJson = {
+        projectNum: projectNum,
+        projectCategory: projectCategory,
+        declareUnit: declareUnit,
+        projectName: projectName,
+        guidance: guidance,
+        integral: integral,
+        startTime: startTime,
+        endTime: endTime,
+        maximum: maximum
+    }
+
+    var projectInfo = "{ ";
+    for (var item in projectInfoJson) {
+        projectInfo += "'" + item + "':'" + projectInfoJson[item] + "',";
+    }
+    projectInfo += " }";
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            projectInfo: projectInfo
+        },
+        beforeSend: function (XMLHttpRequest) {
+        },
+        success: function (result) {
+            alert("修改成功");
+            getData(pageNum, dataUrl);
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+        },
+        error: function () {
+        }
+    });
+}
+
+function getNowData(id) {
+    return $("#" + id).val() == "" ? $("#" + id).attr("myVal") : $("#" + id).val();
 }

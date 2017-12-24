@@ -1,10 +1,10 @@
 var data1Url = "/operator/searchOperator";
-var chakanUrl = "";
 var xiugaiUrl = "";
 var shezhimimaUrl = "";
 var dongjieUrl = "";
-var saveUserInfoUrl = "";
-var saveUserStatusUrl = "";
+var saveOperatorInfoUrl = "/operator/updateTheOperator";
+var updateOperatorRoleUrl = "/operator/updateOperatorRole";
+var saveUserStatusUrl = "/operator/changeOperatorStatus";
 var pageSize1 = 0;
 var totalPages1 = -1;
 var pageNum1 = 0;
@@ -70,13 +70,17 @@ function addHtmls1(datas) {
         // htmls += "<td>" + data[i].type + "</td>";
         htmls += "<td>";
         htmls += "<div class='message_di'>";
-        htmls += "<a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + chakanUrl + "','userNum=" + data[i].jobNum + "','chakan','GET')>【查看】</span></a>";
+        htmls += "<a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + data1Url + "','jobNum=" + data[i].jobNum + "','chakan','GET')>【查看】</span></a>";
         htmls += "<span class='space'>|</span>";
-        htmls += "<a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + chakanUrl + "','userNum=" + data[i].jobNum + "','xiugai','GET')>【修改】</span></a>";
+        htmls += "<a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + data1Url + "','jobNum=" + data[i].jobNum + "','xiugai','GET')>【修改】</span></a>";
         htmls += "<span class='space'>|</span>";
-        htmls += "<a href='#mymodal' data-toggle='modal'><span onclick=shezhimima(" + data[i].jobNum + "," + data[i].username + ")>【重置密码】</span></a>";
-        htmls += "<span class='space'>|</span>";
-        htmls += "<a href='#mymodal5' data-toggle='modal'><sapn onclick=dongjie(" + data[i].jobNum + "," + data[i].username + ")>【冻结】</sapn></a>";
+        // htmls += "<a href='#mymodal' data-toggle='modal'><span onclick=shezhimima(" + data[i].jobNum + "," + data[i].username + ")>【重置密码】</span></a>";
+        // htmls += "<span class='space'>|</span>";
+        if (data[i].status === "NORMAL_CONDITION") {
+            htmls += "<a href='#mymodal5' data-toggle='modal'><sapn onclick=dongjie('" + data[i].jobNum + "','" + data[i].username + "','1')>【冻结】</sapn></a>";
+        } else {
+            htmls += "<a href='#mymodal5' data-toggle='modal'><sapn onclick=dongjie('" + data[i].jobNum + "','" + data[i].username + "','2')>【恢复】</sapn></a>";
+        }
         htmls += "</div></td>";
         htmls += "</tr>";
     }
@@ -84,198 +88,168 @@ function addHtmls1(datas) {
     page1(datas, data1Url, datas.size, datas.number);
 }
 
-function chakan(data) {
+function chakan(datas) {
+    var data = datas.content[0];
     var htmlss = "";
     var statuss = "";
-    if (true) {
-        statuss = ""
+    if (data.status === "NORMAL_CONDITION") {
+        statuss = "正常";
+    } else {
+        statuss = "已冻结";
     }
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>操作员姓名：</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<input type='text' class='input-medium' placeholder='" + data.userName + "' disabled />";
+    htmlss += "<input type='text' class='input-medium' placeholder='" + data.username + "' disabled />";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>操作员工号</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<input type='text' class='input-medium' placeholder='" + data.userNum + "' disabled/>";
+    htmlss += "<input type='text' class='input-medium' placeholder='" + data.jobNum + "' disabled/>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>创建时间</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<span>" + getDate(data.createTime) + "</span>";
+    htmlss += "<span>" + getDate(data.creatTime, "yyyy-MM-dd") + "</span>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>状态</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<span>" + statuss + "</span>";
+    htmlss += "<span id='" + data.jobNum + "status'>" + statuss + "</span>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>角色</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<span>" + data.userType + "</span>";
+    htmlss += "<span id='theRole'></span>";
     htmlss += "</div>";
     htmlss += "</div>";
 
     $("#getUserInfo").html(htmlss);
+
+    getTheRole(data.jobNum, "theRole");
 }
 
-function xiugai(data) {
+function xiugai(datas) {
+    var data = datas.content[0];
     var htmlss = "";
     var statuss = "";
-    if (true) {
-        statuss = ""
+    if (data.status === "NORMAL_CONDITION") {
+        statuss = "正常";
+    } else {
+        statuss = "已冻结";
     }
     htmlss += "<div class='modal-header'>";
     htmlss += "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
     htmlss += "<h4>修改信息</h4>";
     htmlss += "</div>";
     htmlss += "<div class='modal-body'>";
-    htmlss += "<form action='#'' class='form-horizontal'>";
+    htmlss += "<form action='#' class='form-horizontal'>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>操作员姓名：</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<input type='text' id='" + data.userNum + "name' class='input-medium' value='" + data.userName + "'  />";
+    htmlss += "<span id='" + data.jobNum + "name'>" + data.username + "</span>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>操作员工号</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<input type='text' id='" + data.userNum + "num' class='input-medium' value='" + data.userNum + "' />";
+    htmlss += "<span id='" + data.jobNum + "num'>" + data.jobNum + "</span>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>创建时间</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<span id='" + data.userNum + "time'>" + getDate(data.createTime) + "</span>";
+    htmlss += "<span id='" + data.jobNum + "time'>" + getDate(data.creatTime, "yyyy-MM-dd") + "</span>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>状态</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<span id='" + data.userNum + "status'>" + statuss + "</span>";
+    htmlss += "<select id='theOperatorStatus' style='width: 100%;' class='color-wh'>";
+    htmlss += "<option value='4' class='yellow'>" + statuss + "</option>";
+    htmlss += "<option value='4' myStatus='NORMAL_CONDITION' class='yellow'>正常</option>";
+    htmlss += "<option value='4' myStatus='FROZE' class='yellow'>冻结</option>";
+    htmlss += "</select>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<div class='control-group'>";
     htmlss += "<label class='control-label'>角色</label>";
     htmlss += "<div class='controls'>";
-    htmlss += "<span id='" + data.userNum + "type'>" + data.userType + "</span>";
+    htmlss += "<span id='" + data.jobNum + "type'></span>";
     htmlss += "</div>";
     htmlss += "</div>";
     htmlss += "<fieldset class='fild1'>";
     htmlss += "<legend style='font-size: 12px;'>选择角色</legend>";
-    htmlss += "<div class='controls controls_change'>";
-    htmlss += "<label class='checkbox'>";
-    htmlss += "<input type='checkbox' value=''/>  学生";
-    htmlss += "</label>";
-    htmlss += "<label class='checkbox'>";
-    htmlss += "<input type='checkbox' value=''/> 教师";
-    htmlss += "</label>";
-    htmlss += "<label class='checkbox'>";
-    htmlss += "<input type='checkbox' value=''/> 管理员";
-    htmlss += "</label>";
-    htmlss += "<label class='checkbox'>";
-    htmlss += "<input type='checkbox' value=''/> 超级管理员";
-    htmlss += "</label>";
+    htmlss += "<div id='getAllRoles' class='controls controls_change'>";
     htmlss += "</div>";
     htmlss += "</fieldset>";
     htmlss += "</form>";
     htmlss += "</div>";
     htmlss += "<div class='modal-footer'>";
-    htmlss += "<button class='btn btn-primary' data-dismiss='modal' onclick=saveUserInfo(" + data.userNum + ")>保存</button>";
+    htmlss += "<button class='btn btn-primary' data-dismiss='modal' onclick=saveUserInfo(" + data.jobNum + ")>保存</button>";
     htmlss += "<button class='btn' data-dismiss='modal' aria-hidden='true'>关闭</button>";
-    htmlss += "/div>";
-    $("#changeUserInfo").html(htmlss);
-    if (data.userType === "STUDENT") {
-    }
+    htmlss += "</div>";
+    $("#mymodal3").html(htmlss);
+
+    getTheRole(data.jobNum, data.jobNum + "type", "need");
 }
 
 function saveUserInfo(id) {
     var Data = {};
-    Data.userName = $("#" + id + "name").text();
-    Data.userNum = $("#" + id + "num").text();
-    Data.createTime = $("#" + id + "time").text();
-    Data.status = $("#" + id + "status").text();
-    Data.userType = $("#" + id + "type").text();
+    Data.status = $("#theOperatorStatus  option:selected").attr("myStatus");
+    Data.jobNum = $("#" + id + "num").html();
 
-    $.ajax({
-        type: "GET",
-        url: saveUserInfoUrl,
-        data: Data,
-        success: function (result) {
-            alert("已保存")
-        }
-    });
-}
-
-function shezhimima(usernum, username) {
-    var html = "";
-    htmlss += "<div class='modal-header'>";
-    htmlss += "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
-    htmls += "<h4>重置密码</h4>";
-    htmls += "</div>";
-    htmlss += "<div class='modal-body'>";
-    htmlss += "<form action='#'' class='form-horizontal'>";
-    htmlss += "<div class='control-group'>";
-    htmlss += "<label class='control-label'>操作员姓名：</label>";
-    htmlss += "<div class='controls'>";
-    htmlss += "<input type='text' class='input-medium' value='" + username + "' disabled />";
-    htmlss += "</div>";
-    htmls += "</div>";
-    htmlss += "<div class='control-group'>";
-    htmlss += "<label class='control-label'>操作员工号</label>";
-    htmlss += "<div class='controls'>";
-    htmlss += "<input type='text' class='input-medium' value='" + usernum + "' />";
-    htmlss += "</div>";
-    htmlss += "</div>";
-    htmls += "<div class='control-group'>";
-    htmls += "<label class='control-label'>新密码</label>";
-    htmls += "<div class='controls'>";
-    htmls += "<input type='password' class='input-medium' id='" + usernum + "apassword'/>";
-    htmls += "</div>";
-    htmls += "</div>";
-    htmls += "<div class='control-group'>";
-    htmls += "<label class='control-label'>确认新密码</label>";
-    htmls += "<div class='controls'>";
-    htmls += "<input type='password' class='input-medium' id='" + usernum + "bpassword'/>";
-    htmls += "</div>";
-    htmls += "</div>";
-    htmls += "</form>";
-    htmls += "</div>";
-    htmls += "<div class='modal-footer'>";
-    htmls += "<button class='btn btn-primary' data-dismiss='modal' onclick=savePassWord(" + usernum + ")>保存</button>";
-    htmls += "<button class='btn' data-dismiss='modal' aria-hidden='true'>关闭</button>";
-    htmls += "</div>";
-    $("#changepassword").html(htmls);
-    var aPW = $("#" + usernum + "apassword").val();
-    var bPW = $("#" + usernum + "bpassword").val();
-    if (aPW != bPW) {
-        alert("两次输入的密码不一致,请重新输入");
-        $("#" + usernum + "apassword").attr("value", "");
-        $("#" + usernum + "bpassword").attr("value", "");
+    var operatorInfo = "{ ";
+    for (var item in Data) {
+        operatorInfo += "'" + item + "':'" + Data[item] + "',";
     }
-}
+    operatorInfo += " }";
 
-function savePassWord(usernum) {
-    var bPW = $("#" + usernum + "bpassword").val();
-    var Data = {};
-    Data.userNum = usernum;
-    Data.password = bPW;
     $.ajax({
-        type: "GET",
-        url: savePassWordUrl,
-        data: Data,
+        type: "POST",
+        url: saveOperatorInfoUrl,
+        data: {
+            operatorInfo: operatorInfo
+        },
         success: function (result) {
-            alert("已保存")
+            alert("已保存");
+            updateOperatorRole(Data.jobNum);
         }
     });
 }
 
-function dongjie(usernum, username) {
+function updateOperatorRole(jobNum) {
+    var roleIdLists = new Array();
+    $("input[type=checkbox]:checked").each(function () {
+        roleIdLists.push($(this).attr("id"));
+    });
+
+    var roleIdList = new Array();
+
+    for (var i = 0; i < roleIdLists.length; i++) {
+        roleIdList.push(splitRoleId(roleIdLists[i]));
+    }
+
+    var str = JSON.stringify(roleIdList);
+
+    $.ajax({
+        type: "GET",
+        url: updateOperatorRoleUrl,
+        data: {
+            roleIdList: str,
+            jobNum: jobNum
+        },
+        success: function (result) {
+            getData1(pageNum1, data1Url);
+        }
+    });
+}
+
+function dongjie(jobNum, username, num) {
     var htmls = "";
     htmls += "<div class='modal-header'>";
     htmls += "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>";
@@ -283,26 +257,87 @@ function dongjie(usernum, username) {
     htmls += "</div>";
     htmls += "<div class='modal-body'>";
     htmls += "<form action='#'' class='form-horizontal'>";
-    htmls += "<p>冻结<span>" + username + "</span>?</p>";
+    if (num == 1) {
+        htmls += "<p>冻结<span>" + username + "</span>?</p>";
+    } else {
+        htmls += "<p>恢复<span>" + username + "</span>?</p>";
+    }
     htmls += "</form>";
     htmls += "</div>";
     htmls += "<div class='modal-footer'>";
-    htmls += "<button class='btn btn-primary' data-dismiss='modal' onclick=changeUserStatus(" + usernum + ")>确定</button>";
+    htmls += "<button class='btn btn-primary' data-dismiss='modal' onclick=changeUserStatus('" + jobNum + "')>确定</button>";
     htmls += "<button class='btn' data-dismiss='modal' aria-hidden='true'>取消</button>";
     htmls += "</div>";
-    $("#changeUserStatus").html(htmls);
+    $("#mymodal5").html(htmls);
 }
 
 function changeUserStatus(usernum) {
-    var Data = {};
-    Data.userNum = usernum;
-    Data.status = "DONGJIE";
     $.ajax({
         type: "GET",
         url: saveUserStatusUrl,
-        data: Data,
+        data: {
+            jobNum: usernum
+        },
         success: function (result) {
-            alert("已冻结")
+            alert("操作成功");
+            getData1(pageNum1, data1Url);
         }
     });
+}
+
+function getTheRole(jobNum, method, needToCompare) {
+    $.ajax({
+        type: "GET",
+        url: "/operator/getRoleByJobNum",
+        data: {
+            jobNum: jobNum
+        },
+        success: function (result) {
+            if (needToCompare === "need") {
+                getAllRoles(result);
+            }
+            var addHtml = "";
+            for (var i = 0; i < result.length; i++) {
+                if (i == 0) {
+                    addHtml += result[i].roleName;
+                } else {
+                    addHtml += "、" + result[i].roleName;
+                }
+            }
+            $("#" + method).html(addHtml);
+        }
+    });
+}
+
+function getAllRoles(hadRoles) {
+    $.ajax({
+        type: "GET",
+        url: "/operator/getAllRoles",
+        data: {},
+        success: function (result) {
+            var addHtml = "";
+            for (var i = 0; i < result.length; i++) {
+                addHtml += "<label class='checkbox'>";
+                addHtml += "<input id='checkbox" + result[i].id + "' type='checkbox' value=''/>" + result[i].roleName;
+                addHtml += "</label>";
+            }
+
+            $("#getAllRoles").html(addHtml);
+
+            for (var i = 0; i < result.length; i++) {
+                for (var j = 0; j < hadRoles.length; j++) {
+                    if (result[i].id == hadRoles[j].id) {
+                        $("#checkbox" + result[i].id).attr("checked", true);
+                        break;
+                    }
+                }
+            }
+        }
+    });
+}
+
+function splitRoleId(roleId) {
+    var roleIds = new Array();
+    roleIds = roleId.split("checkbox");
+    return roleIds[1];
 }

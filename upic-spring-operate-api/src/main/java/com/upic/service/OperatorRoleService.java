@@ -34,4 +34,10 @@ public interface OperatorRoleService {
      * @param operatorRoleInfo
      */
     void deleteOperatorRole(OperatorRoleInfo operatorRoleInfo);
+
+    List<OperatorRoleInfo> getByJobNum(String jobNum);
+
+    OperatorRoleInfo getByJobNumAndRoleId(String jobNum, Long aLong);
+
+    List<OperatorRoleInfo> getByRoleId(long roleId);
 }

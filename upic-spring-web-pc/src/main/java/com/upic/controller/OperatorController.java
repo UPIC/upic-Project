@@ -2,6 +2,7 @@ package com.upic.controller;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.upic.condition.OperatorCondition;
 import com.upic.condition.ResourceCondition;
@@ -24,7 +25,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -46,6 +49,9 @@ public class OperatorController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OperatorRoleService operatorRoleService;
 
     /**
      * 加载操作员
@@ -81,6 +87,43 @@ public class OperatorController {
             LOGGER.info("searchRole:" + e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * 加载角色
+     *
+     * @param jobNum
+     * @return
+     */
+    @GetMapping("/getRoleByJobNum")
+    @ApiOperation("加载角色")
+    public List<RoleInfo> getRoleByJobNum(String jobNum) {
+        try {
+            List<RoleInfo> roleInfoList = new ArrayList<>();
+            List<Long> roleIdList = new ArrayList<>();
+            List<OperatorRoleInfo> operatorRoleInfoList = operatorRoleService.getByJobNum(jobNum);
+            for (OperatorRoleInfo operatorRoleInfo : operatorRoleInfoList) {
+                roleIdList.add(operatorRoleInfo.getRoleId());
+            }
+            for (long roleId : roleIdList) {
+                roleInfoList.add(roleService.getRoleById(roleId));
+            }
+            return roleInfoList;
+        } catch (Exception e) {
+            LOGGER.info("searchRole:" + e.getMessage());
+        }
+        return null;
+    }
+
+    @GetMapping("/getAllRoles")
+    @ApiOperation("获取所有的角色")
+    public List<RoleInfo> getAllRoles(RoleCondition roleCondition) {
+        try {
+            return roleService.getAll(roleCondition);
+        } catch (Exception e) {
+            LOGGER.info("getAllRoles:" + e.getMessage());
+        }
+        return null;
     }
 
     /**
@@ -136,6 +179,70 @@ public class OperatorController {
     }
 
     /**
+     * 更新操作员（t_system_manager/permissions_manager.html）
+     *
+     * @param operatorInfo
+     * @return
+     */
+    @PostMapping("/updateTheOperator")
+    @ApiOperation("更新操作员")
+    public String updateTheOperator(String operatorInfo) {
+        try {
+            OperatorInfo operator = JSON.parseObject(operatorInfo, OperatorInfo.class);
+            OperatorInfo o = operatorService.getByJobNum(operator.getJobNum());
+            o.setStatus(operator.getStatus());
+            operatorService.updateOperator(o);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("updateOperator:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 更新操作员角色关系
+     *
+     * @param roleIdList
+     * @param jobNum
+     * @return
+     */
+    @GetMapping("/updateOperatorRole")
+    public String updateOperatorRole(String roleIdList, String jobNum) {
+        try {
+            List<Long> roleIdLists = JSONArray.parseArray(roleIdList, Long.class);
+
+            List<OperatorRoleInfo> operatorRoleInfoList = operatorRoleService.getByJobNum(jobNum);
+
+            for (OperatorRoleInfo operatorRoleInfo : operatorRoleInfoList) {
+                int j = 0;
+                for (int i = 0; i < roleIdLists.size(); i++) {
+                    if (operatorRoleInfo.getRoleId() != roleIdLists.get(i)) {
+                        j++;
+                    }
+                }
+                if (j == roleIdLists.size()) {
+                    operatorRoleService.deleteOperatorRole(operatorRoleInfo);
+                }
+            }
+
+            for (int i = 0; i < roleIdLists.size(); i++) {
+                OperatorRoleInfo operatorRoleInfo = operatorRoleService.getByJobNumAndRoleId(jobNum, roleIdLists.get(i));
+                if (operatorRoleInfo == null) {
+                    operatorRoleInfo = new OperatorRoleInfo();
+                    operatorRoleInfo.setJobNum(jobNum);
+                    operatorRoleInfo.setRoleId(roleIdLists.get(i));
+                    operatorRoleInfo.setCreatTime(new Date());
+                    operatorRoleService.addOperatorRole(operatorRoleInfo);
+                }
+            }
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("updateOperatorRole:" + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      * 冻结操作员
      *
      * @param jobNum
@@ -156,6 +263,45 @@ public class OperatorController {
     }
 
     /**
+     * 修改操作员状态
+     *
+     * @param jobNum
+     * @return
+     */
+    @GetMapping("/changeOperatorStatus")
+    public String changeOperatorStatus(String jobNum) {
+        try {
+            OperatorInfo operatorInfo = operatorService.getByJobNum(jobNum);
+            if (operatorInfo.getStatus() == OperatorStatusEnum.NORMAL_CONDITION) {
+                operatorInfo.setStatus(OperatorStatusEnum.FROZE);
+            } else {
+                operatorInfo.setStatus(OperatorStatusEnum.NORMAL_CONDITION);
+            }
+            operatorService.updateOperator(operatorInfo);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("changeOperatorStatus:" + e.getMessage());
+        }
+        return null;
+    }
+
+    @GetMapping("/getAllRoleOperator")
+    @ApiOperation("获取此角色下的所有操作员")
+    public List<OperatorInfo> getAllRoleOperator(long roleId) {
+        try {
+            List<OperatorInfo> operatorInfoList = new ArrayList<>();
+            List<OperatorRoleInfo> operatorRoleInfoList = operatorRoleService.getByRoleId(roleId);
+            for (OperatorRoleInfo operatorRoleInfo : operatorRoleInfoList) {
+                operatorInfoList.add(operatorService.getByJobNum(operatorRoleInfo.getJobNum()));
+            }
+            return operatorInfoList;
+        } catch (Exception e) {
+            LOGGER.info("getAllRoleOperator:" + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      * 更新角色
      *
      * @param roleInfo
@@ -166,6 +312,27 @@ public class OperatorController {
     public RoleInfo updateRole(RoleInfo roleInfo) {
         try {
             return roleService.updateRole(roleInfo);
+        } catch (Exception e) {
+            LOGGER.info("updateRole:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 更新角色（t_systemManager/permissions_manage2.js updateRole）
+     *
+     * @param roleInfo
+     * @return
+     */
+    @PostMapping("/updateMyRole")
+    @ApiOperation("更新角色")
+    public RoleInfo updateMyRole(String roleInfo) {
+        try {
+            RoleInfo role = JSON.parseObject(roleInfo, RoleInfo.class);
+            RoleInfo r = roleService.getRoleById(role.getId());
+            r.setRoleName(role.getRoleName());
+            r.setContent(role.getContent());
+            return roleService.updateRole(r);
         } catch (Exception e) {
             LOGGER.info("updateRole:" + e.getMessage());
             return null;

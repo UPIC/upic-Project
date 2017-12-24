@@ -1,5 +1,4 @@
 var dataUrl = "/common/getProject";
-var changeCodeUrl = "";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -122,8 +121,8 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].projectCategory + "</td>";
         htmls += "<td>" + data[i].projectName + "</td>";
         htmls += "<td>" + data[i].guidanceMan + "</td>";
-        htmls += "<td>" + getDate(data[i].startTime, 'yyyy-mm-dd') + "</td>";
-        htmls += "<td>" + getDate(data[i].endTime, 'yyyy-mm-dd') + "</td>";
+        htmls += "<td>" + getDate(data[i].startTime, 'yyyy-MM-dd') + "</td>";
+        htmls += "<td>" + getDate(data[i].endTime, 'yyyy-MM-dd') + "</td>";
         htmls += "<td>" + status + "</td>";
         htmls += "<td class='center_td'>";
         htmls += "<a href='#mymodal1' data-toggle='modal'><div class='message_div'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getInfo','GET')>查看详情</span></div></a></td>";
@@ -134,7 +133,8 @@ function addHtmls(datas, pageNum) {
     page(datas, dataUrl, datas.size, datas.number);
 }
 
-function getInfo(data) {
+function getInfo(datas) {
+    var data = datas.content[0];
     var htmlss = "";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目类别</div>";
@@ -144,42 +144,59 @@ function getInfo(data) {
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>起始时间</div>";
-    htmlss += "<div class='span3'>" + getDate(data.startTime, 'yyyy-mm-dd') + "</div>";
+    htmlss += "<div class='span3'>" + getDate(data.startTime, 'yyyy-MM-dd') + "</div>";
     htmlss += "<div class='span3'>结束时间</div>";
-    htmlss += "<div class='span3'>" + getDate(data.endTime, 'yyyy-mm-dd') + "</div>";
+    htmlss += "<div class='span3'>" + getDate(data.endTime, 'yyyy-MM-dd') + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
-    htmlss += "<div class='span3'>所属学院</div>";
-    htmlss += "<div class='span3'>" + data.college + "</div>";
+    htmlss += "<div class='span3'>申报单位</div>";
+    htmlss += "<div class='span3'>" + data.declareUnit + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>二维码</div>";
-    htmlss += "<div class='span9'><img src='" + data.pic + "' alt=''></div>";
+    htmlss += "<div class='span9'>";
+    if (data.implementationProcess != "ENROLLMENT") {
+        htmlss += "<img src='../../img/fuck.jpeg' alt=''>";
+    } else {
+
+    }
+    htmlss += "</div>";
     htmlss += "</div>";
 
     $("#mymodal1").html(htmlss);
 }
 
 function changeStatus(pN, juge) {
-    if (juge = 0) {
+    if (juge == 0) {
         juge = 1;
         $("#" + pN).removeClass('switch-off');
         $("#" + pN).addClass('switch-on');
-    }
-    if (juge = 1) {
+    } else {
         juge = 0;
         $("#" + pN).removeClass('switch-on');
         $("#" + pN).addClass('switch-off');
     }
+
+    var projectInfoJson = {
+        projectNum: pN,
+        onOff: juge
+    }
+
+    var projectInfo = "{ ";
+    for (var item in projectInfoJson) {
+        projectInfo += "'" + item + "':'" + projectInfoJson[item] + "',";
+    }
+    projectInfo += " }";
+
     $.ajax({
-        type: 'GET',
-        url: changeCodeUrl,
+        type: "POST",
+        url: "/common/updateProjectOnOff",
         data: {
-            "projectNum": pN,
-            "onOff": juge
+            projectInfo: projectInfo
         },
         success: function (result) {
             alert(result);
+            getData(pageNum, dataUrl);
         }
     });
 }

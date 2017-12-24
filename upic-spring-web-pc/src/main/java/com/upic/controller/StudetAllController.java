@@ -3,6 +3,7 @@ package com.upic.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.common.document.excel.ExcelDocument;
+import com.upic.common.fdfs.FastDFSClient;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
@@ -12,6 +13,7 @@ import com.upic.service.*;
 //import com.upic.utils.UserUtils;
 
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -267,8 +270,12 @@ public class StudetAllController {
      * request
      */
     @PostMapping("/postIntegralLog")
-    public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo) throws Exception {
+    public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo, File file) throws Exception {
         try {
+//            CommonsMultipartFile cf = (CommonsMultipartFile) file;
+//            DiskFileItem fi = (DiskFileItem) cf.getFileItem();
+//            File f = fi.getStoreLocation();
+
             integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
             integralLogInfo.setType(IntegralLogTypeEnum.VOLUNTARY_APPLICATION);
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
@@ -290,6 +297,7 @@ public class StudetAllController {
             integralLogInfo.setIntegralLogId(integralLogIdInfo);
             integralLogInfo.setCollegeOtherName(cte.getAllFirstLetter(userInfo.getCollege()).toUpperCase());
             integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);
+
             return integralLogInfo;
         } catch (Exception e) {
             LOGGER.info("postIntegralLog:" + e.getMessage());
@@ -687,6 +695,6 @@ public class StudetAllController {
 //    }
 
     private UserInfo getUser() {
-        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
+        return new UserInfo("1522110238", "虞高峰", "", "信息工程学院", "计算机科学与技术", "15移动1班", "", "1", "yu_gao_feng@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "高峰", UserTypeEnum.STUDENT, 0, 0);
     }
 }
