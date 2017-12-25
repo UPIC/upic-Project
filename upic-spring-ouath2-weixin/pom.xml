@@ -11,11 +11,11 @@
 	<name>oauth2-weixin</name>
 	<description>Demo project for Spring Boot</description>
 
-	  <parent>
-        <groupId>com.upic</groupId>
-        <artifactId>upic-spring-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>com.upic</groupId>
+		<artifactId>upic-spring-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 
 
 	<properties>
@@ -94,24 +94,51 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
-        </dependency>
-        <dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.2</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/resources/lib/commons-collections-3.2.2.jar</systemPath>
 		</dependency>
-    </dependencies>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-batch</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>3.2.4</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.41</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.upic.common</groupId>
+			<artifactId>upic-spring-common</artifactId>
+			<version>${student-common.version}</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

@@ -43,8 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		SpringSocialConfigurer configurer = new SpringSocialConfigurer();
-		configurer.signupUrl("/casgo");
-//		configurer.signupUrl("/cas");
+//		configurer.signupUrl("/casgo");
+		configurer.signupUrl("/cas");
 		http.httpBasic().and().headers().frameOptions().disable().and().formLogin()
 		.loginPage("/cas")
 		.usernameParameter("user").passwordParameter("pass")

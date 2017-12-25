@@ -1,6 +1,7 @@
 package com.upic.controller;
 
 import com.upic.common.beans.utils.ChineseCharToEn;
+import com.upic.common.utils.redis.service.IRedisService;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.enums.IntegralLogStatusEnum;
@@ -29,6 +30,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/stu")
 public class StudetAllController {
@@ -52,6 +56,8 @@ public class StudetAllController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private IRedisService redisService;
     /**
      * 报名
      *
@@ -291,7 +297,7 @@ public class StudetAllController {
     @PostMapping("/updateIntegralLog")
     public IntegralLogInfo updateIntegralLog(IntegralLogInfo i, String projectNum) {
         try {
-            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserNum(), projectNum));
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(UserUtils.getUser().getUserNum(), projectNum));
 //            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserId(), projectNum));
             integralLogInfo.setProjectName(i.getProjectName());
             integralLogInfo.setProjectCategory(i.getProjectCategory());
@@ -386,10 +392,42 @@ public class StudetAllController {
         return null;
     }
 
-    private UserInfo getUser() {
-        return new UserInfo("1422110108", "董腾舟", "", "信息工程学院", "计算机科学与技术", "14微社交1班", "15858323367", "1", "dong_tengzhou@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "董", UserTypeEnum.TEACHER, 0, 0);
-    }
+//    private UserInfo getUser() {
+//        return new UserInfo("1422110108", "董腾舟", "", "信息工程学院", "计算机科学与技术", "14微社交1班", "15858323367", "1", "dong_tengzhou@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "董", UserTypeEnum.TEACHER, 0, 0);
+//    }
 
+    /**
+     * 1001 超时
+     * 1002服务器异常
+     * @param response
+     * @param projectNum
+     * @param nowTime
+     */
+    @GetMapping()
+    public void qrCodeConsume(HttpServletResponse response,String projectNum,String nowTime) {
+    	String msg="";
+    	try {
+    		String qrNum = redisService.get("QR"+projectNum);
+    		if(qrNum==null) {
+    			msg="1001";
+    		}
+    		//验签
+    		
+    		//获取项目
+    		ProjectInfo projectByNum = projectService.getProjectByNum(projectNum);
+    		GrainCoinLogInfo g=new GrainCoinLogInfo();
+    		//开始拼接
+    		//获取用户
+    		SocialUsers user = UserUtils.getUser();
+    		
+    		grainCoinLogService.saveGrainCoinLog(g);
+    		//二维码扫完后跳转地址 并传递msg
+    		response.sendRedirect("/?msg="+msg);
+    	}catch (Exception e) {
+    		LOGGER.info("qrCodeConsumption:" + e.getMessage());
+		}
+    }
+    
 
     /**
      * 修改未通过积分状态

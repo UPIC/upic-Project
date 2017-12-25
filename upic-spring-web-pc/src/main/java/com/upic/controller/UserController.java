@@ -1,5 +1,6 @@
 package com.upic.controller;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -23,9 +24,11 @@ import com.upic.dto.StudentInfo;
 import com.upic.dto.UserInfo;
 import com.upic.service.UserService;
 
-//@RestController
-@Controller
+@RestController
+@RequestMapping("/user")
 public class UserController {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(StudetAllController.class);
+
     @Autowired
     private WebRequestRedisService redisService;
 
@@ -35,6 +38,38 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+  
+  	@Autowired
+	private UserService userService;
+
+	@PostMapping("/batchAddStudent")
+	public String batchAddStudent(HttpServletRequest request, String baseModel) {
+		List<Object> list = null;
+		try {
+			// 转型为MultipartHttpRequest：
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			// 获得文件：
+			MultipartFile inputFile = multipartRequest.getFile("inputFile");
+			// 获得文件名：
+			String filename = inputFile.getOriginalFilename();
+			// 获得输入流：
+			// InputStream input = file.getInputStream();
+			String[] baseModels = new String[] {};
+			List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+			baseModels = parseArray.toArray(baseModels);
+			InputStream inputStream = inputFile.getInputStream();
+			if (inputStream == null) {
+				throw new Exception("文件为空");
+			}
+			list = ExcelDocument.upload(inputStream, baseModels, UserInfo.class, filename);
+			// integralLogService.saveAll(list);
+			userService.batchAddUser(list);
+		} catch (Exception e) {
+			LOGGER.info("batchAddStudent:" + e.getMessage());
+			return null;
+		}
+		return "SUCCESS";
+	}
     @RequestMapping("/registUser")
     public String createUser(WebRequest request, StudentInfo info) {
         providerSignInUtils.doPostSignUp(info.getStuNum(), request);
