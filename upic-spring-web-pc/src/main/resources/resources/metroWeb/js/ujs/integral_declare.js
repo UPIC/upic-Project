@@ -44,15 +44,15 @@ $(function () {
                 }
             });
     $("#submit").click(function () {
-        submit();
+        submitFile();
     })
 })
 
 function submitFile() {
-    var formData = new FormData(document.getElementById("myFileData"));
+    var formData = new FormData($("#"));
 
     $.ajax({
-        url: "",
+        url: "/stu/picUpload",
         type: "POST",
         data: formData,
         processData: false,

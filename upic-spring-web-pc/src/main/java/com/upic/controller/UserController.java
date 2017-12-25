@@ -7,10 +7,13 @@ import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.List;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONArray;
+import com.upic.common.document.excel.ExcelDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +37,12 @@ import com.upic.common.utils.redis.WebRequestRedisService;
 import com.upic.dto.StudentInfo;
 import com.upic.dto.UserInfo;
 import com.upic.service.UserService;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class UserController {
+
 	 protected static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
@@ -48,37 +54,39 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/user/batchAddStudent")
+    @ResponseBody
+    public String batchAddStudent(HttpServletRequest request, String baseModel) {
+        List<Object> list = null;
+        try {
+            // 转型为MultipartHttpRequest：
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            // 获得文件：
+            MultipartFile inputFile = multipartRequest.getFile("inputFile");
+            // 获得文件名：
+            String filename = inputFile.getOriginalFilename();
+            // 获得输入流：
+            // InputStream input = file.getInputStream();
+            String[] baseModels = new String[]{};
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            baseModels = parseArray.toArray(baseModels);
+            InputStream inputStream = inputFile.getInputStream();
+            if (inputStream == null) {
+                throw new Exception("文件为空");
+            }
+            list = ExcelDocument.upload(inputStream, baseModels, UserInfo.class, filename);
+            // integralLogService.saveAll(list);
+            userService.batchAddUser(list);
+        } catch (Exception e) {
+            LOGGER.info("batchAddStudent:" + e.getMessage());
+            return null;
+        }
+        return "SUCCESS";
+    }
+
   
 
-	@PostMapping("/user/batchAddStudent")
-	@ResponseBody
-	public String batchAddStudent(HttpServletRequest request, String baseModel) {
-		List<Object> list = null;
-		try {
-			// 转型为MultipartHttpRequest：
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-			// 获得文件：
-			MultipartFile inputFile = multipartRequest.getFile("inputFile");
-			// 获得文件名：
-			String filename = inputFile.getOriginalFilename();
-			// 获得输入流：
-			// InputStream input = file.getInputStream();
-			String[] baseModels = new String[] {};
-			List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
-			baseModels = parseArray.toArray(baseModels);
-			InputStream inputStream = inputFile.getInputStream();
-			if (inputStream == null) {
-				throw new Exception("文件为空");
-			}
-			list = ExcelDocument.upload(inputStream, baseModels, UserInfo.class, filename);
-			// integralLogService.saveAll(list);
-			userService.batchAddUser(list);
-		} catch (Exception e) {
-			LOGGER.info("batchAddStudent:" + e.getMessage());
-			return null;
-		}
-		return "SUCCESS";
-	}
+
     @RequestMapping("/registUser")
     public String createUser(WebRequest request, StudentInfo info) {
         providerSignInUtils.doPostSignUp(info.getStuNum(), request);
