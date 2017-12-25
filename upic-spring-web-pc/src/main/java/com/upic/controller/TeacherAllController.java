@@ -83,7 +83,7 @@ public class TeacherAllController {
         return null;
     }
 
-    private UserInfo getUser() {
-        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
-    }
+//    private UserInfo getUser() {
+//        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
+//    }
 }
