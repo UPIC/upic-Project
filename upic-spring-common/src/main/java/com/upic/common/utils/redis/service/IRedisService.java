@@ -1,6 +1,8 @@
 package com.upic.common.utils.redis.service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /** 
  *  
@@ -28,4 +30,31 @@ public interface IRedisService {
     public void put(String redisKey,String key, Object doamin, long expire);
       
     public Object getObj(String redisKey,String key);
+    
+    
+    
+    
+    public void del(String key);
+    
+    public Long init(String key);
+    
+    public Long increment(String key);
+    
+    public Long increment(String key, Long addSize);
+    
+    public Long decrement(String key);
+    
+    public Long decrement(String key, Long deleteSize);
+    
+    public boolean putIfAbsent(String key, String hashKey, String value);
+    
+    public boolean deletByKey(String key);
+    
+    public boolean deletByKey(Collection<String> keys);
+    
+    public Set<Object> keys(String key);
+    
+    public boolean deletByHashKey(String key, String hashKey);
+    
+    public void set(String key, String value, long expir);
 }  

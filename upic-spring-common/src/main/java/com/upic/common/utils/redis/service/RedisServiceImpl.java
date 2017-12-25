@@ -1,6 +1,8 @@
 package com.upic.common.utils.redis.service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -11,6 +13,7 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +28,13 @@ import com.alibaba.fastjson.JSONObject;
  */
 @Service
 public class RedisServiceImpl implements IRedisService {
-
+	private static final long INIT = 0;
+	private static final long INCREMENT = 1;
+	private static final long DECREMENT = -1;
 	@Autowired
-	private RedisTemplate<String, ?> redisTemplate;
+	private RedisTemplate<String, Object> redisTemplate;
+//	@Autowired
+//	private RedisTemplate<String, String> redisTemplate;
 	@Resource
 	protected HashOperations<String, String, Object> hashOperations;
 
@@ -120,7 +127,7 @@ public class RedisServiceImpl implements IRedisService {
 	}
 
 	@Override
-	public void put(String redisKey,String key, Object doamin, long expire) {
+	public void put(String redisKey, String key, Object doamin, long expire) {
 		hashOperations.put(redisKey, key, doamin);
 		if (expire != -1) {
 			redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -128,8 +135,104 @@ public class RedisServiceImpl implements IRedisService {
 	}
 
 	@Override
-	public Object getObj(String redisKey,String key) {
-		 return hashOperations.get(redisKey, key);
+	public Object getObj(String redisKey, String key) {
+		return hashOperations.get(redisKey, key);
 	}
 
+	public void del(String key) {
+		this.redisTemplate.delete(key);
+	}
+
+	/**
+	 * 初始化
+	 *
+	 * @param key
+	 * @return
+	 */
+	public Long init(String key) {
+		try {
+			if (get(key) != null) {
+				throw new Exception();
+			}
+			return redisTemplate.opsForValue().increment(key, INIT);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return -1L;
+		}
+	}
+
+	/**
+	 * 添加数值
+	 *
+	 * @param key
+	 * @return
+	 */
+	public Long increment(String key) {
+		return increment(key, INCREMENT);
+	}
+
+	public Long increment(String key, Long addSize) {
+		try {
+			if (get(key) == null) {
+				throw new Exception();
+			}
+			return redisTemplate.opsForValue().increment(key, addSize);
+		} catch (Exception e) {
+			return -1L;
+		}
+	}
+
+	public Long decrement(String key) {
+		return decrement(key, DECREMENT);
+	}
+
+	public Long decrement(String key, Long deleteSize) {
+		return redisTemplate.opsForValue().increment(key, deleteSize);
+	}
+
+	public boolean putIfAbsent(String key, String hashKey, String value) {
+		return redisTemplate.opsForHash().putIfAbsent(key, hashKey, value);
+	}
+
+	public boolean deletByKey(String key) {
+		try {
+			redisTemplate.delete(key);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean deletByKey(Collection<String> keys) {
+		try {
+			redisTemplate.delete(keys);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	public Set<Object> keys(String key) {
+		return redisTemplate.opsForHash().keys(key);
+	}
+
+	public boolean deletByHashKey(String key, String hashKey) {
+		try {
+			redisTemplate.opsForHash().delete(key, hashKey);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	public void set(String key, String value, long expir) {
+		ValueOperations<String, Object> ops = this.redisTemplate.opsForValue();
+		if (!this.redisTemplate.hasKey(key)) {
+			ops.set(key, value, expir);
+			System.out.println("set key success");
+		} else {
+			// 存在则打印之前的value值
+			System.out.println("this key = " + ops.get(key));
+		}
+	}
 }

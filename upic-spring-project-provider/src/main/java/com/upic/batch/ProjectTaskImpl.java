@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import com.upic.common.utils.redis.UpicRedisComponent;
+import com.upic.common.utils.redis.service.IRedisService;
 import com.upic.condition.ProjectCondition;
 import com.upic.enums.ImplementationProcessEnum;
 import com.upic.po.Project;
@@ -34,8 +35,11 @@ public class ProjectTaskImpl implements ProjectTask {
 	/* (non-Javadoc)
 	 * @see com.lesson.batch.BookTask#doTask()
 	 */
+	
+//	@Autowired
+//	private IRedisService redisService;
 	@Autowired
-	private UpicRedisComponent upicRedisComponent;
+	private IRedisService upicRedisComponent;
 	@Override
 	public void doTask() {
 		//处理结束的

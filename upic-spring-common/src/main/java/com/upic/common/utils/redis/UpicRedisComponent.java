@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class UpicRedisComponent {
     private static final long DECREMENT = -1;
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate<String, String> stringRedisTemplate;
 
     public void set(String key, String value) {
         ValueOperations<String, String> ops = this.stringRedisTemplate.opsForValue();
@@ -34,7 +35,7 @@ public class UpicRedisComponent {
     }
 
     public String get(String key) {
-        return this.stringRedisTemplate.opsForValue().get(key);
+        return  this.stringRedisTemplate.opsForValue().get(key);
     }
 
     public void del(String key) {
