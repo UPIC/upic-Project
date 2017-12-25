@@ -38,8 +38,7 @@ $(function () {
                     ajaxs(requestData, "createProject",
                         getConfirmationBasicByC)
                 } else if (selectRadioIdName === 'radioselect2') {
-                    var htmls = "<input type='text' id='projectName' placeholder='请输入项目名称'";
-                    htmls += "class='input-xxlarge' /> <span class='help-inline'>*</span>";
+                    var htmls = "<input type='text' id='projectName' placeholder='请输入项目名称' class='input-xxlarge' /> <span class='help-inline'>*</span>";
                     $("#writeProjectName").html(htmls);
                 }
             });
@@ -49,7 +48,8 @@ $(function () {
 })
 
 function submitFile() {
-    var formData = new FormData($("#"));
+    var formData = new FormData();
+    formData.append("file", $("#myFileData")[0].file);
 
     $.ajax({
         url: "/stu/picUpload",
