@@ -6,91 +6,110 @@
 <title>Index</title>
 </head>
 <body>
-	欢迎来我们的平台！
-	学号:<div id="stuNum"></div>
-	<a href="html/student.html">学生系统</a>
-	<div id="auth"></div>
+<!-- 	欢迎来我们的平台！ -->
+<!-- 	学号:<div id="stuNum"></div> -->
+<!-- 	<a href="html/student.html">学生系统</a> -->
+<!-- 	<div id="auth"></div> -->
 </body>
 <script type="text/javascript">
-	(function($) {
-		$.getUrlParam = function(name) {
-			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-			var r = window.location.search.substr(1).match(reg);
-			if (r != null)
-				return unescape(r[2]);
-			return null;
-		}
-	})(jQuery);
+
+$(function(){
 	$
-			.ajax({
-				type : 'GET',
-				url : '/connect',
-				success : function(r) {
-					var htmls = "";
-					for ( var key in r) {
-						var data = r[key];
-						if (data === true) {
-							htmls += key + "已绑定"
-									+ "  <button onClick=deal('giveup','" + key
-									+ "') >点击解绑</button>" + key + "用户名:"
-									+ $.getUrlParam('username');
-						} else {
-							htmls += key
-									+ "未绑定"
-									+ " <form action='/connect/"+key+"' method='post'> <input type='submit' value='去绑定' /> </form>";
-						}
-						htmls += "<br>";
-					}
-					$("#auth").html(htmls);
-				},
-				error : function() {
-					alert('error!')
-				}
-			});
-
-	function deal(obj, key) {
-		if (obj === 'giveup') {
-			giveup(key);
-		} else if (obj === 'bang') {
-			bang(key);
-		}
-	}
-
-	function giveup(key) {
-		$.ajax({
-			type : 'delete',
-			url : '/connect/' + key,
-			success : function(r) {
-				alert("解绑成功");
-				window.location.reload();
-			},
-			error : function() {
-				window.location.reload();
-			}
-		});
-	}
-
-	function bang(key) {
-		var action = "/connect/" + key;
-		// 创建Form  
-		var form = $('<form></form>');
-		// 设置属性  
-		form.attr('action', action);
-		form.attr('method', 'post');
-		// form的target属性决定form在哪个页面提交  
-		// _self -> 当前页面 _blank -> 新页面  
-		form.submit();
-		return false;
-	}
-
-		$.ajax({
+		.ajax({
 			type : 'GET',
-			url : '/getUserInfo/',
-			success : function(r) {
-				$("#stuNum").html(r.stuNum);
+			url : '/common/getUserInfo',
+			success : function(data) {
+				if(data.userNum.length>9){
+					window.location.href="/student/st-main.html";
+				}else{
+					window.location.href="/teacher/teacher-main.html";
+				}
 			},
 			error : function() {
+				alert('error!')
 			}
 		});
+	
+})
+// 	(function($) {
+// 		$.getUrlParam = function(name) {
+// 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+// 			var r = window.location.search.substr(1).match(reg);
+// 			if (r != null)
+// 				return unescape(r[2]);
+// 			return null;
+// 		}
+// 	})(jQuery);
+// 	$
+// 			.ajax({
+// 				type : 'GET',
+// 				url : '/connect',
+// 				success : function(r) {
+// 					var htmls = "";
+// 					for ( var key in r) {
+// 						var data = r[key];
+// 						if (data === true) {
+// 							htmls += key + "已绑定"
+// 									+ "  <button onClick=deal('giveup','" + key
+// 									+ "') >点击解绑</button>" + key + "用户名:"
+// 									+ $.getUrlParam('username');
+// 						} else {
+// 							htmls += key
+// 									+ "未绑定"
+// 									+ " <form action='/connect/"+key+"' method='post'> <input type='submit' value='去绑定' /> </form>";
+// 						}
+// 						htmls += "<br>";
+// 					}
+// 					$("#auth").html(htmls);
+// 				},
+// 				error : function() {
+// 					alert('error!')
+// 				}
+// 			});
+
+// 	function deal(obj, key) {
+// 		if (obj === 'giveup') {
+// 			giveup(key);
+// 		} else if (obj === 'bang') {
+// 			bang(key);
+// 		}
+// 	}
+
+// 	function giveup(key) {
+// 		$.ajax({
+// 			type : 'delete',
+// 			url : '/connect/' + key,
+// 			success : function(r) {
+// 				alert("解绑成功");
+// 				window.location.reload();
+// 			},
+// 			error : function() {
+// 				window.location.reload();
+// 			}
+// 		});
+// 	}
+
+// 	function bang(key) {
+// 		var action = "/connect/" + key;
+// 		// 创建Form  
+// 		var form = $('<form></form>');
+// 		// 设置属性  
+// 		form.attr('action', action);
+// 		form.attr('method', 'post');
+// 		// form的target属性决定form在哪个页面提交  
+// 		// _self -> 当前页面 _blank -> 新页面  
+// 		form.submit();
+// 		return false;
+// 	}
+
+// 		$.ajax({
+// 			type : 'GET',
+// 			url : '/getUserInfo/',
+// 			success : function(r) {
+// 				$("#stuNum").html(r.stuNum);
+// 			},
+// 			error : function() {
+// 			}
+// 		});
 </script>
 </html>
