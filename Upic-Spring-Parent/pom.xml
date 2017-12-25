@@ -138,7 +138,7 @@
 		<module>../upic-spring-user-provider</module>
 
 
-<!-- 		<module>../upic-spring-web-mobile</module> -->
+		<module>../upic-spring-web-mobile</module>
 		<module>../upic-spring-web-pc</module>
 		
 		<!-- <module>../upic-spring-mail-api</module> -->

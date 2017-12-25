@@ -6,7 +6,7 @@
 	<groupId>com.upic.web.mobile</groupId>
 	<artifactId>web-mobile</artifactId>
 	<version>${upic-web-mobile.version}</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>web-mobile</name>
 
@@ -236,8 +236,32 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
 			</plugin>
+
+<!-- 			<plugin> -->
+<!-- 				<artifactId>maven-compiler-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<source>1.8</source> -->
+<!-- 					<target>1.8</target> -->
+<!-- 					<encoding>UTF-8</encoding> -->
+<!-- 					<compilerArguments> -->
+<!-- 						<extdirs>${basedir}/src/main/resources/lib</extdirs> -->
+<!-- 					</compilerArguments> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 		</plugins>
+		<!-- <resources> -->
+		<!-- <resource> -->
+		<!-- <directory>src/main/resources</directory> -->
+		<!-- <targetPath>lib/</targetPath> -->
+		<!-- <includes> -->
+		<!-- <include>**/*.jar</include> -->
+		<!-- </includes> -->
+		<!-- </resource> -->
+		<!-- </resources> -->
 	</build>
 
 
