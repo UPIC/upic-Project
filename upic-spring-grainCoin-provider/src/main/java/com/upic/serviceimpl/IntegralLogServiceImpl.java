@@ -6,6 +6,7 @@ import com.upic.common.exception.NoExitException;
 import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
 import com.upic.common.utils.redis.UpicRedisComponent;
+import com.upic.common.utils.redis.service.IRedisService;
 import com.upic.condition.IntegralLogCondition;
 import com.upic.dto.IntegralLogIdInfo;
 import com.upic.dto.IntegralLogInfo;
@@ -40,7 +41,7 @@ public class IntegralLogServiceImpl implements IntegralLogService {
     private IntegralLogRepository integralLogRepository;
 
     @Autowired
-    private UpicRedisComponent redisComponent;
+    private IRedisService redisComponent;
     protected static final Logger LOGGER = LoggerFactory.getLogger(IntegralLogServiceImpl.class);
 
     public void allOperation(String apartment, String operatorNum, IntegralLogStatusEnum status,

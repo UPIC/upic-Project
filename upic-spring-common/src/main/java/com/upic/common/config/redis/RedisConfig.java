@@ -26,21 +26,11 @@ public class RedisConfig {
 	@Autowired
 	RedisConnectionFactory redisConnectionFactory;
 
-	/**
-	 * 实例化 RedisTemplate 对象
-	 *
-	 * @return
-	 */
-	// @Bean
-	// public RedisTemplate<String, Object> functionDomainRedisTemplate() {
-	// RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-	// initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
-	// return redisTemplate;
-	// }
 	@Bean
-	public RedisTemplate<?, ?> getRedisTemplate() {
-		RedisTemplate<?, ?> template = new StringRedisTemplate(getConnectionFactory());
-		return template;
+	public RedisTemplate<String, Object> functionDomainRedisTemplate() {
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+		initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
+		return redisTemplate;
 	}
 
 	/**
@@ -130,4 +120,15 @@ public class RedisConfig {
 		logger.info("JedisConnectionFactory bean init success.");
 		return factory;
 	}
+	/**
+	 * 实例化 RedisTemplate 对象
+	 *
+	 * @return
+	 */
+	// @Bean
+	// public RedisTemplate<?, ?> getRedisTemplate() {
+	// RedisTemplate<?, ?> template = new
+	// StringRedisTemplate(getConnectionFactory());
+	// return template;
+	// }
 }
