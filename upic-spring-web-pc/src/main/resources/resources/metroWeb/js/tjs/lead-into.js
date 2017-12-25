@@ -7,20 +7,58 @@ var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
 var requestData = {};
+var batchAddUser="/user/batchAddStudent";
+//function getFile() {//获取EXCEL
+//    //ajax方法上传文件到后台
+//    var files = $('input[name="inputFile"]').prop('files');//获取到文件列表
+//    $.ajax({
+//        type: "POST",
+//        url: daoruUrl,
+//        data: files,
+//        success: function (result) {
+//            alert("已导入")
+//        }
+//    });
+//}
+var uploading=true;
+function getFile() {
+	if(!uploading){
+		return ;
+	}
+	uploading=false;
+	var baseModel = [ "userNum", "username", "college", "major",
+			"clazz", "type" ];
+	var str = JSON.stringify(baseModel);
 
-function getFile() {//获取EXCEL
-    //ajax方法上传文件到后台
-    var files = $('input[name="inputFile"]').prop('files');//获取到文件列表
-    $.ajax({
-        type: "POST",
-        url: daoruUrl,
-        data: files,
-        success: function (result) {
-            alert("已导入")
-        }
-    });
+	var formData = new FormData();
+	formData.append("inputFile", $("#inputFile")[0].files[0]);
+	formData.append("baseModel", str);
+	$.ajax({
+		url : batchAddUser,
+		type : 'POST',
+		cache : false,
+		data : formData,
+		processData : false,
+		contentType : false,
+		dataType : "json",
+		beforeSend : function() {
+			uploading = false;
+		},
+		success : function(data) {
+			if(data==="SUCCESS"){
+				alert("上传成功");
+			}else{
+				alert("上传失败，请重试！");
+			}
+			uploading = true;
+		},
+		error : function(err) {
+			// alert(err);
+			alert("服务器异常！");
+			uploading = true;
+		}
+	});
 }
-
 function addOne() {
     var Data = {};
     Data.college = $("#college1").val();

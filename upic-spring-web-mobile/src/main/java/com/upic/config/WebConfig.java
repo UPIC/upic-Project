@@ -50,7 +50,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		DefaultCASFilter cf = new DefaultCASFilter();
 		filter.setFilter(cf);
 		List<String> urls = new ArrayList<>();
-		urls.add("/cas");
+		urls.add("/casgo");
 		filter.setUrlPatterns(urls);
 		return filter;
 	}

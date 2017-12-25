@@ -63,4 +63,6 @@ public interface UserService {
     void saveAll(List<Object> list);
 
     List<Object> listUser(UserCondition condition);
+    
+    void batchAddUser(List<Object> list);
 }
