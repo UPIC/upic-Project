@@ -2,20 +2,30 @@ package com.upic.controller;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONArray;
+import com.upic.common.document.excel.ExcelDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SocialUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import com.neusoft.education.tp.sso.client.filter.CASFilterRequestWrapper;
@@ -23,11 +33,12 @@ import com.upic.common.utils.redis.WebRequestRedisService;
 import com.upic.dto.StudentInfo;
 import com.upic.dto.UserInfo;
 import com.upic.service.UserService;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-@RestController
-@RequestMapping("/user")
+@Controller
 public class UserController {
-	protected static final Logger LOGGER = LoggerFactory.getLogger(StudetAllController.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(StudetAllController.class);
 
     @Autowired
     private WebRequestRedisService redisService;
@@ -38,38 +49,36 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-  
-  	@Autowired
-	private UserService userService;
+    @PostMapping("/user/batchAddStudent")
+    @ResponseBody
+    public String batchAddStudent(HttpServletRequest request, String baseModel) {
+        List<Object> list = null;
+        try {
+            // 转型为MultipartHttpRequest：
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            // 获得文件：
+            MultipartFile inputFile = multipartRequest.getFile("inputFile");
+            // 获得文件名：
+            String filename = inputFile.getOriginalFilename();
+            // 获得输入流：
+            // InputStream input = file.getInputStream();
+            String[] baseModels = new String[]{};
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            baseModels = parseArray.toArray(baseModels);
+            InputStream inputStream = inputFile.getInputStream();
+            if (inputStream == null) {
+                throw new Exception("文件为空");
+            }
+            list = ExcelDocument.upload(inputStream, baseModels, UserInfo.class, filename);
+            // integralLogService.saveAll(list);
+            userService.batchAddUser(list);
+        } catch (Exception e) {
+            LOGGER.info("batchAddStudent:" + e.getMessage());
+            return null;
+        }
+        return "SUCCESS";
+    }
 
-	@PostMapping("/batchAddStudent")
-	public String batchAddStudent(HttpServletRequest request, String baseModel) {
-		List<Object> list = null;
-		try {
-			// 转型为MultipartHttpRequest：
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-			// 获得文件：
-			MultipartFile inputFile = multipartRequest.getFile("inputFile");
-			// 获得文件名：
-			String filename = inputFile.getOriginalFilename();
-			// 获得输入流：
-			// InputStream input = file.getInputStream();
-			String[] baseModels = new String[] {};
-			List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
-			baseModels = parseArray.toArray(baseModels);
-			InputStream inputStream = inputFile.getInputStream();
-			if (inputStream == null) {
-				throw new Exception("文件为空");
-			}
-			list = ExcelDocument.upload(inputStream, baseModels, UserInfo.class, filename);
-			// integralLogService.saveAll(list);
-			userService.batchAddUser(list);
-		} catch (Exception e) {
-			LOGGER.info("batchAddStudent:" + e.getMessage());
-			return null;
-		}
-		return "SUCCESS";
-	}
     @RequestMapping("/registUser")
     public String createUser(WebRequest request, StudentInfo info) {
         providerSignInUtils.doPostSignUp(info.getStuNum(), request);
