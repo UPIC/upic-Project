@@ -9,12 +9,10 @@ import com.upic.condition.ResourceCondition;
 import com.upic.condition.RoleCondition;
 import com.upic.dto.*;
 import com.upic.enums.OperatorStatusEnum;
-import com.upic.enums.UserStatusEnum;
-import com.upic.enums.UserTypeEnum;
 import com.upic.service.*;
-//import com.upic.social.user.SocialUsers;
-//import com.upic.utils.UserUtils;
 
+import com.upic.social.user.SocialUsers;
+import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -388,8 +385,6 @@ public class OperatorController {
     public List<ResourceInfo> listResource(ResourceCondition resourceCondition) {
         try {
             List<ResourceInfo> resourceInfoList = resourceService.listResource(resourceCondition);
-            System.out.println("1234wqwedu1dbjhqwebduqyb3dbwed" + resourceCondition);
-            System.out.println("ksdc1asdcnasdncasndckasdcasdcn" + resourceInfoList.toString());
             return resourceInfoList;
         } catch (Exception e) {
             LOGGER.info("listResource:" + e.getMessage());
@@ -519,8 +514,8 @@ public class OperatorController {
     @ApiOperation("获取自己的菜单列表")
     public List<ResourceInfo> getResourceBySelf() {
         try {
-//            List<ResourceInfo> resourceList = getUser().getResourceList();
-            List<ResourceInfo> resourceList = resourceService.getAll();
+            List<ResourceInfo> resourceList = getUser().getResourceList();
+//            List<ResourceInfo> resourceList = resourceService.getAll();
             return resourceList;
         } catch (Exception e) {
             LOGGER.info("getResourceBySelf:" + e.getMessage());
@@ -528,12 +523,8 @@ public class OperatorController {
         }
     }
 
-//    private SocialUsers getUser() {
-//        SocialUsers user= UserUtils.getUser();
-//        return user;
-//    }
-
-    private UserInfo getUser() {
-        return new UserInfo("1522110240", "章威男", "", "信息工程学院", "计算机科学与技术", "15微社交1班", "13250950317", "1", "zhang_wei_nan@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "山鸡", UserTypeEnum.TEACHER, 0, 0);
+    private SocialUsers getUser() {
+        SocialUsers user= UserUtils.getUser();
+        return user;
     }
 }

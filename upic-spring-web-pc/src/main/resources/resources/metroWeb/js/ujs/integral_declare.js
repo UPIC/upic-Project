@@ -48,7 +48,25 @@ $(function () {
     })
 })
 
-function submit() {
+function submitFile() {
+    var formData = new FormData(document.getElementById("myFileData"));
+
+    $.ajax({
+        url: "",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            submit(data);
+        },
+        error: function (e) {
+            alert("错误！！");
+        }
+    });
+}
+
+function submit(url) {
     var data = new Object();
     if (parseInt($("#integral").attr('value')) == 0) {
         alert("请选择项目类别");
@@ -80,7 +98,7 @@ function submit() {
     data.projectCategory = $("#1").find("option:selected").text();
     data.event = getEvent();
     data.integral = parseInt($("#integral").attr('value'));
-    var formData = new FormData($("#myFileData")[0]);
+    data.url = url;
 
     $.ajax({
         type: 'POST',
