@@ -1,6 +1,7 @@
 package com.upic.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.common.fdfs.FastDFSClient;
@@ -9,10 +10,13 @@ import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
 import com.upic.enums.*;
 import com.upic.service.*;
+//import com.upic.social.user.SocialUsers;
+//import com.upic.utils.UserUtils;
 
 import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +25,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -37,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -217,23 +225,18 @@ public class StudetAllController {
     /**
      * 图片上传
      *
+     * @param file
      * @return
      */
     @PostMapping("/picUpload")
-    public String picUpload(@RequestParam(required = true, value = "file") MultipartFile file) {
+    public String picUpload(MultipartFile file) {
         try {
-//            // 转型为MultipartHttpRequest：
-//            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-//            // 获得文件：
-//            MultipartFile inputFile = multipartRequest.getFile("inputFile");
-//            // 获得文件名：
-//            String filename = inputFile.getOriginalFilename();
-//            InputStream inputStream = inputFile.getInputStream();
-//            if (inputStream == null) {
-//                throw new Exception("文件为空");
-//            }
+            CommonsMultipartFile commonsMultipartFile = (CommonsMultipartFile) file;
+            DiskFileItem diskFileItem = (DiskFileItem) commonsMultipartFile.getFileItem();
+            File f = diskFileItem.getStoreLocation();
 
-            String upload = FastDFSClient.uploadFile(file.getBytes(), file.getOriginalFilename());
+            FastDFSClient fastDFSClient = new FastDFSClient();
+            String upload = fastDFSClient.uploadFile(f, f.getName());
 
             upload = "116.62.169.117:22122/" + upload;
 
@@ -584,6 +587,7 @@ public class StudetAllController {
             integralLogIdInfo.setProjectNum(projectNum);
             SocialUsers socialUsers = getUser();
 
+//
             integralLogIdInfo.setStudentNum(socialUsers.getUserId());
 
             integralLogInfo.setIntegralLogId(integralLogIdInfo);
@@ -598,6 +602,10 @@ public class StudetAllController {
             } else if (projectInfo.getUnit().equals("3")) {
                 integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
             }
+//            integralLogInfo.setStudent(socialUsers.getUserNum());
+//            integralLogInfo.setClazz(socialUsers.getClazz());
+//            integralLogInfo.setCollege(socialUsers.getCollege());
+
             integralLogInfo.setStudent(socialUsers.getUsername());
             integralLogInfo.setClazz(socialUsers.getClazz());
             integralLogInfo.setCollege(socialUsers.getCollege());
