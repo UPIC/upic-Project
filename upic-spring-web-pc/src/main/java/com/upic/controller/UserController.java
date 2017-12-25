@@ -2,32 +2,42 @@ package com.upic.controller;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SocialUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.alibaba.fastjson.JSONArray;
 import com.neusoft.education.tp.sso.client.filter.CASFilterRequestWrapper;
+import com.upic.common.document.excel.ExcelDocument;
 import com.upic.common.utils.redis.WebRequestRedisService;
 import com.upic.dto.StudentInfo;
 import com.upic.dto.UserInfo;
 import com.upic.service.UserService;
 
-@RestController
-@RequestMapping("/user")
+@Controller
 public class UserController {
-	protected static final Logger LOGGER = LoggerFactory.getLogger(StudetAllController.class);
+	 protected static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private WebRequestRedisService redisService;
@@ -39,10 +49,9 @@ public class UserController {
     private UserService userService;
 
   
-  	@Autowired
-	private UserService userService;
 
-	@PostMapping("/batchAddStudent")
+	@PostMapping("/user/batchAddStudent")
+	@ResponseBody
 	public String batchAddStudent(HttpServletRequest request, String baseModel) {
 		List<Object> list = null;
 		try {
