@@ -49,7 +49,7 @@ $(function () {
 
 function submitFile() {
     var formData = new FormData();
-    formData.append("file", $("#file-0a")[0].files[0]);
+    formData.append("file", $("#file-0a").files);
 
     $.ajax({
         url: "/stu/picUpload",
@@ -58,10 +58,14 @@ function submitFile() {
         processData: false,
         contentType: false,
         success: function (data) {
-            submit(data);
+            if (data === "116.62.169.117:22122/null") {
+                alert("上传失败！");
+            } else {
+                submit(data);
+            }
         },
         error: function (e) {
-            alert("错误！！");
+            alert("错误！");
         }
     });
 }

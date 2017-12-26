@@ -60,6 +60,8 @@ public interface IntegralLogService {
      */
     IntegralLogInfo getByIntegralLogId(IntegralLogIdInfo integralLogIdInfo);
 
+
+
     /**
      * 报名
      *
@@ -182,4 +184,6 @@ public interface IntegralLogService {
     Page<IntegralLogInfo> getSuccessIntegralLogPage(String studentNum, Pageable pageable);
 
     Page<IntegralLogInfo> getDefeatedIntegralLogPage(String studentNum, Pageable pageable);
+
+    String changeIntegralLogToSignedIn(String projectNum, String userId);
 }

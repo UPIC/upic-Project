@@ -879,20 +879,27 @@ public class CommonController {
     @GetMapping("/changeProjectStatusUrl")
     public String changeProjectStatusUrl(String projectNum) {
         try {
+            SocialUsers socialUsers = getUser();
             ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
 
-            if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED || projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_FAIL) {
-                projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT);
-            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_AGAIN_FAIL) {
-                projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_AGAIN);
-            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_FINAL_FAIL) {
+            if (socialUsers.getRank() == "1" && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
                 projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_FINAL);
-            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_FAIL) {
-                projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING);
-            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_AGAIN_FAIL) {
-                projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING_AGAIN);
-            } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_FINAL_FAIL) {
-                projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING_FINAL);
+            } else if (socialUsers.getRank() == "2" && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
+                projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_AGAIN);
+            } else {
+                if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED || projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_FAIL) {
+                    projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT);
+                } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_AGAIN_FAIL) {
+                    projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_AGAIN);
+                } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_FINAL_FAIL) {
+                    projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_FINAL);
+                } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_FAIL) {
+                    projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING);
+                } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_AGAIN_FAIL) {
+                    projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING_AGAIN);
+                } else if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.CHECKING_FINAL_FAIL) {
+                    projectInfo.setImplementationProcess(ImplementationProcessEnum.CHECKING_FINAL);
+                }
             }
 
             projectService.updateProject(projectInfo);

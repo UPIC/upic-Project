@@ -25,7 +25,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import sun.misc.BASE64Encoder;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +60,7 @@ public class StudetAllController {
 
     @Autowired
     private IRedisService redisService;
+
     /**
      * 报名
      *
@@ -86,11 +89,7 @@ public class StudetAllController {
                 return null;
             }
             integralLogInfo.setIntegral(projectInfo.getIntegral());
-            if (projectInfo.getUnit().equals("2") || projectInfo.getUnit().equals("1")) {
-                integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
-            } else if (projectInfo.getUnit().equals("3")) {
-                integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
-            }
+            integralLogInfo.setStatus(IntegralLogStatusEnum.ALREADY_SIGN_UP);
 
             integralLogInfo.setStudent(socialUsers.getUsername());
             integralLogInfo.setClazz(socialUsers.getClazz());
@@ -100,8 +99,11 @@ public class StudetAllController {
             integralLogInfo.setProjectName(projectNum);
             integralLogInfo.setProjectCategory(projectInfo.getProjectCategory());
             integralLogInfo.setCollegeOtherName(projectInfo.getCollegeOtherName());
-            integralLogService.signUp(integralLogInfo);
-            return "SUCCESS";
+            if (integralLogService.signUp(integralLogInfo) == null) {
+                return "ERROR";
+            } else {
+                return "SUCCESS";
+            }
         } catch (Exception e) {
             LOGGER.info("signUp:" + e.getMessage());
             return null;
@@ -399,35 +401,49 @@ public class StudetAllController {
     /**
      * 1001 超时
      * 1002服务器异常
+     *
      * @param response
      * @param projectNum
      * @param nowTime
      */
     @GetMapping()
-    public void qrCodeConsume(HttpServletResponse response,String projectNum,String nowTime) {
-    	String msg="";
-    	try {
-    		String qrNum = redisService.get("QR"+projectNum);
-    		if(qrNum==null) {
-    			msg="1001";
-    		}
-    		//验签
-    		
-    		//获取项目
-    		ProjectInfo projectByNum = projectService.getProjectByNum(projectNum);
-    		GrainCoinLogInfo g=new GrainCoinLogInfo();
-    		//开始拼接
-    		//获取用户
-    		SocialUsers user = UserUtils.getUser();
-    		
-    		grainCoinLogService.saveGrainCoinLog(g);
-    		//二维码扫完后跳转地址 并传递msg
-    		response.sendRedirect("/?msg="+msg);
-    	}catch (Exception e) {
-    		LOGGER.info("qrCodeConsumption:" + e.getMessage());
-		}
+    public void qrCodeConsume(HttpServletResponse response, String projectNum, String nowTime) {
+        String msg = "";
+        try {
+            String qrNum = redisService.get("QR" + projectNum);
+            if (qrNum == null) {
+                msg = "1001";
+                throw new Exception(msg);
+            }
+
+            String token = projectNum + nowTime + "QR";
+
+            //验签
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            BASE64Encoder base64Encoder = new BASE64Encoder();
+            String accessToken = base64Encoder.encode(messageDigest.digest(token.getBytes("utf-8")));
+
+            if (!qrNum.equals(accessToken)) {
+                msg = "1002";
+                throw new Exception(msg);
+            }
+
+            //获取项目
+            ProjectInfo projectByNum = projectService.getProjectByNum(projectNum);
+
+            //获取用户
+            SocialUsers user = UserUtils.getUser();
+
+            // 更改报名积分状态
+            String returnCode = integralLogService.changeIntegralLogToSignedIn(projectNum, user.getUserId());
+
+            //二维码扫完后跳转地址 并传递msg
+            response.sendRedirect("/index.html?msg=" + msg);
+        } catch (Exception e) {
+            LOGGER.info("qrCodeConsumption:" + e.getMessage());
+        }
     }
-    
+
 
     /**
      * 修改未通过积分状态
