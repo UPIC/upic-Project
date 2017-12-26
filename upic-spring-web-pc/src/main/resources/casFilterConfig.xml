@@ -4,7 +4,7 @@
     <validateServer>http://cas.nbdhyu.edu.cn/cas</validateServer>
    <!--  <this>upictest.sinaapp.com</this>  -->
 <!-- <this>localhost:9091</this>  -->
- <this>10.101.9.230:9091</this>
+ <this>10.21.10.120:9091</this>
     <wrapRequest>false</wrapRequest>
     <checkAlive>false</checkAlive>
     <notForceAuthUrls>

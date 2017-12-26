@@ -46,6 +46,8 @@
             <artifactId>upic-spring-common</artifactId>
             <version>${student-common.version}</version>
         </dependency>
+        
+        
     </dependencies>
 
    <build>

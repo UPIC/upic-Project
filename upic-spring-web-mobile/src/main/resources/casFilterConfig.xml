@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <loginServer>http://cas.nbdhyu.edu.cn/cas</loginServer>
-    <validateServer>http://cas.nbdhyu.edu.cn/cas</validateServer>
-   <!--  <this>upictest.sinaapp.com</this>  -->
-<!-- <this>localhost:9090</this>  --> 
- <this>10.101.9.230:9090</this>
-    <wrapRequest>false</wrapRequest>
-    <checkAlive>false</checkAlive>
-    <notForceAuthUrls>
-        <url-pattern>\.js$</url-pattern>
-        <url-pattern>\.xsl$</url-pattern>
-        <url-pattern>\.xml$</url-pattern>
-        <url-pattern>\.gif$</url-pattern>
-        <url-pattern>\.jpg$</url-pattern>
-        <url-pattern>\.bmp$</url-pattern>
-        <url-pattern>\.css$</url-pattern>
-        <url-pattern>\.swf$</url-pattern>
-        <url-pattern>\.htm$</url-pattern>
-        <url-pattern>\.html$</url-pattern>
-    </notForceAuthUrls>
+	<loginServer>http://cas.nbdhyu.edu.cn/cas</loginServer>
+	<validateServer>http://cas.nbdhyu.edu.cn/cas</validateServer>
+	<!-- <this>upictest.sinaapp.com</this> -->
+	<this>127.0.0.1:9090</this>
+	<!-- <this>10.21.10.120:9090</this> -->
+	<wrapRequest>false</wrapRequest>
+	<checkAlive>false</checkAlive>
+	<notForceAuthUrls>
+		<url-pattern>\.js$</url-pattern>
+		<url-pattern>\.xsl$</url-pattern>
+		<url-pattern>\.xml$</url-pattern>
+		<url-pattern>\.gif$</url-pattern>
+		<url-pattern>\.jpg$</url-pattern>
+		<url-pattern>\.bmp$</url-pattern>
+		<url-pattern>\.css$</url-pattern>
+		<url-pattern>\.swf$</url-pattern>
+		<url-pattern>\.htm$</url-pattern>
+		<url-pattern>\.html$</url-pattern>
+	</notForceAuthUrls>
 </config>

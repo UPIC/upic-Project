@@ -11,6 +11,7 @@
  */
 package com.upic.common.lock;
 
+import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class SingleServerRedissonConfigBuilder implements RedissonConfigBuilder 
     @Override
     public Config build(RedisProperties redisProperties) {
         Config config = new Config();
-        config.useSingleServer().setAddress(redisProperties.getHost()+":"+redisProperties.getPort());
+        config.useSingleServer().setAddress(redisProperties.getHost()+":"+redisProperties.getPort()).setPassword(redisProperties.getPassword());
         return config;
     }
 

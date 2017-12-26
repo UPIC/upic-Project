@@ -91,7 +91,10 @@
 			<artifactId>upic-spring-common</artifactId>
 			<version>${student-common.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-batch</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
@@ -118,11 +121,11 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>com.upic.grainCoin.api</groupId>
-            <artifactId>upic-spring-grainCoin-api</artifactId>
-            <version>${student-grainCoin-api.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>com.upic.grainCoin.api</groupId>
+			<artifactId>upic-spring-grainCoin-api</artifactId>
+			<version>${student-grainCoin-api.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.101tec</groupId>

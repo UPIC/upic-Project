@@ -1,6 +1,10 @@
 package com.upic.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +29,13 @@ import com.upic.enums.UserTypeEnum;
 //import com.upic.po.Student;
 //import com.upic.repository.StudentRspoitory;
 import com.upic.service.UserService;
+import com.upic.utils.UserUtils;
 
 @Controller
 public class UserController {
-//	@Autowired
-//	private WebRequestRedisService redisService;
-	
+	// @Autowired
+	// private WebRequestRedisService redisService;
+
 	@Autowired
 	private IRedisService redisService;
 
@@ -64,22 +69,35 @@ public class UserController {
 	}
 
 	@RequestMapping("/casgo")
-	public String createUsers(WebRequest request, HttpServletRequest requests, HttpSession session,
-			RedirectAttributes model, String sessionId) {
+	public void createUsers(WebRequest request, HttpServletRequest requests, HttpServletResponse response,
+			HttpSession session, RedirectAttributes model, String sessionId) {
 		CASFilterRequestWrapper reqWrapper = new CASFilterRequestWrapper(requests);
 		String userID = reqWrapper.getRemoteUser();
-		ProviderSignInAttempt webRequestSer = (ProviderSignInAttempt) redisService.getObj("TEST_REDIS_KEY",sessionId);
+		ProviderSignInAttempt webRequestSer = (ProviderSignInAttempt) redisService.getObj("TEST_REDIS_KEY", sessionId);
 		request.setAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, webRequestSer, RequestAttributes.SCOPE_SESSION);
 		// System.out.println(webRequestSer);
 		if (userID == null) {
 			System.out.println("获取失败");
 		}
 		providerSignInUtils.doPostSignUp(userID, request);
-		model.addAttribute("stuId", userID);
-		UserInfo userByUserNum = userService.getUserByUserNum(userID);
+		String payUrl = "/auth";// POST提交地址
+		String user = "user";// 如有多个，以此类推。
+		String pass = "pass";
 
-		return userByUserNum.getType().equals(UserTypeEnum.STUDENT) ? "/student/st-main.html"
-				: "/teacher/teacher-main.html";
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println("<form name='authSubmit' method='post'  action='" + payUrl + "' >");
+			out.println("<input type='hidden' name='" + user + "' value='" + userID + "'>"); // 如有多个，则写多个hidden即可
+			out.println("<input type='hidden' name='" + pass + "' value='" + userID + "'>");
+			out.println("</form>");
+			out.println("<script>");
+			out.println("  document.authSubmit.submit()");
+			out.println("</script>");
+		} catch (IOException e) {
+		}
+
 	}
 
 	@RequestMapping("/cas")
@@ -87,7 +105,8 @@ public class UserController {
 		String sessionId = request.getSessionId();
 		ProviderSignInAttempt attribute = (ProviderSignInAttempt) request
 				.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
-		redisService.put("TEST_REDIS_KEY",sessionId, attribute, 60 * 20);
-		return "forward:/cas?sessionId=" + sessionId;
+		redisService.put("TEST_REDIS_KEY", sessionId, attribute, 60 * 20);
+		return "forward:/casgo?sessionId=" + sessionId;
 	}
+
 }

@@ -1,5 +1,6 @@
 package com.upic;
 
+import com.upic.common.utils.redis.service.IRedisService;
 import com.upic.condition.ProjectCondition;
 import com.upic.dto.AdviceInfo;
 import com.upic.dto.ProjectInfo;
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +30,8 @@ public class SpringBootJpaTestApplicationTests {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private IRedisService redisService;
     @Test
     public void testAddProject() {
         for (int i = 0; i < 50; i++) {
@@ -181,4 +185,21 @@ public class SpringBootJpaTestApplicationTests {
 //            }
 //        }
     }
+    
+    @Test
+    public void testRedis() {
+    	boolean set = redisService.set("abc", "123");
+    	System.out.println(set);
+    }
+    
+    @Test
+    public void testTime() {
+    	System.out.println(getOneDayBefore(new Date(),1));
+    }
+    public  Date getOneDayBefore(Date dateEnd,int dates){
+	    Calendar date = Calendar.getInstance();
+	    date.setTime(dateEnd);
+	    date.set(Calendar.DATE, date.get(Calendar.DATE) + dates);
+	    return date.getTime();
+	}
 }
