@@ -84,6 +84,8 @@ public class ProjectTaskImpl implements ProjectTask {
 					x.setImplementationProcess(ImplementationProcessEnum.CHECKING_AGAIN);
 				}else if(x.getUnit().equals("3")) {
 					x.setImplementationProcess(ImplementationProcessEnum.CHECKING);
+				}else if(x.getUnit().equals("1")) {
+					x.setImplementationProcess(ImplementationProcessEnum.CHECKING_FINAL);
 				}else {
 					return;
 				}
@@ -172,7 +174,7 @@ public class ProjectTaskImpl implements ProjectTask {
 		ProjectCondition p=new ProjectCondition();
 		StringBuffer sb=new StringBuffer();
 		p.setImplementationProcess(ImplementationProcessEnum.CHECKED);
-		List<Project> findAll = projectRepository.findAll();
+		List<Project> findAll = projectRepository.findAll(new ProjectSpec(p));
 		findAll.parallelStream().forEach(x->{
 			sb.append(x.getProjectNum()).append(",");
 		});

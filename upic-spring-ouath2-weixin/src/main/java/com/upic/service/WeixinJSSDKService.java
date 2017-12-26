@@ -26,7 +26,7 @@ public class WeixinJSSDKService {
 	/**
 	 * 每两小时运行一次
 	 */
-	@Scheduled(cron = "0 */2 * * * *")
+	@Scheduled(cron = "0 * */2 * * *")
 	@GlobalLock(path = "/weixin/jssdk")
 	public void task() throws Exception {
 		Map<String, JobParameter> param = new HashMap<>();

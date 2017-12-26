@@ -225,14 +225,39 @@ public class RedisServiceImpl implements IRedisService {
 		return true;
 	}
 
-	public void set(String key, String value, long expir) {
-		ValueOperations<String, Object> ops = this.redisTemplate.opsForValue();
-		if (!this.redisTemplate.hasKey(key)) {
-			ops.set(key, value, expir);
-			System.out.println("set key success");
-		} else {
-			// 存在则打印之前的value值
-			System.out.println("this key = " + ops.get(key));
-		}
-	}
+//	public void set(String key, String value, long expir) {
+//		ValueOperations<String, Object> ops = this.redisTemplate.opsForValue();
+//		if (!this.redisTemplate.hasKey(key)) {
+//			ops.set(key, value, expir);
+////			System.out.println("set key success");
+//		} else {
+//			// 存在则打印之前的value值
+////			System.out.println("this key = " + ops.get(key));
+//		}
+//	}
+	 /**
+     * @param key
+     * @param value
+     * @param liveTime
+     */
+    public void set(final byte[] key, final byte[] value, final long liveTime) {
+        redisTemplate.execute(new RedisCallback() {
+            public Long doInRedis(RedisConnection connection) throws DataAccessException {
+                connection.set(key, value);
+                if (liveTime > 0) {
+                    connection.expire(key, liveTime);
+                }
+                return 1L;
+            }
+        });
+    }
+
+    /**
+     * @param key
+     * @param value
+     * @param liveTime
+     */
+    public void set(String key, String value, long liveTime) {
+        this.set(key.getBytes(), value.getBytes(), liveTime);
+    }
 }

@@ -160,7 +160,7 @@ function addHtmls(datas, pageNum) {
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
             if (data[i].implementationProcess === "ENROLLMENT") {
-                htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getSignUpPeopleByProjectNumUrl + "','projectNum=" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a><span class='space'>|</span><a href='#mymodal1' data-toggle='modal'><span onclick=commonMyAjax('" + getqrCodeUrl + "','projectNum=" + data[i].projectNum + "&freshTime=" + data[i].refreshTime + "','getQrCode','GET','" + data[i].refreshTime + "')>点击查看二维码</span></a></div></td>";
+                htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getSignUpPeopleByProjectNumUrl + "','projectNum=" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a><span class='space'>|</span><a href='#mymodal1' data-toggle='modal'><span onclick=commonMyAjax('" + getqrCodeUrl + "','projectNum=" + data[i].projectNum + "&freshTime=30000','getQrCode','GET',30000)>点击查看二维码</span></a></div></td>";
             } else {
                 htmls += " <div class='message_div'><a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>详情</span></a><span class='space'>|</span><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getSignUpPeopleByProjectNumUrl + "','projectNum=" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>名单</span></a></div></td>";
             }
@@ -181,9 +181,28 @@ function addHtmls(datas, pageNum) {
 }
 
 function commonMyAjax(url, data, method, requestType, refreshTime) {
-    timeId = setInterval("commonAjax(url, data, method, requestType)", parseInt(refreshTime));
+     timeId = window.setInterval("qrAjax('"+url+"','"+data+"','"+method+"','"+requestType+"')", parseInt(refreshTime));
+//	commonAjax(url, data, method, requestType);
+//	commonAjax(url+"?"+data, "", method, requestType);
+	
 }
 
+function  qrAjax(url, data, method, requestType, refreshTime){
+	$.ajax({
+        type: requestType,
+        url: url+"?"+data,
+        beforeSend: function (XMLHttpRequest) {
+        },
+        success: function (result) {
+        	getQrCode(result);
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+        },
+        error: function (err) {
+        	alert(err.msg);
+        }
+    });
+}
 function closeTheInterval() {
     clearInterval(timeId);
 }

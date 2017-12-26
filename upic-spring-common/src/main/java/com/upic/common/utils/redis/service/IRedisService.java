@@ -56,5 +56,7 @@ public interface IRedisService {
     
     public boolean deletByHashKey(String key, String hashKey);
     
-    public void set(String key, String value, long expir);
+    public void set(final byte[] key, final byte[] value, final long liveTime);
+    
+    public void set(String key, String value, long liveTime);
 }  
