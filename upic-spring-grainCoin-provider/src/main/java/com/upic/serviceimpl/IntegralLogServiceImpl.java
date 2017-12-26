@@ -234,6 +234,25 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         return null;
     }
 
+    @Override
+    public String changeIntegralLogToSignedIn(String projectNum, String userId) {
+        try {
+            IntegralLogId integralLogId = new IntegralLogId();
+            integralLogId.setProjectNum(projectNum);
+            integralLogId.setStudentNum(userId);
+            IntegralLog integralLog = integralLogRepository.findByIntegralLogId(integralLogId);
+            if (integralLog == null) {
+                throw new Exception("1003");
+            }
+            integralLog.setStatus(IntegralLogStatusEnum.SIGNED_IN);
+            integralLogRepository.saveAndFlush(integralLog);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("changeIntegralLogToSignedIn:" + e.getMessage());
+            return null;
+        }
+    }
+
     public Page<IntegralLogInfo> getUserListByProjectNum(String projectNum, Pageable pageable) {
         Page<IntegralLog> integralLogPage = null;
         try {

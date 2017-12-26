@@ -225,18 +225,18 @@ public class StudetAllController {
     /**
      * 图片上传
      *
-     * @param file
      * @return
      */
     @PostMapping("/picUpload")
-    public String picUpload(MultipartFile file) {
+    public String picUpload(HttpServletRequest request) {
         try {
-            CommonsMultipartFile commonsMultipartFile = (CommonsMultipartFile) file;
-            DiskFileItem diskFileItem = (DiskFileItem) commonsMultipartFile.getFileItem();
-            File f = diskFileItem.getStoreLocation();
+            // 转型为MultipartHttpRequest：
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            // 获得文件：
+            MultipartFile inputFile = multipartRequest.getFile("file");
 
             FastDFSClient fastDFSClient = new FastDFSClient();
-            String upload = fastDFSClient.uploadFile(f, f.getName());
+            String upload = fastDFSClient.uploadFile(inputFile.getBytes(), inputFile.getOriginalFilename());
 
             upload = "116.62.169.117:22122/" + upload;
 
@@ -597,11 +597,8 @@ public class StudetAllController {
                 return null;
             }
             integralLogInfo.setIntegral(projectInfo.getIntegral());
-            if (projectInfo.getUnit().equals("2") || projectInfo.getUnit().equals("1")) {
-                integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT_AGAIN);
-            } else if (projectInfo.getUnit().equals("3")) {
-                integralLogInfo.setStatus(IntegralLogStatusEnum.PENDING_AUDIT);
-            }
+
+            integralLogInfo.setStatus(IntegralLogStatusEnum.ALREADY_SIGN_UP);
 //            integralLogInfo.setStudent(socialUsers.getUserNum());
 //            integralLogInfo.setClazz(socialUsers.getClazz());
 //            integralLogInfo.setCollege(socialUsers.getCollege());
@@ -614,8 +611,11 @@ public class StudetAllController {
             integralLogInfo.setProjectName(projectNum);
             integralLogInfo.setProjectCategory(projectInfo.getProjectCategory());
             integralLogInfo.setCollegeOtherName(projectInfo.getCollegeOtherName());
-            integralLogService.signUp(integralLogInfo);
-            return "SUCCESS";
+            if (integralLogService.signUp(integralLogInfo) == null) {
+                return "ERROR";
+            } else {
+                return "SUCCESS";
+            }
         } catch (Exception e) {
             LOGGER.info("signUp:" + e.getMessage());
             return null;

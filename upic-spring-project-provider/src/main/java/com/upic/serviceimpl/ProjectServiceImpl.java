@@ -3,6 +3,7 @@ package com.upic.serviceimpl;
 import com.upic.common.beans.utils.UpicBeanUtils;
 import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
+import com.upic.common.utils.redis.UpicRedisComponent;
 import com.upic.utils.Constant;
 import com.upic.condition.AdviceCondition;
 import com.upic.condition.ProjectCondition;
@@ -482,8 +483,8 @@ public class ProjectServiceImpl implements ProjectService {
             String accessToken = base64Encoder.encode(messageDigest.digest(token.getBytes("utf-8")));
 
             // 存Redis
-//            UpicRedisComponent upicRedisComponent = new UpicRedisComponent();
-//            upicRedisComponent.set("QR" + projectNum, accessToken, freshTime);
+            UpicRedisComponent upicRedisComponent = new UpicRedisComponent();
+            upicRedisComponent.set("QR" + projectNum, accessToken, freshTime);
             String url = Constant.URL + "stu/qrCodeConsumption?projectNum=" + projectNum + "&nowTime=" + nowTime;
 
             return url;
