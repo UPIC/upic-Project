@@ -38,4 +38,6 @@ public interface GrainCoinLogService {
      * @return
      */
     GrainCoinLogInfo saveGrainCoinLog(GrainCoinLogInfo grainCoinLogInfo);
+
+	void task() throws Exception;
 }

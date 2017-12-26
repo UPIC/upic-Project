@@ -48,8 +48,11 @@ public class ProjectTaskImpl implements ProjectTask {
 		doProjectSinStart();
 		//项目结束的标记为结束
 		doProjectEnd();
+		//查询所有验收的项目
+		searchAllCheckedPro();
 	}
 	
+
 	/**
 	 * 处理项目结束的标记为结束
 	 */
@@ -95,8 +98,8 @@ public class ProjectTaskImpl implements ProjectTask {
 	private void doProjectSinStart() {
 		PageRequest page=new PageRequest(0, 100);
 		ProjectCondition p=new ProjectCondition();
-//		p.setSignUpStartTimeTo(getOneDayBefore(new Date(),1));
-//		p.setSignUpStartTime(new Date());
+		p.setSignUpStartTime(getOneDayBefore(new Date(),-1));
+		p.setSignUpStartTimeTo(new Date());
 		p.setImplementationProcess(ImplementationProcessEnum.AUDITED);
 		Page<Project> pageBean = projectRepository.findAll(new ProjectSpec(p), page);
 		for(int i=0;i<pageBean.getTotalPages();i++) {
@@ -146,7 +149,7 @@ public class ProjectTaskImpl implements ProjectTask {
 			x.setImplementationProcess(ImplementationProcessEnum.COMPLETED);
 			upicRedisComponent.keys(x.getProjectNum()+"hash").forEach(s->{
 				String hashKey=(String) s;
-				upicRedisComponent.deletByHashKey(x.getProjectNum(),hashKey);
+				upicRedisComponent.deletByHashKey(x.getProjectNum()+"hash",hashKey);
 			});
 		});
 	}
@@ -155,8 +158,24 @@ public class ProjectTaskImpl implements ProjectTask {
 			x.setImplementationProcess(ImplementationProcessEnum.ENROLLMENT);
 			projectRepository.saveAndFlush(x);
 			upicRedisComponent.init(x.getProjectNum());
-//			upicRedisComponent.init(x.getProjectNum()+"hash");
+			upicRedisComponent.init(x.getProjectNum()+"hash");
 //			upicRedisComponent.deletByKey(x.getProjectNum()+"hash");
 		});
+	}
+	
+
+	/**
+	 * 查询所有已验收的项目编号，并且存放到redis
+	 * key:PROJECT_CHECKED
+	 */
+	private void searchAllCheckedPro() {
+		ProjectCondition p=new ProjectCondition();
+		StringBuffer sb=new StringBuffer();
+		p.setImplementationProcess(ImplementationProcessEnum.CHECKED);
+		List<Project> findAll = projectRepository.findAll();
+		findAll.parallelStream().forEach(x->{
+			sb.append(x.getProjectNum()).append(",");
+		});
+		upicRedisComponent.set("PROJECT_CHECKED", sb.toString());
 	}
 }

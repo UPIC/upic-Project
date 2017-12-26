@@ -1,10 +1,16 @@
 package com.upic;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import com.upic.common.utils.redis.service.IRedisService;
+import com.upic.common.utils.redis.service.RedisService;
+import com.upic.common.utils.redis.service.RedisServiceImpl;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -13,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 @EnableScheduling
 @ImportResource("classpath:provider.xml")
 public class SpringBootJpaTestApplication {
+	
 	private static final Log log = LogFactory.getLog(SpringBootJpaTestApplication.class);
 	public static void main(String[] args) {
 
