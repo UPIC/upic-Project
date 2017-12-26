@@ -96,7 +96,7 @@ public class StudetAllController {
             integralLogInfo.setCollege(socialUsers.getCollege());
 
             integralLogInfo.setCreatTime(new Date());
-            integralLogInfo.setProjectName(projectNum);
+            integralLogInfo.setProjectName(projectInfo.getProjectName());
             integralLogInfo.setProjectCategory(projectInfo.getProjectCategory());
             integralLogInfo.setCollegeOtherName(projectInfo.getCollegeOtherName());
             if (integralLogService.signUp(integralLogInfo) == null) {

@@ -178,7 +178,7 @@ public class SpringBootJpaTestApplicationTests {
     // }
     @Test
     public void testWatchGrainCoin() {
-        String studentNum = "1";
+        String studentNum = "1422110108";
         double score = grainCoinLogService.watchGrainCoin(studentNum);
         System.out.println(score);
     }

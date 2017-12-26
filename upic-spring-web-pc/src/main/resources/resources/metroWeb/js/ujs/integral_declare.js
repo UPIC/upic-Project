@@ -49,7 +49,7 @@ $(function () {
 
 function submitFile() {
     var formData = new FormData();
-    formData.append("file", $("#file-0a").files);
+    formData.append("file", $("#getProject")[0].files[0]);
 
     $.ajax({
         url: "/stu/picUpload",
