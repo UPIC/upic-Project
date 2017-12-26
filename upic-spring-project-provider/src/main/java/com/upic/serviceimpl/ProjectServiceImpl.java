@@ -486,7 +486,6 @@ public class ProjectServiceImpl implements ProjectService {
             UpicRedisComponent upicRedisComponent = new UpicRedisComponent();
             upicRedisComponent.set("QR" + projectNum, accessToken, freshTime);
             String url = Constant.URL + "stu/qrCodeConsumption?projectNum=" + projectNum + "&nowTime=" + nowTime;
-
             return url;
         } catch (Exception e) {
             LOGGER.info("qrCodeGenerate。错误信息：" + e.getMessage());
