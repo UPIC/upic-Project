@@ -1,39 +1,43 @@
 package com.upic.controller;
 
-import com.upic.common.beans.utils.ChineseCharToEn;
-import com.upic.common.utils.redis.service.IRedisService;
-import com.upic.condition.*;
-import com.upic.dto.*;
-import com.upic.enums.IntegralLogStatusEnum;
-import com.upic.enums.IntegralLogTypeEnum;
-import com.upic.enums.UserStatusEnum;
-import com.upic.enums.UserTypeEnum;
-import com.upic.service.*;
+import java.security.MessageDigest;
+import java.util.Date;
 
-import com.upic.social.user.SocialUsers;
-import com.upic.utils.UserUtils;
-
-import io.swagger.annotations.ApiOperation;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.upic.common.beans.utils.ChineseCharToEn;
+import com.upic.common.utils.redis.service.IRedisService;
+import com.upic.condition.BannerCondition;
+import com.upic.condition.IntegralLogCondition;
+import com.upic.dto.BannerInfo;
+import com.upic.dto.IntegralLogIdInfo;
+import com.upic.dto.IntegralLogInfo;
+import com.upic.dto.PrizeInfo;
+import com.upic.dto.ProjectInfo;
+import com.upic.enums.IntegralLogStatusEnum;
+import com.upic.enums.IntegralLogTypeEnum;
+import com.upic.service.BannerService;
+import com.upic.service.GrainCoinLogService;
+import com.upic.service.IntegralLogService;
+import com.upic.service.PrizeService;
+import com.upic.service.ProjectService;
+import com.upic.service.UserService;
+import com.upic.social.user.SocialUsers;
+import com.upic.utils.UserUtils;
+
+import io.swagger.annotations.ApiOperation;
 import sun.misc.BASE64Encoder;
-
-import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/stu")
@@ -75,10 +79,6 @@ public class StudetAllController {
             IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
             integralLogIdInfo.setProjectNum(projectNum);
             SocialUsers socialUsers = UserUtils.getUser();
-
-//            UserInfo socialUsers = getUser();
-
-//            integralLogIdInfo.setStudentNum(socialUsers.getUserNum());
 
             integralLogIdInfo.setStudentNum(socialUsers.getUserId());
 
@@ -394,10 +394,6 @@ public class StudetAllController {
         return null;
     }
 
-//    private UserInfo getUser() {
-//        return new UserInfo("1422110108", "董腾舟", "", "信息工程学院", "计算机科学与技术", "14微社交1班", "15858323367", "1", "dong_tengzhou@qq.com", "", UserStatusEnum.NORMAL_CONDITION, "董", UserTypeEnum.TEACHER, 0, 0);
-//    }
-
     /**
      * 1001 超时
      * 1002服务器异常
@@ -406,7 +402,7 @@ public class StudetAllController {
      * @param projectNum
      * @param nowTime
      */
-    @GetMapping()
+    @GetMapping("/qrCodeConsumption")
     public void qrCodeConsume(HttpServletResponse response, String projectNum, String nowTime) {
         String msg = "";
         try {
@@ -415,28 +411,21 @@ public class StudetAllController {
                 msg = "1001";
                 throw new Exception(msg);
             }
-
             String token = projectNum + nowTime + "QR";
-
             //验签
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             BASE64Encoder base64Encoder = new BASE64Encoder();
             String accessToken = base64Encoder.encode(messageDigest.digest(token.getBytes("utf-8")));
-
             if (!qrNum.equals(accessToken)) {
                 msg = "1002";
                 throw new Exception(msg);
             }
-
             //获取项目
             ProjectInfo projectByNum = projectService.getProjectByNum(projectNum);
-
             //获取用户
             SocialUsers user = UserUtils.getUser();
-
             // 更改报名积分状态
-            String returnCode = integralLogService.changeIntegralLogToSignedIn(projectNum, user.getUserId());
-
+             msg = integralLogService.changeIntegralLogToSignedIn(projectNum, user.getUserId());
             //二维码扫完后跳转地址 并传递msg
             response.sendRedirect("/index.html?msg=" + msg);
         } catch (Exception e) {
