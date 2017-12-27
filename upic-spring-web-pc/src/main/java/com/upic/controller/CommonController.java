@@ -970,6 +970,18 @@ public class CommonController {
                     if (!status.equals("PASS")) {
                         integralLogInfo.setStatus(failIntegralLogStatus(integralLogInfo.getStatus()));
                     } else {
+                        if (integralLogInfo.getStatus().equals("PENDING_AUDIT_FINAL")) {
+                            GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
+                            grainCoinLogInfo.setCreatTime(new Date());
+                            grainCoinLogInfo.setEvent(integralLogInfo.getEvent());
+                            grainCoinLogInfo.setScore((integralLogInfo.getIntegral() * 1000));
+                            grainCoinLogInfo.setType(GrainCoinLogTypeEnum.INCOME);
+                            grainCoinLogInfo.setStatus(GrainCoinLogStatusEnum.HAVEDONE);
+                            grainCoinLogInfo.setUserNum(studentNums.get(i));
+                            grainCoinLogInfo.setProjectName(integralLogInfo.getProjectName());
+                            grainCoinLogInfo.setProjectNum(integralLogInfo.getIntegralLogId().getProjectNum());
+                            grainCoinLogService.saveGrainCoinLog(grainCoinLogInfo);
+                        }
                         integralLogInfo.setStatus(changeIntegralLogStatus(integralLogInfo.getStatus()));
                     }
                     integralLogService.changeAllIntegralLogStatus(integralLogInfo);
