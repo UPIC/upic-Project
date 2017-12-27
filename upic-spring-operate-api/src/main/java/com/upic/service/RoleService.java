@@ -67,4 +67,6 @@ public interface RoleService {
     RoleInfo getRoleByalins(String alinsNum);
 
     List<RoleInfo> getAll(RoleCondition roleCondition);
+
+    List<RoleInfo> getByRank(int rank);
 }

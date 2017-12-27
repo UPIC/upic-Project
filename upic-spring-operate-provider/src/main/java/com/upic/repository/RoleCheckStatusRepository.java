@@ -12,4 +12,6 @@ import java.util.List;
 public interface RoleCheckStatusRepository extends JpaRepository<RoleCheckStatus, Long>, JpaSpecificationExecutor<RoleCheckStatus> {
 
     List<RoleCheckStatus> findByRoleId(long roleId);
+
+    RoleCheckStatus getByRoleIdAndEnumName(Long id, String checkStatus);
 }

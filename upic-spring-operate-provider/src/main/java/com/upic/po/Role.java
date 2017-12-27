@@ -24,4 +24,6 @@ public class Role extends BaseEntity {
     private RoleTypeEnum type; //角色类型
     
     private String aliasName; //别名
+
+    private int rank;
 }

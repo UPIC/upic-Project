@@ -18,6 +18,8 @@ public class RoleCondition extends BaseCondition {
 
     private String aliasName; //英文别名
 
+    private int rank;
+
     public String getContent() {
         return content;
     }
@@ -30,11 +32,13 @@ public class RoleCondition extends BaseCondition {
         super();
     }
 
-    public RoleCondition(String roleName, RoleStatusEnum status, RoleTypeEnum type) {
-        super();
+    public RoleCondition(String roleName, RoleStatusEnum status, RoleTypeEnum type, String content, String aliasName, int rank) {
         this.roleName = roleName;
         this.status = status;
         this.type = type;
+        this.content = content;
+        this.aliasName = aliasName;
+        this.rank = rank;
     }
 
     public String getRoleName() {
@@ -69,4 +73,11 @@ public class RoleCondition extends BaseCondition {
         this.aliasName = aliasName;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 }

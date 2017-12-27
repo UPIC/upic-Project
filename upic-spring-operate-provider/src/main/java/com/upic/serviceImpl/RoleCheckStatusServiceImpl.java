@@ -5,6 +5,7 @@ import com.upic.common.support.spec.domain.AbstractDomain2InfoConverter;
 import com.upic.common.support.spec.domain.converter.QueryResultConverter;
 import com.upic.condition.RoleCheckStatusCondition;
 import com.upic.dto.RoleCheckStatusInfo;
+import com.upic.dto.RoleInfo;
 import com.upic.po.RoleCheckStatus;
 import com.upic.repository.RoleCheckStatusRepository;
 import com.upic.repository.Spec.RoleCheckStatusSpec;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -98,6 +100,7 @@ public class RoleCheckStatusServiceImpl implements RoleCheckStatusService {
 
     /**
      * Important！！！重要！！！！获取审批状态列表
+     *
      * @param roleId
      * @return
      */
@@ -114,5 +117,49 @@ public class RoleCheckStatusServiceImpl implements RoleCheckStatusService {
             LOGGER.info("getCheckStatusEnumName。错误信息：" + e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public String addNewRoleCheckStatus(RoleInfo roleInfo) {
+        try {
+            List<String> checkStatuses = getCheckStatusByRank(roleInfo.getRank());
+            for (String checkStatus : checkStatuses) {
+                RoleCheckStatus roleCheckStatus = roleCheckStatusRepository.getByRoleIdAndEnumName(roleInfo.getId(), checkStatus);
+                if (roleCheckStatus == null) {
+                    roleCheckStatus = new RoleCheckStatus();
+                    roleCheckStatus.setEnumName(checkStatus);
+                    roleCheckStatus.setRoleId(roleInfo.getId());
+                    roleCheckStatus.setCreatTime(new Date());
+                    roleCheckStatus.setRoleName(roleInfo.getRoleName());
+                    roleCheckStatusRepository.save(roleCheckStatus);
+                }
+            }
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("addNewRoleCheckStatus。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
+
+    private List<String> getCheckStatusByRank(int rank) {
+        List<String> checkStatuses = new ArrayList<>();
+        switch (rank) {
+            case 1:
+                checkStatuses.add("PENDING_AUDIT_FINAL");
+                checkStatuses.add("IN_AUDIT_FINAL");
+                checkStatuses.add("CHECKING_FINAL");
+                break;
+            case 2:
+                checkStatuses.add("PENDING_AUDIT_AGAIN");
+                checkStatuses.add("IN_AUDIT_AGAIN");
+                checkStatuses.add("CHECKING_AGAIN");
+                break;
+            case 3:
+                checkStatuses.add("PENDING_AUDIT");
+                checkStatuses.add("IN_AUDIT");
+                checkStatuses.add("CHECKING");
+                checkStatuses.add("PENDING_AUDIT_BEFORE");
+        }
+        return checkStatuses;
     }
 }
