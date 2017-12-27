@@ -42,7 +42,7 @@ $(function () {
             htmls += "<div class='list-det det-cen'>" + result.projectName + "</div></li>";
             htmls += "<li class='clearfix'><div class='list-name'>项目类别：</div>";
             htmls += "<div class='list-det det-cen'>";
-            htmls += getSplitSmall(result.event);
+            htmls += result.event;
             htmls += "</div>";
             htmls += "</li>";
             htmls += "<li class='li-other clearfix'>";
@@ -75,8 +75,8 @@ $(function () {
     })
 })
 
-function getSplitSmall(event) {
-    var projectCategory = new Array();
-    projectCategory = event.split("/");
-    return projectCategory[0];
-}
+//function getSplitSmall(event) {
+//    var projectCategory = new Array();
+//    projectCategory = event.split("/");
+//    return projectCategory[0];
+//}

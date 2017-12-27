@@ -21,10 +21,13 @@ import com.upic.common.utils.redis.service.IRedisService;
 import com.upic.condition.BannerCondition;
 import com.upic.condition.IntegralLogCondition;
 import com.upic.dto.BannerInfo;
+import com.upic.dto.GrainCoinLogInfo;
 import com.upic.dto.IntegralLogIdInfo;
 import com.upic.dto.IntegralLogInfo;
 import com.upic.dto.PrizeInfo;
 import com.upic.dto.ProjectInfo;
+import com.upic.enums.GrainCoinLogStatusEnum;
+import com.upic.enums.GrainCoinLogTypeEnum;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import com.upic.service.BannerService;
@@ -168,8 +171,32 @@ public class StudetAllController {
      * @return
      */
     @GetMapping("/getExchangePrize")
-    public PrizeInfo getExchangePrize(Long prizeId) {
-        return null;
+    public String getExchangePrize(Long prizeId) {
+        try {
+            PrizeInfo prizeInfo = prizeService.getPrizeById(prizeId);
+            //积分不够
+            double watchIntegral = integralLogService.watchIntegral(UserUtils.getUser().getUserId());
+            if(watchIntegral-prizeInfo.getScore()<0) {
+            	return "ERROR";
+            }
+            if (prizeInfo != null) {
+                GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
+                grainCoinLogInfo.setEvent(UserUtils.getUser().getUserId() + "兑换" + prizeInfo.getPrizeName());
+                grainCoinLogInfo.setPrizeId(prizeId);
+                grainCoinLogInfo.setScore(-prizeInfo.getScore());
+                grainCoinLogInfo.setType(GrainCoinLogTypeEnum.PAYMENT);
+                grainCoinLogInfo.setStatus(GrainCoinLogStatusEnum.HAVEDONE);
+                SocialUsers socialUsers = UserUtils.getUser();
+                grainCoinLogInfo.setUsername(socialUsers.getUserNum());
+                grainCoinLogInfo.setUserNum(socialUsers.getUserNum());
+                grainCoinLogInfo.setPrizeName(prizeInfo.getPrizeName());
+                grainCoinLogService.saveGrainCoinLog(grainCoinLogInfo);
+                return "SUCCESS";
+            }
+        } catch (Exception e) {
+            LOGGER.info("getExchangePrize:" + e.getMessage());
+        }
+        return "ERROR";
     }
 
     /**

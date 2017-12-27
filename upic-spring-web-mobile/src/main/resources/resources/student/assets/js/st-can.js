@@ -10,125 +10,169 @@
  * 获取商品详情
  */
 
- var getCoin = "/stu/getGrainCoin";
- var getinfo = "/common/getPrize";
- var page = 1;
- var pageCount = -1;
- var types = "GET";
- var coin = "";
-
+var getCoin = "/stu/getGrainCoin";
+var getinfo = "/common/getPrize";
+var page = 0;
+var pageCount = -1;
+var types = "GET";
+var coin = "";
+var getExchangePrizeUrl = "/stu/getExchangePrize";
 /*
- 获取积分
+ * 获取积分
  */
- function getCoin(){
-    $.ajax({
-    type: "GET", // 提交方式
-    url: getCoin,// 路径
-    async: false,
-    success: function (result) {// 返回数据根据结果进行相应的处理
-        coin = result;
-    }
-});
+function getCoins() {
+	$.ajax({
+		type : "GET", // 提交方式
+		url : getCoin,// 路径
+		async : false,
+		success : function(result) {// 返回数据根据结果进行相应的处理
+			coin = result;
+		}
+	});
 }
 
-$(function () {
-    ajaxs("score=0&scoreTo=" + coin + "&status=SHELVES", "getPrizeInfo", getinfo);
+$(function() {
+	
+	ajaxs("score=0&scoreTo=" + coin + "&status=SHELVES", "getPrizeInfo",
+			"/common/getPrize");
 });
+getCoins();
 
 function ajaxs(datas, method, urls) {
-    if (pageCount == page || pageCount == 0) {
-        return;
-    }
-    $.ajax({
-        type: types, // 提交方式
-        url: urls,// 路径
-        async: false,
-        data: datas,//
+	if (pageCount == page || pageCount == 0) {
+		return;
+	}
+	$.ajax({
+		type : types, // 提交方式
+		url : urls + "?" + datas,// 路径
+		async : false,
+		data : datas,//
 
-
-        beforeSend: function (XMLHttpRequest) {
-// progress.inc();
-},
-        success: function (result) {// 返回数据根据结果进行相应的处理
-            pageCount = result.total;
-            var datas = result.content;
-            addHtmls(datas, method)
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-// progress.done(true);
-},
-error: function () {
-// progress.done(true);
-}
-});
+		beforeSend : function(XMLHttpRequest) {
+			// progress.inc();
+		},
+		success : function(result) {// 返回数据根据结果进行相应的处理
+			pageCount = result.totalPages;
+			var datas = result.content;
+			addHtmls(datas, method)
+		},
+		complete : function(XMLHttpRequest, textStatus) {
+			// progress.done(true);
+		},
+		error : function() {
+			// progress.done(true);
+		}
+	});
 }
 
 function addHtmls(result, method) {
-    var htmls = "";
-    if (method == "getPrizeInfo") {
-        for (var i = 0; i < result.length; i++) {
+	var htmls = "";
+	if (method == "getPrizeInfo") {
+		for (var i = 0; i < result.length; i++) {
 
-            htmls += "<li><div class='tab-left'><img src='" + result[i].prizePic + "'></div>";
-            htmls += "<div class='tab-right'><div class='right-name'>" + result[i].prizeName;
-            htmls += "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal'>";
-            htmls += "兑换";
-            htmls += "</button>";
-            htmls += "<div class='modal fade' id='myModa' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
-            htmls += "<div class='modal-dialog' role='document'>";
-            htmls += "<div class='modal-content'>";
-            htmls += "<div class='modal-header'>";
-            htmls += "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
-            htmls += "<h4 class='modal-title' id='myModalLabe'>提示</h4>";
-            htmls += "</div>";
-            htmls += "<div class='modal-body'>";
-            htmls += "兑换成功";
-            htmls += "</div>";
-            htmls += " <a href='st-main.html'>";
-            htmls += "<div class='modal-footer'>";
-            htmls += "<button type='button' class='btn btn-default' data-dismiss='modal' onclick='duihuan(" + result[i].id + ")'>确定</button>";
-            htmls += "</div>";
-            htmls += " </a>";
-            htmls += "</div>";
-            htmls += "</div>";
-            htmls += "</div>";
-            htmls += "</div>";
-            htmls += "<div class='right-apply'>总计: <span>" + result[i].score + "</span> 分</div></div></li>";
-        }
-    }
+			htmls += "<li><div class='tab-left'><img src='"
+					+ result[i].prizePic + "'></div>";
+			htmls += "<div class='tab-right'><div class='right-name'>"
+					+ result[i].prizeName;
+			htmls += "<button type='button' onclick='getExchangePrize("
+					+ result[i].id
+					+ ","
+					+ result[i].score
+					+ ")' class='btn btn-primary' data-toggle='modal' data-target='#myModal'>";
+			htmls += "兑换";
+			htmls += "</button>";
+			htmls += "<div class='modal fade' id='myModa' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>";
+			htmls += "<div class='modal-dialog' role='document'>";
+			htmls += "<div class='modal-content'>";
+			htmls += "<div class='modal-header'>";
+			htmls += "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
+			htmls += "<h4 class='modal-title' id='myModalLabe'>提示</h4>";
+			htmls += "</div>";
+			htmls += "<div class='modal-body'>";
+			htmls += "兑换成功";
+			htmls += "</div>";
+			htmls += " <a href='st-main.html'>";
+			htmls += "<div class='modal-footer'>";
+			htmls += "<button type='button' class='btn btn-default' data-dismiss='modal' onclick='duihuan("
+					+ result[i].id + ")'>确定</button>";
+			htmls += "</div>";
+			htmls += " </a>";
+			htmls += "</div>";
+			htmls += "</div>";
+			htmls += "</div>";
+			htmls += "</div>";
+			htmls += "<div class='right-apply'>总计: <span>" + result[i].score
+					+ "</span> 分</div></div></li>";
+		}
+	}
 
-    if (page == 1) {
-        $("#" + method).html(htmls);
-    } else {
-        $("#" + method).append(htmls);
-    }
+	if (page == 0) {
+		$("#" + method).html(htmls);
+	} else {
+		$("#" + method).append(htmls);
+	}
 }
 
-function duihuan(prizeId){
-    $.ajax({
-        type: types, // 提交方式
-        url: '/stu/getExchangePrize',// 路径
-        data: {
-            id:prizeId
-        },
-        success: function (result) {// 返回数据根据结果进行相应的处理
-            alert("已兑换");
-            getCoin();
-        }
-    });
-}
+//function duihuan(prizeId) {
+//	$.ajax({
+//		type : types, // 提交方式
+//		url : '/stu/getExchangePrize',// 路径
+//		data : {
+//			id : prizeId
+//		},
+//		success : function(result) {// 返回数据根据结果进行相应的处理
+//			alert("已兑换");
+//			getCoin();
+//		}
+//	});
+//}
 
 /** 滚动条* */
-    var totalheight = 0;// 定义一个总的高度变量
-    $(window)
-    .scroll(
-        function() {
-            totalheight = parseFloat($(window).height())
-                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
-                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
-                        {
-                         page++;
-                         getCoin();
-                         ajaxs("score=0&scoreTo=" + coin + "&status=SHELVES", "getPrizeInfo", getinfo);
+var totalheight = 0;// 定义一个总的高度变量
+$(window).scroll(
+		function() {
+			totalheight = parseFloat($(window).height())
+					+ parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+			if ($(document).height() <= totalheight+7) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+			{	
+				
+				if(pageCount<(page+1)){
+					return ;
+				}
+				page++;
+//				getCoin();
+				ajaxs("score=0&scoreTo=" + coin + "&status=SHELVES&page="+page,
+						"getPrizeInfo", getinfo);
 
-                     }
-                 });
+			}
+		});
+
+function getExchangePrize(prizeId, score) {
+	if (coin < score) {
+		alert("兑换失败，素拓币不足！");
+	} else {
+		$.ajax({
+			type : types, // 提交方式
+			url : getExchangePrizeUrl,// 路径
+			data : {
+				prizeId : prizeId
+			},
+			beforeSend : function(XMLHttpRequest) {
+			},
+			success : function(result) {// 返回数据根据结果进行相应的处理
+				if (result === "SUCCESS") {
+					alert("兑换成功！");
+
+					getCoins();
+				} else {
+					alert("兑换失败！");
+				}
+			},
+			complete : function(XMLHttpRequest, textStatus) {
+			},
+			error : function(err) {
+				alert(err.msg);
+			}
+		});
+	}
+}

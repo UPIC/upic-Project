@@ -163,6 +163,11 @@ public class StudetAllController {
     public String getExchangePrize(Long prizeId) {
         try {
             PrizeInfo prizeInfo = prizeService.getPrizeById(prizeId);
+            //积分不够
+            double watchIntegral = integralLogService.watchIntegral(UserUtils.getUser().getUserId());
+            if(watchIntegral-prizeInfo.getScore()<0) {
+            	return "ERROR";
+            }
             if (prizeInfo != null) {
                 GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
                 grainCoinLogInfo.setEvent(UserUtils.getUser().getUserId() + "兑换" + prizeInfo.getPrizeName());

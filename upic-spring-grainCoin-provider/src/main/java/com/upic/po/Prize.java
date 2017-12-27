@@ -18,7 +18,7 @@ public class Prize extends BaseEntity {
 
     private double score; //消费分数
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     private List<String> prizePic; //图片
 
     private String title; //标题
