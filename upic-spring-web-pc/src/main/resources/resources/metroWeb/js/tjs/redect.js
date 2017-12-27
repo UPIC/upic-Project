@@ -3,15 +3,31 @@
 //修改项目类别
 var getAllProjectCategoryUrl = "/common/getAllProjectCategory";
 var addProjectCategoryUrl = "/common/addProjectCategory";
-var updateProjectCategoryUrl = "/common/updateProjectCategory";
 
 $(function () {
-
     getDate();
-    tabel_click();
 
     $(".btn-primary").click(function () {
-
+        var trElement = document.getElementById("data").childNodes;
+        var tdElement = document.getElementById("tr" + trElement.length).childNodes;
+        var tdNum = tdElement.length;
+        if (tdNum == 1) {
+            var htmlTd = "";
+            htmlTd += "<td id='td" + trElement.length * 2 + "'>";
+            htmlTd += "<input id='input" + trElement.length * 2 + "' type='text'  class='text' value='NewProjectCategory' />";
+            htmlTd += "<button class='btn btn-small' onclick=saveNewProjectCategory('input" + trElement.length * 2 + "')>保存</button>";
+            htmlTd += "</td>";
+            $("#tr" + trElement.length).append(htmlTd);
+        } else {
+            var htmlTr = "";
+            htmlTr += "<tr id='tr" + (trElement.length + 1) + "'>";
+            htmlTr += "<td id='td" + (trElement.length * 2 + 1) + "'>";
+            htmlTr += "<input id='input" + (trElement.length * 2 + 1) + "' type='text'  class='text' value='NewProjectCategory' />";
+            htmlTr += "<button class='btn btn-small' onclick=saveNewProjectCategory('input" + (trElement.length * 2 + 1) + "')>保存</button>";
+            htmlTr += "</td>";
+            htmlTr += "</tr>";
+            $("#data").append(htmlTr);
+        }
     });
 });
 
@@ -26,63 +42,45 @@ function getDate() {
     });
 }
 
-function addProjectCategory(cn) {
-    $.ajax({
-        type: "GET",
-        url: addProjectCategoryUrl,
-        data: {
-            "categoryName": cn
-        },
-        success: function (result) {
-            alert(result)
-        }
-    });
-}
-
 function addhtml(res) {
     var htmls = "";
     for (var i = 0; i < res.length; i++) {
-        htmls += "<tr>";
-        htmls += "<td>";
+        htmls += "<tr id='tr" + (i / 2 + 1) + "'>";
+        htmls += "<td id='td" + (i + 1) + "'>";
         htmls += "<span>" + res[i].categoryName + "</span>";
-        htmls += "<button id='" + res[i].id + "'' type='submit' class='btn btn-small'>编辑</button>";
         htmls += "</td>";
-        htmls += "<td>";
+        if (i + 1 >= res.length) {
+            break;
+        }
+        htmls += "<td id='td" + (i + 2) + "'>";
         htmls += "<span>" + res[i + 1].categoryName + "</span>";
-        htmls += "<button id='" + res[i + 1].id + "'' type='submit'  class='btn btn-small'>编辑</button>";
         htmls += "</td>";
         htmls += "</tr>";
         i++;
     }
+    $("#data").html(htmls);
 }
 
-function tabel_click() {
-    $("td>button").click(function () {
-        var xg = $(this).html();
-        var id = $(this).attr("id");
-        if (xg == '编辑') {
-            var old = $(this).parent('td').find('span').html();//获取编辑后的值
-            $(this).parent('td').find('span').html(old);
-            $(this).html('保存');
-        } else if (xg == '保存') {
-            updateProjectCategory(id, old);
-            $(this).html('编辑');
-            getDate();
-        }
-        ;
-    })
-}
+function saveNewProjectCategory(id) {
+    var categoryName = $("#" + id).val();
 
-function updateProjectCategory(categoryid, old) {
     $.ajax({
         type: "GET",
-        url: updateProjectCategoryUrl,
+        url: addProjectCategoryUrl,
         data: {
-            "id": categoryid,
-            "categoryName": old
+            categoryName: categoryName
+        },
+        beforeSend: function (XMLHttpRequest) {
         },
         success: function (result) {
-            alert("已修改");
+            if (result === "SUCCESS") {
+                alert("编辑成功！")
+                getDate();
+            }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+        },
+        error: function () {
         }
     });
 }
