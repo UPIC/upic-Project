@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		configurer.signupUrl("/casgo");
 		configurer.signupUrl("/cas");
 		http.httpBasic().and().headers().frameOptions().disable().and().formLogin()
-		.loginPage("/index.html")
+		.loginPage("/upiclogin")
 		.usernameParameter("user").passwordParameter("pass")
 				.successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)
 				.loginProcessingUrl("/auth").and()
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable()
 				// csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
 				.authorizeRequests()
-				.antMatchers("/connect/**",  "/login.html", "/login", "/auth", "/auth/**","/cas","/casgo")
+				.antMatchers("/connect/**",  "/login.html", "/upiclogin", "/auth", "/auth/**","/cas","/casgo")
 				.permitAll().anyRequest()
 				.access("@checkAllSecurity.check(authentication,request)")
 //				 .authenticated()

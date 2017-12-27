@@ -29,6 +29,7 @@ import com.upic.enums.UserTypeEnum;
 //import com.upic.po.Student;
 //import com.upic.repository.StudentRspoitory;
 import com.upic.service.UserService;
+import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
 
 @Controller
@@ -109,4 +110,18 @@ public class UserController {
 		return "forward:/casgo?sessionId=" + sessionId;
 	}
 
+	@RequestMapping("/upiclogin")
+	public String login() {
+		SocialUsers user = null;
+		try {
+			// 如果是游客就会报异常
+			user = UserUtils.getUser();
+		} catch (Exception e) {
+			return "/auth/weixin";
+		}
+		if (user.getUserId().length() > 0) {
+			return "/student/st-main.html";
+		}
+		return "/teacher/teacher-main.html";
+	}
 }

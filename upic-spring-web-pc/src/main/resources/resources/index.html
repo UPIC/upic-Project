@@ -14,7 +14,18 @@
 <script type="text/javascript">
 
 $(function(){
-	window.location.href="/metroWeb/html/t_index/index.html";	
+	$
+	.ajax({
+		type : 'GET',
+		url : '/common/getUserInfo',
+		success : function(data) {
+			window.location.href="/metroWeb/html/t_index/index.html";	
+		},
+		error : function() {
+			window.location.href="/cas";	
+		}
+	});
+	
 })
 // 	(function($) {
 // 		$.getUrlParam = function(name) {
