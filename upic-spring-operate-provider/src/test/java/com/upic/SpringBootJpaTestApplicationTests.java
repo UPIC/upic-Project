@@ -3,6 +3,7 @@ package com.upic;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.po.OperatorRole;
+import com.upic.po.Role;
 import com.upic.po.RoleCheckStatus;
 import com.upic.service.*;
 import org.junit.Test;
@@ -173,7 +174,6 @@ public class SpringBootJpaTestApplicationTests {
 //            operatorRoleService.addOperatorRole(operatorRoleInfo);
 //        }
 //    }
-
     @Test
     public void testSearchOperatorRole() {
         OperatorRoleCondition operatorRoleCondition = new OperatorRoleCondition();
@@ -207,7 +207,6 @@ public class SpringBootJpaTestApplicationTests {
 //            roleResourceService.addRoleResource(roleResourceInfo);
 //        }
 //    }
-
     @Test
     public void testSearchRoleResource() {
         RoleResourceCondition roleResourceCondition = new RoleResourceCondition();
@@ -233,5 +232,20 @@ public class SpringBootJpaTestApplicationTests {
         long id = 1;
         List<String> a = roleCheckStatusService.getCheckStatusEnumName(id);
         System.out.println(a.toString());
+    }
+
+    @Test
+    public void testAddNewRoleCheckStatus() {
+        RoleInfo roleInfo = roleService.getRoleById(23);
+        RoleInfo roleInfo1 = roleService.getRoleById(24);
+        RoleInfo roleInfo2 = roleService.getRoleById(21);
+        RoleInfo roleInfo3 = roleService.getRoleById(1);
+        RoleInfo roleInfo4 = roleService.getRoleById(22);
+        String result = roleCheckStatusService.addNewRoleCheckStatus(roleInfo);
+        String result1 = roleCheckStatusService.addNewRoleCheckStatus(roleInfo1);
+        String result2 = roleCheckStatusService.addNewRoleCheckStatus(roleInfo2);
+        String result3 = roleCheckStatusService.addNewRoleCheckStatus(roleInfo3);
+        String result4 = roleCheckStatusService.addNewRoleCheckStatus(roleInfo4);
+        System.out.println(result + result1 + result2 + result3 + result4);
     }
 }

@@ -2,7 +2,7 @@ var dataUrl = "/common/getProjectWithoutSignUp";
 var getProjectInfo = "/common/getProjectInfo";
 var searchKeyWordUrl = "/common/integralLogSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
-var getStatusUrl = "/common/getCollege";
+var getStatusUrl = "/common/getProjectStatus";
 var baomingUrl = "/stu/signUp";
 var pageSize = 0;
 var totalPages = -1;
@@ -15,7 +15,7 @@ $(function () {
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getStatusUrl, null, "addStatus", "GET");
     registSelect("projectCategory");
-    registSelect("getStatus");
+    registSelect("implementationProcess");
 })
 
 function addProjectType(res) {
@@ -30,12 +30,12 @@ function addProjectType(res) {
 }
 
 function addStatus(res) {
-    var data = res.content;
+    var data = res;
     var htmls = "";
     htmls += "<option value='4' class='yellow'>状态筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i].status + "</option>";
+        htmls += "<option value='" + (i + 4) + "'>" + splitImplementationProcess(data[i]) + "</option>";
     }
     $("#getStatus").html(htmls);
 }
@@ -120,5 +120,6 @@ function apply(data) {//报名按钮
     }
 }
 
-
-
+function splitImplementationProcess(implementationProcess) {
+    return implementationProcess.split("content=")[1].split("}")[0];
+}

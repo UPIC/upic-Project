@@ -123,6 +123,19 @@ public class OperatorController {
         return null;
     }
 
+    @GetMapping("/getMyRoles")
+    @ApiOperation("获取我所有的角色")
+    public List<RoleInfo> getMyRoles() {
+        try {
+            SocialUsers socialUsers = getUser();
+            int rank = Integer.parseInt(socialUsers.getRank());
+            return roleService.getByRank(rank);
+        } catch (Exception e) {
+            LOGGER.info("getAllRoles:" + e.getMessage());
+        }
+        return null;
+    }
+
     /**
      * 根据角色查找操作员
      *

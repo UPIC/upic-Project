@@ -18,17 +18,19 @@ public class RoleInfo extends BaseInfo {
 
     private String aliasName; // 别名
 
+    private int rank; // 等级
+
     public RoleInfo() {
         super();
     }
 
-    public RoleInfo(String roleName, RoleStatusEnum status, RoleTypeEnum type, String content, String aliasName) {
-        super();
+    public RoleInfo(String roleName, RoleStatusEnum status, RoleTypeEnum type, String content, String aliasName, int rank) {
         this.roleName = roleName;
         this.status = status;
         this.type = type;
         this.content = content;
         this.aliasName = aliasName;
+        this.rank = rank;
     }
 
     public String getRoleName() {
@@ -71,6 +73,14 @@ public class RoleInfo extends BaseInfo {
         this.aliasName = aliasName;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
     @Override
     public String toString() {
         return "RoleInfo{" +
@@ -79,6 +89,7 @@ public class RoleInfo extends BaseInfo {
                 ", type=" + type +
                 ", content='" + content + '\'' +
                 ", aliasName='" + aliasName + '\'' +
+                ", rank=" + rank +
                 '}';
     }
 }

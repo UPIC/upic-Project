@@ -4,6 +4,7 @@ import com.upic.condition.CheckStatusCondition;
 import com.upic.condition.RoleCheckStatusCondition;
 import com.upic.dto.CheckStatusInfo;
 import com.upic.dto.RoleCheckStatusInfo;
+import com.upic.dto.RoleInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -53,4 +54,12 @@ public interface RoleCheckStatusService {
      * @return
      */
     List<String> getCheckStatusEnumName(long roleId);
+
+    /**
+     * 添加新的角色审批状态
+     *
+     * @param roleInfo
+     * @return
+     */
+    String addNewRoleCheckStatus(RoleInfo roleInfo);
 }

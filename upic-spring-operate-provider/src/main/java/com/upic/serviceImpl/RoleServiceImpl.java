@@ -137,4 +137,21 @@ public class RoleServiceImpl implements RoleService {
         }
         return null;
     }
+
+    @Override
+    public List<RoleInfo> getByRank(int rank) {
+        List<Role> roleList = new ArrayList<>();
+        try {
+            roleList = roleRepository.getByRank(rank);
+            return QueryResultConverter.convert(roleList, new AbstractDomain2InfoConverter<Role, RoleInfo>() {
+                @Override
+                protected void doConvert(Role domain, RoleInfo info) throws Exception {
+                    UpicBeanUtils.copyProperties(domain, info);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.info("getAll。错误信息：" + e.getMessage());
+            return null;
+        }
+    }
 }
