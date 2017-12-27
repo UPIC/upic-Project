@@ -125,10 +125,8 @@ public class OperatorController {
 
     @GetMapping("/getMyRoles")
     @ApiOperation("获取我所有的角色")
-    public List<RoleInfo> getMyRoles() {
+    public List<RoleInfo> getMyRoles(int rank) {
         try {
-            SocialUsers socialUsers = getUser();
-            int rank = Integer.parseInt(socialUsers.getRank());
             return roleService.getByRank(rank);
         } catch (Exception e) {
             LOGGER.info("getAllRoles:" + e.getMessage());
@@ -537,7 +535,7 @@ public class OperatorController {
     }
 
     private SocialUsers getUser() {
-        SocialUsers user= UserUtils.getUser();
+        SocialUsers user = UserUtils.getUser();
         return user;
     }
 }

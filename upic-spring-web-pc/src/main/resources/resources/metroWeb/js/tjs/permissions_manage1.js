@@ -72,7 +72,7 @@ function addHtmls1(datas) {
         htmls += "<div class='message_di'>";
         htmls += "<a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + data1Url + "','jobNum=" + data[i].jobNum + "','chakan','GET')>【查看】</span></a>";
         htmls += "<span class='space'>|</span>";
-        htmls += "<a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + data1Url + "','jobNum=" + data[i].jobNum + "','xiugai','GET')>【修改】</span></a>";
+        htmls += "<a href='#mymodal3' data-toggle='modal'><span onclick=commonAjax('" + data1Url + "','jobNum=" + data[i].jobNum + "','xiugai','GET','" + data[i].rank + "')>【修改】</span></a>";
         htmls += "<span class='space'>|</span>";
         // htmls += "<a href='#mymodal' data-toggle='modal'><span onclick=shezhimima(" + data[i].jobNum + "," + data[i].username + ")>【重置密码】</span></a>";
         // htmls += "<span class='space'>|</span>";
@@ -133,7 +133,7 @@ function chakan(datas) {
     getTheRole(data.jobNum, "theRole");
 }
 
-function xiugai(datas) {
+function xiugai(datas, rank) {
     var data = datas.content[0];
     var htmlss = "";
     var statuss = "";
@@ -195,7 +195,7 @@ function xiugai(datas) {
     htmlss += "</div>";
     $("#mymodal3").html(htmlss);
 
-    getTheRole(data.jobNum, data.jobNum + "type", "need");
+    getTheRole(data.jobNum, data.jobNum + "type", "need", rank);
 }
 
 function saveUserInfo(id) {
@@ -285,7 +285,7 @@ function changeUserStatus(usernum) {
     });
 }
 
-function getTheRole(jobNum, method, needToCompare) {
+function getTheRole(jobNum, method, needToCompare, rank) {
     $.ajax({
         type: "GET",
         url: "/operator/getRoleByJobNum",
@@ -294,7 +294,7 @@ function getTheRole(jobNum, method, needToCompare) {
         },
         success: function (result) {
             if (needToCompare === "need") {
-                getAllRoles(result);
+                getAllRoles(result, rank);
             }
             var addHtml = "";
             for (var i = 0; i < result.length; i++) {
@@ -309,11 +309,13 @@ function getTheRole(jobNum, method, needToCompare) {
     });
 }
 
-function getAllRoles(hadRoles) {
+function getAllRoles(hadRoles, rank) {
     $.ajax({
         type: "GET",
         url: "/operator/getMyRoles",
-        data: {},
+        data: {
+            rank: rank
+        },
         success: function (result) {
             var addHtml = "";
             for (var i = 0; i < result.length; i++) {

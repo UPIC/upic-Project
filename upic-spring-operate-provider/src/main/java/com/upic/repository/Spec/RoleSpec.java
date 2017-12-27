@@ -18,6 +18,5 @@ public class RoleSpec extends CommonSimpleSpecification<Role, RoleCondition> {
         addEqualsCondition(queryWraper,"status");
         addEqualsCondition(queryWraper,"type");
         addEqualsCondition(queryWraper,"content");
-        addEqualsCondition(queryWraper,"rank");
     }
 }
