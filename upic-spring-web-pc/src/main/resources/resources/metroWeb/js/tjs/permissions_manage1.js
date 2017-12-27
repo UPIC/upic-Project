@@ -312,7 +312,7 @@ function getTheRole(jobNum, method, needToCompare) {
 function getAllRoles(hadRoles) {
     $.ajax({
         type: "GET",
-        url: "/operator/getAllRoles",
+        url: "/operator/getMyRoles",
         data: {},
         success: function (result) {
             var addHtml = "";
