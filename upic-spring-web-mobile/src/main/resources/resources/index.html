@@ -21,24 +21,24 @@ function GetQueryString(name)
 if(GetQueryString("msg")!=null&&GetQueryString("msg")!=""){
 alert(GetQueryString("msg"));
 }
-$(function(){
-	$
-		.ajax({
-			type : 'GET',
-			url : '/common/getUserInfo',
-			success : function(data) {
-				if(data.userNum.length>9){
-					window.location.href="/student/st-main.html";
-				}else{
-					window.location.href="/teacher/teacher-main.html";
-				}
-			},
-			error : function() {
-				alert('error!')
-			}
-		});
+// $(function(){
+// 	$
+// 		.ajax({
+// 			type : 'GET',
+// 			url : '/common/getUserInfo',
+// 			success : function(data) {
+// 				if(data.userNum.length>9){
+// 					window.location.href="/student/st-main.html";
+// 				}else{
+// 					window.location.href="/teacher/teacher-main.html";
+// 				}
+// 			},
+// 			error : function() {
+// 				alert('error!')
+// 			}
+// 		});
 	
-})
+// })
 // 	(function($) {
 // 		$.getUrlParam = function(name) {
 // 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

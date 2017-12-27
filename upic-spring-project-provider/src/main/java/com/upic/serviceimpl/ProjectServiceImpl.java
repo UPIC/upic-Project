@@ -465,7 +465,8 @@ public class ProjectServiceImpl implements ProjectService {
 	/**
 	 * 定时任务 每天晚上十二点执行
 	 */
-	@Scheduled(cron = "0 0 0,12,18 * * ?")
+//	@Scheduled(cron = "0 0 0,12,18 * * ?")
+	@Scheduled(cron = "0 0 0/1 * * ? *") //测试是每小时一次
 	@Override
 	// @Scheduled(cron = "0 0 0 * * ?")
 	public void task() throws Exception {

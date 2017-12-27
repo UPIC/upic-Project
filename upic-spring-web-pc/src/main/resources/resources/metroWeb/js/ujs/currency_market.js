@@ -106,7 +106,9 @@ function getExchangePrize(prizeId, score) {
         $.ajax({
             type: types, // 提交方式
             url: getExchangePrizeUrl,// 路径
-
+            data:{
+            	prizeId:prizeId
+            },
             beforeSend: function (XMLHttpRequest) {
             },
             success: function (result) {// 返回数据根据结果进行相应的处理
@@ -120,7 +122,8 @@ function getExchangePrize(prizeId, score) {
             },
             complete: function (XMLHttpRequest, textStatus) {
             },
-            error: function () {
+            error: function (err) {
+            	alert(err.msg);
             }
         });
     }

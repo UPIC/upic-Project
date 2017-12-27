@@ -117,6 +117,9 @@ public class UserController {
 			// 如果是游客就会报异常
 			user = UserUtils.getUser();
 		} catch (Exception e) {
+			if(user==null) {
+				return "/index.html?msg=未绑定，请联系管理员";
+			}
 			return "/auth/weixin";
 		}
 		if (user.getUserId().length() > 0) {
