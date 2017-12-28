@@ -18,7 +18,7 @@ function shangChuan() {
     var formData = new FormData();
     formData.append("prizeName", $("#pName").val());
     formData.append("score", $("#pCoin").val());
-    formData.append("content", $("#pContent").text());
+    formData.append("content", $("#pContent").val());
     formData.append("file", $("#pPic")[0].files[0]);
     $.ajax({
         type: 'POST',
