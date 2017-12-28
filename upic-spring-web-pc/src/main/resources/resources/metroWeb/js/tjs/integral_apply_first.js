@@ -18,7 +18,7 @@ $(function () {
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getCollegeUrl, null, "addCollegeUrl", "GET");
     registSelect("projectCategory");
-    registSelect("getCollege");
+    registSelect("college");
 })
 
 function addProjectType(res) {
@@ -40,7 +40,7 @@ function addCollegeUrl(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
-    $("#getCollege").html(htmls);
+    $("#college").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {
@@ -88,6 +88,8 @@ function getProjectInfo(data) {
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>详情</div>";
     htmlss += "<div class='span9'>" + data.event + "</div>";
+    htmlss += "<div class='span3'>积分</div>";
+    htmlss += "<div class='span9'>" + data.integral + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>作证材料</div>";
