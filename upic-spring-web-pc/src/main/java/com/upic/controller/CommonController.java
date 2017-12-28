@@ -1250,7 +1250,7 @@ public class CommonController {
     public PrizeInfo addPrize(PrizeInfo prizeInfo, HttpServletRequest request) {
         try {
             String url = getUrl(request, "file");
-            if (url == null) {
+            if (url.equals(Constans.STRONGE_URL)) {
                 return null;
             }
             List<String> pics = new ArrayList<>();
