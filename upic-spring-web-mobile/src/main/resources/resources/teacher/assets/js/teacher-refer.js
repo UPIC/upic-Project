@@ -63,20 +63,28 @@ function addHtmls(result, method) {
             }
 
             switch (result[i].implementationProcess) {
+                case ("SAVED"):
+                    status = "已保存";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
                 case ("IN_AUDIT"):
-                    status = "审核中";
+                    status = "待初审";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("IN_AUDIT_AGAIN"):
+                    status = "待复审";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("IN_AUDIT_FINAL"):
+                    status = "待终审";
                     url = "teacher-detail.html?projectNum=" + result[i].projectNum;
                     break;
                 case ("AUDITED"):
                     status = "已审核";
                     url = "teacher-detail.html?projectNum=" + result[i].projectNum;
                     break;
-                case ("SAVED"):
-                    status = "已保存";
-                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
-                    break;
-                case ("NO_PASS"):
-                    status = "未通过";
+                case ("ENROLLMENT"):
+                    status = "报名中";
                     url = "teacher-detail.html?projectNum=" + result[i].projectNum;
                     break;
                 case ("HAVE_IN_HAND"):
@@ -87,10 +95,47 @@ function addHtmls(result, method) {
                     status = "已完成";
                     url = "teacher-detail.html?projectNum=" + result[i].projectNum;
                     break;
-                case ("ENROLLMENT"):
-                    status = "报名中";
+                case ("CHECKING"):
+                    status = "待初验";
                     url = "teacher-detail.html?projectNum=" + result[i].projectNum;
                     break;
+                case ("CHECKING_AGAIN"):
+                    status = "待复验";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("CHECKING_FINAL"):
+                    status = "待终验";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("CHECKED"):
+                    status = "已验收";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("IN_AUDIT_FAIL"):
+                    status = "待初审失败";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("IN_AUDIT_AGAIN_FAIL"):
+                    status = "待复审失败";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("IN_AUDIT_FINAL_FAIL"):
+                    status = "待终审失败";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("CHECKING_FAIL"):
+                    status = "待初验失败";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("CHECKING_AGAIN_FAIL"):
+                    status = "待复验失败";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                case ("CHECKING_FINAL_FAIL"):
+                    status = "待终验失败";
+                    url = "teacher-detail.html?projectNum=" + result[i].projectNum;
+                    break;
+                default:
             }
 
             htmls += "<div class='" + className + "'>";
@@ -108,7 +153,7 @@ function addHtmls(result, method) {
             if (isNaN(signUpNum)) {
                 signUpNum = 0;
             }
-            htmls += "<span class='small'></span><span  id='nowNum"+i+"'>" + getPeopleNum(result[i].projectNum,'nowNum'+i) + "</span>" + "<span>/" + result[i].maximum + "</span>";
+            htmls += "<span class='small'></span><span  id='nowNum" + i + "'>" + getPeopleNum(result[i].projectNum, 'nowNum' + i) + "</span>" + "<span>/" + result[i].maximum + "</span>";
             htmls += "</div>";
             htmls += "</div>";
             htmls += "<div class='tab-text'>";
@@ -137,7 +182,7 @@ function addHtmls(result, method) {
  * @param projectNum
  * @returns
  */
-function getPeopleNum(projectNum,numId) {
+function getPeopleNum(projectNum, numId) {
     $.ajax({
         url: getNewNum,
         type: 'GET', // GET
@@ -151,10 +196,10 @@ function getPeopleNum(projectNum,numId) {
         success: function (data) {
             var num = Number(data);
             if (num === 'NaN') {
-                $("#"+numId).html("获取失败，请重新刷新页面！");
+                $("#" + numId).html("获取失败，请重新刷新页面！");
                 return;
             }
-            $("#"+numId).html(num);
+            $("#" + numId).html(num);
         },
         error: function (xhr, textStatus) {
         },
@@ -239,24 +284,26 @@ Date.prototype.pattern = function (fmt) {
 }
 
 function subMyStr(str) {
-    if (str.length > 8) {
+    if (str != null && str.length > 8) {
         str = str.substring(0, 8);
         str += "...";
     }
     return str;
 }
 
-    /** 滚动条* */
-    var totalheight = 0;// 定义一个总的高度变量
-    $(window)
-            .scroll(
-                    function() {
-                        totalheight = parseFloat($(window).height())
-                                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
-                        if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
-                        {
-                           page++;
-                           ajaxs('size=10&page='+page, "getAll", getAllurl);
-
-                        }
-                    });
+/**
+ * 滚动条
+ * @type {number}
+ */
+var totalheight = 0;// 定义一个总的高度变量
+$(window)
+    .scroll(
+        function () {
+            totalheight = parseFloat($(window).height())
+                + parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
+            if ($(document).height() <= totalheight) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+            {
+                page++;
+                ajaxs('size=10&page=' + page, "getAll", getAllurl);
+            }
+        });
