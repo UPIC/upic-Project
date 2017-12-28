@@ -43,36 +43,12 @@ $(function () {
                 }
             });
     $("#submit").click(function () {
-//        submitFile();
-    	submit();
+        submit();
     })
 })
 
-//function submitFile() {
-//    var formData = new FormData();
-//    formData.append("file", $("#getProject")[0].files[0]);
-//
-//    $.ajax({
-//        url: "/stu/picUpload",
-//        type: "POST",
-//        data: formData,
-//        processData: false,
-//        contentType: false,
-//        success: function (data) {
-//            if (data === "116.62.169.117:22122/null") {
-//                alert("上传失败！");
-//            } else {
-//                submit(data);
-//            }
-//        },
-//        error: function (e) {
-//            alert("错误！");
-//        }
-//    });
-//}
-
 function submit(url) {
-	  var formData = new FormData();
+    var formData = new FormData();
     var data = new Object();
     if (parseInt($("#integral").attr('value')) == 0) {
         alert("请选择项目类别");
@@ -90,8 +66,6 @@ function submit(url) {
         }
         data.projectName = $("#selectProject").find("option:selected").text();
         // 项目编号
-//        data.field2 = val;
-//        data.field1 = "radioselect1";
         formData.append("field2", val);
         formData.append("field1", "radioselect1");
     } else if (selectRadioIdName == "radioselect2") {
@@ -100,16 +74,10 @@ function submit(url) {
             alert("请填写项目名称");
             return;
         }
-//        data.projectName = val;
-//        data.field1 = "radioselect2";
         formData.append("projectName", val);
         formData.append("field1", "radioselect2");
     }
-//    data.projectCategory = $("#1").find("option:selected").text();
-//    data.event = getEvent();
-//    data.integral = parseInt($("#integral").attr('value'));
-//    data.url = url;
-  
+
     formData.append("file", $("#file-0a")[0].files[0]);
     formData.append("projectCategory", $("#1").find("option:selected").text());
     formData.append("event", getEvent());
@@ -124,8 +92,8 @@ function submit(url) {
         success: function (result) {
             alert("已提交")
         },
-        error:function(err){
-        	alert(err.msg);
+        error: function (err) {
+            alert(err.msg);
         }
     });
 }

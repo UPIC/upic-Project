@@ -7,28 +7,31 @@ var changstatusUrl = "/common/changePrizeStatus";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
-var requestData = {
-    status: "SHELVES"
-};
+var requestData = {};
 
 $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     getData(pageNum, dataUrl);
 })
 
-function shangchuan() {
-    var Data = {};
-    Data.prizeName = $("#pName").val();
-    Data.score = $("#pCoin").val();
-    Data.content = $("#pContent").val();
-    Data.prizePic = $("#pPic").val();
+function shangChuan() {
+    var formData = new FormData();
+    formData.append("prizeName", $("#pName").val());
+    formData.append("score", $("#pCoin").val());
+    formData.append("content", $("#pContent").text());
+    formData.append("file", $("#pPic")[0].files[0]);
     $.ajax({
-        type: "GET",
+        type: 'POST',
         url: addPrize,
-        data: Data,
+        data: formData,
+        processData: false,
+        contentType: false,
         success: function (result) {
             alert("已上传");
             getData(pageNum, dataUrl);
+        },
+        error: function (err) {
+            alert("上传失败！");
         }
     });
 }
@@ -54,8 +57,8 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].score + "</td>";
         htmls += "<td>" + getDate(data[i].startTime, "yyyy-MM-dd") + "</td>";
         htmls += "<td class='center_td'>";
-        htmls += "<button class='btn btn-small' onclick=putaway(" + data[i].id + ")>上架</button>";
-        htmls += "<button class='btn btn-small down' onclick=undercarriage(" + data[i].id + ")>下架</button>";
+        htmls += "<button class='btn btn-small' onclick=putAway('" + data[i].id + "')>上架</button>";
+        htmls += "<button class='btn btn-small down' onclick=underCarriage('" + data[i].id + "')>下架</button>";
         htmls += "</td>";
         htmls += "<td class='center_td'>";
         htmls += "<a href='#mymodal1' data-toggle='modal'><button class='btn btn-small' onclick=commonAjax('" + getPrizeById + "','prizeId=" + data[i].id + "','getInfo','GET')>编辑</button></a>";
@@ -66,14 +69,14 @@ function addHtmls(datas, pageNum) {
     page(datas, dataUrl, datas.size, datas.number);
 }
 
-function putaway(prizeNum) {
-    var Data = {};
-    Data.prizeId = prizeNum;
-    Data.status = "上架";
+function putAway(prizeNum) {
     $.ajax({
         type: "GET",
         url: changstatusUrl,
-        data: Data,
+        data: {
+            prizeId: prizeNum,
+            status: "上架"
+        },
         success: function (result) {
             if (result === "SUCCESS") {
                 alert("已上架");
@@ -85,24 +88,26 @@ function putaway(prizeNum) {
     });
 }
 
-function undercarriage(prizeNum) {
-    var Data = {};
-    Data.prizeNum = prizeNum;
-    Data.status = "下架";
+function underCarriage(prizeNum) {
     $.ajax({
         type: "GET",
         url: changstatusUrl,
-        data: Data,
+        data: {
+            prizeId: prizeNum,
+            status: "下架"
+        },
         success: function (result) {
-            alert("已下架");
-            getData(pageNum, dataUrl);
+            if (result === "SUCCESS") {
+                alert("已下架");
+                getData(pageNum, dataUrl);
+            } else {
+                alert("下架失败");
+            }
         }
     });
 }
 
-function getInfo(datas) {
-    var data = datas.content;
-
+function getInfo(data) {
     var htmlss = "";
 
     htmlss += "<div class='modal-header'>";

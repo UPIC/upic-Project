@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.upic.common.document.excel.ExcelDocument;
+import com.upic.common.fdfs.FastDFSClient;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.enums.*;
 import com.upic.service.*;
 import com.upic.social.user.SocialUsers;
+import com.upic.utils.Constans;
 import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,7 +22,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -970,7 +975,7 @@ public class CommonController {
                     if (!status.equals("PASS")) {
                         integralLogInfo.setStatus(failIntegralLogStatus(integralLogInfo.getStatus()));
                     } else {
-                        if (integralLogInfo.getStatus().equals("PENDING_AUDIT_FINAL")) {
+                        if (integralLogInfo.getStatus().equals(IntegralLogStatusEnum.PENDING_AUDIT_FINAL)) {
                             GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
                             grainCoinLogInfo.setCreatTime(new Date());
                             grainCoinLogInfo.setEvent(integralLogInfo.getEvent());
@@ -986,8 +991,8 @@ public class CommonController {
                     }
                     integralLogService.changeAllIntegralLogStatus(integralLogInfo);
                 }
-                return "SUCCESS";
             }
+            return "SUCCESS";
         } catch (Exception e) {
             LOGGER.info("changeAllIntegralLogStatus:" + e.getMessage());
         }
@@ -1240,14 +1245,24 @@ public class CommonController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/addPrize")
+    @PostMapping("/addPrize")
     @ApiOperation("添加奖品")
-    public PrizeInfo addPrize(PrizeInfo prizeInfo) throws Exception {
+    public PrizeInfo addPrize(PrizeInfo prizeInfo, HttpServletRequest request) {
         try {
+            String url = getUrl(request, "file");
+            if (url == null) {
+                return null;
+            }
+            List<String> pics = new ArrayList<>();
+            pics.add(url);
+
+            prizeInfo.setPrizePic(pics);
+            prizeInfo.setCreatTime(new Date());
+            prizeInfo.setStatus(PrizeStatusEnum.SHELVES);
             return prizeService.addPrize(prizeInfo);
         } catch (Exception e) {
             LOGGER.info("addPrize:" + e.getMessage());
-            throw new Exception("addPrize" + e.getMessage());
+            return null;
         }
     }
 
@@ -1666,5 +1681,20 @@ public class CommonController {
         date.setTime(dateEnd);
         date.set(Calendar.DATE, date.get(Calendar.DATE) + dates);
         return date.getTime();
+    }
+
+    public String getUrl(HttpServletRequest request, String fileName) throws IOException {
+        // 转型为MultipartHttpRequest：
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        // 获得文件：
+        MultipartFile inputFile = multipartRequest.getFile(fileName);
+        // 获得文件名：
+        String filename = inputFile.getOriginalFilename();
+
+        String uploadFile = FastDFSClient.uploadFile(inputFile.getBytes(), filename);
+
+        String url = Constans.STRONGE_URL + uploadFile;
+        return url;
+
     }
 }
