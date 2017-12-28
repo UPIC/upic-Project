@@ -2,7 +2,7 @@ var dataUrl = "/stu/loadIntegralLogInfo";
 var searchKeyWordUrl = "";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getConfirmationBasicByC = "/common/getConfirmationBasisByCategoryNodeId";
-var addData="/systemManager/changeIntegralLogInfoExcel"
+var addData = "/systemManager/changeIntegralLogInfoExcel"
 var saveUrl = "";
 var pageSize = 0;
 var totalPages = -1;
@@ -10,21 +10,22 @@ var pageNum = 0;
 var requestData = {};
 var uploading = false;
 
-
 // 项目类别
 var projectCategory = "";
 var projectName = "";
 var projectNum = "";
 var allData = "";
-var fatherId="";
-var selectRadioIdName="";
+var fatherId = "";
+var selectRadioIdName = "";
 // 上传文件
 function getFile() {
 	if (projectCategory == "") {
 		alert("请选择项目类别");
 		return;
 	}
-
+	if ($("#projectName").val() != "") {
+		projectName = $("#projectName").val();
+	}
 	if (projectName == "") {
 		alert("请选择项目名称");
 		return;
@@ -71,34 +72,35 @@ function getFile() {
 $(function() {
 	pageSize = $("#select-small").children('option:selected').text()
 	commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
-	$("#getProjectType").change(function () {
-//        var name = $(this).attr("name");
-		fatherId=$(this).find("option:selected").val();
-		projectCategory=$(this).find("option:selected").text();
-    });
-		$(":radio")
-				.click(
-						function() {
-							var requestData=new Object();
-							selectRadioIdName = $(this).attr("id");
-							if (selectRadioIdName === 'radioselect1') {
-								$("#inputIt").html("");
-								if (fatherId == "") {
-									alert("请选择项目类别");
-									selectRadioIdName = "";
-									return;
-								}
-								requestData.categoryNodeId = fatherId;
-								ajaxs(requestData, "createProject",
-										getConfirmationBasicByC)
-							} else if (selectRadioIdName === 'radioselect2') {
-								var htmls = "<div id='inputIt'><input type='text' id='projectName' placeholder='请输入项目名称'";
-								htmls += "class='input-xxlarge' /> <span class='help-inline'>*</span></div>";
-								$("#sample_1_length").find('label')
-										.after(htmls);
-
+	$("#getProjectType").change(function() {
+		// var name = $(this).attr("name");
+		fatherId = $(this).find("option:selected").val();
+		projectCategory = $(this).find("option:selected").text();
+	});
+	$(":radio")
+			.click(
+					function() {
+						var requestData = new Object();
+						projectName="";
+						selectRadioIdName = $(this).attr("id");
+						if (selectRadioIdName === 'radioselect1') {
+							$("#inputIt").html("");
+							if (fatherId == "") {
+								alert("请选择项目类别");
+								selectRadioIdName = "";
+								return;
 							}
-						});
+							$("#projectName").val("");
+							requestData.categoryNodeId = fatherId;
+							ajaxs(requestData, "createProject",
+									getConfirmationBasicByC)
+						} else if (selectRadioIdName === 'radioselect2') {
+							var htmls = "<div id='inputIt'><input type='text' id='projectName' placeholder='请输入项目名称'";
+							htmls += "class='input-xxlarge' /> <span class='help-inline'>*</span></div>";
+							$("#sample_1_length").find('label').after(htmls);
+
+						}
+					});
 })
 /** 生成官方项目* */
 function createProject(data) {
@@ -111,13 +113,13 @@ function createProject(data) {
 	htmls += "</select></div>";
 	// $("#writeProjectName").html(htmls);
 	$("#sample_1_length").find('label').after(htmls);
-	$("#selectProject").change(function () {
-		var value=$(this).find("option:selected").val();
-		if(value!="none"){
-		projectName=$(this).find("option:selected").text();
-		projectNum=$(this).find("option:selected").text();
+	$("#selectProject").change(function() {
+		var value = $(this).find("option:selected").val();
+		if (value != "none") {
+			projectName = $(this).find("option:selected").text();
+			projectNum = $(this).find("option:selected").text();
 		}
-  });
+	});
 }
 
 function addProjectType(res) {
@@ -130,14 +132,14 @@ function addProjectType(res) {
 				+ "</option>";
 	}
 	$("#getProjectType").html(htmls);
-	
+
 }
 
 function addHtmls(data) {
 	var htmls = "";
 	for (var i = 0; i < data.length; i++) {
-		allData[i].projectCategory=projectCategory;
-		data[i].projectName=projectName;
+		allData[i].projectCategory = projectCategory;
+		data[i].projectName = projectName;
 		htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='"
 				+ data[i].projectNum + "'/></td>";
 		htmls += "<td class='center_td'>" + data.length + "</td>";
@@ -227,9 +229,9 @@ function save(index) {
 }
 // ajax
 function ajaxs(datas, method, urls) {
-//	if (jQuery.type(datas.fatherId) === 'undefined' && datas != "") {
-//		return;
-//	}
+	// if (jQuery.type(datas.fatherId) === 'undefined' && datas != "") {
+	// return;
+	// }
 	$.ajax({
 		type : "GET", // 提交方式
 		url : urls,// 路径
@@ -247,22 +249,22 @@ function ajaxs(datas, method, urls) {
 	});
 }
 
-function submitData(){
-	var str=JSON.stringify(allData);
+function submitData() {
+	var str = JSON.stringify(allData);
 	$.ajax({
 		type : "POST", // 提交方式
 		url : addData,// 路径
 		data : {
-			string:str,
-			type:selectRadioIdName
+			string : str,
+			type : selectRadioIdName
 		},
 		beforeSend : function(XMLHttpRequest) {
 		},
 		success : function(result) {// 返回数据根据结果进行相应的处理
-			if(result==="SUCCESS"){
+			if (result === "SUCCESS") {
 				alert("上传成功");
-				//刷新页面
-			}else{
+				// 刷新页面
+			} else {
 				alert("服务器异常，请重试！");
 			}
 		},
