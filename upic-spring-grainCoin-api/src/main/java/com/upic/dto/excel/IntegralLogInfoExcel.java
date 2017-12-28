@@ -14,7 +14,7 @@ public class IntegralLogInfoExcel implements Serializable {
 
     private String event; //事件 json
 
-    private double integral; //分数
+    private String integral; //分数
 
     private IntegralLogTypeEnum type; //类型
 
@@ -74,11 +74,11 @@ public class IntegralLogInfoExcel implements Serializable {
 		this.event = event;
 	}
 
-	public double getIntegral() {
+	public String getIntegral() {
 		return integral;
 	}
 
-	public void setIntegral(double integral) {
+	public void setIntegral(String integral) {
 		this.integral = integral;
 	}
 

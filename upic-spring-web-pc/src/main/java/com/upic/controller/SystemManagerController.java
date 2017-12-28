@@ -147,7 +147,7 @@ public class SystemManagerController {
                 IntegralLogInfo integralLogInfo = new IntegralLogInfo();
                 integralLogInfo.setIntegralLogId(integralLogIdInfo);
                 integralLogInfo.setEvent(integralLogInfoExcel.getEvent());
-                integralLogInfo.setIntegral(integralLogInfoExcel.getIntegral());
+                integralLogInfo.setIntegral(Double.parseDouble(integralLogInfoExcel.getIntegral()));
                 integralLogInfo.setType(integralLogInfoExcel.getType());
 //                if (getUser().getField1().equals("1")) {
                 if (getUser().getRank().equals("1")) {
