@@ -161,7 +161,7 @@ public class ProjectTaskImpl implements ProjectTask {
 			x.setImplementationProcess(ImplementationProcessEnum.ENROLLMENT);
 			projectRepository.saveAndFlush(x);
 			upicRedisComponent.init(x.getProjectNum());
-			upicRedisComponent.init(x.getProjectNum()+"hash");
+//			upicRedisComponent.init(x.getProjectNum()+"hash");
 //			upicRedisComponent.deletByKey(x.getProjectNum()+"hash");
 		});
 	}

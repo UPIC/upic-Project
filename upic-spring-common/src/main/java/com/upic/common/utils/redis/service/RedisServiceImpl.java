@@ -194,6 +194,13 @@ public class RedisServiceImpl implements IRedisService {
 		return redisTemplate.opsForHash().putIfAbsent(key, hashKey, value);
 	}
 
+	public String getHashByKey(String key, String hashKey) {
+		return (String) redisTemplate.opsForHash().get(key, hashKey);
+	}
+	public void putHashKey(String key, String hashKey, String value) {
+		 redisTemplate.opsForHash().put(key, hashKey, value);
+	}
+
 	public boolean deletByKey(String key) {
 		try {
 			redisTemplate.delete(key);

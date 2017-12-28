@@ -69,8 +69,11 @@ $(function() {
 	 */
 	$("#submit").click(
 			function() {
+				if(hadCategoryName===""){
+					return;
+				}
 				obj.event = hadCategoryName;
-				obj.content = $("#content").text();
+				obj.content = $("#content").val();
 				obj.integral = $("#integral").val();
 				if (myRadio === "radioselect1") {
 					obj.projectName = $("#form1 option:selected").text();

@@ -81,21 +81,31 @@ public class UserController {
 			System.out.println("获取失败");
 		}
 		providerSignInUtils.doPostSignUp(userID, request);
-		String payUrl = "/auth";// POST提交地址
-		String user = "user";// 如有多个，以此类推。
-		String pass = "pass";
-
-		response.setContentType("text/html;charset=utf-8");
+		// String payUrl = "/auth";// POST提交地址
+		// String user = "user";// 如有多个，以此类推。
+		// String pass = "pass";
+		//
+		// response.setContentType("text/html;charset=utf-8");
 		PrintWriter out;
 		try {
 			out = response.getWriter();
-			out.println("<form name='authSubmit' method='post'  action='" + payUrl + "' >");
-			out.println("<input type='hidden' name='" + user + "' value='" + userID + "'>"); // 如有多个，则写多个hidden即可
-			out.println("<input type='hidden' name='" + pass + "' value='" + userID + "'>");
-			out.println("</form>");
-			out.println("<script>");
-			out.println("  document.authSubmit.submit()");
-			out.println("</script>");
+			// out.println("<form name='authSubmit' method='post' action='" + payUrl + "'
+			// >");
+			// out.println("<input type='hidden' name='" + user + "' value='" + userID +
+			// "'>"); // 如有多个，则写多个hidden即可
+			// out.println("<input type='hidden' name='" + pass + "' value='" + userID +
+			// "'>");
+			// out.println("</form>");
+			// out.println("<script>");
+			// out.println(" document.authSubmit.submit()");
+			// out.println("</script>");
+			String msg = "";
+			if (userID.length() > 0) {
+				msg = "/student/st-main.html";
+			} else {
+				msg = "/teacher/teacher-main.html";
+			}
+			response.sendRedirect(msg);
 		} catch (IOException e) {
 		}
 

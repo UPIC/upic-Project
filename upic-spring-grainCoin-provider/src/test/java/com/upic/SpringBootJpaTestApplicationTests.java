@@ -2,6 +2,7 @@ package com.upic;
 
 import com.upic.condition.GrainCoinLogCondition;
 import com.upic.common.utils.redis.UpicRedisComponent;
+import com.upic.common.utils.redis.service.IRedisService;
 import com.upic.condition.IntegralLogCondition;
 import com.upic.condition.IntegralOperateLogCondition;
 import com.upic.condition.PrizeCondition;
@@ -49,6 +50,9 @@ public class SpringBootJpaTestApplicationTests {
 
     @Autowired
     private UpicRedisComponent redisComponent;
+    
+    @Autowired
+    private IRedisService redisService;
 
     /**
      * ************************************** IntegralLog
@@ -344,5 +348,13 @@ public class SpringBootJpaTestApplicationTests {
         for (IntegralLogInfo integralLogInfo : integralLogInfoPage.getContent()) {
             System.out.println(integralLogInfo);
         }
+    }
+    
+    @Test
+    public void testHash() {
+    	redisService.putIfAbsent("SQ16201300751514435762208hash", "1422110108", "12");
+    	redisService.putIfAbsent("SQ16201300751514435762208hash", "1422110109", "13");
+    	redisService.putIfAbsent("SQ16201300751514435762208hash", "1422110110", "14");
+    	redisService.putIfAbsent("SQ16201300751514435762208hash", "1422110111", "15");
     }
 }

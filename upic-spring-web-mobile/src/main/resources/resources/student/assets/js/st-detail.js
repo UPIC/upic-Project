@@ -184,9 +184,20 @@ success: function (data) {
         	projectNum: projectNUm,
         },
         success: function (data) {
-           alert("已发送报名请求")
+// alert("已发送报名请求")
+        	if(data==="SUCCESS"){
+        		alert("报名成功");
+        		isApply=false;
+        		 $(".navbar").addClass("nav-bot-black");
+                 $(".navbar").removeClass("nav-bot");
+                 $("#txtD").html("已报名");
+        	}else{
+        		alert("请求失败");
+        	}
         }
     })
+   }else{
+	   alert("你已报名成功");
    }
 }
 

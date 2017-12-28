@@ -6,7 +6,7 @@
  * @version $Id$
  */
 
-var page = 1;
+var page = 0;
 var pageCount = -1;
 var getAllUrl = "/common/getPrize";// 商品信息地址
 var getPicUrl = "/stu/getBanner";// banner图地址
@@ -52,7 +52,7 @@ function ajaxs(datas, method, urls) {
 			// progress.inc();
 		},
 		success : function(result) {// 返回数据根据结果进行相应的处理
-			pageCount = result.total;
+			pageCount = result.totalPages;
 			var datas = result.content;
 			addHtmls(datas, method)
 		},
@@ -107,7 +107,7 @@ function addHtmls(result, method) {
 			htmls += "</div>";
 			htmls += "</li>";
 		}
-		if (page == 1) {
+		if (page == 0) {
 			$("#" + method).html(htmls);
 		} else {
 			$("#" + method).append(htmls);
@@ -158,6 +158,9 @@ $(window).scroll(
 					+ parseFloat($(window).scrollTop());// 浏览器的高度加上滚动条的高度
 			if ($(document).height() <= totalheight+7) // 当文档的高度小于或者等于总的高度的时候，开始动态加载数据
 			{
+				if(pageCount<(page+1)){
+					return ;
+				}
 				page++;
 				ajaxs('status=SHELVES&size=10&page=' + page, "getAll",
 						"/common/getPrize");

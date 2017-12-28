@@ -40,6 +40,8 @@ $(function () {
         success: function (result) {// 返回数据根据结果进行相应的处理
             htmls += "<li class='clearfix'><div class='list-name'>项目名称：</div>";
             htmls += "<div class='list-det det-cen'>" + result.projectName + "</div></li>";
+            htmls += "<li class='clearfix'><div class='list-name'>项目积分：</div>";
+            htmls += "<div class='list-det det-cen'>" + result.integral + "</div></li>";
             htmls += "<li class='clearfix'><div class='list-name'>项目类别：</div>";
             htmls += "<div class='list-det det-cen'>";
             htmls += result.event;
@@ -49,7 +51,7 @@ $(function () {
             htmls += "<div class='list-line'>";
             htmls += "项目详情：";
             htmls += "</div>";
-            htmls += "<div class='li-text'>" + result.event + "</div>";
+            htmls += "<div class='li-text'>" + result.content + "</div>";
             htmls += "</li>";
             htmls += "<li class='li-other clearfix'>";
             htmls += "<div class='list-line'>";

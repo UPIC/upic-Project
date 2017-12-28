@@ -1,137 +1,75 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-
-    <!-- Bootstrap -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/css/st-declare.css">
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/st-declare1.js"></script>
-    <script type="text/javascript">
-        var phoneWidth = parseInt(window.screen.width);
-        var phoneScale = phoneWidth / 375;
-        var ua = navigator.userAgent;
-        if (/Android (\d+\.\d+)/.test(ua)) {
-            var version = parseFloat(RegExp.$1);
-            if (version > 2.3) {
-                document
-                    .write('<meta name="viewport" content="width=375, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
-            } else {
-                document
-                    .write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
-            }
-        } else {
-            document
-                .write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
-        }
-    </script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<!-- Bootstrap -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="assets/css/st-check.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/st-detail1-1.js"></script>
+<script type="text/javascript">
+	var phoneWidth = parseInt(window.screen.width);
+	var phoneScale = phoneWidth / 375;
+	var ua = navigator.userAgent;
+	if (/Android (\d+\.\d+)/.test(ua)) {
+		var version = parseFloat(RegExp.$1);
+		if (version > 2.3) {
+			document
+					.write('<meta name="viewport" content="width=375, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+		} else {
+			document
+					.write('<meta name="viewport" content="width=375, target-densitydpi=device-dpi">');
+		}
+	} else {
+		document
+				.write('<meta name="viewport" content="width=375, user-scalable=no, target-densitydpi=device-dpi">');
+	}
+</script>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <a href="st-detail4.html">
-            <div class="de-left">
-                <img src="assets/i/b-1.png" alt="">
-            </div>
-        </a> <span>积分申报</span>
-    </div>
-</nav>
-<div class="re-nav top">
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="home">
-            <div class="de-list">
-                <ul>
-                    <li>
-                        <div class="list-left">项目类别：</div>
-                        <div class="list-right">
-                            <select class="form-control" id="sui">
-                                <option></option>
-                            </select>
-                            <img id="projectCategorySelect" src="assets/i/close.png" alt="" width="25px" height="25px;"
-                                 style="float:right;margin-top:12px;margin-right:10px">
-                        </div>
-                        <div class="clear"></div>
-                    </li>
-                    <li>
-                        <div class="list-left">预获积分：</div>
-                        <div class="list-right agray"><input id="integral" type="text" name="" value=""
-                                                             disabled="disabled"></div>
-                        <!-- <input id="integral" type="hidden"/> -->
-                    </li>
-                    <li>
-                        <div class="list-left">项目选择：</div>
-                        <div class="list-right">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="radioselect1" value="option1"
-                                           checked>
-                                    系统选择
-                                </label>
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="radioselect2" value="option2">
-                                    手动输入
-                                </label>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                    </li>
-                    <li>
-                        <div class="list-left">项目名称：</div>
-                        <div class="list-right" id="change">
-                            <input id="projectName" type="text" name="" style="display:none" placeholder="请输入项目名称">
-                            <select class="form-control" id="form1">
-                                <option></option>
-                            </select>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="list-left">所属学院：</div>
-                        <div class="list-right agray" id="college"></div>
-                    </li>
-                    <li class="list-other">
-                        <div>项目详情:</div>
-                        <textarea id="content" class="form-control"
-                                  rows="3"></textarea>
-                    </li>
-                    <li class="list-other">
-                        <div class="de-text">上传佐证：</div>
-                        <img src="assets/i/b-2.png"
-                             alt="">
-                    </li>
-                </ul>
-            </div>
-
-            <nav class="navbar navbar-default navbar-fixed-bottom">
-                <a href="javascript:;" id="submit">
-                    <div class="container nav-bot" onclick="sub()">确认修改</div>
-                </a>
-            </nav>
-        </div>
-    </div>
-</div>
-<script>
-    $(function () {
-        $(":radio").click(function () {
-            if (this.checked) {
-                if ($(this).attr("id") == "radioselect1") {
-                    myRadio = "radioselect1";
-                    $("#projectName").hide();
-                    $("#form1").show();
-                }
-                if ($(this).attr("id") == "radioselect2") {
-                    myRadio = "radioselect2";
-                    $("#form1").hide();
-                    $("#projectName").show();
-                }
-            }
-        });
-    })
-</script>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<a href="st-declare.html">
+				<div class="de-left">
+					<img src="assets/i/b-1.png" alt="">
+				</div>
+			</a> <span>申报详情</span>
+		</div>
+	</nav>
+	<div class="dt-list">
+		<ul id="content" class="clearfix">
+			<li class="clearfix">
+				<div class="list-name">项目名称：</div>
+				<div class="list-det det-cen">校园文化节</div>
+			</li>
+			<li class="clearfix">
+				<div class="list-name">项目类别：</div>
+				<div class="list-det det-cen">
+					<span>创新创业类 >></span>&nbsp;<span>国赛 >></span>&nbsp;<span>一等奖</span><br>
+				</div>
+			</li>
+			<li class="list-other">
+				<div>项目详情:</div> <textarea id="content" class="form-control"
+					rows="3"></textarea>
+			</li>
+			<li class="li-other clearfix">
+				<div class="list-line">佐证照片：</div> <img src="assets/i/b-3.jpg"
+				alt="">
+			</li>
+<!-- 			<li class="clearfix"> -->
+<!-- 				<div class="list-name">失败原因：</div> -->
+<!-- 				<div class="list-det">失败原因失败原因失败原因失败原因失败原因失败原因</div> -->
+<!-- 			</li> -->
+		</ul>
+	</div>
+	<div id="xiugai">
+		<a href="#" id="submit">
+			<div class="container1 nav-bot">确认修改</div>
+		</a>
+	</div>
 </body>
 </html>

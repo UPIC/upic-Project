@@ -327,7 +327,7 @@ public class StudetAllController {
     @PostMapping("/updateIntegralLog")
     public IntegralLogInfo updateIntegralLog(IntegralLogInfo i, String projectNum) {
         try {
-            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(UserUtils.getUser().getUserNum(), projectNum));
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(UserUtils.getUser().getUserId(), projectNum));
 //            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserId(), projectNum));
             integralLogInfo.setProjectName(i.getProjectName());
             integralLogInfo.setProjectCategory(i.getProjectCategory());
@@ -349,7 +349,27 @@ public class StudetAllController {
         }
         return null;
     }
-
+    /**
+     * 修改积分状态
+     *
+     * @return
+     */
+    @PostMapping("/updateIntegralLogNew")
+    public IntegralLogInfo updateIntegralLogNew(String content, String projectNum) {
+        try {
+            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(UserUtils.getUser().getUserId(), projectNum));
+//            IntegralLogInfo integralLogInfo = integralLogService.getByIntegralLogId(new IntegralLogIdInfo(getUser().getUserId(), projectNum));
+            integralLogInfo.setContent(content);
+            if (integralLogInfo != null) {
+                integralLogInfo.setStatus(failIntegralLogStatus(integralLogInfo.getStatus()));
+                integralLogInfo = integralLogService.changeAllIntegralLogStatus(integralLogInfo);
+                return integralLogInfo;
+            }
+        } catch (Exception e) {
+            LOGGER.info("updateIntegralLog:" + e.getMessage());
+        }
+        return null;
+    }
     private String splitMyProjectCategory(String event) {
         String[] projectCategoryList = event.split("/");
         return projectCategoryList[0];

@@ -59,4 +59,8 @@ public interface IRedisService {
     public void set(final byte[] key, final byte[] value, final long liveTime);
     
     public void set(String key, String value, long liveTime);
-}  
+    
+    public String getHashByKey(String key, String hashKey);
+    
+	public void putHashKey(String key, String hashKey, String value);
+}
