@@ -3,6 +3,7 @@ package com.upic.controller;
 import com.upic.condition.*;
 import com.upic.dto.*;
 import com.upic.service.*;
+import com.upic.social.user.SocialUsers;
 import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -362,12 +363,14 @@ public class CommonController {
      * @throws Exception
      */
     @GetMapping("/getProjectByUser")
-    public Page<ProjectInfo> getProjectByUser(@PageableDefault(size = 10) Pageable pageable, ProjectCondition projectCondition) throws Exception {
+    public Page<ProjectInfo> getProjectByUser(@PageableDefault(size = 100) Pageable pageable, ProjectCondition projectCondition) {
         try {
+        	SocialUsers user = UserUtils.getUser();
+        	projectCondition.setGuidanceNum(user.getUserId());
             return projectService.searchProject(projectCondition, pageable);
         } catch (Exception e) {
             LOGGER.info("getProjectByUser:" + e.getMessage());
-            throw new Exception("getProjectByUser" + e.getMessage());
+            return null;
         }
     }
 

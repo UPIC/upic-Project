@@ -61,6 +61,7 @@ public class ProjectTaskImpl implements ProjectTask {
 		ProjectCondition p=new ProjectCondition();
 		p.setEndTime(getOneDayBefore(new Date(),-7));
 		p.setEndTimeTo(new Date());
+		p.setImplementationProcess(ImplementationProcessEnum.HAVE_IN_HAND);
 		Page<Project> pageBean = projectRepository.findAll(new ProjectSpec(p), page);
 		for(int i=0;i<pageBean.getTotalPages();i++) {
 			List<Project> content=null;

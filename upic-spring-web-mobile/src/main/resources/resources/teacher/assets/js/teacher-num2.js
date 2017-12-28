@@ -13,7 +13,7 @@
     return null;
 }
 
-var page = 1;
+var page = 0;
 var pageCount = -1;
 var getNumUrl = "/teacher/getUserListByProjectNum";
 var types = "GET";
@@ -30,8 +30,8 @@ function ajaxs(datas, method, urls) {
     }
     $.ajax({
         type: types, // 提交方式
-        url: urls,// 路径
-        data: datas,
+        url: urls+"?"+datas,// 路径
+//        data: datas,
         beforeSend: function (XMLHttpRequest) {
 // progress.inc();
 },
@@ -55,7 +55,12 @@ function addHtmls(result, method) {
 
     if (method == "getNum") {
         for (var i = 0; i < result.length; i++) {
-            var status = "已报名";
+        	if(result[i].status==="ALREADY_SIGN_UP"){
+        		status="已报名";
+        	}
+        	else{
+        		var status = "已签到";
+        	}
             htmls += "<tr><td>" + (i + 1) + "</td>";
             htmls += "<td>" + result[i].integralLogId.studentNum + "</td>";
             htmls += "<td>" + result[i].student + "</td>";

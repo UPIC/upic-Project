@@ -8,18 +8,18 @@
 
 var page = 1;
 var pageCount = -1;
-var getAllurl = "/common/getProjectByUser";//获取用户项目列表
-var getNewNum = "/common/getSignUpNumberByProjectNum";//项目报名人数
+var getAllurl = "/common/getProjectByUser";// 获取用户项目列表
+var getNewNum = "/common/getSignUpNumberByProjectNum";// 项目报名人数
 var types = "GET";
 
 
 $(function () {
     ajaxs("", "getAll", getAllurl)
     /**
-     * 获取创建的活动详情
-     *
-     * @returns
-     */
+	 * 获取创建的活动详情
+	 * 
+	 * @returns
+	 */
 })
 
 
@@ -92,7 +92,6 @@ function addHtmls(result, method) {
                     url = "teacher-detail.html?projectNum=" + result[i].projectNum;
                     break;
             }
-
             htmls += "<div class='" + className + "'>";
             htmls += "<div class='tab-left'>";
             htmls += "<img src='assets/i/b-3.jpg'>";
@@ -133,7 +132,7 @@ function addHtmls(result, method) {
 
 /**
  * 获取人数
- *
+ * 
  * @param projectNum
  * @returns
  */
@@ -171,7 +170,7 @@ function getDate(date, rule) {
 }
 /**
  * 只满足获取项目时间
- *
+ * 
  * @returns
  */
 function getProjectTime(projectNUm) {
@@ -239,7 +238,7 @@ Date.prototype.pattern = function (fmt) {
 }
 
 function subMyStr(str) {
-    if (str.length > 8) {
+    if (str!=null&&str.length > 8) {
         str = str.substring(0, 8);
         str += "...";
     }

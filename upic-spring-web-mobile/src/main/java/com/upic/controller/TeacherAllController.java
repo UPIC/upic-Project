@@ -4,6 +4,8 @@ import com.upic.dto.IntegralLogInfo;
 import com.upic.dto.ProjectInfo;
 import com.upic.service.IntegralLogService;
 import com.upic.service.ProjectService;
+import com.upic.utils.UserUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +51,12 @@ public class TeacherAllController {
      * @throws Exception
      */
     @GetMapping("/getUserListByProjectNum")
-    public Page<IntegralLogInfo> getUserListByProjectNum(@PageableDefault(size = 10) Pageable pageable, String projectNum) {
+    public Page<IntegralLogInfo> getUserListByProjectNum(@PageableDefault(size = 500) Pageable pageable, String projectNum) {
         try {
+        	ProjectInfo projectByNum = projectService.getProjectByNum(projectNum);
+        	if(!projectByNum.getGuidanceNum().equals(UserUtils.getUser().getUserId())) {
+        		return null;
+        	}
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getUserListByProjectNum(projectNum, pageable);
             System.out.println(integralLogInfoPage.getContent().toString());
             return integralLogInfoPage;
