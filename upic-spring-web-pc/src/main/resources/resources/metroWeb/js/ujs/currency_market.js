@@ -9,7 +9,7 @@
 var getGrainCoinUrl = "/stu/getGrainCoin";
 var getGraincoinLogPage = "/common/getGraincoinLogPage";
 var getPrize = "/common/getPrize";
-var getHistoryPrize = "/common/getHistoryPrize";
+// var getHistoryPrize = "/common/getHistoryPrize";
 var getExchangePrizeUrl = "/stu/getExchangePrize";
 
 var myGrainCoin = 0;
@@ -33,7 +33,7 @@ $(function () {
     /**
      * 获取历史物品
      */
-    ajaxs("", "liShiWuPin", getHistoryPrize);
+    // ajaxs("", "liShiWuPin", getHistoryPrize);
 })
 
 function getGrainCoin() {
@@ -105,9 +105,9 @@ function getExchangePrize(prizeId, score) {
     } else {
         $.ajax({
             type: types, // 提交方式
-            url: getExchangePrizeUrl,// 路径
-            data:{
-            	prizeId:prizeId
+            url: getExchangePrizeUrl, // 路径
+            data: {
+                prizeId: prizeId
             },
             beforeSend: function (XMLHttpRequest) {
             },
@@ -123,7 +123,7 @@ function getExchangePrize(prizeId, score) {
             complete: function (XMLHttpRequest, textStatus) {
             },
             error: function (err) {
-            	alert(err.msg);
+                alert(err.msg);
             }
         });
     }

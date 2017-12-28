@@ -176,19 +176,20 @@ public class StudetAllController {
             PrizeInfo prizeInfo = prizeService.getPrizeById(prizeId);
             //积分不够
             double watchIntegral = integralLogService.watchIntegral(UserUtils.getUser().getUserId());
-            if(watchIntegral-prizeInfo.getScore()<0) {
-            	return "ERROR";
+            if (watchIntegral - prizeInfo.getScore() < 0) {
+                return "ERROR";
             }
             if (prizeInfo != null) {
                 GrainCoinLogInfo grainCoinLogInfo = new GrainCoinLogInfo();
                 grainCoinLogInfo.setEvent(UserUtils.getUser().getUserId() + "兑换" + prizeInfo.getPrizeName());
                 grainCoinLogInfo.setPrizeId(prizeId);
+                grainCoinLogInfo.setCreatTime(new Date());
                 grainCoinLogInfo.setScore(-prizeInfo.getScore());
                 grainCoinLogInfo.setType(GrainCoinLogTypeEnum.PAYMENT);
                 grainCoinLogInfo.setStatus(GrainCoinLogStatusEnum.HAVEDONE);
                 SocialUsers socialUsers = UserUtils.getUser();
                 grainCoinLogInfo.setUsername(socialUsers.getUserNum());
-                grainCoinLogInfo.setUserNum(socialUsers.getUserNum());
+                grainCoinLogInfo.setUserNum(socialUsers.getUserId());
                 grainCoinLogInfo.setPrizeName(prizeInfo.getPrizeName());
                 grainCoinLogService.saveGrainCoinLog(grainCoinLogInfo);
                 return "SUCCESS";
@@ -452,7 +453,7 @@ public class StudetAllController {
             //获取用户
             SocialUsers user = UserUtils.getUser();
             // 更改报名积分状态
-             msg = integralLogService.changeIntegralLogToSignedIn(projectNum, user.getUserId());
+            msg = integralLogService.changeIntegralLogToSignedIn(projectNum, user.getUserId());
             //二维码扫完后跳转地址 并传递msg
             response.sendRedirect("/index.html?msg=" + msg);
         } catch (Exception e) {
