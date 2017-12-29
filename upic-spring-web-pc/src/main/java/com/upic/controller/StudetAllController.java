@@ -622,7 +622,7 @@ public class StudetAllController {
             // integralLogInfo.setClazz(socialUsers.getClazz());
             // integralLogInfo.setCollege(socialUsers.getCollege());
 
-            integralLogInfo.setStudent(socialUsers.getUsername());
+            integralLogInfo.setStudent(socialUsers.getUserNum());
             integralLogInfo.setClazz(socialUsers.getClazz());
             integralLogInfo.setCollege(socialUsers.getCollege());
 
