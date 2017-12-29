@@ -5,7 +5,7 @@ var getIntegeralUrl = "/stu/getIntegeralByUserNum";
 var getGrainCoinUrl = "/stu/getGrainCoinByUserNum";
 var getAllIntegralLogByStudentNum = "/stu/getAllIntegralLogByUserNum";
 var getProjectCollegeUrl = "/common/getCollege";
-var getProjectclazzUrl = "/common/getClazz";
+var getProjectClazzUrl = "/common/getClazz";
 var getUserByUserNum = "/common/getUserByUserNum";
 var pageSize = 0;
 var totalPages = -1;
@@ -17,9 +17,8 @@ var requestData = {
 $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     commonAjax(getProjectCollegeUrl, null, "addProjectCollege", "GET");
-    commonAjax(getProjectclazzUrl, null, "addProjectclazz", "GET");
-    registSelect("getProjectCollege");
-    registSelect("getProjectclazz");
+    registSelect1("college");
+    registSelect("clazz");
     getData(pageNum, dataUrl);
 
     $("#exportBtn").click(function () {
@@ -36,7 +35,7 @@ $(function () {
     })
 })
 
-function addProjectclazz(res) {
+function addProjectClazz(res) {
     var data = res.content;
     var htmls = "";
     htmls += "<option value='4' class='yellow'>班级筛选...</option>";
@@ -44,7 +43,7 @@ function addProjectclazz(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].clazz + "</option>";
     }
-    $("#getProjectclazz").html(htmls);
+    $("#clazz").html(htmls);
 }
 
 function addProjectCollege(res) {
@@ -55,7 +54,7 @@ function addProjectCollege(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
-    $("#getProjectCollege").html(htmls);
+    $("#college").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {
@@ -155,5 +154,16 @@ function getGrainCoinAjax(userNum, id) {
         },
         error: function () {
         }
+    });
+}
+
+// 下拉框注册监听
+function registSelect1(id) {
+    $("#" + id).change(function () {
+        var name = $(this).attr("name");
+        var value = $(this).children('option:selected').text();
+        eval('(' + "requestData." + name + "=\"" + value + '\")');
+        getData(0, dataUrl);
+        commonAjax(getProjectClazzUrl, "college=" + value, "addProjectClazz", "GET");
     });
 }
