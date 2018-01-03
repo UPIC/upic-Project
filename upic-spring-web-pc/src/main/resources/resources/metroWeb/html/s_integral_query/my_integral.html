@@ -19,7 +19,6 @@
     <link rel="stylesheet" type="text/css" href="../../css/my_project.css"/>
     <script src="../../js/jquery-1.8.3.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/ujs/integral_query.js"></script>
     <script>
         $(document).ready(function () {
             $("#main-content").css({
@@ -178,13 +177,13 @@
         $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
         $(".selectlist").after('<div class="selectlist selectlist_second"><select name="college" id="college" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目状态筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
-        $(".selectlist_second").after('<button class="btn btn-small btn-success"><i class="icon-cloud"></i>导出</button>');
+        $(".selectlist_second").after('<button class="btn btn-small btn-success" id="exportBtn"><i class="icon-cloud"></i>导出</button>');
         $("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
         $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
         $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().append('<input type="search" id="search" style="float:right" class="search"/>')
     })
 </script>
 </body>
+<script src="../../js/tjs/pagejs.js"></script>
 <script src="../../js/ujs/my_integral.js"></script>
-<script src="../../js/ujs/pagejs.js"></script>
 </html>

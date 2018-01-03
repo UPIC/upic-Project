@@ -416,7 +416,14 @@ public class IntegralLogServiceImpl implements IntegralLogService {
     public List<Object> listIntegralLog(IntegralLogCondition condition) {
         try {
             List<Object> objectList = new ArrayList<>();
-            objectList = toObject(integralLogRepository.findAll(new IntegralLogSpec(condition)));
+            List<IntegralLog> integralLogList = integralLogRepository.findAll(new IntegralLogSpec(condition));
+            List<IntegralLogInfo> integralLogInfoList = new ArrayList<>();
+            for (IntegralLog integralLog : integralLogList) {
+                IntegralLogInfo integralLogInfo = new IntegralLogInfo();
+                UpicBeanUtils.copyProperties(integralLog, integralLogInfo);
+                integralLogInfoList.add(integralLogInfo);
+            }
+            objectList = toObject(integralLogInfoList);
             return objectList;
         } catch (Exception e) {
             LOGGER.info("listIntegralLog:" + e.getMessage());

@@ -1,4 +1,4 @@
-var dataUrl = "/stu/getAllIntegralLogByStudentNum";
+var dataUrl = "/stu/searchIntegralLog";
 var getIntegralLogByIntegralLogId = "/common/getIntegralLogByIntegralLogId";
 var searchKeyWordUrl = "/common/integralLogSearchBar";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
