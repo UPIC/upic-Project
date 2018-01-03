@@ -1,6 +1,8 @@
 package com.upic;
 
 import com.upic.common.fdfs.FastDFSClient;
+import com.upic.dto.UserInfo;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,4 +21,9 @@ public class TestFastDfs {
         String upload = fastDFSClient.uploadFile(file, "fuck.jpeg");
         System.out.print(upload);
     }
+    
+    public static void main(String[] args) {
+//		UserInfo u=new UserInfo();
+		System.out.println(UserInfo.class.getSimpleName());
+	}
 }

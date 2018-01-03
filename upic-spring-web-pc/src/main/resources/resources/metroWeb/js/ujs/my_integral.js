@@ -184,6 +184,9 @@ function getProjectInfo(result, j) {
 }
 
 function splitJson(json) {
+	if(json==null ||json===""){
+		return "";
+	}
     var projectCategorys = new Array();
     projectCategorys = json.split("/");
     return projectCategorys[0];
