@@ -7,6 +7,7 @@ import com.upic.common.document.excel.ExcelDocument;
 import com.upic.common.fdfs.FastDFSClient;
 import com.upic.condition.*;
 import com.upic.dto.*;
+import com.upic.dto.excel.IntegralLogInfoExcel;
 import com.upic.enums.*;
 import com.upic.service.*;
 import com.upic.social.user.SocialUsers;
@@ -1440,6 +1441,35 @@ public class CommonController {
             downLoadExcel(response, wk, "我的项目.xls");
         } catch (Exception e) {
             LOGGER.info("exportProjectByGuidanceNum:" + e.getMessage());
+            try {
+                response.getWriter().println("下载失败！");
+            } catch (IOException e1) {
+            }
+        }
+    }
+
+    /**
+     * 我的积分导出
+     *
+     * @return
+     */
+    @ApiOperation("我的积分导出")
+    @GetMapping("/exportIntegralLogByGuidanceNum")
+    public void exportIntegralLogByGuidanceNum(HttpServletResponse response, IntegralLogCondition integralLogCondition, String baseModel) {
+        try {
+//            projectCondition.setGuidanceNum(getUser().getUserNum());
+            IntegralLogIdInfo integralLogIdInfo = new IntegralLogIdInfo();
+            integralLogIdInfo.setStudentNum(getUser().getUserId());
+            integralLogCondition.setIntegralLogId(integralLogIdInfo);
+
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            String[] desc = new String[]{};
+            String[] array = parseArray.toArray(desc);
+            List<Object> byProjectNum = integralLogService.listIntegralLog(integralLogCondition);
+            Workbook wk = ExcelDocument.download(array, IntegralLogInfo.class, byProjectNum);
+            downLoadExcel(response, wk, "我的积分.xls");
+        } catch (Exception e) {
+            LOGGER.info("exportIntegralLogByGuidanceNum:" + e.getMessage());
             try {
                 response.getWriter().println("下载失败！");
             } catch (IOException e1) {

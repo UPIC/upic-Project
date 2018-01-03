@@ -1,11 +1,12 @@
-var dataUrl = "/stu/getAllIntegralLogByStudentNum";
+var dataUrl = "/stu/searchIntegralLog";
 var getIntegralLogByIntegralLogId = "/common/getIntegralLogByIntegralLogId";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getStatusUrl = "/common/getCollege";
-var searchKeyWordUrl = "";
+var searchKeyWordUrl = "/common/integralLogSearchBar";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
+var exportExcelUrl = "/common/exportIntegralLogByGuidanceNum";
 var requestData = {};
 
 $(function () {
@@ -15,6 +16,19 @@ $(function () {
     commonAjax(getStatusUrl, null, "addStatus", "GET");
     registSelect("projectCategory");
     registSelect("college");
+
+    $("#exportBtn").click(function () {
+        var baseModels = ["projectNum", "studentNum", "event", "integral", "projectName", "student", "projectCategory", "college", "clazz", "status"];
+        var str = JSON.stringify(baseModels);
+        var form = $("<form></form>").attr("action", exportExcelUrl).attr("method", "GET");
+        form.append($("<input></input>").attr("type", "hidden").attr("name", "baseModel").attr("value", str));
+        var formKeyValue = appendForm(requestData);
+        for (var i = 0; i < formKeyValue.key.length; i++) {
+            form.append($("<input></input>").attr("type", "hidden").attr("name", formKeyValue.key[i]).attr("value", formKeyValue.value[i]));
+        }
+        form.appendTo('body').submit().remove();
+        form.submit();
+    })
 })
 
 function addProjectType(res) {
