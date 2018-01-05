@@ -4,11 +4,13 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.condition.OperatorCondition;
 import com.upic.condition.ResourceCondition;
 import com.upic.condition.RoleCondition;
 import com.upic.dto.*;
 import com.upic.enums.OperatorStatusEnum;
+import com.upic.enums.RoleTypeEnum;
 import com.upic.service.*;
 
 import com.upic.social.user.SocialUsers;
@@ -521,6 +523,11 @@ public class OperatorController {
         }
     }
 
+    /**
+     * 获取自己的菜单列表
+     *
+     * @return
+     */
     @GetMapping("/getResourceBySelf")
     @ApiOperation("获取自己的菜单列表")
     public List<ResourceInfo> getResourceBySelf() {
@@ -530,6 +537,51 @@ public class OperatorController {
             return resourceList;
         } catch (Exception e) {
             LOGGER.info("getResourceBySelf:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 添加操作员
+     *
+     * @param operatorInfo
+     * @return
+     */
+    @PostMapping("/addOperator")
+    @ApiOperation("添加操作员")
+    public String addOperator(OperatorInfo operatorInfo) {
+        try {
+            UserInfo userInfo = userService.getUserByUserNum(operatorInfo.getJobNum());
+            if (userInfo == null) {
+                return "ERROR";
+            }
+            operatorInfo.setCreatTime(new Date());
+            ChineseCharToEn cte = new ChineseCharToEn();
+            operatorInfo.setCollegeOtherName(cte.getAllFirstLetter(userInfo.getCollege()).toUpperCase());
+            operatorService.addOperator(operatorInfo);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("addOperator:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @PostMapping("/addRole")
+    @ApiOperation("添加角色")
+    public String addRole(RoleInfo roleInfo) {
+        try {
+            roleInfo.setCreatTime(new Date());
+            if ("1".equals(roleInfo.getRank())) {
+                roleInfo.setType(RoleTypeEnum.SUPER_ADMINISTRATOR);
+                roleInfo.setContent("超级管理员");
+            } else {
+                roleInfo.setType(RoleTypeEnum.GENERAL_ADMINISTRATOR);
+                roleInfo.setContent("普通管理员");
+            }
+            roleService.addRole(roleInfo);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("addRole:" + e.getMessage());
             return null;
         }
     }

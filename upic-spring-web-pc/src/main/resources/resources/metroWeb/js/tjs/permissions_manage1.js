@@ -1,20 +1,41 @@
 var data1Url = "/operator/searchOperator";
-var xiugaiUrl = "";
-var shezhimimaUrl = "";
-var dongjieUrl = "";
 var saveOperatorInfoUrl = "/operator/updateTheOperator";
 var updateOperatorRoleUrl = "/operator/updateOperatorRole";
 var saveUserStatusUrl = "/operator/changeOperatorStatus";
 var pageSize1 = 0;
-var totalPages1 = -1;
 var pageNum1 = 0;
 var requestData1 = {};
 
 $(function () {
     pageSize1 = $("#select-small3").children('option:selected').text();
     getData1(pageNum1, data1Url);
-    registSelect("userType");
-    registSelect("userStatus");
+    registSelect("type");
+    registSelect("status");
+    $("#addRoleRank").change(function () {
+        var rank = $(this).children('option:selected').attr("roleRank");
+        $.ajax({
+            type: "GET",
+            url: "/common/getAllColleges",
+            data: {
+                rank: rank
+            },
+            beforeSend: function (XMLHttpRequest) {
+            },
+            success: function (result) {
+                if (result != null && result != "") {
+                    var html = "<option value='category 0'>请选择</option>";
+                    for (var i = 0; i < result.content.length; i++) {
+                        html += "<option value='category " + (i + 1) + "' aliasName='" + result.content[i].otherName + "'>" + result.content[i].college + "</option>";
+                    }
+                    $("#addRoleCollege").html(html);
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            error: function () {
+            }
+        });
+    })
 })
 
 //ajax获取页面内容
@@ -342,4 +363,28 @@ function splitRoleId(roleId) {
     var roleIds = new Array();
     roleIds = roleId.split("checkbox");
     return roleIds[1];
+}
+
+function addOperators() {
+    var data = {
+        username: $("#addOperatorName").val(),
+        jobNum: $("#addOperatorNum").val(),
+        password: $("#addOperatorPassword").val(),
+        status: $("#addOperatorStatus  option:selected").attr("operatorStatus"),
+        rank: parseInt($("#addOperatorRank  option:selected").attr("operatorRank"))
+    }
+    $.ajax({
+        type: "POST",
+        url: "/operator/addOperator",
+        data: data,
+        success: function (result) {
+            if (result === "SUCCESS") {
+                alert("添加成功！");
+                getData1(pageNum1, data1Url);
+            } else if (result === "ERROR") {
+                alert("请先添加用户！");
+                getData1(pageNum1, data1Url);
+            }
+        }
+    });
 }

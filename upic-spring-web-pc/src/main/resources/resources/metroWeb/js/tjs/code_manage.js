@@ -24,7 +24,7 @@ function addProjectType(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].categoryName + "</option>";
     }
-    $("#getProjectType").html(htmls);
+    $("#projectCategory").html(htmls);
 }
 
 function addProjectStatus(res) {
@@ -35,7 +35,7 @@ function addProjectStatus(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + getProjectImplementationProcesses(data[i]) + "</option>";
     }
-    $("#getProjectStatus").html(htmls);
+    $("#implementationProcess").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {

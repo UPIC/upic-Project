@@ -208,3 +208,70 @@ function appendForm(requestData) {
     }
     return formKeyValue;
 }
+
+/**
+ * 将中文状态转换成英文
+ * @param value
+ * @returns {string}
+ */
+function changeEnglishChinese(value) {
+    var changeValue = "";
+    switch (value) {
+        case ("已保存"):
+            changeValue = "SAVED";
+            break;
+        case ("待初审"):
+            changeValue = "IN_AUDIT";
+            break;
+        case ("待复审"):
+            changeValue = "IN_AUDIT_AGAIN";
+            break;
+        case ("待终审"):
+            changeValue = "IN_AUDIT_FINAL";
+            break;
+        case ("已审核"):
+            changeValue = "AUDITED";
+            break;
+        case ("报名中"):
+            changeValue = "ENROLLMENT";
+            break;
+        case ("进行中"):
+            changeValue = "HAVE_IN_HAND";
+            break;
+        case ("已完成"):
+            changeValue = "COMPLETED";
+            break;
+        case ("待初验"):
+            changeValue = "CHECKING";
+            break;
+        case ("待复验"):
+            changeValue = "CHECKING_AGAIN";
+            break;
+        case ("待终验"):
+            changeValue = "CHECKING_FINAL";
+            break;
+        case ("已验收"):
+            changeValue = "CHECKED";
+            break;
+        case ("待初审失败"):
+            changeValue = "IN_AUDIT_FAIL";
+            break;
+        case ("待复审失败"):
+            changeValue = "IN_AUDIT_AGAIN_FAIL";
+            break;
+        case ("待终审失败"):
+            changeValue = "IN_AUDIT_FINAL_FAIL";
+            break;
+        case ("待初验失败"):
+            changeValue = "CHECKING_FAIL";
+            break;
+        case ("待复验失败"):
+            changeValue = "CHECKING_AGAIN_FAIL";
+            break;
+        case ("待终验失败"):
+            changeValue = "CHECKING_FINAL_FAIL";
+            break;
+        default:
+    }
+    return changeValue;
+}

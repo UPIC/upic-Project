@@ -106,7 +106,6 @@
                     轮播图管理
                 </li>
             </ul>
-
         </div>
     </div>
 
@@ -128,7 +127,7 @@
                     <th width="20%" class="center_td">设置</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="data">
                 <tr>
                     <td class="center_td">01</td>
                     <td class="center_td"><input type="checkbox" class="checkboxes" value="1"/></td>
@@ -193,7 +192,7 @@
      aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 id="mymodallabel1">编辑</h4>
+        <h4 id="mymodallabel11">编辑</h4>
     </div>
     <div class="modal-body">
         <div class="row-fluid">
@@ -260,41 +259,38 @@
         });
 
         $("#sample_1_length").find('label').after('<a href="#mymoda1" data-toggle="modal"><button class="btn btn-small btn-primary new"><i class="icon-plus icon-white"></i>上传图片</button></a>');
-
-        /*$("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
-         $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
-         $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
-         $("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
-         $(".selectlist").after('<div class="selectlist selectlist_second"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目名称筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');*/
+        $("#sample_1_length").find('label').html('<span>每页显示</span><select class="input-small m-wrap" tabindex="1" id="select-small"><option value="Category 1">5</option><option value="Category 2">10</option><option value="Category 3">15</option><option value="Category 4">20</option></select><span>条记录</span>');
+        $('#sample_1_info').html('当前显示<span>1</span>到<span>6</span>条,共<span>6</span>条记录');
+        $('.pagination').html('<div class="pagination"><ul><li><a href="#">上一页</a></li><li><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="hidden-phone"><a href="#">4</a></li><li><a href="#">下一页</a></li></ul></div>');
 
         /*        $(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/
-        /*$("#sample_1_wrapper>.row-fluid>.span6").first().css('width', '62.9%');
-         $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
-         $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().append('<input type="text" style="float:right" class="search"/>')*/
+        $("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
+            '62.9%');
+        $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
 
-        $('[name="status"]').bootstrapSwitch({    //初始化按钮
-            onText: "开启",
-            offText: "关闭",
-            onColor: "success",
-            offColor: "info",
-            size: "small",
-            onSwitchChange: function (event, state) {
-                if (state == true) {
-                    $(this).val("1");
-                    console.log("开启");
-                } else {
-                    $(this).val("2");
-                    console.log("关闭");
-                }
-            }
-        });
-        $("#close").click(function () {
-            $('[name="status"]').bootstrapSwitch('state', false); // 关闭按钮
-        });
-        $("#open").click(function () {
-            $('[name="status"]').bootstrapSwitch('state', true); // 打开按钮
-
-        });
+//        $('[name="status"]').bootstrapSwitch({    //初始化按钮
+//            onText: "开启",
+//            offText: "关闭",
+//            onColor: "success",
+//            offColor: "info",
+//            size: "small",
+//            onSwitchChange: function (event, state) {
+//                if (state == true) {
+//                    $(this).val("1");
+//                    console.log("开启");
+//                } else {
+//                    $(this).val("2");
+//                    console.log("关闭");
+//                }
+//            }
+//        });
+//        $("#close").click(function () {
+//            $('[name="status"]').bootstrapSwitch('state', false); // 关闭按钮
+//        });
+//        $("#open").click(function () {
+//            $('[name="status"]').bootstrapSwitch('state', true); // 打开按钮
+//
+//        });
     })
 </script>
 <script type="text/javascript">
@@ -321,5 +317,7 @@
         });
     });
 </script>
+<script src="../../js/tjs/pic_manage.js"></script>
+<script src="../../js/tjs/pagejs.js"></script>
 </body>
 </html>
