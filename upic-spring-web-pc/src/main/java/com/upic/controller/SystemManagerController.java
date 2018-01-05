@@ -4,6 +4,7 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSONArray;
 import com.upic.common.beans.utils.ChineseCharToEn;
+import com.upic.condition.BannerCondition;
 import com.upic.condition.UserCondition;
 import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
@@ -46,6 +47,9 @@ public class SystemManagerController {
 
     @Autowired
     private AdviceService adviceService;
+
+    @Autowired
+    private BannerService bannerService;
 
     @ApiOperation("教师获取需要审批的积分申报")
     @GetMapping("/getIntegralLogBySql")
@@ -197,6 +201,18 @@ public class SystemManagerController {
     public Page<UserInfo> getAllUser(UserCondition userCondition, Pageable pageable) {
         try {
             return userService.searchUser(userCondition, pageable);
+        } catch (Exception e) {
+            LOGGER.info("getAllUser:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/getBanner")
+    @ApiOperation("获取Banner图")
+    public Page<BannerInfo> getBanner(BannerCondition bannerCondition, Pageable pageable) {
+        try {
+            Page<BannerInfo> bannerInfoPage = bannerService.searchBanner(bannerCondition, pageable);
+            return bannerInfoPage;
         } catch (Exception e) {
             LOGGER.info("getAllUser:" + e.getMessage());
             return null;

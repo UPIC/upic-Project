@@ -182,8 +182,8 @@
         <div class="widget-body">
             <div class="tabbable ">
                 <ul class="nav nav-tabs">
-                    <li><a href="#widget_tab1" data-toggle="tab"
-                           onclick="getCaoZuoRiZhi()">操作日志查询</a></li>
+                    <!--<li><a href="#widget_tab1" data-toggle="tab"-->
+                    <!--onclick="getCaoZuoRiZhi()">操作日志查询</a></li>-->
                     <li><a href="#widget_tab2" data-toggle="tab"
                            onclick="getJueSe()">角色管理</a></li>
                     <li class="active"><a href="#widget_tab3" data-toggle="tab"
@@ -331,49 +331,60 @@
                 <div class="control-group">
                     <label class="control-label">操作员姓名</label>
                     <div class="controls">
-                        <input type="text" class="input-medium"/>
+                        <input id="addOperatorName" type="text" class="input-medium"/>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">操作员工号</label>
                     <div class="controls">
-                        <input type="text" class="input-medium"/>
+                        <input id="addOperatorNum" type="text" class="input-medium"/>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">密码</label>
                     <div class="controls">
-                        <input type="password" class="input-medium"/>
+                        <input id="addOperatorPassword" type="password" class="input-medium"/>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">状态</label>
                     <div class="controls">
-                        <select class="input-medium m-wrap" tabindex="1">
+                        <select id="addOperatorStatus" class="input-medium m-wrap" tabindex="1">
                             <option value="category 1">-请选择-</option>
-                            <option value="category 2">激活</option>
-                            <option value="category 3">冻结</option>
+                            <option value="category 2" operatorStatus="NORMAL_CONDITION">激活</option>
+                            <option value="category 3" operatorStatus="FROZE">冻结</option>
                         </select>
                     </div>
                 </div>
-                <fieldset class="fild1">
-                    <legend style="font-size: 12px;">选择角色</legend>
-                    <div class="controls controls_change">
-                        <label class="checkbox"> <input type="checkbox" value=""/>
-                            学生
-                        </label> <label class="checkbox"> <input type="checkbox" value=""/>
-                        教师
-                    </label> <label class="checkbox"> <input type="checkbox" value=""/>
-                        管理员
-                    </label> <label class="checkbox"> <input type="checkbox" value=""/>
-                        超级管理员
-                    </label>
+                <div class="control-group">
+                    <label class="control-label">等级</label>
+                    <div class="controls">
+                        <select id="addOperatorRank" class="input-medium m-wrap" tabindex="1">
+                            <option value="category 1">-请选择-</option>
+                            <option value="category 2" operatorRank="1">超级管理员</option>
+                            <option value="category 3" operatorRank="2">职能部门</option>
+                            <option value="category 4" operatorRank="3">学院</option>
+                        </select>
                     </div>
-                </fieldset>
+                </div>
+                <!--<fieldset class="fild1">-->
+                <!--<legend style="font-size: 12px;">选择角色</legend>-->
+                <!--<div class="controls controls_change">-->
+                <!--<label class="checkbox"> <input type="checkbox" value=""/>-->
+                <!--学生-->
+                <!--</label> <label class="checkbox"> <input type="checkbox" value=""/>-->
+                <!--教师-->
+                <!--</label> <label class="checkbox"> <input type="checkbox" value=""/>-->
+                <!--管理员-->
+                <!--</label> <label class="checkbox"> <input type="checkbox" value=""/>-->
+                <!--超级管理员-->
+                <!--</label>-->
+                <!--</div>-->
+                <!--</fieldset>-->
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary">添加</button>
+            <button class="btn btn-primary" onclick="addOperators()">添加</button>
             <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
         </div>
     </div>
@@ -716,27 +727,43 @@
         <div class="modal-body">
             <form action="#" class="form-horizontal">
                 <div class="control-group">
-                    <label class="control-label">角色姓名</label>
+                    <label class="control-label">角色名</label>
                     <div class="controls">
-                        <input type="text" class="input-medium"/>
+                        <input id="addRoleName" type="text" class="input-medium"/>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">角色类型</label>
+                    <label class="control-label">角色状态</label>
                     <div class="controls">
-                        <input type="text" class="input-medium"/>
+                        <select id="addRoleStatus" class="input-medium m-wrap" tabindex="1">
+                            <option value="category 1">-请选择-</option>
+                            <option value="category 2" roleStatus="NORMAL_CONDITION">激活</option>
+                            <option value="category 3" roleStatus="FROZE">冻结</option>
+                        </select>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">描述</label>
+                    <label class="control-label">等级</label>
                     <div class="controls">
-                        <textarea name="" id=""></textarea>
+                        <select id="addRoleRank" class="input-medium m-wrap" tabindex="1">
+                            <option value="category 1">-请选择-</option>
+                            <option value="category 2" roleRank="1">超级管理员</option>
+                            <option value="category 3" roleRank="2">职能部门</option>
+                            <option value="category 4" roleRank="3">学院</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">所属部门</label>
+                    <div class="controls">
+                        <select id="addRoleCollege" class="input-medium m-wrap" tabindex="1">
+                        </select>
                     </div>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary">添加</button>
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="addRoles()">添加</button>
             <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
         </div>
     </div>
@@ -817,12 +844,12 @@
         $("#sample_1_3_length")
             .find('label')
             .after(
-                '<div class="selectlist"><select name="userStatus" id="userStatus"  style="width: 100%;" class="color-wh"><option value="4" class="yellow">用户状态筛选...</option><option value="4">全部</option><option value="5">激活</option><option value="6">冻结</option></select></div>');
+                '<div class="selectlist"><select name="status" id="status" style="width: 100%;" class="color-wh"><option value="4" class="yellow">用户状态筛选...</option><option value="4">全部</option><option value="5">激活</option><option value="6">冻结</option></select></div>');
 
         $("#sample_1_3_length")
             .find(".selectlist")
             .after(
-                '<div class="selectlist1 selectlist_second"><select name="userType" id="userType" style="width: 100%;" class="color-wh"><option value="4" class="yellow">用户类型筛选...</option><option value="4">全部</option><option value="5">普通用户</option><option value="6">管理员</option></select></div>');
+                '<div class="selectlist1 selectlist_second"><select name="type" id="type" style="width: 100%;" class="color-wh"><option value="4" class="yellow">用户类型筛选...</option><option value="4">全部</option><option value="5">普通用户</option><option value="6">管理员</option></select></div>');
 
         $("#sample_1_1_length")
             .find('label')

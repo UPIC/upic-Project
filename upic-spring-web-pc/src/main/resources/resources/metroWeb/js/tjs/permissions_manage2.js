@@ -6,8 +6,6 @@ var pageSize2 = 0;
 var totalPages2 = -1;
 var pageNum2 = 0;
 var requestData2 = {};
-var zNodes = [];
-var searchResource = "";
 var getAllResourceUrl = "/operator/listResource";
 var getResourceByRoleIdUrl = "/operator/listResourceByRoleId"
 function getJueSe() {
@@ -367,4 +365,26 @@ function nodeUpdateRelation(data) {
     } else {
         alert("更新失败请重试");
     }
+}
+
+// 添加角色
+function addRoles() {
+    var data = {
+        roleName: $("#addRoleName").val(),
+        status: $("#addRoleStatus  option:selected").attr("roleStatus"),
+        rank: parseInt($("#addRoleRank  option:selected").attr("roleRank")),
+        aliasName: $("#addRoleCollege  option:selected").attr("aliasName")
+    }
+    $.ajax({
+        type: "POST",
+        url: "/operator/addRole",
+        data: data,
+        success: function (result) {
+            if (result === "SUCCESS") {
+                alert("添加成功！");
+
+                getData2(pageNum2, data2Url);
+            }
+        }
+    });
 }

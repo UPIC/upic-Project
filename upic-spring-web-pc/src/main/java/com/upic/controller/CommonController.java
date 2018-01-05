@@ -947,8 +947,8 @@ public class CommonController {
                     projectInfo.setImplementationProcess(changeProjectStatus(projectInfo.getImplementationProcess()));
                 }
                 projectService.updateProject(projectInfo);
-                return "SUCCESS";
             }
+            return "SUCCESS";
         } catch (Exception e) {
             LOGGER.info("changeAllProjectStatus:" + e.getMessage());
         }
@@ -1507,11 +1507,29 @@ public class CommonController {
     @ApiOperation("获取学院")
     public Page<CollegeInfo> getCollege(CollegeCondition collegeCondition, @PageableDefault(size = 20) Pageable pageable) {
         try {
-            collegeCondition.setRank("3");
             Page<CollegeInfo> collegeInfoPage = collegeService.searchCollege(collegeCondition, pageable);
             return collegeInfoPage;
         } catch (Exception e) {
             LOGGER.info("getCollege:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取所有学院
+     *
+     * @param collegeCondition
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/getAllColleges")
+    @ApiOperation("获取所有学院")
+    public Page<CollegeInfo> getAllColleges(CollegeCondition collegeCondition, @PageableDefault(size = 20) Pageable pageable) {
+        try {
+            Page<CollegeInfo> collegeInfoPage = collegeService.searchCollege(collegeCondition, pageable);
+            return collegeInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getAllColleges:" + e.getMessage());
             return null;
         }
     }

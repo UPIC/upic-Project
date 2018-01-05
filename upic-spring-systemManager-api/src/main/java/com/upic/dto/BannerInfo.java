@@ -8,11 +8,11 @@ import com.upic.enums.BannerTypeEnum;
  * Created by zhubuqing on 2017/9/5.
  */
 public class BannerInfo extends BaseInfo {
-    private String pic; //图片
+    private String pic; // 图片
 
-    private String url; //URL
+    private String url; // URL
 
-    private int num; //顺序
+    private int num; // 顺序
 
     private BannerStatusEnum status;
 
