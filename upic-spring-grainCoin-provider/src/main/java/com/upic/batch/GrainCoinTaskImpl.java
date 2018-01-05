@@ -47,6 +47,9 @@ public class GrainCoinTaskImpl implements GrainCoinTask {
 		Stream.of(redisAllProjectNum).parallel().forEach(x->{
 			List<IntegralLog> byProjectNum = integralLogRepository.getByProjectNum(x);
 			byProjectNum.parallelStream().forEach(i->{
+				if(i.getStatus().equals(IntegralLogStatusEnum.COMPLETED)) {
+					return;
+				}
 				if(i.getStatus().equals(IntegralLogStatusEnum.SIGNED_IN)) {
 					i.setStatus(IntegralLogStatusEnum.COMPLETED);
 					integralLogRepository.saveAndFlush(i);

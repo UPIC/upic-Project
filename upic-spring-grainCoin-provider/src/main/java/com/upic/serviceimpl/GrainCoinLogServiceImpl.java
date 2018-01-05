@@ -119,6 +119,7 @@ public class GrainCoinLogServiceImpl implements GrainCoinLogService {
 	 */
 //	@Scheduled(cron = "0 0 1,13,19 * * ?")
 	@Scheduled(cron = "0 0 0/1 * * ?")//测试每小时更新一次
+//	@Scheduled(cron = "0 0/1 * * * ?")
 	@Override
 	// @Scheduled(cron = "0 0 0 * * ?")
 	public void task() throws Exception {
