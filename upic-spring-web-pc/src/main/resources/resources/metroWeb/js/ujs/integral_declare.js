@@ -50,7 +50,7 @@ $(function () {
 function submit(url) {
     var formData = new FormData();
     var data = new Object();
-    if (parseInt($("#integral").attr('value')) == 0) {
+    if (parseFloat($("#integral").attr('value')) == 0) {
         alert("请选择项目类别");
         return;
     }
@@ -79,10 +79,10 @@ function submit(url) {
     }
 
     formData.append("file", $("#file-0a")[0].files[0]);
-    formData.append("projectCategory", $("#1").find("option:selected").text());
+    formData.append("projectCategory", $("#selectAll").find("option:selected").text());
     formData.append("event", getEvent());
     formData.append("integral", parseInt($("#integral").attr('value')));
-    formData.append("url", url);
+//    formData.append("url", url);
     $.ajax({
         type: 'POST',
         url: submitUrl,
