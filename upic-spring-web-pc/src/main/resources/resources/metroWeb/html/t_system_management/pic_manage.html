@@ -18,8 +18,10 @@
     <link rel="stylesheet" type="text/css" href="../../css/uniform.default.css"/>
     <link rel="stylesheet" type="text/css" href="../../css/my_project.css"/>
     <link rel="stylesheet" href="../../css/honeySwitch.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap-switch.min.css">
     <script src="../../js//jquery.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap-switch.min.js"></script>
     <script src="../../js/honeySwitch.js"></script>
     <script>
         $(document).ready(function () {
@@ -268,29 +270,28 @@
             '62.9%');
         $("#sample_1_wrapper>.row-fluid>.span6").first().siblings().css('width', '33.9%');
 
-//        $('[name="status"]').bootstrapSwitch({    //初始化按钮
-//            onText: "开启",
-//            offText: "关闭",
-//            onColor: "success",
-//            offColor: "info",
-//            size: "small",
-//            onSwitchChange: function (event, state) {
-//                if (state == true) {
-//                    $(this).val("1");
-//                    console.log("开启");
-//                } else {
-//                    $(this).val("2");
-//                    console.log("关闭");
-//                }
-//            }
-//        });
-//        $("#close").click(function () {
-//            $('[name="status"]').bootstrapSwitch('state', false); // 关闭按钮
-//        });
-//        $("#open").click(function () {
-//            $('[name="status"]').bootstrapSwitch('state', true); // 打开按钮
-//
-//        });
+        $('[name="status"]').bootstrapSwitch({    //初始化按钮
+            onText: "开启",
+            offText: "关闭",
+            onColor: "success",
+            offColor: "info",
+            size: "small",
+            onSwitchChange: function (event, state) {
+                if (state == true) {
+                    $(this).val("1");
+                    console.log("开启");
+                } else {
+                    $(this).val("2");
+                    console.log("关闭");
+                }
+            }
+        });
+        $("#close").click(function () {
+            $('[name="status"]').bootstrapSwitch('state', false); // 关闭按钮
+        });
+        $("#open").click(function () {
+            $('[name="status"]').bootstrapSwitch('state', true); // 打开按钮
+        });
     })
 </script>
 <script type="text/javascript">
