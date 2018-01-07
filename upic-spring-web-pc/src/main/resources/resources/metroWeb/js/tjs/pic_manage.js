@@ -24,7 +24,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<td class='center_td'><input type='checkbox' class='checkboxes' value='1'/></td>";
         htmls += "<td class='center_td'>";
         htmls += "<div class='common-row'>";
-        htmls += "<div class='cell-right'><span class='" + data[i].field1 + "' themeColor='#6d9eeb' id='directory'></span>";
+        htmls += "<div class='cell-right'><span name='status' class='" + data[i].field1 + "' themeColor='#6d9eeb' id=''></span>";
         htmls += "</div></div></td>";
         htmls += "<td class='center_td'>" + data[i].id + "</td>";
         htmls += "<td class='img-box'>";
