@@ -164,28 +164,23 @@
         <div class="row-fluid">
             <div class="block-fluid">
                 <div class="row-form clearfix">
-                    <div class="span3">图片编号</div>
-                    <div class="span6"><input type="text" name=""></div>
-                </div>
-                <div class="row-form clearfix">
                     <div class="span3">图片链接</div>
-                    <div class="span6"><input type="text" name=""></div>
+                    <div class="span6"><input id="uploadPicUrl" type="text" name=""></div>
                 </div>
                 <div class="row-form clearfix">
                     <div class="span3">图片详情</div>
-                    <div class="span6"><input type="text" name=""></div>
+                    <div class="span6"><input id="uploadPicContent" type="text" name=""></div>
                 </div>
                 <div class="row-form clearfix">
                     <div class="span3">选择图片</div>
-                    <div class="span3"><input type="file"/></div>
-
+                    <div class="span3"><input id="uploadPicFile" type="file"/></div>
                 </div>
             </div>
             <div class="dr"><span></span></div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">上传</button>
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="uploadPic()">上传</button>
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
     </div>
 </div>
@@ -200,10 +195,6 @@
         <div class="row-fluid">
             <div class="block-fluid">
                 <div class="row-form clearfix">
-                    <div class="span3">图片编号</div>
-                    <div class="span6"><input type="text" name="" value="111"></div>
-                </div>
-                <div class="row-form clearfix">
                     <div class="span3">图片链接</div>
                     <div class="span6"><input type="text" name="" value="111"></div>
                 </div>
@@ -214,14 +205,13 @@
                 <div class="row-form clearfix">
                     <div class="span3">选择图片</div>
                     <div class="span3"><input type="file"/></div>
-
                 </div>
             </div>
             <div class="dr"><span></span></div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">上传</button>
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="updateBanner()">上传</button>
         <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
     </div>
 </div>
