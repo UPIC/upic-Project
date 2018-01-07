@@ -264,9 +264,9 @@ public class StudetAllController {
     @PostMapping("/postIntegralLog")
     public IntegralLogInfo postIntegralLog(IntegralLogInfo integralLogInfo, HttpServletRequest request)
             throws Exception {
-
+    	String url=null;
         try {
-            String url = getUrl(request, "file");
+             url = getUrl(request, "file");
             if (url == null) {
                 return null;
             }
@@ -294,10 +294,19 @@ public class StudetAllController {
             integralLogInfo.setIntegralLogId(integralLogIdInfo);
             integralLogInfo.setCollegeOtherName(cte.getAllFirstLetter(userInfo.getCollege()).toUpperCase());
             integralLogInfo = integralLogService.saveIntegralLog(integralLogInfo);
-
+            //以后版本可以根据版本覆盖，例如有个标识符，为true的时候，就是要覆盖老版本，就先删除，再添加，建议在service操作，事务版本控制
+            if(integralLogInfo==null) {
+            	throw new Exception("此项目已申请过");
+            }
             return integralLogInfo;
         } catch (Exception e) {
             LOGGER.info("postIntegralLog:" + e.getMessage());
+            if(integralLogInfo==null) {
+            	String[] split = url.split(Constans.STRONGE_URL);
+            	if(split!=null&&split.length>1) {
+            	FastDFSClient.deleteFile(split[1]);
+            	}
+            }
             return null;
         }
     }
