@@ -4,28 +4,34 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.alibaba.fastjson.JSONArray;
 import com.upic.common.beans.utils.ChineseCharToEn;
+import com.upic.common.fdfs.FastDFSClient;
 import com.upic.condition.BannerCondition;
 import com.upic.condition.UserCondition;
 import com.upic.dto.*;
 import com.upic.dto.excel.IntegralLogInfoExcel;
-import com.upic.enums.IntegralLogStatusEnum;
-import com.upic.enums.UserStatusEnum;
-import com.upic.enums.UserTypeEnum;
+import com.upic.enums.*;
 import com.upic.service.*;
 //import com.upic.social.user.SocialUsers;
 //import com.upic.utils.UserUtils;
 import com.upic.social.user.SocialUsers;
+import com.upic.utils.Constans;
 import com.upic.utils.UserUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -219,7 +225,95 @@ public class SystemManagerController {
         }
     }
 
+    @PostMapping("/uploadBanner")
+    @ApiOperation("添加Banner图")
+    public String uploadBanner(BannerInfo bannerInfo, HttpServletRequest request) {
+        String pic = null;
+        try {
+            pic = getUrl(request, "file");
+            if (pic == null) {
+                return null;
+            }
+            bannerInfo.setPic(pic);
+            bannerInfo.setCreatTime(new Date());
+            bannerInfo.setField1("switch-on");
+            bannerInfo.setStatus(BannerStatusEnum.NORMAL_CONDITION);
+            bannerInfo.setType(BannerTypeEnum.OUTSIDE);
+            bannerService.addBanner(bannerInfo);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("uploadBanner:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @PostMapping("/updateBanner")
+    @ApiOperation("更新Banner图")
+    public String updateBanner(BannerInfo bannerInfo, HttpServletRequest request) {
+        String pic = null;
+        try {
+            BannerInfo b = bannerService.getBannerByBannerId(bannerInfo.getId());
+            pic = getUrl(request, "file");
+            if (pic != null) {
+                b.setPic(pic);
+            }
+            b.setUrl(bannerInfo.getUrl());
+            b.setField2(bannerInfo.getField2());
+            bannerService.updateBanner(b);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("updateBannerUrl:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/deleteBanner")
+    @ApiOperation("删除Banner图")
+    public String deleteBanner(BannerInfo bannerInfo) {
+        try {
+            BannerInfo banner = bannerService.getBannerByBannerId(bannerInfo.getId());
+            String[] split = banner.getPic().split(Constans.STRONGE_URL);
+            if (split != null && split.length > 1) {
+                FastDFSClient.deleteFile(split[1]);
+            }
+            bannerService.deleteBanner(banner.getId());
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("deleteBanner:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/getBannerById")
+    @ApiOperation("根据BannerId获取Banner")
+    public BannerInfo getBannerById(long id) {
+        try {
+            return bannerService.getBannerByBannerId(id);
+        } catch (Exception e) {
+            LOGGER.info("getBannerById:" + e.getMessage());
+            return null;
+        }
+    }
+
     private SocialUsers getUser() {
         return UserUtils.getUser();
+    }
+
+    public String getUrl(HttpServletRequest request, String fileName) throws IOException {
+        // 转型为MultipartHttpRequest：
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        // 获得文件：
+        MultipartFile inputFile = multipartRequest.getFile(fileName);
+        // 获得文件名：
+        String filename = inputFile.getOriginalFilename();
+
+        if (filename == null || filename == "") {
+            return null;
+        }
+
+        String uploadFile = FastDFSClient.uploadFile(inputFile.getBytes(), filename);
+
+        String url = Constans.STRONGE_URL + uploadFile;
+        return url;
     }
 }
