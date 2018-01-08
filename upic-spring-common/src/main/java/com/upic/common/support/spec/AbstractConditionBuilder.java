@@ -305,12 +305,19 @@ public abstract class AbstractConditionBuilder<T> {
 	protected Predicate juegeType(JugeType jugeType,QueryWraper<T> queryWraper,String key) {
 		Path<String> fieldPath = getPath(queryWraper.getRoot(), key);
 		Predicate predicate =null;
+		Object data=null;
+		if(jugeType.getData().getClass().isEnum()) {
+			data=jugeType.getData();
+		}else {
+			data=(String)jugeType.getData();
+		}
 		switch (jugeType.getType()) {
+		
 		case EQUAL:
-			predicate = queryWraper.getCb().equal(fieldPath, (String)jugeType.getData());
+			predicate = queryWraper.getCb().equal(fieldPath, data);
 			break;
 		case LIKE:
-			predicate=queryWraper.getCb().like(fieldPath, "%"+(String)jugeType.getData()+"%");
+			predicate=queryWraper.getCb().like(fieldPath, "%"+data+"%");
 			break;
 		default:
 			break;
