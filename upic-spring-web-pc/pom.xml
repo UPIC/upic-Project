@@ -1,274 +1,272 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.upic.web.pc</groupId>
-	<artifactId>web-pc</artifactId>
-	<version>${upic-web-pc.version}</version>
-	<packaging>war</packaging>
+    <groupId>com.upic.web.pc</groupId>
+    <artifactId>web-pc</artifactId>
+    <version>${upic-web-pc.version}</version>
+    <packaging>war</packaging>
 
-	<name>web-pc</name>
+    <name>web-pc</name>
 
-	<parent>
-		<groupId>com.upic</groupId>
-		<artifactId>upic-spring-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>com.upic</groupId>
+        <artifactId>upic-spring-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.boot</groupId> -->
-		<!-- <artifactId>spring-boot-starter-security</artifactId> -->
-		<!-- </dependency> -->
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-commons</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.101tec</groupId>
-			<artifactId>zkclient</artifactId>
-			<version>0.8</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>dubbo</artifactId>
-			<version>2.5.3</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-jdbc</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework.boot</groupId> -->
+        <!-- <artifactId>spring-boot-starter-security</artifactId> -->
+        <!-- </dependency> -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.8</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.5.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-jdbc</artifactId>
+        </dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.security.oauth</groupId> -->
-		<!-- <artifactId>spring-security-oauth2</artifactId> -->
-		<!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework.security.oauth</groupId> -->
+        <!-- <artifactId>spring-security-oauth2</artifactId> -->
+        <!-- </dependency> -->
 
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.social</groupId> -->
-		<!-- <artifactId>spring-social-core</artifactId> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.social</groupId> -->
-		<!-- <artifactId>spring-social-config</artifactId> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.social</groupId> -->
-		<!-- <artifactId>spring-social-web</artifactId> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.social</groupId> -->
-		<!-- <artifactId>spring-social-security</artifactId> -->
-		<!-- </dependency> -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-		</dependency>
-		<!--<dependency> -->
-		<!--<groupId>com.upic</groupId> -->
-		<!--<artifactId>gitOauth2</artifactId> -->
-		<!--<version>0.0.1-SNAPSHOT</version> -->
-		<!--</dependency> -->
-
-
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.boot</groupId> -->
-		<!-- <artifactId>spring-boot-starter-data-redis</artifactId> -->
-		<!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework.social</groupId> -->
+        <!-- <artifactId>spring-social-core</artifactId> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework.social</groupId> -->
+        <!-- <artifactId>spring-social-config</artifactId> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework.social</groupId> -->
+        <!-- <artifactId>spring-social-web</artifactId> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework.social</groupId> -->
+        <!-- <artifactId>spring-social-security</artifactId> -->
+        <!-- </dependency> -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <!--<dependency> -->
+        <!--<groupId>com.upic</groupId> -->
+        <!--<artifactId>gitOauth2</artifactId> -->
+        <!--<version>0.0.1-SNAPSHOT</version> -->
+        <!--</dependency> -->
 
 
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.boot</groupId> -->
-		<!-- <artifactId>spring-boot-starter-data-redis</artifactId> -->
-		<!-- </dependency> -->
-		<dependency>
-			<groupId>com.upic.user.api</groupId>
-			<artifactId>upic-spring-user-api</artifactId>
-			<version>${student-user-api.version}</version>
-		</dependency>
-
-		<!-- <dependency> -->
-		<!-- <groupId>com.upic.mail.api</groupId> -->
-		<!-- <artifactId>upic-spring-mail-api</artifactId> -->
-		<!-- <version>${student-mail-api.version}</version> -->
-		<!-- </dependency> -->
-
-		<dependency>
-			<groupId>com.upic.project.api</groupId>
-			<artifactId>upic-spring-project-api</artifactId>
-			<version>${student-project-api.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.upic.systemManager.api</groupId>
-			<artifactId>upic-spring-systemManager-api</artifactId>
-			<version>${student-systemManage-api.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.upic.grainCoin.api</groupId>
-			<artifactId>upic-spring-grainCoin-api</artifactId>
-			<version>${student-grainCoin-api.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.101tec</groupId>
-			<artifactId>zkclient</artifactId>
-			<version>0.8</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>dubbo</artifactId>
-			<version>2.4.9</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.upic.operate.api</groupId>
-			<artifactId>upic-spring-operate-api</artifactId>
-			<version>${student-operate-api.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.security.config</groupId>
-			<artifactId>upic-security-config</artifactId>
-			<version>${upic-security-config.version}</version>
-		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.upic.oauth2.weixin</groupId> -->
-<!-- 			<artifactId>oauth2-weixin</artifactId> -->
-<!-- 			<version>${oauth2-weixin.version}</version> -->
-<!-- 		</dependency> -->
-		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.39</version>
-		</dependency>
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework.boot</groupId> -->
+        <!-- <artifactId>spring-boot-starter-data-redis</artifactId> -->
+        <!-- </dependency> -->
 
 
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2.2</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/src/main/resources/lib/commons-collections-3.2.2.jar</systemPath>
-		</dependency>
+        <!-- <dependency> -->
+        <!-- <groupId>org.springframework.boot</groupId> -->
+        <!-- <artifactId>spring-boot-starter-data-redis</artifactId> -->
+        <!-- </dependency> -->
+        <dependency>
+            <groupId>com.upic.user.api</groupId>
+            <artifactId>upic-spring-user-api</artifactId>
+            <version>${student-user-api.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>neusoft-cas</groupId>
-			<artifactId>neusoft-cas</artifactId>
-			<version>1.1.1</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/src/main/resources/lib/neusoft-cas-1.1.1.jar</systemPath>
-		</dependency>
+        <!-- <dependency> -->
+        <!-- <groupId>com.upic.mail.api</groupId> -->
+        <!-- <artifactId>upic-spring-mail-api</artifactId> -->
+        <!-- <version>${student-mail-api.version}</version> -->
+        <!-- </dependency> -->
 
-		<!-- 文件上传组件 -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.3.1</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.upic.project.api</groupId>
+            <artifactId>upic-spring-project-api</artifactId>
+            <version>${student-project-api.version}</version>
+        </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<includeSystemScope>true</includeSystemScope>
-				</configuration>
-			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-compiler-plugin</artifactId> -->
-<!-- 				<configuration> -->
-<!-- 					<source>1.8</source> -->
-<!-- 					<target>1.8</target> -->
-<!-- 					<encoding>UTF-8</encoding> -->
-<!-- 					<compilerArguments> -->
-<!-- 						<extdirs>${basedir}/src/main/resources/lib</extdirs> -->
-<!-- 					</compilerArguments> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
-		</plugins>
-<!-- 		<resources> -->
-<!-- 			<resource> -->
-<!-- 				<directory>src/main/resources</directory> -->
-<!-- 				<targetPath>/WEB-INF/lib/</targetPath> -->
-<!-- 				<includes> -->
-<!-- 					<include>**/*.jar</include> -->
-<!-- 				</includes> -->
-<!-- 			</resource> -->
-<!-- 		</resources> -->
-	</build>
+        <dependency>
+            <groupId>com.upic.systemManager.api</groupId>
+            <artifactId>upic-spring-systemManager-api</artifactId>
+            <version>${student-systemManage-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.upic.grainCoin.api</groupId>
+            <artifactId>upic-spring-grainCoin-api</artifactId>
+            <version>${student-grainCoin-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.8</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.4.9</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.upic.operate.api</groupId>
+            <artifactId>upic-spring-operate-api</artifactId>
+            <version>${student-operate-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.security.config</groupId>
+            <artifactId>upic-security-config</artifactId>
+            <version>${upic-security-config.version}</version>
+        </dependency>
+        <!-- 		<dependency> -->
+        <!-- 			<groupId>com.upic.oauth2.weixin</groupId> -->
+        <!-- 			<artifactId>oauth2-weixin</artifactId> -->
+        <!-- 			<version>${oauth2-weixin.version}</version> -->
+        <!-- 		</dependency> -->
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.39</version>
+        </dependency>
 
 
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/lib/commons-collections-3.2.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>neusoft-cas</groupId>
+            <artifactId>neusoft-cas</artifactId>
+            <version>1.1.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/lib/neusoft-cas-1.1.1.jar</systemPath>
+        </dependency>
+
+        <!-- 文件上传组件 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+            </plugin>
+            <!-- 			<plugin> -->
+            <!-- 				<artifactId>maven-compiler-plugin</artifactId> -->
+            <!-- 				<configuration> -->
+            <!-- 					<source>1.8</source> -->
+            <!-- 					<target>1.8</target> -->
+            <!-- 					<encoding>UTF-8</encoding> -->
+            <!-- 					<compilerArguments> -->
+            <!-- 						<extdirs>${basedir}/src/main/resources/lib</extdirs> -->
+            <!-- 					</compilerArguments> -->
+            <!-- 				</configuration> -->
+            <!-- 			</plugin> -->
+        </plugins>
+        <!-- 		<resources> -->
+        <!-- 			<resource> -->
+        <!-- 				<directory>src/main/resources</directory> -->
+        <!-- 				<targetPath>/WEB-INF/lib/</targetPath> -->
+        <!-- 				<includes> -->
+        <!-- 					<include>**/*.jar</include> -->
+        <!-- 				</includes> -->
+        <!-- 			</resource> -->
+        <!-- 		</resources> -->
+    </build>
 </project>
