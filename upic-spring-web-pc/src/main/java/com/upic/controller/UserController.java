@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SocialUser;
 import org.springframework.stereotype.Controller;
@@ -143,14 +144,55 @@ public class UserController {
 		}
 		return "/cas";
 	}
+	@PostMapping("/login")
+	public void login(HttpServletRequest request, HttpServletResponse response,String user,String pass) {
+		PrintWriter out;
+		try {
+			response.setContentType("text/html;charset=utf-8");
+			out = response.getWriter();
+			UserInfo userByUserNum = userService.getUserByUserNum(user);
+			if(userByUserNum==null) {
+				out.println("<script>");
+				out.println(" alert('账号不存在')");
+				out.println("window.location.href='/upiclogin' ");
+				out.println("</script>");
+				return;
+			}
+//			BCryptPasswordEncoder b=new BCryptPasswordEncoder();
+//			if(!b.encode(pass).equals(userByUserNum.getPassword())) {
+//				out.println("<script>");
+//				out.println(" alert('密码不正确')");
+//				out.println("window.location.href='/upiclogin' ");
+//				out.println("</script>");
+//				return;
+//			}
+			String payUrl = "/auth";// POST提交地址
+			String users = "user";// 如有多个，以此类推。
+			String passs = "pass";
 
+		
+			
+			out.println("<form name='authSubmit' method='post'  action='" + payUrl + "' >");
+			out.println("<input type='hidden' name='" + users + "' value='" + user + "'>"); // 如有多个，则写多个hidden即可
+			out.println("<input type='hidden' name='" + passs + "' value='" + user + "'>");
+			out.println("</form>");
+			out.println("<script>");
+			out.println("  document.authSubmit.submit()");
+			out.println("</script>");
+		} catch (Exception e) {
+			
+		}
+	}
+	
+	
 	@RequestMapping("/upiclogin")
 	public String login() {
 		try {
 			//如果是游客就会报异常
 			UserUtils.getUser();
 		} catch (Exception e) {
-			return "/cas";
+//			return "/cas";
+			return "/metroWeb/html/login.html";
 		}
 		return "/metroWeb/html/t_index/index.html";
 	}

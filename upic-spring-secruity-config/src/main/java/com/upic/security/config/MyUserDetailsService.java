@@ -72,16 +72,23 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
         BCryptPasswordEncoder b = new BCryptPasswordEncoder();
+        
+//        String userIds[]=userId.split("upic");
         UserInfo userInfo = userService.getUserByUserNum(userId);
+//        if (userInfo == null) {
+//            throw new UsernameNotFoundException("用户名不存在，请联系管理员！");
+//        }
+//        if(userIds.length>1) {
+//        	
+//        }
+        
         OperatorRoleCondition operatorRoleCondition = new OperatorRoleCondition();
 
         RoleResourceCondition roleResourceCondition = new RoleResourceCondition();
 
         ResourceCondition resourceCondition = new ResourceCondition();
 
-        if (userInfo == null) {
-            throw new UsernameNotFoundException("用户名不存在，请联系管理员！");
-        }
+        
         //部门级别，只有operator才会有 不然为Null
         StringBuffer rank=new StringBuffer();
         StringBuffer ainColloge=new StringBuffer();
