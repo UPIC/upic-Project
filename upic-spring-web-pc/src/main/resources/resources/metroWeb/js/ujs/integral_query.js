@@ -1,8 +1,8 @@
 var dataUrl = "/stu/searchIntegralLog";
 var getIntegralLogByIntegralLogId = "/common/getIntegralLogByIntegralLogId";
-var searchKeyWordUrl = "/common/integralLogSearchBar";
+var searchKeyWordUrl = "/common/integralLogSearchBarWithoutStatus";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
-var getStatusUrl = "/common/getCollege";
+var getStatusUrl = "/common/getAllIntegralLogStatus";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -18,7 +18,7 @@ $(function () {
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getStatusUrl, null, "addStatus", "GET");
     registSelect("projectCategory");
-    registSelect("college");
+    registStatusSelect("status");
 })
 
 function addProjectType(res) {
@@ -33,20 +33,14 @@ function addProjectType(res) {
 }
 
 function addStatus(res) {
-    var data = res.content;
-    var htmls = "";
+    var data = res;
     var htmlss = "";
-    htmls += "<option value='4' class='yellow'>状态筛选...</option>";
+    htmlss += "<option value='4' class='yellow'>状态筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
+        htmlss += "<option value='" + (i + 4) + "'>" + data[i] + "</option>";
     }
-    $("#college").html(htmls);
-
-    for (var i = 0; i < data.length; i++) {
-        htmlss += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
-    }
-    $("selectCollege").append(htmlss);
+    $("#status").html(htmlss);
 }
 
 function addHtmls(datas, pageNum) {
@@ -176,7 +170,7 @@ function getProjectInfo(result, j) {
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>作证材料</div>";
         htmlss += "<div class='span9'>";
-        htmlss += "<a class='tooltip1' href='../../img/example.jpg'><img src='../../img/example.jpg'></a>";
+        htmlss += "<a class='tooltip1' href='" + result.integralLogPic[0] + "'>点击查看佐证材料</a>";
         htmlss += "</div> </div>";
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>审核失败原因</div>";
@@ -216,7 +210,7 @@ function getProjectInfo(result, j) {
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>作证材料</div>";
         htmlss += "<div class='span9'>";
-        htmlss += "<a class='tooltip1' href='../../img/example.jpg'><img src='../../img/example.jpg'></a>";
+        htmlss += "<a class='tooltip1' href='" + result.integralLogPic[0] + "'>点击查看佐证材料</a>";
         htmlss += "</div> </div>";
         htmlss += "</div><div class='dr'><span></span></div></div></div><div class='modal-footer'>";
         htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true'>确定</button>";
@@ -241,4 +235,43 @@ function changeMyIntegralLogStatus(url) {
             getData(pageNum, dataUrl);
         }
     })
+}
+
+function getEnglishEnumName(enumName) {
+    if (enumName === "保存") {
+        return "SAVE";
+    } else if (enumName === "待初审") {
+        return "PENDING_AUDIT_BEFORE";
+    } else if (enumName === "待初审失败") {
+        return "PENDING_AUDIT_BEFORE_FAIL";
+    } else if (enumName === "待学院审") {
+        return "PENDING_AUDIT";
+    } else if (enumName === "待学院审失败") {
+        return "PENDING_AUDIT_FAIL";
+    } else if (enumName === "待部门审") {
+        return "PENDING_AUDIT_AGAIN";
+    } else if (enumName === "待部门审失败") {
+        return "PENDING_AUDIT_AGAIN_FAIL";
+    } else if (enumName === "待团委审") {
+        return "PENDING_AUDIT_FINAL";
+    } else if (enumName === "待团委审失败") {
+        return "PENDING_AUDIT_FINAL_FAIL";
+    } else if (enumName === "审核成功") {
+        return "HAVEPASSED";
+    } else if (enumName === "已报名") {
+        return "ALREADY_SIGN_UP";
+    } else if (enumName === "已签到") {
+        return "SIGNED_IN";
+    } else if (enumName === "已完成") {
+        return "COMPLETED";
+    }
+}
+
+function registStatusSelect(id) {
+    $("#" + id).change(function () {
+        var name = $(this).attr("name");
+        var value = getEnglishEnumName($(this).children('option:selected').text());
+        eval('(' + "requestData." + name + "=\"" + value + '\")');
+        getData(0, dataUrl);
+    });
 }

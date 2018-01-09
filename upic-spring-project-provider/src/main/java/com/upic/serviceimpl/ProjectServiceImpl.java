@@ -345,10 +345,7 @@ public class ProjectServiceImpl implements ProjectService {
 						projectCategoryOr = cb.equal(root.get("projectCategory"), projectCategoryList.get(0));
 					}
 
-					// Predicate and = changeStatus(statusList).size()==0?cb.and(
-					// projectCategoryOr):cb.and(statusOr, projectCategoryOr);
 					Predicate status = null;
-					// Predicate projectCategory=null;
 					Predicate result = null;
 					if (changeStatus(statusList, type).size() > 0) {
 						status = cb.and(statusOr);

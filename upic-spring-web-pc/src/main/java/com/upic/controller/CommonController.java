@@ -176,6 +176,22 @@ public class CommonController {
         }
     }
 
+    @GetMapping("/getAllIntegralLogStatus")
+    @ApiOperation("获取积分状态")
+    public List<String> getAllIntegralLogStatus() {
+        try {
+            List<String> statusList = new ArrayList<String>();
+            List<CheckStatusInfo> checkStatusInfoList = checkStatusService.getByType("1");
+            for (CheckStatusInfo checkStatusInfo : checkStatusInfoList) {
+                statusList.add(checkStatusInfo.getName());
+            }
+            return statusList;
+        } catch (Exception e) {
+            LOGGER.info("getAllIntegralLogStatus:" + e.getMessage());
+            return null;
+        }
+    }
+
     /**
      * 获取所有项目类别
      *
@@ -532,7 +548,7 @@ public class CommonController {
      */
     @GetMapping("/getIntegralLogPageByUserNum")
     @ApiOperation("根据用户编号获取积分明细")
-    public Page<IntegralLogInfo> getIntegralLogPageByUserNum(@PageableDefault(size = 10) Pageable pageable, String studentNum) throws Exception {
+    public Page<IntegralLogInfo> getIntegralLogPageByUserNum(@PageableDefault(size = 1000) Pageable pageable, String studentNum) throws Exception {
         try {
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getIntegralLogByMySelf(studentNum, pageable);
             return integralLogInfoPage;
@@ -731,6 +747,25 @@ public class CommonController {
     public Page<IntegralLogInfo> integralLogSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("积分状态") IntegralLogStatusEnum status, @ApiParam("关键词") String keyword) throws Exception {
         try {
             return integralLogService.integralLogSearchBar(status, keyword, pageable);
+        } catch (Exception e) {
+            LOGGER.info("integralLogSearchBar:" + e.getMessage());
+            throw new Exception("integralLogSearchBar" + e.getMessage());
+        }
+    }
+
+    /**
+     * 积分搜索条
+     *
+     * @param pageable
+     * @param keyword
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/integralLogSearchBarWithoutStatus")
+    @ApiOperation("积分搜索条")
+    public Page<IntegralLogInfo> integralLogSearchBarWithoutStatus(@PageableDefault(size = 10) Pageable pageable, @ApiParam("关键词") String keyword) throws Exception {
+        try {
+            return integralLogService.integralLogSearchBarWithoutStatus(keyword, pageable);
         } catch (Exception e) {
             LOGGER.info("integralLogSearchBar:" + e.getMessage());
             throw new Exception("integralLogSearchBar" + e.getMessage());

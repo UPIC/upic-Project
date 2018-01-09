@@ -186,4 +186,6 @@ public interface IntegralLogService {
     Page<IntegralLogInfo> getDefeatedIntegralLogPage(String studentNum, Pageable pageable);
 
     String changeIntegralLogToSignedIn(String projectNum, String userId);
+
+    Page<IntegralLogInfo> integralLogSearchBarWithoutStatus(String keyword, Pageable pageable);
 }
