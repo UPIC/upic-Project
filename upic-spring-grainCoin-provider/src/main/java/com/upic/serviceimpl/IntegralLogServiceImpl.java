@@ -253,6 +253,24 @@ public class IntegralLogServiceImpl implements IntegralLogService {
         }
     }
 
+    @Override
+    public Page<IntegralLogInfo> integralLogSearchBarWithoutStatus(String keyword, Pageable pageable) {
+        Page<IntegralLog> integralLogPage = null;
+        try {
+            integralLogPage = integralLogRepository.integralLogSearchBarWithoutStatus(keyword, pageable);
+            return QueryResultConverter.convert(integralLogPage, pageable,
+                    new AbstractDomain2InfoConverter<IntegralLog, IntegralLogInfo>() {
+                        @Override
+                        protected void doConvert(IntegralLog domain, IntegralLogInfo info) throws Exception {
+                            UpicBeanUtils.copyProperties(domain, info);
+                        }
+                    });
+        } catch (Exception e) {
+            LOGGER.info("integralLogSearchBar:" + e.getMessage());
+            return null;
+        }
+    }
+
     public Page<IntegralLogInfo> getUserListByProjectNum(String projectNum, Pageable pageable) {
         Page<IntegralLog> integralLogPage = null;
         try {

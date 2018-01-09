@@ -49,10 +49,8 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.projectNum = ?1")
     List<IntegralLog> getByProjectNum(String projectNum);
 
-    //    @Query(value = "select * from  integral_log where status = ?1 and (student_num like %?2% or student like %?2% or project_num like %?2%)",nativeQuery=true)
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1 and (integralLog.integralLogId.studentNum like %?2% or integralLog.student like %?2% or integralLog.integralLogId.projectNum like %?2%)")
     Page<IntegralLog> integralLogSearchBar(IntegralLogStatusEnum status, String keyword, Pageable pageable);
-//    Page<IntegralLog> integralLogSearchBar(IntegralLogStatusEnum status, String keyword, Pageable pageable);
 
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1")
     Page<IntegralLog> getIntegralLogWithOutPass(IntegralLogStatusEnum status, Pageable pageable);
@@ -68,4 +66,7 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
 
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and (integralLog.status = 'PENDING_AUDIT_BEFORE_FAIL' or integralLog.status = 'PENDING_AUDIT_FAIL' or integralLog.status = 'PENDING_AUDIT_AGAIN_FAIL' or integralLog.status = 'PENDING_AUDIT_FINAL_FAIL')")
     Page<IntegralLog> getDefeatedIntegralLogPage(String studentNum, Pageable pageable);
+
+    @Query(value = "select integralLog from IntegralLog integralLog where (integralLog.integralLogId.studentNum like %?1% or integralLog.projectName like %?1% or integralLog.integralLogId.projectNum like %?1%)")
+    Page<IntegralLog> integralLogSearchBarWithoutStatus(String keyword, Pageable pageable);
 }

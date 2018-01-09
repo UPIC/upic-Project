@@ -15,7 +15,8 @@ var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
 var requestData = {
-    type: "Y"
+    // 类型，不是unit
+    unit: "Y"
 };
 
 $(function () {

@@ -79,9 +79,9 @@ function submit(url) {
     }
 
     formData.append("file", $("#file-0a")[0].files[0]);
-    formData.append("projectCategory", $("#selectAll").find("option:selected").text());
+    formData.append("projectCategory", splitJson(getEvent()));
     formData.append("event", getEvent());
-    formData.append("integral", parseInt($("#integral").attr('value')));
+    formData.append("integral", parseFloat($("#integral").attr('value')));
 //    formData.append("url", url);
     $.ajax({
         type: 'POST',
@@ -93,7 +93,7 @@ function submit(url) {
             alert("已提交")
         },
         error: function (err) {
-            alert(err.msg);
+            // alert(err.msg);
         }
     });
 }
@@ -229,4 +229,13 @@ function getEvent() {
         str += $("#" + i + " option:selected").text();
     }
     return str;
+}
+
+function splitJson(json) {
+    if (json == null || json === "") {
+        return "";
+    }
+    var projectCategorys = new Array();
+    projectCategorys = json.split("/");
+    return projectCategorys[0];
 }

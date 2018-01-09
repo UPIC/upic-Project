@@ -8,7 +8,8 @@ var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
 var requestData = {
-    type: "S"
+    // 不是unit
+    unit: "S"
 };
 
 $(function () {
