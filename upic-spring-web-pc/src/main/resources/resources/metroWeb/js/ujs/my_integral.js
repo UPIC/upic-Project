@@ -2,7 +2,7 @@ var dataUrl = "/stu/searchIntegralLog";
 var getIntegralLogByIntegralLogId = "/common/getIntegralLogByIntegralLogId";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getStatusUrl = "/common/getCollege";
-var searchKeyWordUrl = "/common/integralLogSearchBar";
+var searchKeyWordUrl = "/common/integralLogSearchBarWithoutStatus";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -184,9 +184,9 @@ function getProjectInfo(result, j) {
 }
 
 function splitJson(json) {
-	if(json==null ||json===""){
-		return "";
-	}
+    if (json == null || json === "") {
+        return "";
+    }
     var projectCategorys = new Array();
     projectCategorys = json.split("/");
     return projectCategorys[0];

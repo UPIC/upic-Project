@@ -32,11 +32,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/systemManager")
@@ -63,7 +59,7 @@ public class SystemManagerController {
 
     @ApiOperation("教师获取需要审批的积分申报")
     @GetMapping("/getIntegralLogBySql")
-    public Page<IntegralLogInfo> getIntegralLogBySqlcondi(IntegralLogCondition condi, Pageable pageable, String type) {
+    public Page<IntegralLogInfo> getIntegralLogBySqlcondi(IntegralLogCondition condi, Pageable pageable) {
         try {
             SocialUsers s = getUser();
             List<String> statusList = s.getStatusList();
@@ -77,13 +73,13 @@ public class SystemManagerController {
 
             List<Map<String, Object>> orList = new ArrayList<Map<String, Object>>();
             if (rank.equals("2")) {
-                Map<String, Object> maps = new HashMap<String, Object>();
+                Map<String, Object> maps = new IdentityHashMap<String, Object>();
                 for (String projectCategory : projectCategoryList) {
                     maps.put(new String("projectCategory"), projectCategory);
                 }
                 orList.add(maps);
             }
-            Map<String, Object> mapStatus = new HashMap<String, Object>();
+            Map<String, Object> mapStatus = new IdentityHashMap<String, Object>();
             for (String status : statusList) {
                 IntegralLogStatusEnum enum1 = getEnum(status);
                 if (enum1 == null) {
@@ -93,7 +89,8 @@ public class SystemManagerController {
             }
             orList.add(mapStatus);
             condi.setOrList(orList);
-            return integralLogService.searchIntegralLog(condi, pageable);
+            Page<IntegralLogInfo> integralLogInfoPage = integralLogService.searchIntegralLog(condi, pageable);
+            return integralLogInfoPage;
         } catch (Exception e) {
             LOGGER.info("getIntegralLogBySql:" + e.getMessage());
             return null;
@@ -117,14 +114,14 @@ public class SystemManagerController {
             List<Map<String, Object>> orList = new ArrayList<Map<String, Object>>();
 
             if (rank.equals("2")) {
-                Map<String, Object> mapProjectCategory = new HashMap<>();
+                Map<String, Object> mapProjectCategory = new IdentityHashMap<>();
                 for (String projectCategory : projectCategoryList) {
                     mapProjectCategory.put(new String("projectCategory"), projectCategory);
                 }
                 orList.add(mapProjectCategory);
             }
 
-            Map<String, Object> mapStatus = new HashMap<>();
+            Map<String, Object> mapStatus = new IdentityHashMap<>();
 
             for (String status : statusList) {
                 ImplementationProcessEnum implementationProcessEnum = getImplementationProcessEnum(status, projectCondition.getUnit());
