@@ -2,7 +2,6 @@ var dataUrl = "/systemManager/getIntegralLogBySql";//获取积分列表
 var getAllProjectCategory = "/common/getAllProjectCategory";//获取项目类别
 var searchKeyWordUrl = "/common/integralLogSearchBar";//搜索条(String status=PENDING_AUDIT, String keyword)
 var updateIntegralLogStatus = "/common/changeAllIntegralLogStatus";
-//修改积分状态(List<String> studentNumList, List<String> projectNumList, IntegralLogStatusEnum status)
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getCollegeUrl = "/common/getCollege";
 var pageSize = 0;
@@ -17,8 +16,8 @@ $(function () {
     commonAjax(getCollegeUrl, null, "addCollegeUrl", "GET");
     registSelect("projectCategory");
     registSelect("getCollege");
-    $("#failSubmit").click(function(){
-    	notPass();
+    $("#failSubmit").click(function () {
+        notPass();
     })
 })
 
