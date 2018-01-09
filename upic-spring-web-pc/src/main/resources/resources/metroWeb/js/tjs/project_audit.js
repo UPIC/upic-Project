@@ -17,8 +17,8 @@ $(function () {
     getData(pageNum, dataUrl);
     commonAjax(getProjectCategoryUrl, null, "addProjectCategory", "GET");
     commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
-    registSelect("projectNum");
-    registSelect("ProjectStatus");
+    registSelect("projectCategory");
+    registSelect("implementationProcess");
 })
 
 function addProjectCategory(res) {
@@ -40,7 +40,7 @@ function addProjectStatus(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i] + "</option>";
     }
-    $("#projectStatus").html(htmls);
+    $("#implementationProcess").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {
