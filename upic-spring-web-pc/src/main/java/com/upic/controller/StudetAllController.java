@@ -270,6 +270,9 @@ public class StudetAllController {
             if (url == null) {
                 return null;
             }
+            if (url.equals("NO_FILE")) {
+                url = null;
+            }
             List<String> pics = new ArrayList<>();
             pics.add(url);
             integralLogInfo.setIntegralLogPic(pics);
@@ -702,10 +705,19 @@ public class StudetAllController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         // 获得文件：
         MultipartFile inputFile = multipartRequest.getFile(fileName);
+
+        if (inputFile == null) {
+            return "NO_FILE";
+        }
+
         // 获得文件名：
         String filename = inputFile.getOriginalFilename();
 
         String uploadFile = FastDFSClient.uploadFile(inputFile.getBytes(), filename);
+
+        if (uploadFile == null) {
+            return null;
+        }
 
         String url = Constans.STRONGE_URL + uploadFile;
         return url;

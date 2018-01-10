@@ -1,6 +1,6 @@
 var getAllProjectCategoryUrl = "/common/getAllProjectCategory";
 var addProjectUrl = "/common/addProject";
-var getAllCollegeUrl = "/common/getCollege";
+var getAllCollegeUrl = "/common/getMyColleges";
 
 var inputs = $("input");
 function cancel() {
@@ -16,8 +16,8 @@ function saveProject() {
     Data.projectCategory = $("#getAllProjectCategory option:selected").text();
     Data.projectCategoryId = $("#getAllProjectCategory option:selected").attr("id");
 
-    Data.declareUnit = $("#declareUnit option:selected").text();
-    Data.collegeOtherName = $("#declareUnit option:selected").attr("id");
+    Data.declareUnit = $("#declareUnit").val();
+    Data.collegeOtherName = $("#declareUnit").attr("myOtherName");
 
     Data.projectName = $("#projectName").val();
     Data.guidanceMan = $("#guidanceMan").val();
@@ -76,11 +76,8 @@ $(function () {
         url: getAllCollegeUrl,
         success: function (result) {
             var data = result.content;
-            var htmls = "";
-            for (var i = 0; i < data.length; i++) {
-                htmls += "<option value='category 1' id='" + data[i].otherName + "'>" + data[i].college + "</option>";
-            }
-            $("#declareUnit").html(htmls);
+            $("#declareUnit").val(data[0].college);
+            $("#declareUnit").attr("myOtherName", data[0].otherName);
         }
     });
 

@@ -1065,8 +1065,10 @@ public class CommonController {
     @GetMapping("/getAllUser")
     @ApiOperation("获取所有用户")
     public Page<UserInfo> getAllUser(@PageableDefault(size = 10) Pageable pageable, UserCondition userCondition) throws Exception {
+        Page<UserInfo> userInfoPage = null;
         try {
-            return userService.searchUser(userCondition, pageable);
+            userInfoPage = userService.searchUser(userCondition, pageable);
+            return userInfoPage;
         } catch (Exception e) {
             LOGGER.info("getAllUser:" + e.getMessage());
             throw new Exception("getAllUser" + e.getMessage());
@@ -1602,6 +1604,27 @@ public class CommonController {
     @ApiOperation("获取所有学院")
     public Page<CollegeInfo> getAllColleges(CollegeCondition collegeCondition, @PageableDefault(size = 20) Pageable pageable) {
         try {
+            Page<CollegeInfo> collegeInfoPage = collegeService.searchCollege(collegeCondition, pageable);
+            return collegeInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getAllColleges:" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取所有学院
+     *
+     * @param collegeCondition
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/getMyColleges")
+    @ApiOperation("获取所有学院")
+    public Page<CollegeInfo> getMyColleges(CollegeCondition collegeCondition, @PageableDefault(size = 20) Pageable pageable) {
+        try {
+            SocialUsers socialUsers = getUser();
+            collegeCondition.setCollege(socialUsers.getCollege());
             Page<CollegeInfo> collegeInfoPage = collegeService.searchCollege(collegeCondition, pageable);
             return collegeInfoPage;
         } catch (Exception e) {
