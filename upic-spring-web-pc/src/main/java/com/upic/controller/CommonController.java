@@ -1265,12 +1265,20 @@ public class CommonController {
      */
     @PostMapping("/addUser")
     @ApiOperation("添加用户")
-    public UserInfo addUser(UserInfo userInfo) throws Exception {
+    public String addUser(UserInfo userInfo) {
         try {
-            return userService.addUser(userInfo);
+            UserInfo u = userService.getUserByUserNum(userInfo.getUserNum());
+            if (u != null) {
+                return "HAVE";
+            } else {
+                userInfo.setCreatTime(new Date());
+                userInfo.setStatus(UserStatusEnum.NORMAL_CONDITION);
+                userService.addUser(userInfo);
+                return "SUCCESS";
+            }
         } catch (Exception e) {
             LOGGER.info("addUser:" + e.getMessage());
-            throw new Exception("addUser" + e.getMessage());
+            return null;
         }
     }
 

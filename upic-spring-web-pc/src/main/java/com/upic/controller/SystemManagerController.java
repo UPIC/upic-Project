@@ -123,24 +123,31 @@ public class SystemManagerController {
                     mapProjectCategory.put(new String("projectCategory"), new JugeType(JygeTypeEnum.EQUAL, projectCategory));
 
                 }
-                orList.add(mapProjectCategory);
+                if (mapProjectCategory.size() == 1) {
+                    projectCondition.setProjectCategory(projectCategoryList.get(0));
+                } else {
+                    orList.add(mapProjectCategory);
+                }
             }
 
             Map<String, Object> mapStatus = new IdentityHashMap<>();
 
+            ImplementationProcessEnum implementationProcessEnumTemp = null;
             for (String status : statusList) {
                 ImplementationProcessEnum implementationProcessEnum = getImplementationProcessEnum(status, projectCondition.getUnit());
                 if (implementationProcessEnum == null) {
                     continue;
                 }
-                if (rank.equals("1")) {
-                    projectCondition.setImplementationProcess(implementationProcessEnum);
-                }
+                implementationProcessEnumTemp = implementationProcessEnum;
                 mapStatus.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, implementationProcessEnum));
             }
-            projectCondition.setUnit(null);
-            orList.add(mapStatus);
+            if (mapStatus.size() == 1) {
+                projectCondition.setImplementationProcess(implementationProcessEnumTemp);
+            } else {
+                orList.add(mapStatus);
+            }
             projectCondition.setOrList(orList);
+            projectCondition.setUnit(null);
 
             Page<ProjectInfo> projectInfoPage = projectService.searchProject(projectCondition, pageable);
             return projectInfoPage;
