@@ -48,4 +48,12 @@ public interface PrizeService {
      * @return
      */
     Page<PrizeInfo> getHistoryPrize(Pageable pageable);
+
+    /**
+     * 删除奖品
+     *
+     * @param id
+     * @return
+     */
+    String deletePrize(long id);
 }

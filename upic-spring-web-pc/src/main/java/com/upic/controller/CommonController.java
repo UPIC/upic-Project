@@ -1243,15 +1243,33 @@ public class CommonController {
      */
     @PostMapping("/updateUser")
     @ApiOperation("更新用户")
-    public UserInfo updateUser(UserInfo userInfo) {
+    public String updateUser(UserInfo userInfo) {
         try {
             UserInfo u = userService.getUserByUserNum(userInfo.getUserNum());
             u.setCollege(userInfo.getCollege());
             u.setClazz(userInfo.getClazz());
             u.setUsername(userInfo.getUsername());
-            return userService.updateUser(u);
+            userService.updateUser(u);
+            return "SUCCESS";
         } catch (Exception e) {
             LOGGER.info("updateUser:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/deleteUser")
+    @ApiOperation("删除用户")
+    public String deleteUser(String userNum) {
+        try {
+            UserInfo userInfo = userService.getUserByUserNum(userNum);
+            if (userInfo != null) {
+                userService.deleteUser(userNum);
+                return "SUCCESS";
+            } else {
+                return "ERROR";
+            }
+        } catch (Exception e) {
+            LOGGER.info("deleteUser:" + e.getMessage());
             return null;
         }
     }
@@ -1306,6 +1324,21 @@ public class CommonController {
             return prizeService.addPrize(prizeInfo);
         } catch (Exception e) {
             LOGGER.info("addPrize:" + e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/deletePrize")
+    @ApiOperation("删除奖品")
+    public String deletePrize(long id) {
+        try {
+            PrizeInfo prizeInfo = prizeService.getPrizeById(id);
+            if (prizeInfo != null) {
+                return prizeService.deletePrize(id);
+            }
+            return "ERROR";
+        } catch (Exception e) {
+            LOGGER.info("deletePrize:" + e.getMessage());
             return null;
         }
     }

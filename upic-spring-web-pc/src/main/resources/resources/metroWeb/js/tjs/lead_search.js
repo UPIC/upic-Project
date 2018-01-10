@@ -10,9 +10,8 @@ var requestData = {};
 $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     getData(pageNum, dataUrl);
-    commonAjax(getCollegeUrl, null, "addCollege", "GET");
-    commonAjax(getClazzUrl, null, "addClazz", "GET");
-    registSelect("college");
+    commonAjax(getCollegeUrl, "rank=3", "addCollege", "GET");
+    registSelect1("college");
     registSelect("clazz");
 })
 
@@ -24,10 +23,11 @@ function addCollege(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
+
     $("#college").html(htmls);
 }
 
-function addClazz(res) {
+function addProjectClazz(res) {
     var data = res.content;
     var htmls = "";
     htmls += "<option value='4' class='yellow'>班级筛选...</option>";
@@ -54,4 +54,15 @@ function addHtmls(datas, pageNum) {
 
     $("#data").html(htmls);
     page(datas, dataUrl, requestData.size, requestData.page);
+}
+
+// 下拉框注册监听
+function registSelect1(id) {
+    $("#" + id).change(function () {
+        var name = $(this).attr("name");
+        var value = $(this).children('option:selected').text();
+        eval('(' + "requestData." + name + "=\"" + value + '\")');
+        getData(0, dataUrl);
+        commonAjax(getClazzUrl, "college=" + value, "addProjectClazz", "GET");
+    });
 }
