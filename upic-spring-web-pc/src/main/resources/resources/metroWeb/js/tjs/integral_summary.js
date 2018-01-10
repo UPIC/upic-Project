@@ -19,6 +19,7 @@ $(function () {
     commonAjax(getProjectCollegeUrl, "rank=3", "addProjectCollege", "GET");
     registSelect1("college");
     registSelect("clazz");
+    registEarnedPointsSelect("earnedPoints");
     getData(pageNum, dataUrl);
 
     $("#exportBtn").click(function () {
@@ -165,5 +166,27 @@ function registSelect1(id) {
         eval('(' + "requestData." + name + "=\"" + value + '\")');
         getData(0, dataUrl);
         commonAjax(getProjectClazzUrl, "college=" + value, "addProjectClazz", "GET");
+    });
+}
+
+// 下拉框注册监听
+function registEarnedPointsSelect(id) {
+    $("#" + id).change(function () {
+        var name = $(this).attr("name");
+        var value = $(this).children('option:selected').text();
+        var value1 = 0;
+        var value2 = 0;
+        if (value !== "大于10") {
+            var valueList = new Array();
+            valueList = value.split("-");
+            value1 = parseFloat(valueList[0]);
+            value2 = parseFloat(valueList[1]) - 0.1;
+        } else {
+            value1 = 10;
+            value2 = 100;
+        }
+        eval('(' + "requestData." + name + "=\"" + value1 + '\")');
+        eval('(' + "requestData." + (name + "To") + "=\"" + value2 + '\")');
+        getData(0, dataUrl);
     });
 }

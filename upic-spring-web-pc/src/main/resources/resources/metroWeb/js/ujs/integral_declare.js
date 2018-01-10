@@ -49,7 +49,6 @@ $(function () {
 
 function submit(url) {
     var formData = new FormData();
-    var data = new Object();
     if (parseFloat($("#integral").attr('value')) == 0) {
         alert("请选择项目类别");
         return;
@@ -64,7 +63,7 @@ function submit(url) {
             alert("请选择项目名");
             return;
         }
-        data.projectName = $("#selectProject").find("option:selected").text();
+        formData.projectName = $("#selectProject").find("option:selected").text();
         // 项目编号
         formData.append("field2", val);
         formData.append("field1", "radioselect1");

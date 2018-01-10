@@ -55,6 +55,7 @@ function addOne() {
     var Data = {};
     Data.college = $("#college1 option:selected").text();
     Data.clazz = $("#clazz1 option:selected").text();
+    Data.type = $("#type1 option:selected").attr("theType");
     Data.userNum = $("#userNum1").val();
     Data.username = $("#username1").val();
 

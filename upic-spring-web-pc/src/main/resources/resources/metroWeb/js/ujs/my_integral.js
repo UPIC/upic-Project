@@ -13,7 +13,7 @@ $(function () {
     pageSize = $("#select-small").children('option:selected').text();
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
-    commonAjax(getStatusUrl, null, "addStatus", "GET");
+    commonAjax(getStatusUrl, "rank=3", "addStatus", "GET");
     registSelect("projectCategory");
     registSelect("college");
 
