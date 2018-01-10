@@ -119,7 +119,9 @@ public class SystemManagerController {
             if (rank.equals("2")) {
                 Map<String, Object> mapProjectCategory = new IdentityHashMap<>();
                 for (String projectCategory : projectCategoryList) {
+
                     mapProjectCategory.put(new String("projectCategory"), new JugeType(JygeTypeEnum.EQUAL, projectCategory));
+
                 }
                 orList.add(mapProjectCategory);
             }

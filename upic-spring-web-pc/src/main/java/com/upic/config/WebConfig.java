@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.neusoft.education.tp.sso.client.filter.DefaultCASFilter;
@@ -53,4 +54,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 //	    registry.addResourceHandler("/metroWeb/css/**","/metroWeb/js/**","/metroWeb/img/**","/metroWeb/others/**")
 //	            .addResourceLocations("classpath:/metroWeb/");
 //	}
+	
 }
