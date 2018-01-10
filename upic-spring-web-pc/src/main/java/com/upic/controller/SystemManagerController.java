@@ -85,6 +85,9 @@ public class SystemManagerController {
                 if (enum1 == null) {
                     continue;
                 }
+                if (rank.equals("1")) {
+                    condi.setStatus(enum1);
+                }
                 mapStatus.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, enum1));
             }
             orList.add(mapStatus);
@@ -116,7 +119,9 @@ public class SystemManagerController {
             if (rank.equals("2")) {
                 Map<String, Object> mapProjectCategory = new IdentityHashMap<>();
                 for (String projectCategory : projectCategoryList) {
-                    mapProjectCategory.put(new String("projectCategory"),  new JugeType(JygeTypeEnum.EQUAL, projectCategory));
+
+                    mapProjectCategory.put(new String("projectCategory"), new JugeType(JygeTypeEnum.EQUAL, projectCategory));
+
                 }
                 orList.add(mapProjectCategory);
             }
@@ -125,19 +130,22 @@ public class SystemManagerController {
 
             for (String status : statusList) {
                 ImplementationProcessEnum implementationProcessEnum = getImplementationProcessEnum(status, projectCondition.getUnit());
-                projectCondition.setUnit(null);
                 if (implementationProcessEnum == null) {
                     continue;
                 }
+                if (rank.equals("1")) {
+                    projectCondition.setImplementationProcess(implementationProcessEnum);
+                }
                 mapStatus.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, implementationProcessEnum));
             }
+            projectCondition.setUnit(null);
             orList.add(mapStatus);
             projectCondition.setOrList(orList);
 
             Page<ProjectInfo> projectInfoPage = projectService.searchProject(projectCondition, pageable);
             return projectInfoPage;
         } catch (Exception e) {
-            LOGGER.info("getIntegralLogBySql:" + e.getMessage());
+            LOGGER.info("getProjectBySql:" + e.getMessage());
             return null;
         }
     }
@@ -146,13 +154,15 @@ public class SystemManagerController {
         ImplementationProcessEnum[] implementationProcessEnums = ImplementationProcessEnum.values();
         ImplementationProcessEnum implementationProcessEnum = null;
         for (ImplementationProcessEnum i : implementationProcessEnums) {
-            if ((type != null || type != "") && type != "Y") {
-                if (status.equals(i.name()) && i.getNum() <= 11) {
-                    implementationProcessEnum = i;
-                }
-            } else {
-                if (status.equals(i.name()) && i.getNum() > 11) {
-                    implementationProcessEnum = i;
+            if (type != "" || type != null) {
+                if (!type.equals("Y")) {
+                    if (status.equals(i.name()) && i.getNum() <= 11) {
+                        implementationProcessEnum = i;
+                    }
+                } else {
+                    if (status.equals(i.name()) && i.getNum() > 11) {
+                        implementationProcessEnum = i;
+                    }
                 }
             }
         }

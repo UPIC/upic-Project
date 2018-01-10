@@ -16,7 +16,7 @@ var requestData = {
 
 $(function () {
     pageSize = $("#select-small").children('option:selected').text()
-    commonAjax(getProjectCollegeUrl, null, "addProjectCollege", "GET");
+    commonAjax(getProjectCollegeUrl, "rank=3", "addProjectCollege", "GET");
     registSelect1("college");
     registSelect("clazz");
     getData(pageNum, dataUrl);

@@ -828,8 +828,8 @@ public class CommonController {
     @ApiOperation("我的项目搜索条")
     public Page<ProjectInfo> myProjectSearchBar(@PageableDefault(size = 10) Pageable pageable, @ApiParam("关键词") String keyword) throws Exception {
         try {
-//            return projectService.projectSearchBar(getUser().getUserNum(), keyword, pageable);
-            return projectService.projectSearchBar(getUser().getUserId(), keyword, pageable);
+            Page<ProjectInfo> projectInfoPage = projectService.projectSearchBar(getUser().getUserId(), keyword, pageable);
+            return projectInfoPage;
         } catch (Exception e) {
             LOGGER.info("myProjectSearchBar:" + e.getMessage());
             throw new Exception("myProjectSearchBar" + e.getMessage());
@@ -923,9 +923,9 @@ public class CommonController {
             SocialUsers socialUsers = getUser();
             ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
 
-            if (socialUsers.getRank() == "1" && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
+            if (socialUsers.getRank().equals("1") && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
                 projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_FINAL);
-            } else if (socialUsers.getRank() == "2" && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
+            } else if (socialUsers.getRank().equals("2") && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
                 projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_AGAIN);
             } else {
                 if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED || projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_FAIL) {
@@ -1286,7 +1286,7 @@ public class CommonController {
     public PrizeInfo addPrize(PrizeInfo prizeInfo, HttpServletRequest request) {
         try {
             String url = getUrl(request, "file");
-            if (url.equals(Constans.STRONGE_URL)) {
+            if (url.equals(Constans.STRONGE_URL + "null")) {
                 return null;
             }
             List<String> pics = new ArrayList<>();

@@ -63,10 +63,17 @@ function addHtmls(datas, pageNum) {
         htmls += "<td class='center_td'>";
         htmls += "<a href='#mymodal1' data-toggle='modal'><button class='btn btn-small' onclick=commonAjax('" + getPrizeById + "','prizeId=" + data[i].id + "','getInfo','GET')>编辑</button></a>";
         htmls += "</td>";
+        htmls += "<td class='center_td'>";
+        htmls += "<button class='btn btn-small' onclick=deletePrize('" + data[i].id + "')>删除</button>";
+        htmls += "</td>";
         htmls += "</tr>";
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
+}
+
+function deletePrize(id) {
+    
 }
 
 function putAway(prizeNum) {
@@ -166,5 +173,4 @@ function save() {
             getData(pageNum, dataUrl);
         }
     });
-
 }

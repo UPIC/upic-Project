@@ -49,12 +49,12 @@ function addProjectType(res) {
 function addProjectCollege(res) {
     var data = res.content;
     var htmls = "";
-    htmls += "<option value='4' class='yellow'>学院筛选...</option>";
+    htmls += "<option value='4' class='yellow'>申报单位筛选...</option>";
 
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
-    $("#college").html(htmls);
+    $("#declareUnit").html(htmls);
 }
 
 function addProjectStatus(res) {
