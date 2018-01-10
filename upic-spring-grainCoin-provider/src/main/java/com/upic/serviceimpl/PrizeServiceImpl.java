@@ -99,6 +99,17 @@ public class PrizeServiceImpl implements PrizeService {
         }
     }
 
+    @Override
+    public String deletePrize(long id) {
+        try {
+            prizeRepository.delete(id);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("deletePrize：" + e.getMessage());
+            return null;
+        }
+    }
+
     private void filterPrize(Prize prize) {
         if (prize.getPrizePic() != null) {
             prize.setPrizePic(null);

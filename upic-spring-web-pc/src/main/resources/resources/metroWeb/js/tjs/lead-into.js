@@ -3,6 +3,7 @@ var addUserUrl = "/common/addUser";//添加用户
 var searchKeyWordUrl = "/common/userSearchBar";//搜索条
 var updateUser = "/common/updateUser"//更新用户
 var daoruUrl = "";//导入用户
+var deleteUserUrl = "/common/deleteUser";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -99,7 +100,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<td class='center_td'><div class='message_div'><a href='#mymodal1' data-toggle='modal'>";
         htmls += "<span onclick=commonAjax('" + dataUrl + "','userNum=" + data[i].userNum + "','bianji','GET')>编辑</span>";
         htmls += "</a><span class='space'>|</span><a>";
-        htmls += "<span onclick=sub(" + data[i].userNum + ")>保存</span>";
+        htmls += "<span onclick=deleteUser(" + data[i].userNum + ")>删除</span>";
         htmls += "</a></div></tr>";
     }
     $("#data").html(htmls);
@@ -118,13 +119,13 @@ function bianji(datas) {
     htmlss += "<div class='block-fluid'>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>所属学院</div>";
-    htmlss += "<div class='span3'><input type='text' name='' id='college' value='" + data[0].college + "' ></div>";
+    htmlss += "<div class='span3'><select id='college' name='college'><option>" + data[0].college + "</option></select></div>";
     htmlss += "<div class='span3'>班级</div>";
-    htmlss += "<div class='span3'><input type='text' name='' id='clazz' value='" + data[0].clazz + "'></div>";
+    htmlss += "<div class='span3'><select id='clazz' name='clazz'><option>" + data[0].clazz + "</option></select></div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>学号</div>";
-    htmlss += "<div class='span3'><input type='text' name='' id='userNum' value='" + data[0].userNum + "'></div>";
+    htmlss += "<div class='span3'><input type='text' disabled='disabled' name='' id='userNum' value='" + data[0].userNum + "'></div>";
     htmlss += "<div class='span3'>姓名</div>";
     htmlss += "<div class='span3'><input type='text' name='' id='userName' value='" + data[0].username + "'></div>";
     htmlss += "</div>";
@@ -138,12 +139,24 @@ function bianji(datas) {
     htmlss += "</div>";
 
     $("#mymodal1").html(htmlss);
+    registSelect2("college", data[0].clazz);
+    commonAjax(getAllCollegeUrl, "", "addBianJiCollege", "GET", data[0].college);
+}
+
+function addBianJiCollege(res, a) {
+    var datas = res.content;
+    var htmls = "";
+    htmls += "<option>" + a + "</option>";
+    for (var i = 0; i < datas.length; i++) {
+        htmls += "<option value='" + (i + 4) + "'>" + datas[i].college + "</option>";
+    }
+    $("#college").html(htmls);
 }
 
 function save() {
     var Data = {};
-    Data.college = $("#college").val();
-    Data.clazz = $("#clazz").val();
+    Data.college = $("#college option:selected").text();
+    Data.clazz = $("#clazz option:selected").text();
     Data.userNum = $("#userNum").val();
     Data.username = $("#userName").val();
 
@@ -152,26 +165,27 @@ function save() {
         url: updateUser,
         data: Data,
         success: function (result) {
-            alert("已保存");
+            alert("编辑成功！");
             getData(pageNum, dataUrl);
         }
     });
 }
 
-function sub(id) {
-    var Data = {};
-    Data.college = $("#" + id + "a").text();
-    Data.clazz = $("#" + id + "b").text();
-    Data.userNum = $("#" + id + "c").text();
-    Data.username = $("#" + id + "d").text();
-
-    Data.status = "";//提交的状态码
+function deleteUser(id) {
     $.ajax({
-        type: "POST",
-        url: saveUrl,
-        data: Data,
-        success: function () {
-            alert("已提交")
+        type: "GET",
+        url: deleteUserUrl,
+        data: {
+            userNum: id
+        },
+        success: function (result) {
+            if (result === "SUCCESS") {
+                alert("删除成功！");
+                getData(pageNum, dataUrl);
+            } else {
+                alert("删除失败！");
+                getData(pageNum, dataUrl);
+            }
         }
     });
 }
@@ -203,11 +217,30 @@ function addProjectClazz(res) {
     $("#clazz1").html(htmls);
 }
 
+function addJiProjectClazz(res, a) {
+    var data = res.content;
+    var htmls = "";
+    htmls += "<option>" + a + "</option>";
+    for (var i = 0; i < data.length; i++) {
+        htmls += "<option value='" + (i + 4) + "'>" + data[i].clazz + "</option>";
+    }
+    $("#clazz").html(htmls);
+}
+
 // 下拉框注册监听
 function registSelect1(id) {
     $("#" + id).change(function () {
         var name = $(this).attr("name");
         var value = $(this).children('option:selected').text();
         commonAjax(getProjectClazzUrl, "college=" + value, "addProjectClazz", "GET");
+    });
+}
+
+// 下拉框注册监听
+function registSelect2(id, a) {
+    $("#" + id).change(function () {
+        var name = $(this).attr("name");
+        var value = $(this).children('option:selected').text();
+        commonAjax(getProjectClazzUrl, "college=" + value, "addJiProjectClazz", "GET", a);
     });
 }
