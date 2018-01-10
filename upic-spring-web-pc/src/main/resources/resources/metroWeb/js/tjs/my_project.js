@@ -183,9 +183,6 @@ function addHtmls(datas, pageNum) {
 
 function commonMyAjax(url, data, method, requestType, refreshTime) {
     timeId = window.setInterval("qrAjax('" + url + "','" + data + "','" + method + "','" + requestType + "')", parseInt(refreshTime));
-//	commonAjax(url, data, method, requestType);
-//	commonAjax(url+"?"+data, "", method, requestType);
-
 }
 
 function qrAjax(url, data, method, requestType, refreshTime) {

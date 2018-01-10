@@ -2,7 +2,7 @@ var dataUrl = "/systemManager/getProjectBySql";
 var getProjectInfoUrl = "/common/getProjectInfo";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectCategoryUrl = "/common/getAllProjectCategory";
-var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
+// var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
 var changeStatusUrl = "/common/changeAllProjectStatus";
 var pageSize = 0;
 var totalPages = -1;
@@ -16,9 +16,9 @@ $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     getData(pageNum, dataUrl);
     commonAjax(getProjectCategoryUrl, null, "addProjectCategory", "GET");
-    commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
+    // commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
     registSelect("projectCategory");
-    registSelect("implementationProcess");
+    // registSelect("implementationProcess");
 })
 
 function addProjectCategory(res) {
@@ -32,16 +32,16 @@ function addProjectCategory(res) {
     $("#projectCategory").html(htmls);
 }
 
-function addProjectStatus(res) {
-    var data = res;
-    var htmls = "";
-    htmls += "<option value='4' class='yellow'>项目状态筛选...</option>";
-
-    for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i] + "</option>";
-    }
-    $("#implementationProcess").html(htmls);
-}
+// function addProjectStatus(res) {
+//     var data = res;
+//     var htmls = "";
+//     htmls += "<option value='4' class='yellow'>项目状态筛选...</option>";
+//
+//     for (var i = 0; i < data.length; i++) {
+//         htmls += "<option value='" + (i + 4) + "'>" + data[i] + "</option>";
+//     }
+//     $("#implementationProcess").html(htmls);
+// }
 
 function addHtmls(datas, pageNum) {
     totalPages = datas.totalElements;

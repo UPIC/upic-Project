@@ -13,7 +13,7 @@ $(function () {
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getCollegeUrl, null, "addCollege", "GET");
     registSelect("projectCategory");
-    registSelect("college");
+    registSelect("declareUnit");
     getData(pageNum, dataUrl);
 
     //模拟form导出
@@ -50,7 +50,7 @@ function addCollege(res) {
     for (var i = 0; i < data.length; i++) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
-    $("#college").html(htmls);
+    $("#declareUnit").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {
@@ -63,7 +63,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].projectNum + "</td>";
         htmls += "<td>" + data[i].projectCategory + "</td>";
         htmls += "<td>" + data[i].projectName + "</td>";
-        htmls += "<td>" + data[i].collegeOtherName + "</td>";
+        htmls += "<td>" + data[i].declareUnit + "</td>";
         htmls += "<td>" + data[i].guidanceNum + "</td>";
         htmls += "<td>" + data[i].guidanceMan + "</td>";
         htmls += "<td>" + data[i].integral + "</td>";

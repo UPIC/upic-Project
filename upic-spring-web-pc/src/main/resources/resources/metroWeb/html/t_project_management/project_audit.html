@@ -354,7 +354,8 @@
 
         $(".selectlist")
             .after(
-                '<div class="selectlist selectlist_second"> <select id="implementationProcess" name="implementationProcess" style="width: 100%;" class="color-wh"> <option value="4" class="yellow">项目状态筛选...</option> <option value="5">项目类别</option> <option value="6">项目类别</option> </select> </div>');
+                '<div class="selectlist selectlist_second"></div>');
+        // <select id="implementationProcess" name="implementationProcess" style="width: 100%;" class="color-wh"> <option value="4" class="yellow">项目状态筛选...</option> <option value="5">项目类别</option> <option value="6">项目类别</option> </select>
         $(".selectlist_second")
             .after(
                 '<button class="btn btn-small btn-info" onclick="pass()">审核通过</button><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-danger btn-no">审核不通过</button></a>');

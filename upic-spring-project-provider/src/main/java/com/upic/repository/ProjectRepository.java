@@ -26,7 +26,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
     @Query(value = "select project from Project project where project.signUpStartTime < ?1 and project.signUpEndTime > ?1 and project.implementationProcess = 'ENROLLMENT'")
     Page<Project> getProjectWithoutSignUp(Date now, Pageable pageable);
 
-    @Query(value = "select project from Project project where project.guidanceNum = ?1 and (project.projectNum like %?2% or project.projectName like %?2% or project.guidanceMan like %?2%)")
+    @Query(value = "select project from Project project where project.guidanceNum = ?1 and (project.projectNum like %?2% or project.projectName like %?2% or project.projectCategory like %?2%)")
     Page<Project> projectSearchBar(String userNum, String keyword, Pageable pageable);
 
     @Query(value = "select project from Project project where project.projectNum like %?1% or project.projectName like %?1% or project.guidanceMan like %?1%")
