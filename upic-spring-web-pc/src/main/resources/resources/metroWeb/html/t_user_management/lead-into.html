@@ -187,17 +187,6 @@
                 </tr>
                 </thead>
                 <tbody id="data">
-                <tr>
-                    <td class="center_td">01</td>
-                    <td>信息工程学院</td>
-                    <td>14广告</td>
-                    <td>152273737</td>
-                    <td>宣武帝</td>
-                    <td class="center_td">
-                        <div class="message_div"><a href="#mymodal1" data-toggle="modal">编辑</a><span
-                                class="space">|</span><a>提交</a></div>
-                    </td>
-                </tr>
                 </tbody>
             </table>
         </div>
@@ -214,7 +203,7 @@
                 <div class="block-fluid">
                     <div class="row-form clearfix">
                         <div class="span3">所属学院</div>
-                        <div class="span3"><input type="text" name="" id="college1"></div>
+                        <div class="span3"><select id="getAllCollege"></select></div>
                         <div class="span3">班级</div>
                         <div class="span3"><input type="text" name="" id="clazz1"></div>
                     </div>
@@ -297,7 +286,7 @@
         /* $("#sample_1_length").find('label').after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目类别筛选...</option><option value="4">校级学生干部加分</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');
          $(".selectlist").after('<div class="selectlist"><select name="select" style="width: 100%;" class="color-wh"><option value="4" class="yellow">项目名称筛选...</option><option value="5">项目类别</option><option value="6">项目类别</option></select></div>');*/
         /*$("#sample_1_length").after('<a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-warning new"><i class="icon-plus icon-white"></i>新建</button></a><form method="post" enctype="multipart/form-data"><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form>');*/
-        $("#sample_1_length").after('<form method="post" enctype="multipart/form-data"><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-warning new"><i class="icon-plus icon-white"></i>新建</button></a>');
+        $("#sample_1_length").after('<form method="post" enctype="multipart/form-data"><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form><a href="#mymodal2" data-toggle="modal"><button class="btn btn-small btn-warning new" onclick="getAllCollege()"><i class="icon-plus icon-white"></i>新建</button></a>');
 
 
         /*        $(".dataTables_filter").find('input').after('<button class="btn btn-default btn_left btn-sm" type="button">搜索</button>');*/

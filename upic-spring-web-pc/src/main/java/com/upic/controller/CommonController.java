@@ -923,9 +923,9 @@ public class CommonController {
             SocialUsers socialUsers = getUser();
             ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
 
-            if (socialUsers.getRank() == "1" && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
+            if (socialUsers.getRank().equals("1") && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
                 projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_FINAL);
-            } else if (socialUsers.getRank() == "2" && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
+            } else if (socialUsers.getRank().equals("2") && projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED) {
                 projectInfo.setImplementationProcess(ImplementationProcessEnum.IN_AUDIT_AGAIN);
             } else {
                 if (projectInfo.getImplementationProcess() == ImplementationProcessEnum.SAVED || projectInfo.getImplementationProcess() == ImplementationProcessEnum.IN_AUDIT_FAIL) {
