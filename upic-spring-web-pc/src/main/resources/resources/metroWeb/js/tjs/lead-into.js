@@ -9,6 +9,7 @@ var pageNum = 0;
 var requestData = {};
 var batchAddUser = "/user/batchAddStudent";
 var getAllCollegeUrl = "/common/getCollege";
+var getProjectClazzUrl = "/common/getClazz";
 
 var uploading = true;
 function getFile() {
@@ -51,26 +52,29 @@ function getFile() {
 }
 function addOne() {
     var Data = {};
-    Data.college = $("#college1").val();
-    Data.clazz = $("#clazz1").val();
+    Data.college = $("#college1 option:selected").text();
+    Data.clazz = $("#clazz1 option:selected").text();
     Data.userNum = $("#userNum1").val();
     Data.username = $("#username1").val();
 
-    Data.status = "";//保存状态码
+    Data.status = ""; // 保存状态码
     $.ajax({
         type: "POST",
         url: addUserUrl,
         data: Data,
         success: function (result) {
-            alert("已新建用户");
-            getData(pageNum, dataUrl);
+            if (result === "SUCCESS") {
+                alert("已新建用户");
+                getData(pageNum, dataUrl);
+            } else if (result === "HAVE") {
+                alert("用户已存在");
+                getData(pageNum, dataUrl);
+            }
         }
     });
 }
 
 function clearStr() {
-    $("#college1").val("");
-    $("#clazz1").val("");
     $("#userNum1").val("");
     $("#username1").val("");
 }
@@ -173,6 +177,7 @@ function sub(id) {
 }
 
 function getAllCollege() {
+    registSelect1("college1");
     $.ajax({
         type: "GET",
         data: {},
@@ -180,6 +185,29 @@ function getAllCollege() {
         success: function (result) {
             var datas = result.content;
             var htmls = "";
+            htmls += "<option value='" + (i + 4) + "'>请选择</option>";
+            for (var i = 0; i < datas.length; i++) {
+                htmls += "<option value='" + (i + 4) + "'>" + datas[i].college + "</option>";
+            }
+            $("#college1").html(htmls);
         }
+    });
+}
+
+function addProjectClazz(res) {
+    var data = res.content;
+    var htmls = "";
+    for (var i = 0; i < data.length; i++) {
+        htmls += "<option value='" + (i + 4) + "'>" + data[i].clazz + "</option>";
+    }
+    $("#clazz1").html(htmls);
+}
+
+// 下拉框注册监听
+function registSelect1(id) {
+    $("#" + id).change(function () {
+        var name = $(this).attr("name");
+        var value = $(this).children('option:selected').text();
+        commonAjax(getProjectClazzUrl, "college=" + value, "addProjectClazz", "GET");
     });
 }
