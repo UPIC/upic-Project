@@ -1,14 +1,11 @@
 package com.upic.repository;
 
-import com.upic.dto.IntegralLogInfo;
 import com.upic.enums.IntegralLogStatusEnum;
 import com.upic.enums.IntegralLogTypeEnum;
 import com.upic.po.IntegralLog;
 import com.upic.po.IntegralLogId;
-import com.upic.repository.Spec.IntegralLogSpec;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -49,7 +46,7 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.projectNum = ?1")
     List<IntegralLog> getByProjectNum(String projectNum);
 
-    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1 and (integralLog.integralLogId.studentNum like %?2% or integralLog.student like %?2% or integralLog.integralLogId.projectNum like %?2%)")
+    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1 and (integralLog.integralLogId.studentNum like %?2% or integralLog.student like %?2% or integralLog.integralLogId.projectNum like %?2% or integralLog.projectName like %?2%)")
     Page<IntegralLog> integralLogSearchBar(IntegralLogStatusEnum status, String keyword, Pageable pageable);
 
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.status = ?1")

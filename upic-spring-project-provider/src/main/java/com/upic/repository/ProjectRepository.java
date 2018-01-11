@@ -41,4 +41,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, JpaSpec
 
     @Query(value = "select project from Project project where project.guidanceNum = ?1 and (project.projectNum like %?2% or project.projectName like %?2% or project.guidanceMan like %?2%)")
     List<Project> exportProjectSearchBar(String userNum, String keyword);
+
+    String deleteByProjectNum(String projectNum);
 }

@@ -33,9 +33,15 @@ var setting = {
 };
 
 $(function () {
+    initMyTree();
+})
+
+function initMyTree() {
+    zNodes = null;
+    zNodes = new Array();
     commonAjax(getAllCategoryNodeUrl, requestData, "addAllCategoryNodeUrl", "GET");
     aAjax(getAllProjectCategoryUrl);
-})
+}
 
 function aAjax(url) {
     $.ajax({
@@ -180,10 +186,8 @@ function saveProjectCategory(id) {
             categoryName: $("#node_content").val(),
         },
         success: function (result) {
-            // zNodes = {};
-            // commonAjax(getAllCategoryNodeUrl, requestData, "addAllCategoryNodeUrl", "GET");
-            // aAjax(getAllProjectCategoryUrl);
             alert("保存成功");
+            initMyTree();
         }
     });
 

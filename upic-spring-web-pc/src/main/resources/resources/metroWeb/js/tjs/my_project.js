@@ -14,6 +14,7 @@ var getProjectStatusUrl = "/common/getAllProjectImplementationProcess";
 var exportExcelUrl = "/common/exportProjectByGuidanceNum";
 var saveUrl = "/common/updateMyProject";
 var changeProjectStatusUrl = "/common/changeProjectStatusUrl";
+var deleteProjectUrl = "/common/deleteProject";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -145,7 +146,11 @@ function addHtmls(datas, pageNum) {
             htmls += "<td>" + getDate(data[i].startTime, "yyyy/MM/dd hh:mm") + "</td>";
             htmls += "<td class='center_td'>" + status + "</td>";
             htmls += "<td class='center_td'>";
-            htmls += " <div class='message_div'><a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo2','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>编辑</span></a><span class='space'>|</span><a><span onclick=commonAjax('" + changeProjectStatusUrl + "','projectNum=" + data[i].projectNum + "','subOne','GET')>提交</span></a></div></td>";
+            if (data[i].implementationProcess === "SAVED" || data[i].implementationProcess === "IN_AUDIT" || data[i].implementationProcess === "IN_AUDIT_AGAIN" || data[i].implementationProcess === "IN_AUDIT_FINAL" || data[i].implementationProcess === "IN_AUDIT_FAIL" || data[i].implementationProcess === "IN_AUDIT_AGAIN_FAIL" || data[i].implementationProcess === "IN_AUDIT_FINAL_FAIL") {
+                htmls += " <div class='message_div'><a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo2','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>编辑</span></a><span class='space'>|</span><a><span onclick=commonAjax('" + changeProjectStatusUrl + "','projectNum=" + data[i].projectNum + "','subOne','GET')>提交</span></a><span class='space'>|</span><a><span onclick=commonAjax('" + deleteProjectUrl + "','projectNum=" + data[i].projectNum + "','deleteProject','GET')>删除</span></a></div></td>";
+            } else {
+                htmls += " <div class='message_div'><a href='#mymodal2' data-toggle='modal'><span onclick=commonAjax('" + dataUrl + "','projectNum=" + data[i].projectNum + "','getProjectInfo2','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>编辑</span></a><span class='space'>|</span><a><span onclick=commonAjax('" + changeProjectStatusUrl + "','projectNum=" + data[i].projectNum + "','subOne','GET')>提交</span></a></div></td>";
+            }
             htmls += " </tr>";
         } else {
             htmls += "<tr><td><input type='checkbox' class='checkboxes' value='1' id='" + data[i].projectNum + "'/></td>";
@@ -179,6 +184,13 @@ function addHtmls(datas, pageNum) {
 
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number, requestData);
+}
+
+function deleteProject(result) {
+    if (result === "SUCCESS") {
+        alert("删除成功！");
+        getData(pageNum, dataUrl);
+    }
 }
 
 function commonMyAjax(url, data, method, requestType, refreshTime) {

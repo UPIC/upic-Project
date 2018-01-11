@@ -91,10 +91,14 @@ function getProjectInfo(data) {
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>作证材料</div>";
-    htmlss += "<div class='span9'><a class='tooltip1' href='" + data.picUrl + "'><img src='" + data.pic + "' ></a></div>";
+    htmlss += "<div class='span9'><a class='tooltip1'><span onclick=toOtherPage('" + data.picUrl + "')>点击查看佐证材料</span></a></div>";
     htmlss += "</div>";
     htmlss += "</div>";
     $("#getProjectInfo").html(htmlss);
+}
+
+function toOtherPage(url) {
+    window.open(url);
 }
 
 function pass() {

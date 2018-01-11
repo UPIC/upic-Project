@@ -243,6 +243,17 @@ public class CommonController {
         }
     }
 
+    @GetMapping("/deleteCategoryNode")
+    @ApiOperation("删除项目节点")
+    public String deleteCategoryNode(long id) {
+        try {
+            return categoryNodeService.deleteCategoryNode(id);
+        } catch (Exception e) {
+            LOGGER.info("deleteCategoryNode:" + e.getMessage());
+            return null;
+        }
+    }
+
     /**
      * 获取项目节点
      *
@@ -400,7 +411,7 @@ public class CommonController {
      */
     @GetMapping("/getPrize")
     @ApiOperation("根据条件查询奖品")
-    public Page<PrizeInfo> getPrize(@PageableDefault(size = 10) Pageable pageable, PrizeCondition p) throws Exception {
+    public Page<PrizeInfo> getPrize(@PageableDefault(size = 1000) Pageable pageable, PrizeCondition p) throws Exception {
         try {
             Page<PrizeInfo> prizeInfoPage = prizeService.searchPrizes(p, pageable);
             return prizeInfoPage;
@@ -893,6 +904,21 @@ public class CommonController {
         }
     }
 
+    @GetMapping("/deleteProject")
+    @ApiOperation("删除项目")
+    public String deleteProject(String projectNum) {
+        try {
+            ProjectInfo projectInfo = projectService.getProjectByNum(projectNum);
+            if (projectInfo == null) {
+                return null;
+            }
+            return projectService.deleteProject(projectInfo.getId());
+        } catch (Exception e) {
+            LOGGER.info("deleteProject:" + e.getMessage());
+            return null;
+        }
+    }
+
     /**
      * 更新项目
      *
@@ -1067,6 +1093,31 @@ public class CommonController {
     public Page<UserInfo> getAllUser(@PageableDefault(size = 10) Pageable pageable, UserCondition userCondition) throws Exception {
         Page<UserInfo> userInfoPage = null;
         try {
+            userInfoPage = userService.searchUser(userCondition, pageable);
+            return userInfoPage;
+        } catch (Exception e) {
+            LOGGER.info("getAllUser:" + e.getMessage());
+            throw new Exception("getAllUser" + e.getMessage());
+        }
+    }
+
+    /**
+     * 获取所有用户
+     *
+     * @param pageable
+     * @param userCondition
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getMyAllUser")
+    @ApiOperation("获取所有用户")
+    public Page<UserInfo> getMyAllUser(@PageableDefault(size = 10) Pageable pageable, UserCondition userCondition) throws Exception {
+        Page<UserInfo> userInfoPage = null;
+        try {
+            SocialUsers socialUsers = getUser();
+            if (socialUsers.getRank().equals("3")) {
+                userCondition.setCollege(socialUsers.getCollege());
+            }
             userInfoPage = userService.searchUser(userCondition, pageable);
             return userInfoPage;
         } catch (Exception e) {
@@ -1314,8 +1365,11 @@ public class CommonController {
     public PrizeInfo addPrize(PrizeInfo prizeInfo, HttpServletRequest request) {
         try {
             String url = getUrl(request, "file");
-            if (url.equals(Constans.STRONGE_URL + "null")) {
+            if (url == null) {
                 return null;
+            }
+            if (url.equals("NO_FILE")) {
+                url = null;
             }
             List<String> pics = new ArrayList<>();
             pics.add(url);
@@ -1738,7 +1792,7 @@ public class CommonController {
         } else if (implementationProcessEnum == ImplementationProcessEnum.IN_AUDIT_FINAL) {
             return ImplementationProcessEnum.AUDITED;
         } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING) {
-            return ImplementationProcessEnum.CHECKING_AGAIN;
+            return ImplementationProcessEnum.CHECKING_FINAL;
         } else if (implementationProcessEnum == ImplementationProcessEnum.CHECKING_AGAIN) {
             return ImplementationProcessEnum.CHECKING_FINAL;
         } else {
@@ -1836,6 +1890,11 @@ public class CommonController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         // 获得文件：
         MultipartFile inputFile = multipartRequest.getFile(fileName);
+
+        if (inputFile == null) {
+            return "NO_FILE";
+        }
+
         // 获得文件名：
         String filename = inputFile.getOriginalFilename();
 

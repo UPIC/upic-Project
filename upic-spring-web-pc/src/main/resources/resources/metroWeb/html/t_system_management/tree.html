@@ -133,6 +133,7 @@
             } else {
                 alert("叶子节点被锁定，无法增加子节点");
             }
+            initMyTree();
         }
 
         function edit() {
@@ -150,10 +151,21 @@
             var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
                 nodes = zTree.getSelectedNodes(),
                 treeNode = nodes[0];
+
+            if (treeNode.myParentId == 0) {
+                alert("项目类别节点不能删除！");
+                return;
+            }
+
             if (nodes.length == 0) {
                 alert("请先选择一个节点");
                 return;
             }
+
+            deleteCategoryNode(treeNode.myId);
+
+            initMyTree();
+
             var callbackFlag = $("#callbackTrigger").attr("checked");
             zTree.removeNode(treeNode, callbackFlag);
         }
@@ -215,6 +227,24 @@
             return newProjectCategory;
         }
 
+        function deleteCategoryNode(id) {
+            $.ajax({
+                type: "GET",
+                url: "/common/deleteCategoryNode",
+                data: {
+                    id: parseInt(id)
+                },
+                success: function (message) {
+                    if (message !== null) {
+                        alert("删除成功！");
+                    }
+                },
+                error: function (message) {
+
+                }
+            });
+        }
+
         function isTheParent(parent) {
             return (parent === true ? 0 : 1);
         }
@@ -249,7 +279,6 @@
         <div>
             <button class="btn btn-small" id="addParent"><i class="icon-plus icon-white"></i>父节点</button>
             <button class="btn btn-small" id="addLeaf"><i class="icon-plus icon-white"></i>子节点</button>
-            <!--<button class="btn btn-small" id="edit"><i class="icon-pencil icon-white"></i>编辑</button>-->
             <button class="btn btn-small" id="remove"><i class="icon-remove icon-white"></i>删除</button>
         </div>
         <div class="zTreeDemoBackground left">

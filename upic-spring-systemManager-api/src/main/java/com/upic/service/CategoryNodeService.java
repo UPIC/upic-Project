@@ -58,4 +58,12 @@ public interface CategoryNodeService {
      * @return
      */
     List<CategoryNodeInfo> searchCategoryNodeList(CategoryNodeCondition categoryNodeCondition);
+
+    /**
+     * 删除项目节点
+     *
+     * @param id
+     * @return
+     */
+    String deleteCategoryNode(long id);
 }
