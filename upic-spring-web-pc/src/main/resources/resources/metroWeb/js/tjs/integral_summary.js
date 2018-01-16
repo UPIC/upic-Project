@@ -1,4 +1,4 @@
-var dataUrl = "/common/getAllUser";
+var dataUrl = "/common/getMyAllUser";
 var exportExcelUrl = "/common/exportUser";
 var searchKeyWordUrl = "/common/userSearchBar";
 var getIntegeralUrl = "/stu/getIntegeralByUserNum";

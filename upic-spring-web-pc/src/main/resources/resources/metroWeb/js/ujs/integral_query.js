@@ -210,7 +210,7 @@ function getProjectInfo(result, j) {
         htmlss += "<div class='row-form clearfix'>";
         htmlss += "<div class='span3'>作证材料</div>";
         htmlss += "<div class='span9'>";
-        htmlss += "<a class='tooltip1' href='" + result.integralLogPic[0] + "'>点击查看佐证材料</a>";
+        htmlss += "<a class='tooltip1'><span onclick=toOtherPage('" + result.integralLogPic[0] + "')>点击查看佐证材料</span></a>";
         htmlss += "</div> </div>";
         htmlss += "</div><div class='dr'><span></span></div></div></div><div class='modal-footer'>";
         htmlss += "<button class='btn btn-primary' data-dismiss='modal' aria-hidden='true'>确定</button>";
@@ -218,6 +218,10 @@ function getProjectInfo(result, j) {
         htmlss += "</div>";
         $("#mymodal1").html(htmlss);
     }
+}
+
+function toOtherPage(url) {
+    window.open(url);
 }
 
 function changeMyIntegralLogStatus(url) {

@@ -5,7 +5,7 @@ var getProjectInfoUrl = "/common/getProjectInfo";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getProjectStatusUrl = "/common/getProjectStatus";
 var getProjectCollegeUrl = "/common/getCollege";
-var getProjectCollege = "";
+var getSignUpPeopleByProjectNumUrl = "/common/getSignUpPeopleByProjectNum";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -140,7 +140,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].projectName + "</td>";
         htmls += "<td>" + data[i].declareUnit + "</td>";
         htmls += "<td>" + data[i].integral + "</td>";
-        htmls += "<td>" + data[i].maximum + "</td>";
+        htmls += "<td><a href='#mymodal5' data-toggle='modal'><span onclick=commonAjax('" + getSignUpPeopleByProjectNumUrl + "','projectNum=" + data[i].projectNum + "','getPeopleInfo','GET','" + (parseInt(pageNum) * parseInt(pageSize) + i + 1) + "')>" + data[i].maximum + "</span></a></td>";
         htmls += "<td>" + data[i].guidanceMan + "</td>";
         htmls += "<td class='center_td'>" + status + "</td>";
         htmls += "<td class='center_td'><a href='#mymodal1' data-toggle='modal'>";
@@ -148,6 +148,15 @@ function addHtmls(datas, pageNum) {
     }
     $("#data").html(htmls);
     page(datas, dataUrl, datas.size, datas.number);
+}
+
+function getPeopleInfo(data) {
+    var htmlss = "";
+    htmlss += "<tr> <th>编号</th> <th>所属学院</th> <th>班级</th> <th>学号</th> <th>姓名</th> <th>状态</th> </tr>";
+    for (var i = 0; i < data.length; i++) {
+        htmlss += "<tr><td>" + (i + 1) + "</td><td>" + data[i].college + "</td><td>" + data[i].clazz + "</td><td>" + data[i].userNum + "</td><td>" + data[i].username + "</td><td>" + data[i].field1 + "</td></tr>";
+    }
+    $("#getPeopleInfo").html(htmlss);
 }
 
 function getProjectInfo(data, j) {

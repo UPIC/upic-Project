@@ -78,7 +78,11 @@ function addHtmls(result, method) {
         for (var i = 0; i < result.length; i++) {
             htmls += "<li>";
             htmls += "<div class='goods_item'>";
-            htmls += "<img src='../../img/example.jpg' class='img-thumbnail'>";
+            if (result[i].prizePic == null) {
+                htmls += "<img src='../../img/example.jpg' class='img-thumbnail'>";
+            } else {
+                htmls += "<img src='" + result[i].prizePic[0] + "' class='img-thumbnail'>";
+            }
             htmls += "<h4>" + result[i].prizeName + "</h4>";
             htmls += "<p>所需积分：<span>" + result[i].score + "</span></p>";
             htmls += "<div class='button_exchange'>";
@@ -90,7 +94,7 @@ function addHtmls(result, method) {
         for (var i = 0; i < result.length; i++) {
             htmls += "<li>";
             htmls += "<div class='goods_item'>";
-            htmls += "<img src='../../img/example.jpg' class='img-thumbnail'>";
+            htmls += "<img src='" + result[i].prizePic[0] + "' class='img-thumbnail'>";
             htmls += "<h4>" + result[i].prizeName + "</h4>";
             htmls += "<p>花费积分：<span>" + result[i].score + "</span></p>";
             htmls += "</div></li>";

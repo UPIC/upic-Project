@@ -149,4 +149,6 @@ public interface ProjectService {
      * @return
      */
     String qrCodeGenerate(String projectNum, long freshTime);
+
+    String deleteProject(Long id);
 }

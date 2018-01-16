@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,5 +118,43 @@ public class CategoryNodeServiceImpl implements CategoryNodeService {
             LOGGER.info("searchCategoryNodeList：" + e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    @Transactional
+    public String deleteCategoryNode(long id) {
+        try {
+            List<CategoryNode> categoryNodeList = categoryNodeRepository.findAll();
+            CategoryNode needDeleteCategoryNode = categoryNodeRepository.getOne(id);
+            List<Long> idList = new ArrayList<>();
+            for (int i = 0; i < categoryNodeList.size(); i++) {
+                CategoryNode compareCategoryNode = categoryNodeList.get(i);
+                for (int j = 0; j < categoryNodeList.get(i).getLevel() - needDeleteCategoryNode.getLevel(); j++) {
+                    compareCategoryNode = getFatherCategoryById(compareCategoryNode, categoryNodeList);
+                    if (compareCategoryNode == null) {
+                        return null;
+                    }
+                }
+                if (compareCategoryNode.getId() == needDeleteCategoryNode.getId()) {
+                    idList.add(categoryNodeList.get(i).getId());
+                }
+            }
+            for (int i = 0; i < idList.size(); i++) {
+                categoryNodeRepository.delete(idList.get(i));
+            }
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("deleteCategoryNode：" + e.getMessage());
+            return null;
+        }
+    }
+
+    private CategoryNode getFatherCategoryById(CategoryNode compareCategoryNode, List<CategoryNode> categoryNodeList) {
+        for (int i = 0; i < categoryNodeList.size(); i++) {
+            if (compareCategoryNode.getFatherId() == categoryNodeList.get(i).getId()) {
+                return categoryNodeList.get(i);
+            }
+        }
+        return null;
     }
 }
