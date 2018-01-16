@@ -3,6 +3,8 @@ package com.upic.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.upic.common.base.enums.JugeType;
+import com.upic.common.base.enums.JygeTypeEnum;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.common.fdfs.FastDFSClient;
 import com.upic.condition.*;
@@ -370,6 +372,40 @@ public class CommonController {
     public Page<ProjectInfo> getProject(@PageableDefault(size = 10) Pageable pageable, ProjectCondition p)
             throws Exception {
         try {
+            if (p.getField5() != null) {
+                List<Map<String, Object>> orList = new ArrayList<Map<String, Object>>();
+                Map<String, Object> map = new IdentityHashMap<>();
+                if (p.getField5().equals("IN_AUDIT/IN_AUDIT_AGAIN/IN_AUDIT_FINAL")) {
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.IN_AUDIT));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.IN_AUDIT_AGAIN));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.IN_AUDIT_FINAL));
+                    p.setField5(null);
+                } else if (p.getField5().equals("AUDITED/ENROLLMENT/HAVE_IN_HAND")) {
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.AUDITED));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.ENROLLMENT));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.HAVE_IN_HAND));
+                    p.setField5(null);
+                } else if (p.getField5().equals("CHECKING/CHECKING_AGAIN/CHECKING_FINAL")) {
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.CHECKING));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.CHECKING_AGAIN));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.CHECKING_FINAL));
+                    p.setField5(null);
+                } else if (p.getField5().equals("COMPLETED/CHECKED")) {
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.COMPLETED));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.CHECKED));
+                    p.setField5(null);
+                } else if (p.getField5().equals("IN_AUDIT_FAIL/IN_AUDIT_AGAIN_FAIL/IN_AUDIT_FINAL_FAIL/CHECKING_FAIL/CHECKING_AGAIN_FAIL/CHECKING_FINAL_FAIL")) {
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.IN_AUDIT_FAIL));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.IN_AUDIT_AGAIN_FAIL));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.IN_AUDIT_FINAL_FAIL));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.CHECKING_FAIL));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.CHECKING_AGAIN_FAIL));
+                    map.put(new String("implementationProcess"), new JugeType(JygeTypeEnum.EQUAL, ImplementationProcessEnum.CHECKING_FINAL_FAIL));
+                    p.setField5(null);
+                }
+                orList.add(map);
+                p.setOrList(orList);
+            }
             Page<ProjectInfo> projectInfoPage = projectService.searchProject(p, pageable);
             return projectInfoPage;
         } catch (Exception e) {

@@ -3,7 +3,6 @@ var exportExcelUrl = "/common/exportProject";
 var searchKeyWordUrl = "/common/projectSearchBar";
 var getProjectInfoUrl = "/common/getProjectInfo";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
-var getProjectStatusUrl = "/common/getProjectStatus";
 var getProjectCollegeUrl = "/common/getCollege";
 var getSignUpPeopleByProjectNumUrl = "/common/getSignUpPeopleByProjectNum";
 var pageSize = 0;
@@ -16,9 +15,8 @@ $(function () {
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
     commonAjax(getProjectCollegeUrl, null, "addProjectCollege", "GET");
-    commonAjax(getProjectStatusUrl, null, "addProjectStatus", "GET");
     registSelect("projectCategory");
-    registSelect("implementationProcess");
+    registProjectStatusSelect("implementationProcess");
     registSelect("declareUnit");
 
     $("#exportBtn").click(function () {
@@ -55,18 +53,6 @@ function addProjectCollege(res) {
         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
     }
     $("#declareUnit").html(htmls);
-}
-
-function addProjectStatus(res) {
-    var datas = res;
-    var htmls = "";
-    htmls += "<option value='4' class='yellow'>项目状态筛选...</option>";
-
-    for (var i = 0; i < datas.length; i++) {
-        var data = datas[i].split("content=")[1].split("}")[0];
-        htmls += "<option value='" + (i + 4) + "'>" + data + "</option>";
-    }
-    $("#implementationProcess").html(htmls);
 }
 
 function addHtmls(datas, pageNum) {
@@ -346,4 +332,42 @@ function commonMyAjax(url, projectNum) {
 
 function getNowData(id) {
     return $("#" + id).val() == "" ? $("#" + id).attr("myVal") : $("#" + id).val();
+}
+
+// 下拉框注册监听
+function registProjectStatusSelect(id) {
+    $("#" + id).change(function () {
+        var name = $(this).attr("name");
+        var value = $(this).children('option:selected').text();
+        var implementationProcess = null;
+        delete requestData.implementationProcess;
+        delete requestData.field5;
+        switch (value) {
+            case "已保存":
+                implementationProcess = "SAVED";
+                break;
+            case "待审核":
+                implementationProcess = "IN_AUDIT/IN_AUDIT_AGAIN/IN_AUDIT_FINAL";
+                name = "field5";
+                break;
+            case "进行中":
+                implementationProcess = "AUDITED/ENROLLMENT/HAVE_IN_HAND";
+                name = "field5";
+                break;
+            case "待验收":
+                implementationProcess = "CHECKING/CHECKING_AGAIN/CHECKING_FINAL";
+                name = "field5";
+                break;
+            case "已完成":
+                implementationProcess = "COMPLETED/CHECKED";
+                name = "field5";
+                break;
+            case "驳回待调整":
+                implementationProcess = "IN_AUDIT_FAIL/IN_AUDIT_AGAIN_FAIL/IN_AUDIT_FINAL_FAIL/CHECKING_FAIL/CHECKING_AGAIN_FAIL/CHECKING_FINAL_FAIL";
+                name = "field5";
+                break;
+        }
+        eval('(' + "requestData." + name + "=\"" + implementationProcess + '\")');
+        getData(0, dataUrl);
+    });
 }
