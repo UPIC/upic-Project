@@ -47,8 +47,8 @@ $(function () {
 function getIntegralLogDetails() {
     $.ajax({
         type: "GET", // 提交方式
-        url: "/common/getIntegralLogPageByUserNum",// 路径
-        data: "studentNum=" + results.userNum,
+        url: "/stu/getAllIntegralLogByUserNum",// 路径
+        data: "userNum=" + results.userNum,
         beforeSend: function (XMLHttpRequest) {
             // progress.inc();
         },

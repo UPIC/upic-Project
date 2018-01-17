@@ -438,7 +438,7 @@ public class StudetAllController {
      */
     @GetMapping("/getAllIntegralLogByUserNum")
     public Page<IntegralLogInfo> getAllIntegralLogByUserNum(String userNum,
-                                                            @PageableDefault(size = 10) Pageable pageable) throws Exception {
+                                                            @PageableDefault(size = 10) Pageable pageable) {
         try {
             Page<IntegralLogInfo> integralLogInfoPage = integralLogService.getAllIntegralLogByStudentNum(userNum,
                     pageable);
