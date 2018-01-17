@@ -2,6 +2,8 @@ package com.upic.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.upic.common.base.enums.JugeType;
+import com.upic.common.base.enums.JygeTypeEnum;
 import com.upic.common.beans.utils.ChineseCharToEn;
 import com.upic.common.document.excel.ExcelDocument;
 import com.upic.common.fdfs.FastDFSClient;
@@ -41,9 +43,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -394,6 +394,29 @@ public class StudetAllController {
     public Page<IntegralLogInfo> searchIntegralLog(@PageableDefault(size = 10) Pageable pageable,
                                                    IntegralLogCondition integralLogCondition) {
         try {
+            if (integralLogCondition.getField5() != null) {
+                List<Map<String, Object>> orList = new ArrayList<Map<String, Object>>();
+                Map<String, Object> map = new IdentityHashMap<>();
+                if (integralLogCondition.getField5().equals("PENDING_AUDIT_BEFORE/PENDING_AUDIT/PENDING_AUDIT_AGAIN/PENDING_AUDIT_FINAL")) {
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.PENDING_AUDIT_BEFORE));
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.PENDING_AUDIT));
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.PENDING_AUDIT_AGAIN));
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.PENDING_AUDIT_FINAL));
+                    integralLogCondition.setField5(null);
+                } else if (integralLogCondition.getField5().equals("PENDING_AUDIT_BEFORE_FAIL/PENDING_AUDIT_FAIL/PENDING_AUDIT_AGAIN_FAIL/PENDING_AUDIT_FINAL_FAIL")) {
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.PENDING_AUDIT_BEFORE_FAIL));
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.PENDING_AUDIT_FAIL));
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.PENDING_AUDIT_AGAIN_FAIL));
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.PENDING_AUDIT_FINAL_FAIL));
+                    integralLogCondition.setField5(null);
+                } else if (integralLogCondition.getField5().equals("SIGNED_IN/COMPLETED")) {
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.SIGNED_IN));
+                    map.put(new String("status"), new JugeType(JygeTypeEnum.EQUAL, IntegralLogStatusEnum.COMPLETED));
+                    integralLogCondition.setField5(null);
+                }
+                orList.add(map);
+                integralLogCondition.setOrList(orList);
+            }
             IntegralLogIdInfo integralLogId = new IntegralLogIdInfo();
             integralLogId.setStudentNum(UserUtils.getUser().getUserId());
             integralLogCondition.setIntegralLogId(integralLogId);

@@ -1,7 +1,7 @@
 var dataUrl = "/stu/searchIntegralLog";
 var getIntegralLogByIntegralLogId = "/common/getIntegralLogByIntegralLogId";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
-var getStatusUrl = "/common/getCollege";
+// var getStatusUrl = "/common/getCollege";
 var searchKeyWordUrl = "/common/integralLogSearchBarWithoutStatus";
 var pageSize = 0;
 var totalPages = -1;
@@ -13,9 +13,9 @@ $(function () {
     pageSize = $("#select-small").children('option:selected').text();
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
-    commonAjax(getStatusUrl, "rank=3", "addStatus", "GET");
+    // commonAjax(getStatusUrl, "rank=3", "addStatus", "GET");
     registSelect("projectCategory");
-    registSelect("college");
+    // registSelect("college");
 
     $("#exportBtn").click(function () {
         var baseModels = ["projectNum", "studentNum", "event", "integral", "projectName", "student", "projectCategory", "college", "clazz", "status"];
@@ -42,16 +42,16 @@ function addProjectType(res) {
     $("#projectCategory").html(htmls);
 }
 
-function addStatus(res) {
-    var data = res.content;
-    var htmls = "";
-    htmls += "<option value='4' class='yellow'>学院筛选...</option>";
-
-    for (var i = 0; i < data.length; i++) {
-        htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
-    }
-    $("#college").html(htmls);
-}
+// function addStatus(res) {
+//     var data = res.content;
+//     var htmls = "";
+//     htmls += "<option value='4' class='yellow'>学院筛选...</option>";
+//
+//     for (var i = 0; i < data.length; i++) {
+//         htmls += "<option value='" + (i + 4) + "'>" + data[i].college + "</option>";
+//     }
+//     $("#college").html(htmls);
+// }
 
 function addHtmls(datas, pageNum) {
     totalPages = datas.totalElements;
