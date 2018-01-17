@@ -30,7 +30,7 @@ public interface IntegralLogRepository extends JpaRepository<IntegralLog, Long>,
     @Query(value = "SELECT count(integralLog) from IntegralLog integralLog where integralLog.integralLogId.projectNum = ?1")
     int getSignUpNumberByProjectNum(String projectNum);
 
-    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1 and integralLog.type = 'VOLUNTARY_APPLICATION'")
+    @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1")
     Page<IntegralLog> getIntegralLogByMySelf(String studentNum, Pageable pageable);
 
     @Query(value = "select integralLog from IntegralLog integralLog where integralLog.integralLogId.studentNum = ?1")

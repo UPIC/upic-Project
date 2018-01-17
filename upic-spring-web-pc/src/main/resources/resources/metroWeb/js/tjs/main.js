@@ -100,7 +100,7 @@ function addHtmls(result) {
         }
 
         if (i % 2 == 0) {
-            if (projectCategoryTotal < 0.5 && (projectCategory[i].categoryName === "社会实践" || projectCategory[i].categoryName === "志愿服务" || projectCategory[i].categoryName === "讲座论坛" || projectCategory[i].categoryName === "生活能力")) {
+            if (projectCategoryTotal < 0.5 && (projectCategory[i].categoryName === "社会实践" || projectCategory[i].categoryName === "志愿服务" || projectCategory[i].categoryName === "讲座论坛" || projectCategory[i].categoryName === "生活能力" || projectCategory[i].categoryName === "思想品德")) {
                 htmls += "<tr>";
                 htmls += "<td>" + projectCategory[i].categoryName + "</td>";
                 htmls += "<td>" + projectCategoryTotal + "<img src='../../img/warn.png' alt='' width='24px' height='24px'></td>";
@@ -110,7 +110,7 @@ function addHtmls(result) {
                 htmls += "<td>" + projectCategoryTotal + "</td>";
             }
         } else {
-            if (projectCategoryTotal < 0.5 && (projectCategory[i].categoryName === "社会实践" || projectCategory[i].categoryName === "志愿服务" || projectCategory[i].categoryName === "讲座论坛" || projectCategory[i].categoryName === "生活能力")) {
+            if (projectCategoryTotal < 0.5 && (projectCategory[i].categoryName === "社会实践" || projectCategory[i].categoryName === "志愿服务" || projectCategory[i].categoryName === "讲座论坛" || projectCategory[i].categoryName === "生活能力" || projectCategory[i].categoryName === "思想品德")) {
                 htmls += "<td>" + projectCategory[i].categoryName + "</td>";
                 htmls += "<td>" + projectCategoryTotal + "<img src='../../img/warn.png' alt='' width='24px' height='24px'></td>";
                 htmls += "</tr>";
@@ -136,7 +136,7 @@ function addHtmls(result) {
     htmls += "</tr>";
     htmls += "</tbody></table>";
     htmls += "<div class='warn'>";
-    htmls += "<img src='../../img/warn.png' alt='' width='24px' height='24px'>“社会实践”、“志愿服务”、“讲座论坛”、“生活能力”课程积分至少达到0.5分";
+    htmls += "<img src='../../img/warn.png' alt='' width='24px' height='24px'>“社会实践”、“志愿服务”、“讲座论坛”、“生活能力”、“思想品德”课程积分至少达到0.5分";
     htmls += "</div>";
 
     $("#getInfo").html(htmls);
