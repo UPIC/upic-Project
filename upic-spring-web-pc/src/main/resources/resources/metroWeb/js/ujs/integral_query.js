@@ -2,7 +2,7 @@ var dataUrl = "/stu/searchIntegralLog";
 var getIntegralLogByIntegralLogId = "/common/getIntegralLogByIntegralLogId";
 var searchKeyWordUrl = "/common/integralLogSearchBarWithoutStatus";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
-var getStatusUrl = "/common/getAllIntegralLogStatus";
+// var getStatusUrl = "/common/getAllIntegralLogStatus";
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -16,7 +16,7 @@ $(function () {
     pageSize = $("#select-small").children('option:selected').text()
     getData(pageNum, dataUrl);
     commonAjax(getProjectTypeUrl, null, "addProjectType", "GET");
-    commonAjax(getStatusUrl, null, "addStatus", "GET");
+    // commonAjax(getStatusUrl, null, "addStatus", "GET");
     registSelect("projectCategory");
     registStatusSelect("status");
 })
@@ -32,16 +32,16 @@ function addProjectType(res) {
     $("#projectCategory").html(htmls);
 }
 
-function addStatus(res) {
-    var data = res;
-    var htmlss = "";
-    htmlss += "<option value='4' class='yellow'>状态筛选...</option>";
-
-    for (var i = 0; i < data.length; i++) {
-        htmlss += "<option value='" + (i + 4) + "'>" + data[i] + "</option>";
-    }
-    $("#status").html(htmlss);
-}
+// function addStatus(res) {
+//     var data = res;
+//     var htmlss = "";
+//     htmlss += "<option value='4' class='yellow'>状态筛选...</option>";
+//
+//     for (var i = 0; i < data.length; i++) {
+//         htmlss += "<option value='" + (i + 4) + "'>" + data[i] + "</option>";
+//     }
+//     $("#status").html(htmlss);
+// }
 
 function addHtmls(datas, pageNum) {
     totalPages = datas.totalElements;
@@ -141,12 +141,13 @@ function getProjectInfo(result, j) {
     htmlss += "<div class='block-fluid'>";
 
     if (result.status === "SAVE" || result.status === "PENDING_AUDIT_BEFORE_FAIL" || result.status === "PENDING_AUDIT_FAIL" || result.status === "PENDING_AUDIT_AGAIN_FAIL" || result.status === "PENDING_AUDIT_FINAL_FAIL") {//审核失败
+        // htmlss += "<div class='row-form clearfix'>";
+        // htmlss += "<div class='span3'>编号</div>";
+        // htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
+        // htmlss += "<div class='span3'>代码</div>";
+        // htmlss += "<div id='myProjectNum' class='span3'>" + result.integralLogId.projectNum + "</div>";
+        // htmlss += "</div>";
         htmlss += "<div class='row-form clearfix'>";
-        htmlss += "<div class='span3'>编号</div>";
-        htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
-        htmlss += "<div class='span3'>代码</div>";
-        htmlss += "<div id='myProjectNum' class='span3'>" + result.integralLogId.projectNum + "</div>";
-        htmlss += "</div><div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目申请日期</div>";
         htmlss += "<div class='span3'>" + getDate(result.creatTime, "yyyy-MM-dd") + "</div>";
         htmlss += "<div class='span3'>状态</div>";
@@ -185,12 +186,13 @@ function getProjectInfo(result, j) {
         htmlss += "</div>";
         $("#mymodal2").html(htmlss);
     } else {
+        // htmlss += "<div class='row-form clearfix'>";
+        // htmlss += "<div class='span3'>编号</div>";
+        // htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
+        // htmlss += "<div class='span3'>代码</div>";
+        // htmlss += "<div class='span3'>" + result.integralLogId.projectNum + "</div>";
+        // htmlss += "</div>";
         htmlss += "<div class='row-form clearfix'>";
-        htmlss += "<div class='span3'>编号</div>";
-        htmlss += "<div class='span3'>" + (parseInt(pageNum) * parseInt(pageSize) + j) + "</div>";
-        htmlss += "<div class='span3'>代码</div>";
-        htmlss += "<div class='span3'>" + result.integralLogId.projectNum + "</div>";
-        htmlss += "</div><div class='row-form clearfix'>";
         htmlss += "<div class='span3'>项目申请日期</div>";
         htmlss += "<div class='span3'>" + getDate(result.creatTime, "yyyy-MM-dd") + "</div>";
         htmlss += "<div class='span3'>状态</div>";
@@ -241,41 +243,37 @@ function changeMyIntegralLogStatus(url) {
     })
 }
 
-function getEnglishEnumName(enumName) {
-    if (enumName === "保存") {
-        return "SAVE";
-    } else if (enumName === "待初审") {
-        return "PENDING_AUDIT_BEFORE";
-    } else if (enumName === "待初审失败") {
-        return "PENDING_AUDIT_BEFORE_FAIL";
-    } else if (enumName === "待学院审") {
-        return "PENDING_AUDIT";
-    } else if (enumName === "待学院审失败") {
-        return "PENDING_AUDIT_FAIL";
-    } else if (enumName === "待部门审") {
-        return "PENDING_AUDIT_AGAIN";
-    } else if (enumName === "待部门审失败") {
-        return "PENDING_AUDIT_AGAIN_FAIL";
-    } else if (enumName === "待团委审") {
-        return "PENDING_AUDIT_FINAL";
-    } else if (enumName === "待团委审失败") {
-        return "PENDING_AUDIT_FINAL_FAIL";
-    } else if (enumName === "审核成功") {
-        return "HAVEPASSED";
-    } else if (enumName === "已报名") {
-        return "ALREADY_SIGN_UP";
-    } else if (enumName === "已签到") {
-        return "SIGNED_IN";
-    } else if (enumName === "已完成") {
-        return "COMPLETED";
-    }
-}
-
 function registStatusSelect(id) {
     $("#" + id).change(function () {
         var name = $(this).attr("name");
-        var value = getEnglishEnumName($(this).children('option:selected').text());
-        eval('(' + "requestData." + name + "=\"" + value + '\")');
+        var value = $(this).children('option:selected').text();
+        var myStatus = null;
+        delete requestData.status;
+        delete requestData.field5;
+        switch (value) {
+            case "已保存":
+                myStatus = "SAVE";
+                break;
+            case "待审核":
+                myStatus = "PENDING_AUDIT_BEFORE/PENDING_AUDIT/PENDING_AUDIT_AGAIN/PENDING_AUDIT_FINAL";
+                name = "field5";
+                break;
+            case "审核成功":
+                myStatus = "HAVEPASSED";
+                break;
+            case "驳回待调整":
+                myStatus = "PENDING_AUDIT_BEFORE_FAIL/PENDING_AUDIT_FAIL/PENDING_AUDIT_AGAIN_FAIL/PENDING_AUDIT_FINAL_FAIL";
+                name = "field5";
+                break;
+            case "已报名":
+                myStatus = "ALREADY_SIGN_UP";
+                break;
+            case "签到完成":
+                myStatus = "SIGNED_IN/COMPLETED";
+                name = "field5";
+                break;
+        }
+        eval('(' + "requestData." + name + "=\"" + myStatus + '\")');
         getData(0, dataUrl);
     });
 }
