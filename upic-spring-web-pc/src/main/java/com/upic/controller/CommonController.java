@@ -249,7 +249,8 @@ public class CommonController {
     @ApiOperation("删除项目节点")
     public String deleteCategoryNode(long id) {
         try {
-            return categoryNodeService.deleteCategoryNode(id);
+            String message = categoryNodeService.deleteCategoryNode(id);
+            return message;
         } catch (Exception e) {
             LOGGER.info("deleteCategoryNode:" + e.getMessage());
             return null;
