@@ -60,6 +60,8 @@ public class GrainCoinLogServiceImplTest {
 
     @Test
     public void exchangePrize() throws Exception {
+    	List<IntegralLogInfo> byProjectNum = integralLogService.getByProjectNum("PROJECT017");
+    	System.out.println(byProjectNum);
     }
     
 }

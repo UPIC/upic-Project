@@ -3,6 +3,7 @@ var searchKeyWordUrl = "";
 var getProjectTypeUrl = "/common/getAllProjectCategory";
 var getConfirmationBasicByC = "/common/getConfirmationBasisByCategoryNodeId";
 var addData = "/systemManager/changeIntegralLogInfoExcel"
+var downloadModelUrl = "/common/exportModel"
 var saveUrl = "";
 var pageSize = 0;
 var totalPages = -1;
@@ -17,6 +18,9 @@ var projectNum = "";
 var allData = "";
 var fatherId = "";
 var selectRadioIdName = "";
+var fileName = "intergalModle";
+var baseModel = [ "studentNum", "projectNum", "integral", "student", "college",
+		"clazz" ];
 // 上传文件
 function getFile() {
 	if (projectCategory == "") {
@@ -34,8 +38,7 @@ function getFile() {
 		alert("文件正在上传中，请稍候");
 		return;
 	}
-	var baseModel = [ "studentNum", "projectNum", "integral", "student",
-			"college", "clazz" ];
+
 	var str = JSON.stringify(baseModel);
 
 	var formData = new FormData();
@@ -81,7 +84,7 @@ $(function() {
 			.click(
 					function() {
 						var requestData = new Object();
-						projectName="";
+						projectName = "";
 						selectRadioIdName = $(this).attr("id");
 						if (selectRadioIdName === 'radioselect1') {
 							$("#inputIt").html("");
@@ -273,4 +276,23 @@ function submitData() {
 		error : function() {
 		}
 	});
+}
+
+// 模板下载
+function downloadModel() {
+
+	// var formData = new FormData();
+	// formData.append("inputFile", $("#inputFile")[0].files[0]);
+	var baseModels = [ 'studentNum', 'projectNum', 'integral', 'student',
+			'college', 'clazz' ];
+	var str = JSON.stringify(baseModels);
+	var form = $("<form></form>").attr("action", downloadModelUrl).attr(
+			"method", "GET");
+	form.append($("<input></input>").attr("type", "hidden").attr("name",
+			"baseModel").attr("value", str));
+	form.append($("<input></input>").attr("type", "hidden").attr("name",
+			"fileName").attr("value", fileName));
+	form.appendTo('body').submit().remove();
+	form.submit();
+
 }

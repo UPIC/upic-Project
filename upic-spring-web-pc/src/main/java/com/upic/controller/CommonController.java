@@ -1941,4 +1941,28 @@ public class CommonController {
         return url;
 
     }
+    
+    /**
+     * 项目导出
+     *
+     * @return
+     */
+    @ApiOperation("模板导出")
+    @GetMapping("exportModel")
+    public void exportModel(HttpServletResponse response, String baseModel,String fileName) {
+        try {
+            List<String> parseArray = JSONArray.parseArray(baseModel, String.class);
+            String[] desc = new String[]{};
+            String[] array = parseArray.toArray(desc);
+            List<Object> byProjectNum = new ArrayList<>();
+            Workbook wk = ExcelDocument.download(array, Object.class, byProjectNum);
+            downLoadExcel(response, wk, fileName+".xls");
+        } catch (Exception e) {
+            LOGGER.info("exportProject:" + e.getMessage());
+            try {
+                response.getWriter().println("下载失败！");
+            } catch (IOException e1) {
+            }
+        }
+    }
 }
