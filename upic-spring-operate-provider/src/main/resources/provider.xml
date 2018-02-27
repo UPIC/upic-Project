@@ -7,8 +7,8 @@
 
     <dubbo:application name="Student-provider"/>
 
-   <!--     <dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry> -->
-    <dubbo:registry protocol="zookeeper" address="10.21.10.120:2181"></dubbo:registry>
+        <dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>
+    <!--<dubbo:registry protocol="zookeeper" address="10.21.10.120:2181"></dubbo:registry>-->
     <dubbo:protocol name="dubbo" port="20882"/>
     <dubbo:service interface="com.upic.service.OperatorRoleService" ref="operatorRoleService" version="1.0"
                    group="operate"></dubbo:service>

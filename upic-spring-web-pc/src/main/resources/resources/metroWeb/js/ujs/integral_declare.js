@@ -123,8 +123,7 @@ function selectCreate(data) {
         } else {
             htmls += data[i].id;
         }
-        htmls += "'isLeaf='" + data[i].isLeaf + "'data='" + data[i].nodeContent
-            + "'>";
+        htmls += "'isLeaf='" + data[i].isLeaf + "'data='" + data[i].nodeContent + "'myOwnLevel='" + data[i].level + "'>";
         if (selectIdNum == 1) {
             htmls += data[i].categoryName;
         } else {
@@ -174,10 +173,11 @@ function getNextCategory2(obj) {
     var isLeaf = $("#" + selectIdNum + " option:selected").attr("isLeaf");
     var nodeContent = $("#" + selectIdNum + " option:selected").attr("data");
     if (isLeaf == 1) {
-        $("#integral").attr("value", nodeContent)
+        $("#integral").attr("value", nodeContent);
     } else {
         requestData = new Object();
         requestData.fatherId = id;
+        requestData.level = obj.find("option:selected").attr("myOwnLevel");
         ajaxs(requestData, "selectCreate", getCategoryNodeByFatherId);
     }
 }

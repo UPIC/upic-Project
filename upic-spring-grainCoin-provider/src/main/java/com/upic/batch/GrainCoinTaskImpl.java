@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.upic.batch;
 
@@ -25,56 +25,55 @@ import com.upic.service.IntegralLogService;
 
 /**
  * @author DTZ
- *
  */
 @Component
 public class GrainCoinTaskImpl implements GrainCoinTask {
 
-	@Autowired
-	private IRedisService upicRedisComponent;
+    @Autowired
+    private IRedisService upicRedisComponent;
 
-	@Autowired
-	private IntegralLogRepository integralLogRepository;
+    @Autowired
+    private IntegralLogRepository integralLogRepository;
 
-	@Autowired
-	private GrainCoinLogRepository grainCoinLogRepository;
+    @Autowired
+    private GrainCoinLogRepository grainCoinLogRepository;
 
-	@Override
-	@Transactional(rollbackOn=Exception.class)
-	public void doTask() {
-		// 处理redis中的project
-		String[] redisAllProjectNum = getRedisAllProjectNum();
-		Stream.of(redisAllProjectNum).parallel().forEach(x->{
-			List<IntegralLog> byProjectNum = integralLogRepository.getByProjectNum(x);
-			byProjectNum.parallelStream().forEach(i->{
-				if(i.getStatus().equals(IntegralLogStatusEnum.COMPLETED)) {
-					return;
-				}
-				if(i.getStatus().equals(IntegralLogStatusEnum.SIGNED_IN)) {
-					i.setStatus(IntegralLogStatusEnum.COMPLETED);
-					integralLogRepository.saveAndFlush(i);
-				}
-				GrainCoinLog g=new GrainCoinLog();
-				g.setCreatTime(new Date());
-				g.setProjectName(i.getProjectName());
-				g.setProjectNum(i.getIntegralLogId().getProjectNum());
-				g.setScore(i.getIntegral()*1000);
-				g.setType(GrainCoinLogTypeEnum.INCOME);
-				g.setUsername(i.getStudent());
-				g.setUserNum(i.getIntegralLogId().getStudentNum());
-				grainCoinLogRepository.save(g);
-			});
-		});
-	}
+    @Override
+    @Transactional(rollbackOn = Exception.class)
+    public void doTask() {
+        // 处理redis中的project
+        String[] redisAllProjectNum = getRedisAllProjectNum();
+        Stream.of(redisAllProjectNum).parallel().forEach(x -> {
+            List<IntegralLog> byProjectNum = integralLogRepository.getByProjectNum(x);
+            byProjectNum.parallelStream().forEach(i -> {
+                if (i.getStatus().equals(IntegralLogStatusEnum.COMPLETED)) {
+                    return;
+                }
+                if (i.getStatus().equals(IntegralLogStatusEnum.SIGNED_IN)) {
+                    i.setStatus(IntegralLogStatusEnum.COMPLETED);
+                    integralLogRepository.saveAndFlush(i);
+                }
+                GrainCoinLog g = new GrainCoinLog();
+                g.setCreatTime(new Date());
+                g.setProjectName(i.getProjectName());
+                g.setProjectNum(i.getIntegralLogId().getProjectNum());
+                g.setScore(i.getIntegral() * 1000);
+                g.setType(GrainCoinLogTypeEnum.INCOME);
+                g.setUsername(i.getStudent());
+                g.setUserNum(i.getIntegralLogId().getStudentNum());
+                grainCoinLogRepository.save(g);
+            });
+        });
+    }
 
-	/**
-	 * key:PROJECT_CHECKED
-	 * 
-	 * @return
-	 */
-	private String[] getRedisAllProjectNum() {
-		String result = upicRedisComponent.get("PROJECT_CHECKED");
-		return result.split(",");
-	}
+    /**
+     * key:PROJECT_CHECKED
+     *
+     * @return
+     */
+    private String[] getRedisAllProjectNum() {
+        String result = upicRedisComponent.get("PROJECT_CHECKED");
+        return result == null ? null : result.split(",");
+    }
 
 }

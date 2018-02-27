@@ -7,8 +7,8 @@
 
     <dubbo:application name="student-admin"/>
 
-    <!--     <dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry> -->
-    <dubbo:registry protocol="zookeeper" address="10.21.10.120:2181"></dubbo:registry>
+         <dubbo:registry protocol="zookeeper" address="116.62.197.215:2181"></dubbo:registry>
+    <!--<dubbo:registry protocol="zookeeper" address="10.21.10.120:2181"></dubbo:registry>-->
 
     <!--<import resource="consumer-mail.xml"></import>-->
     <import resource="consumer-grainCoin.xml"></import>
