@@ -28,6 +28,7 @@ public class Correspondence {
         map.put("earningPoints", "预获分数");
         map.put("prizeName", "奖品名称");
         map.put("score", "花费分数");
+        map.put("admin", "admin");
     }
 
     public static String getTranslationWords(String englishWord) {
