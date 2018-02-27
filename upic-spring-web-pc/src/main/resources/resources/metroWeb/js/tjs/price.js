@@ -42,7 +42,7 @@ function addHtmls(datas, pageNum) {
         var status = "";
 
         if (data[i].status === "SHELVES") {
-            status = "上架中";
+            status = "已上架";
         } else {
             status = "已下架";
         }

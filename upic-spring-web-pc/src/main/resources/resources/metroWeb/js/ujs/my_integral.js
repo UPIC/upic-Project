@@ -150,8 +150,8 @@ function getProjectInfo(result, j) {
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>编号</div>";
     htmlss += "<div class='span3'>" + j + "</div>";
-    htmlss += "<div class='span3'>代码</div>";
-    htmlss += "<div class='span3'>" + result.integralLogId.projectNum + "</div>";
+    htmlss += "<div class='span3' style='display: none'>代码</div>";
+    htmlss += "<div class='span3' style='display: none'>" + result.integralLogId.projectNum + "</div>";
     htmlss += "</div>";
     htmlss += "<div class='row-form clearfix'>";
     htmlss += "<div class='span3'>项目申请日期</div>";
