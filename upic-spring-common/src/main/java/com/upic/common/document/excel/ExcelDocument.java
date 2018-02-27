@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import com.upic.common.document.utils.UpicBeanUtils;
 
+import static com.upic.common.utils.excel.Correspondence.getTranslationWords;
+
 public class ExcelDocument {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(ExcelDocument.class);
 
@@ -91,7 +93,7 @@ public class ExcelDocument {
 			// 可设置style
 			for (int i = 0; i < baseModel.length; i++) {
 				cell = row.createCell((short) i);
-				cell.setCellValue(baseModel[i]);
+				cell.setCellValue(getTranslationWords(baseModel[i]));
 			}
 			// 内容
 			for (int i = 0; i < data.size(); i++) {
@@ -112,7 +114,6 @@ public class ExcelDocument {
 					} else {
 						method = fieldToMap.get(baseModel[j].toLowerCase());
 						invoke = method.invoke(object);
-
 					}
 					doJugeType(invoke, row, j);
 				}
