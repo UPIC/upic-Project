@@ -14,7 +14,7 @@ var requestData = {
 };
 
 $(function () {
-    pageSize = $("#select-small").children('option:selected').text()
+    pageSize = $("#select-small").children('option:selected').text();
     getData(pageNum, dataUrl);
 })
 
