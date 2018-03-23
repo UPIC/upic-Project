@@ -351,7 +351,7 @@
 							'<div class="pagination"><ul></li><li><a href="#">1</a></li></ul></div>');
 			$(".selectlist")
 					.after(
-							'<form id="fileSubmit" method="post" enctype="multipart/form-data"><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form><button class="btn btn-small btn-primary" onclick=submitData()>提交</button>');
+							'<form id="fileSubmit" method="post" enctype="multipart/form-data"><a href="javascript:;" class="file">导入<input type="file" name="inputFile" id="inputFile" onchange="getFile()"></a></form><button class="btn btn-small btn-primary" onclick=submitData()>提交</button><button class="btn btn-small btn-primary" onclick=downloadModel()>模板下载</button>');
 
 			$("#sample_1_wrapper>.row-fluid>.span6").first().css('width',
 					'62.9%');
