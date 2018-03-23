@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import sun.security.provider.MD5;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,6 +73,54 @@ public class StudetAllController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 重置密码
+     *
+     * @param password
+     * @param userNum
+     * @return
+     */
+    @PostMapping("/changePwd")
+    public String changePwd(String password, String userNum) {
+        try {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String newPwd = bCryptPasswordEncoder.encode("123456");
+            UserInfo userInfo = userService.getUserByUserNum(userNum);
+            userInfo.setPassword(newPwd);
+            userService.updateUser(userInfo);
+            return "SUCCESS";
+        } catch (Exception e) {
+            LOGGER.info("changePwd :" + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param oldPwd
+     * @param newPwd
+     * @param userNum
+     * @return
+     */
+    @PostMapping("/changeThePwd")
+    public String changeThePwd(String oldPwd, String newPwd, String userNum) {
+        try {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            UserInfo userInfo = userService.getUserByUserNum(userNum);
+            if (!bCryptPasswordEncoder.matches(oldPwd, userInfo.getPassword())) {
+                return "ERROR_OLD_PWD";
+            } else {
+                userInfo.setPassword(bCryptPasswordEncoder.encode(newPwd));
+                userService.updateUser(userInfo);
+                return "SUCCESS";
+            }
+        } catch (Exception e) {
+            LOGGER.info("changeThePwd :" + e.getMessage());
+            return null;
+        }
+    }
 
     /**
      * 获取当前用户的积分*

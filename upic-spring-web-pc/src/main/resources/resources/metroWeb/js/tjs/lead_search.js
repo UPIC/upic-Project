@@ -1,7 +1,8 @@
 var dataUrl = "/common/getAllUser";
 var getCollegeUrl = "/common/getCollege";
 var getClazzUrl = "/common/getClazz";
-var searchKeyWordUrl = "/common/projectSearchBar";
+var searchKeyWordUrl = "/common/userSearchBar";
+var changeUserPwdUrl = "/stu/changePwd"
 var pageSize = 0;
 var totalPages = -1;
 var pageNum = 0;
@@ -49,6 +50,7 @@ function addHtmls(datas, pageNum) {
         htmls += "<td>" + data[i].userNum + "</td>";
         htmls += "<td>" + data[i].username + "</td>";
         htmls += "<td>" + data[i].clazz + "</td>";
+        htmls += "<td><span onclick=changePwd('" + data[i].userNum + "')>重置密码</span></td>";
         htmls += "</tr>";
     }
 
@@ -65,4 +67,24 @@ function registSelect1(id) {
         getData(0, dataUrl);
         commonAjax(getClazzUrl, "college=" + value, "addProjectClazz", "GET");
     });
+}
+
+/**
+ * 重置密码
+ * @param userNum
+ */
+function changePwd(userNum) {
+    var data = {
+        userNum: userNum,
+        password: "123456"
+    }
+    commonAjax(changeUserPwdUrl, data, "changePwdResult", "POST");
+}
+
+function changePwdResult(result) {
+    if (result == "SUCCESS") {
+        alert("重置密码成功！");
+    } else {
+        alert("重置密码失败！");
+    }
 }
