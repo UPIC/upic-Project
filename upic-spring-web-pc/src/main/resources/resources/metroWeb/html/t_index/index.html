@@ -2,267 +2,303 @@
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 <head>
-<meta charset="utf-8" />
-<title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<meta content="" name="description" />
-<meta content="Mosaddek" name="author" />
-<link href="../../css/bootstrap.min.css" rel="stylesheet" />
-<link href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
-<link href="../../css/bootstrap-fileupload.css" rel="stylesheet" />
-<link href="../../css/font-awesome.css" rel="stylesheet" />
-<link href="../../css/style.css" rel="stylesheet" />
-<link href="../../css/style-responsive.css" rel="stylesheet" />
-<link href="../../css/style-default.css" rel="stylesheet"
-	id="style_color" />
-<link href="../../css/bootstrap-fullcalendar.css" rel="stylesheet" />
-<link href="../../css/jquery.easy-pie-chart.css" rel="stylesheet"
-	type="text/css" media="screen">
-<script src="../../js/jquery-1.8.3.min.js"></script>
-<script src="../../js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$("#main-content").css({
-			Height : $(window).height() + "px"
-		});
-		$("#myFrameId").css({
-			height : $(window).height() - 65 + "px"
-		});
-	})
-</script>
-<style>
-body {
-	background: #F5F5F5;
-}
+    <meta charset="utf-8"/>
+    <title>Metro风格响应式后台管理系统模板MetroAdmin - JS代码网</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="Mosaddek" name="author"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap-fileupload.css" rel="stylesheet"/>
+    <link href="../../css/font-awesome.css" rel="stylesheet"/>
+    <link href="../../css/style.css" rel="stylesheet"/>
+    <link href="../../css/style-responsive.css" rel="stylesheet"/>
+    <link href="../../css/style-default.css" rel="stylesheet"
+          id="style_color"/>
+    <link href="../../css/bootstrap-fullcalendar.css" rel="stylesheet"/>
+    <link href="../../css/jquery.easy-pie-chart.css" rel="stylesheet"
+          type="text/css" media="screen">
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#main-content").css({
+                Height: $(window).height() + "px"
+            });
+            $("#myFrameId").css({
+                height: $(window).height() - 65 + "px"
+            });
+        })
+    </script>
+    <style>
+        body {
+            background: #F5F5F5;
+        }
 
-.btn_left {
-	height: 30px;
-}
+        .btn_left {
+            height: 30px;
+        }
 
-.center_td {
-	text-align: center !important;
-}
+        .center_td {
+            text-align: center !important;
+        }
 
-#sidebar>ul>li>ul.sub>li>a {
-	color: #3f444c;
-}
+        #sidebar > ul > li > ul.sub > li > a {
+            color: #3f444c;
+        }
 
-#sidebar>ul>li>ul.sub>li>a:hover, #sidebar>ul>li>ul.sub>li.active>a {
-	background: #D2D3D6;
-}
-</style>
+        #sidebar > ul > li > ul.sub > li > a:hover, #sidebar > ul > li > ul.sub > li.active > a {
+            background: #D2D3D6;
+        }
+    </style>
 </head>
 
 <body class="fixed-top">
-	<div id="header" class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<div class="sidebar-toggle-box hidden-phone">
-					<div class="icon-reorder tooltips" data-placement="right"></div>
-				</div>
+<div id="header" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <div class="sidebar-toggle-box hidden-phone">
+                <div class="icon-reorder tooltips" data-placement="right"></div>
+            </div>
 
-				<a class="brand" href="index.html"> <img
-					src="../../img/logo.png" alt="Metro Lab" />
-				</a> <a class="btn btn-navbar collapsed" id="main_menu_trigger"
-					data-toggle="collapse" data-target=".nav-collapse"> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> <span class="arrow"></span>
-				</a>
+            <a class="brand" href="index.html"> <img
+                    src="../../img/logo.png" alt="Metro Lab"/>
+            </a> <a class="btn btn-navbar collapsed" id="main_menu_trigger"
+                    data-toggle="collapse" data-target=".nav-collapse"> <span
+                class="icon-bar"></span> <span class="icon-bar"></span> <span
+                class="icon-bar"></span> <span class="arrow"></span>
+        </a>
 
-				<div id="top_menu" class="nav notify-row">
-					<ul class="nav top-menu">
-						<li class="dropdown" id="header_inbox_bar"><a href="#"
-							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="icon-envelope-alt"></i> <span
-								class="badge badge-important">5</span>
-						</a>
-							<ul class="dropdown-menu extended inbox">
-								<li>
-									<p>你有5条消息</p>
-								</li>
-								<li><a href="#"> <span class="photo"><img
-											src="../../img/avatar-mini.png" alt="avatar" /></span> <span
-										class="subject"> <span class="from">Jonathan
+            <div id="top_menu" class="nav notify-row">
+                <ul class="nav top-menu">
+                    <li class="dropdown" id="header_inbox_bar"><a href="#"
+                                                                  class="dropdown-toggle" data-toggle="dropdown"> <i
+                            class="icon-envelope-alt"></i> <span
+                            class="badge badge-important">5</span>
+                    </a>
+                        <ul class="dropdown-menu extended inbox">
+                            <li>
+                                <p>你有5条消息</p>
+                            </li>
+                            <li><a href="#"> <span class="photo"><img
+                                    src="../../img/avatar-mini.png" alt="avatar"/></span> <span
+                                    class="subject"> <span class="from">Jonathan
 												Smith</span> <span class="time">Just now</span>
 									</span> <span class="message"> Hello, 这是个消息列子. </span>
-								</a></li>
-								<li><a href="#"> <span class="photo"><img
-											src="../../img/avatar-mini.png" alt="avatar" /></span> <span
-										class="subject"> <span class="from">Jhon Doe</span> <span
-											class="time">10 mins</span>
+                            </a></li>
+                            <li><a href="#"> <span class="photo"><img
+                                    src="../../img/avatar-mini.png" alt="avatar"/></span> <span
+                                    class="subject"> <span class="from">Jhon Doe</span> <span
+                                    class="time">10 mins</span>
 									</span> <span class="message"> Hi, 最近咋样? </span>
-								</a></li>
-								<li><a href="#"> <span class="photo"><img
-											src="../../img/avatar-mini.png" alt="avatar" /></span> <span
-										class="subject"> <span class="from">Jason
+                            </a></li>
+                            <li><a href="#"> <span class="photo"><img
+                                    src="../../img/avatar-mini.png" alt="avatar"/></span> <span
+                                    class="subject"> <span class="from">Jason
 												Stathum</span> <span class="time">3 hrs</span>
 									</span> <span class="message"> This is awesome dashboard. </span>
-								</a></li>
-								<li><a href="#"> <span class="photo"><img
-											src="../../img/avatar-mini.png" alt="avatar" /></span> <span
-										class="subject"> <span class="from">Jondi Rose</span> <span
-											class="time">Just now</span>
+                            </a></li>
+                            <li><a href="#"> <span class="photo"><img
+                                    src="../../img/avatar-mini.png" alt="avatar"/></span> <span
+                                    class="subject"> <span class="from">Jondi Rose</span> <span
+                                    class="time">Just now</span>
 									</span> <span class="message"> Hello, this is metrolab </span>
-								</a></li>
-								<li><a href="#">See all messages</a></li>
-							</ul></li>
-					</ul>
-				</div>
+                            </a></li>
+                            <li><a href="#">See all messages</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
 
-				<div class="top-nav ">
-					<ul class="nav pull-right top-menu">
-						<li class="dropdown mtop5"><a class="dropdown-toggle element"
-							data-placement="bottom" data-toggle="tooltip" href="index.html"
-							data-original-title="首页"> <i class="icon-home"></i><span>&nbsp;</span>
-						</a></li>
+            <div class="top-nav ">
+                <ul class="nav pull-right top-menu">
+                    <li class="dropdown mtop5"><a class="dropdown-toggle element"
+                                                  data-placement="bottom" data-toggle="tooltip" href="index.html"
+                                                  data-original-title="首页"> <i class="icon-home"></i><span>&nbsp;</span>
+                    </a></li>
 
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <img
-								src="../../img/avatar1_small.jpg" alt=""> <span id="username"
-								class="username">Jhon Doe</span> <b class="caret"></b>
-						</a>
-							<ul class="dropdown-menu extended logout">
-								<!--<li><a href="#"><i class="icon-user"></i>我的资料</a></li>-->
-								<!--<li><a href="#"><i class="icon-cog"></i>我的设置</a></li>-->
-								<li><a href="login.html"><i class="icon-key"></i>退出</a></li>
-							</ul></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle"
+                                            data-toggle="dropdown"> <img
+                            src="../../img/avatar1_small.jpg" alt=""> <span id="username"
+                                                                            class="username">Jhon Doe</span> <b
+                            class="caret"></b>
+                    </a>
+                        <ul class="dropdown-menu extended logout">
+                            <!--<li><a href="#"><i class="icon-user"></i>我的资料</a></li>-->
+                            <li><a href="#mymodal2" data-toggle="modal"><i class="icon-cog"></i>修改密码</a></li>
+                            <li><a href="login.html"><i class="icon-key"></i>退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-	<div id="container" class="row-fluid">
-		<div class="sidebar-scroll">
-			<div id="sidebar" class="nav-collapse collapse">
-				<div class="navbar-inverse">
-					<form class="navbar-search visible-phone">
-						<input type="text" class="search-query" placeholder="Search" />
-					</form>
-				</div>
+<div id="container" class="row-fluid">
+    <div class="sidebar-scroll">
+        <div id="sidebar" class="nav-collapse collapse">
+            <div class="navbar-inverse">
+                <form class="navbar-search visible-phone">
+                    <input type="text" class="search-query" placeholder="Search"/>
+                </form>
+            </div>
 
-				<ul class="sidebar-menu" id="getResourceBySelfId">
-					<li class="sub-menu active"><a href="javascript:;"> <i
-							class="icon-dashboard"></i> <span>积分管理</span> <span class="arrow"></span>
-					</a>
-						<ul class="sub" style="display: none;">
-							<li><a class="" href="../t-pointmanagement/integral_apply_first.html"
-								target="myFrameName">积分初审</a></li>
-							<li><a class="" href="../t-pointmanagement/integral_apply.html"
-								target="myFrameName">积分审核</a></li>
-							<li><a class="" href="../t-pointmanagement/integral_declare.html" target="myFrameName">积分申报</a></li>
-							<li><a class="" href="../t-pointmanagement/integral_import.html"
-								target="myFrameName">积分导入</a></li>
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"
-						target="myFrameName"> <i class="icon-book"></i> <span>项目管理</span>
-							<span class="arrow"></span>
-					</a>
-						<ul class="sub">
-							<li><a class="" href="../t-projectmanagement/my_project.html" target="myFrameName">我的项目</a></li>
-							<li><a class="" href="../t-projectmanagement/project_apply.html"
-								target="myFrameName">项目申请</a></li>
-							<li><a class="" href="../t-projectmanagement/project_audit.html"
-								target="myFrameName">项目审核</a></li>
-							<li><a class="" href="../t-projectmanagement/project_accept.html"
-								target="myFrameName">项目验收</a></li>
-							<li><a class="" href="../t-projectmanagement/project_import.html"
-								target="myFrameName">项目导入</a></li>
-							<li><a class="" href="../t-projectmanagement/project_maintenance.html"
-								target="myFrameName">项目维护</a></li>
-							<li><a class="" href="../t-projectmanagement/project_analysis.html"
-								target="myFrameName">项目分析</a></li>
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"
-						target="myFrameName"> <i class="icon-book"></i> <span>项目汇总</span>
-							<span class="arrow"></span>
-					</a>
-						<ul class="sub">
-							<li><a class="" href="../t-projectsummary/project_search.html"
-								target="myFrameName">项目查找</a></li>
-							<li><a class="" href="../t-projectsummary/integral_summary.html"
-								target="myFrameName">积分汇总</a></li>
-							<li><a class="" href="../t-projectsummary/workload_summary.html"
-								target="myFrameName">工作量汇总</a></li>
+            <ul class="sidebar-menu" id="getResourceBySelfId">
+                <li class="sub-menu active"><a href="javascript:;"> <i
+                        class="icon-dashboard"></i> <span>积分管理</span> <span class="arrow"></span>
+                </a>
+                    <ul class="sub" style="display: none;">
+                        <li><a class="" href="../t-pointmanagement/integral_apply_first.html"
+                               target="myFrameName">积分初审</a></li>
+                        <li><a class="" href="../t-pointmanagement/integral_apply.html"
+                               target="myFrameName">积分审核</a></li>
+                        <li><a class="" href="../t-pointmanagement/integral_declare.html" target="myFrameName">积分申报</a>
+                        </li>
+                        <li><a class="" href="../t-pointmanagement/integral_import.html"
+                               target="myFrameName">积分导入</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu"><a href="javascript:;"
+                                        target="myFrameName"> <i class="icon-book"></i> <span>项目管理</span>
+                    <span class="arrow"></span>
+                </a>
+                    <ul class="sub">
+                        <li><a class="" href="../t-projectmanagement/my_project.html" target="myFrameName">我的项目</a></li>
+                        <li><a class="" href="../t-projectmanagement/project_apply.html"
+                               target="myFrameName">项目申请</a></li>
+                        <li><a class="" href="../t-projectmanagement/project_audit.html"
+                               target="myFrameName">项目审核</a></li>
+                        <li><a class="" href="../t-projectmanagement/project_accept.html"
+                               target="myFrameName">项目验收</a></li>
+                        <li><a class="" href="../t-projectmanagement/project_import.html"
+                               target="myFrameName">项目导入</a></li>
+                        <li><a class="" href="../t-projectmanagement/project_maintenance.html"
+                               target="myFrameName">项目维护</a></li>
+                        <li><a class="" href="../t-projectmanagement/project_analysis.html"
+                               target="myFrameName">项目分析</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu"><a href="javascript:;"
+                                        target="myFrameName"> <i class="icon-book"></i> <span>项目汇总</span>
+                    <span class="arrow"></span>
+                </a>
+                    <ul class="sub">
+                        <li><a class="" href="../t-projectsummary/project_search.html"
+                               target="myFrameName">项目查找</a></li>
+                        <li><a class="" href="../t-projectsummary/integral_summary.html"
+                               target="myFrameName">积分汇总</a></li>
+                        <li><a class="" href="../t-projectsummary/workload_summary.html"
+                               target="myFrameName">工作量汇总</a></li>
 
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"
-						target="myFrameName"> <i class="icon-cogs"></i> <span>素拓币管理</span>
-							<span class="arrow"></span>
-					</a>
-						<ul class="sub">
-							<li><a class="" href="../t-coinmanagement/price.html" target="myFrameName">奖品管理</a></li>
-							<li><a class="" href="../t-coinmanagement/change-record.html"
-								target="myFrameName">奖品记录</a></li>
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;" class=""> <i
-							class="icon-tasks"></i> <span>用户管理</span> <span class="arrow"></span>
-					</a>
-						<ul class="sub">
-							<li><a class="" href="../t-usermanagement/lead_search.html" target="myFrameName">用户查询</a></li>
-							<li><a class="" href="../t-usermanagement/lead-into.html" target="myFrameName">用户导入</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu"><a href="javascript:;"
+                                        target="myFrameName"> <i class="icon-cogs"></i> <span>素拓币管理</span>
+                    <span class="arrow"></span>
+                </a>
+                    <ul class="sub">
+                        <li><a class="" href="../t-coinmanagement/price.html" target="myFrameName">奖品管理</a></li>
+                        <li><a class="" href="../t-coinmanagement/change-record.html"
+                               target="myFrameName">奖品记录</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu"><a href="javascript:;" class=""> <i
+                        class="icon-tasks"></i> <span>用户管理</span> <span class="arrow"></span>
+                </a>
+                    <ul class="sub">
+                        <li><a class="" href="../t-usermanagement/lead_search.html" target="myFrameName">用户查询</a></li>
+                        <li><a class="" href="../t-usermanagement/lead-into.html" target="myFrameName">用户导入</a></li>
 
-						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"
-						target="myFrameName"> <i class="icon-th"></i> <span>系统管理</span>
-							<span class="arrow"></span>
-					</a>
-						<ul class="sub">
-							<li><a class="" href="../t-systemmanagement/tree.html" target="myFrameName">积分认定表管理</a></li>
-							<li><a class="" href="../t-systemmanagement/redect.html" target="myFrameName">项目类别管理</a></li>
-							<li><a class="" href="../t-systemmanagement/permissions_manager.html"
-								target="myFrameName">权限管理</a></li>
-							<li><a class="" href="../t-systemmanagement/menu_manage.html" target="myFrameName">菜单管理</a></li>
-							<li><a class="" href="../t-systemmanagement/code_manage.html" target="myFrameName">二维码管理</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
+                    </ul>
+                </li>
+                <li class="sub-menu"><a href="javascript:;"
+                                        target="myFrameName"> <i class="icon-th"></i> <span>系统管理</span>
+                    <span class="arrow"></span>
+                </a>
+                    <ul class="sub">
+                        <li><a class="" href="../t-systemmanagement/tree.html" target="myFrameName">积分认定表管理</a></li>
+                        <li><a class="" href="../t-systemmanagement/redect.html" target="myFrameName">项目类别管理</a></li>
+                        <li><a class="" href="../t-systemmanagement/permissions_manager.html"
+                               target="myFrameName">权限管理</a></li>
+                        <li><a class="" href="../t-systemmanagement/menu_manage.html" target="myFrameName">菜单管理</a></li>
+                        <li><a class="" href="../t-systemmanagement/code_manage.html" target="myFrameName">二维码管理</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-		<div id="main-content">
-			<iframe id="myFrameId" name="myFrameName" frameborder="0"
-				width="100%" height="100%" src="main.html"></iframe>
+    <div id="main-content">
+        <iframe id="myFrameId" name="myFrameName" frameborder="0"
+                width="100%" height="100%" src="main.html"></iframe>
 
-		</div>
-	</div>
+    </div>
+</div>
+<div id="mymodal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mymodallabel1"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4>修改密码</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row-fluid">
+            <div class="row-form clearfix">
+                <div class="span3" style="margin-top:5px;">旧密码</div>
+                <div class="span6">
+                    <input type="text" id="oldPwd"></div>
+            </div>
+            <div class="row-form clearfix">
+                <div class="span3" style="margin-top:5px;">新密码</div>
+                <div class="span6">
+                    <input type="text" id="newPwd"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="changeMyPwd()">保存</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
 
-	<script src="../../js/jquery.nicescroll.js" type="text/javascript"></script>
-	<script type="text/javascript"
-		src="../../js/jquery-ui-1.9.2.custom.min.js"></script>
-	<script type="text/javascript" src="../../js/jquery.slimscroll.min.js"></script>
-	<script src="../../js/fullcalendar.min.js"></script>
+<script src="../../js/jquery.nicescroll.js" type="text/javascript"></script>
+<script type="text/javascript"
+        src="../../js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="../../js/jquery.slimscroll.min.js"></script>
+<script src="../../js/fullcalendar.min.js"></script>
 
-	<!--[if lt IE 9]>
+<!--[if lt IE 9]>
 <script src="http://www.js-css.cn/js/excanvas.js"></script>
 <script src="http://www.js-css.cn/js/respond.js"></script>
 <![endif]-->
 
-	<script src="../../js/jquery.easy-pie-chart.js" type="text/javascript"></script>
-	<script src="../../js/jquery.sparkline.js" type="text/javascript"></script>
-	<script src="../../js/chart.js"></script>
-	<script src="../../js/jquery.scrollto.min.js"></script>
+<script src="../../js/jquery.easy-pie-chart.js" type="text/javascript"></script>
+<script src="../../js/jquery.sparkline.js" type="text/javascript"></script>
+<script src="../../js/chart.js"></script>
+<script src="../../js/jquery.scrollto.min.js"></script>
 
-	<script src="../../js/common-scripts.js"></script>
+<script src="../../js/common-scripts.js"></script>
 
-	<script src="../../js/easy-pie-chart.js"></script>
-	<script src="../../js/sparkline-chart.js"></script>
-	<script src="../../js/home-page-calender.js"></script>
-	<!-- <script src="../../js/home-chartjs.js"></script> -->
-	<script src="../../js/tjs/index.js"></script>
-	<script type="text/javascript">
-		$(function() {
+<script src="../../js/easy-pie-chart.js"></script>
+<script src="../../js/sparkline-chart.js"></script>
+<script src="../../js/home-page-calender.js"></script>
+<!-- <script src="../../js/home-chartjs.js"></script> -->
+<script src="../../js/tjs/index.js"></script>
+<script type="text/javascript">
+    $(function () {
 // 			$('.sidebar-menu>li').click(function(e) {
 // 				$('.sidebar-menu>li').removeClass('active');
 // 				$(this).addClass('active');
 // 			});
-			/*$('.sidebar-menu>li>ul>li').click(function (e) {
-			 $('.sidebar-menu>li>ul>li').removeClass('active');
-			 $(this).addClass('active');
-			 });*/
-		})
-	</script>
+        /*$('.sidebar-menu>li>ul>li').click(function (e) {
+         $('.sidebar-menu>li>ul>li').removeClass('active');
+         $(this).addClass('active');
+         });*/
+    })
+</script>
 
-	<script src="../../js/tjs/pagejs.js"></script>
+<script src="../../js/tjs/pagejs.js"></script>
 
 </body>
 </html>

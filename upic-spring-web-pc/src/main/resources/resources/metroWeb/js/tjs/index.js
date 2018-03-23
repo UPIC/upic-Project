@@ -1,5 +1,8 @@
 var getResourceBySelfUrl = "/operator/getResourceBySelf";
 var getUserUrl = "/common/getUserInfo";
+var changeThePwdUrl = "/stu/changeThePwd";
+
+var userNum = "";
 
 $(function () {
     commonAjax(getResourceBySelfUrl, "", "getFirstResourceBySelf", "GET");
@@ -63,5 +66,25 @@ function getFirstResourceBySelf(datas) {
 }
 
 function getUserInfo(datas) {
+    userNum = datas.userNum;
     $("#username").html(datas.username);
+}
+
+function changeMyPwd() {
+    var data = {
+        oldPwd: $("#oldPwd").val(),
+        newPwd: $("#newPwd").val(),
+        userNum: userNum
+    };
+    commonAjax(changeThePwdUrl, data, "changeMyPwdResult", "POST");
+}
+
+function changeMyPwdResult(result) {
+    if (result == "ERROR_OLD_PWD") {
+        alert("原密码错误！");
+    } else if (result == "SUCCESS") {
+        alert("修改成功！");
+    } else {
+        alert("修改失败！");
+    }
 }
